@@ -1,0 +1,85 @@
+/* =============================================================================
+   Drucklayout (@media print) — ATVANTAGE Academy
+   -----------------------------------------------------------------------------
+   Sauberer Ausdruck von Doku-/Guide-Seiten:
+   - IMMER Light (dunkle Schrift auf hellem Grund) — unabhängig vom Screen-Farbschema
+     (Dark-Mode/System-Präferenz werden per !important-Token-Reset überstimmt).
+   - Screen-Chrome wird ausgeblendet: Meta-Nav, Kopf-Navigation (Burger/Links/
+     Theme-Umschalter), Brotkrumen, rechte Sidebar (Inhaltsverzeichnis/Fortschritt/
+     Ressourcen), Prev/Next, Footer, „Markdown kopieren".
+   - ERHALTEN bleiben: ATVANTAGE-Logo (Briefkopf), Seitentitel, Inhalt und eine
+     Druck-Kontaktzeile (E-Mail + ATVANTAGE-Homepage), die den Footer ersetzt.
+
+   Die Druck-Kontaktzeile lebt im Layout als `.avd-academy-print-contact`
+   (default.html) und ist auf dem Bildschirm ausgeblendet.
+   ============================================================================= */
+
+/* Bildschirm: Druck-Kontaktzeile ausblenden (nur im Ausdruck sichtbar). */
+.avd-academy-print-contact { display: none; }
+
+@media print {
+  /* Light erzwingen — überstimmt Dark-Mode-Tokens (Attribut + prefers-color-scheme). */
+  :root {
+    color-scheme: light !important;
+    --avd-academy-color-ink:       #343E3F !important;
+    --avd-academy-color-ink-muted: #5F5F5F !important;
+    --avd-academy-color-headline:  #1A2627 !important;
+    --avd-academy-color-bg:        #FFFFFF !important;
+    --avd-academy-color-bg-subtle: #F4F4F4 !important;
+    --avd-academy-color-border:    #CFD4D6 !important;
+    --avd-academy-border-soft:     #E6E8EA !important;
+    --avd-academy-hero-bg:         #FFFFFF !important;
+    --avd-academy-topbar-bg:       #FFFFFF !important;
+    --avd-academy-code-bg:         #F4F4F4 !important;
+  }
+  html, body { background: #FFFFFF !important; color: #343E3F !important; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  /* Nicht benötigtes Screen-Chrome ausblenden (u. a. Breadcrumb & Footer). */
+  .avd-academy-metanav,
+  .avd-academy-header__nav,
+  .avd-academy-header__burger,
+  .avd-academy-guide-hero__crumbs,
+  .avd-academy-guide-hero__meta,
+  .avd-academy-guide-sidebar,
+  .avd-academy-guide-nav,
+  .avd-academy-footer,
+  .avd-academy-skip-link,
+  .avd-academy-copy-md,
+  [data-avd-academy-toc-box],
+  [data-avd-academy-progress] { display: none !important; }
+
+  /* Kopf entschlacken: nur das Marken-Logo als Briefkopf, nicht sticky. */
+  .avd-academy-header {
+    position: static !important; box-shadow: none !important; border: 0 !important;
+    background: #FFFFFF !important; padding: 0 0 0.5rem 0 !important;
+  }
+
+  /* Titelband flach & hell. */
+  .avd-academy-guide-hero {
+    background: #FFFFFF !important; padding: 0.5rem 0 !important; margin: 0 !important;
+  }
+
+  /* Einspaltig, volle Breite. */
+  .avd-academy-guide-layout { display: block !important; }
+  .avd-academy-guide-main {
+    max-width: none !important; width: 100% !important; padding: 0 !important;
+  }
+
+  /* Links dunkel & lesbar. */
+  a { color: #1A2627 !important; text-decoration: underline; }
+
+  /* Druck-Kontaktzeile sichtbar machen (ersetzt den ausgeblendeten Footer). */
+  .avd-academy-print-contact {
+    display: flex !important; gap: 1.5rem; flex-wrap: wrap;
+    margin-top: 1.5rem; padding-top: 0.6rem;
+    border-top: 1px solid #CFD4D6;
+    font-size: 0.85rem; color: #5F5F5F;
+  }
+  .avd-academy-print-contact a { color: #1A2627 !important; }
+
+  /* Umbruch-Hygiene. */
+  h1, h2, h3, h4 { break-after: avoid-page; }
+  pre, blockquote, table, figure, img { break-inside: avoid; }
+  img { max-width: 100% !important; }
+}

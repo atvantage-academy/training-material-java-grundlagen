@@ -1,0 +1,93 @@
+# =============================================================================
+# GitHub Pages — Build & Deploy für ein Academy-Schulungsrepo
+# -----------------------------------------------------------------------------
+# VORLAGE aus @avd-academy-tools/academy-theme. In das Schulungsrepo als
+# `.github/workflows/pages.yml` übernehmen.
+#
+# Prinzip: Das Repo enthält KEINE Layout-/Theme-Dateien. Der komplette Design-
+# und Layout-Layer wird zur Build-Zeit als npm-Paket aus der GHE-Registry geladen
+# und nach ./theme/ kopiert; danach baut Jekyll mit den Theme-Defaults plus der
+# projekteigenen _config.yml.
+#
+# Voraussetzungen (einmalig):
+#   1. Settings → Pages → Source: „GitHub Actions".
+#   2. Actions-Secret `THEME_NPM_TOKEN` = GHE-Token mit `read:packages`.
+#   3. Läuft das Repo auf öffentlichem github.com, müssen die Runner
+#      `npm.timetoact.ghe.com` erreichen können (Registry via Variable
+#      `NPM_REGISTRY` überschreibbar). Theme-Version via Variable `THEME_VERSION`.
+# =============================================================================
+name: Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  THEME_PACKAGE: "@avd-academy-tools/academy-theme"
+  NPM_REGISTRY: ${{ vars.NPM_REGISTRY || 'https://npm.timetoact.ghe.com' }}
+  THEME_VERSION: ${{ vars.THEME_VERSION || 'latest' }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Theme aus der GHE-npm-Registry installieren
+        env:
+          THEME_NPM_TOKEN: ${{ secrets.THEME_NPM_TOKEN }}
+        run: |
+          scope="${THEME_PACKAGE%%/*}"                 # @avd-academy-tools
+          host="${NPM_REGISTRY#*://}"; host="${host%%/*}"
+          {
+            echo "${scope}:registry=${NPM_REGISTRY}"
+            echo "//${host}/:_authToken=\${THEME_NPM_TOKEN}"
+          } > .npmrc
+          npm install --no-save "${THEME_PACKAGE}@${THEME_VERSION}"
+
+      - name: Theme nach ./theme kopieren
+        run: |
+          pkg="node_modules/${THEME_PACKAGE}"
+          rm -rf theme && mkdir -p theme
+          cp -R "$pkg/atvantage" "$pkg/academy" "$pkg/jekyll" theme/
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+
+      - name: Jekyll bauen (Theme-Defaults + Projekt-_config)
+        env:
+          JEKYLL_ENV: production
+        run: |
+          gem install jekyll --no-document
+          jekyll build \
+            --config "node_modules/${THEME_PACKAGE}/jekyll/_config.defaults.yml,_config.yml" \
+            --strict_front_matter --trace
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!-- =============================================================================
+     ATVANTAGE Seiten-Template (eigenständig, ohne Jekyll)
+     -----------------------------------------------------------------------------
+     Minimales, vollständiges HTML-Gerüst für eine einzelne, eigenständige Seite
+     (z. B. eine schnell erstellte HTML-Seite). Bindet das ATVANTAGE-Fundament ein
+     und zeigt Header + Footer. Wird die Seite über einen Static-Site-Generator
+     gebaut, stattdessen dessen Layout nutzen.
+
+     Die Asset-Pfade sind relativ zu DIESER Datei (./), die neben den
+     Theme-Dateien liegt. Nur die «…»-Platzhalter vor Verwendung ersetzen.
+     ============================================================================= -->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>«SEITENTITEL» · ATVANTAGE Academy</title>
+  <!-- CI-Schrift „Outfit" (siehe base.css) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Das gesamte ATVANTAGE-Fundament über EINEN Link: -->
+  <link rel="stylesheet" href="./atvantage.css">
+  <script src="./atvantage.js" defer></script>
+</head>
+<body>
+
+  <!-- Header-Baustein (Inhalt aus partials/header.html übernehmen) -->
+  <!-- … hier Header einfügen … -->
+
+  <main class="avd-academy-page" style="max-width: var(--avd-academy-page-width); margin-inline: auto; padding: var(--avd-academy-space-8) var(--avd-academy-space-6);">
+    <h1>«SEITENTITEL»</h1>
+    <p>«INHALT»</p>
+  </main>
+
+  <!-- Footer-Baustein (Inhalt aus partials/footer.html übernehmen) -->
+  <!-- … hier Footer einfügen … -->
+
+</body>
+</html>
