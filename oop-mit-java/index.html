@@ -39,8 +39,8 @@
 <head>
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title> · Java-Grundlagen (ATVANTAGE Academy)</title>
-<meta name="description" content="Schulungskonzepte der ATVANTAGE Academy."><link rel="preconnect" href="https://fonts.googleapis.com">
+<title>Objektorientierte Programmierung mit Java · Java-Grundlagen (ATVANTAGE Academy)</title>
+<meta name="description" content="5-tägiger Einstieg in die objektorientierte Programmierung mit Java für Entwickler:innen mit prozeduralen Vorkenntnissen."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/atvantage/styles.css?v=1786445370"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/tokens.css?v=1786445370">
 <link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/base.css?v=1786445370">
@@ -67,91 +67,65 @@
   </a>
   <button class="avd-academy-btn avd-academy-btn--ghost avd-academy-header__burger" data-avd-academy-nav-toggle="#avd-academy-main-nav"
           aria-label="Navigation umschalten" aria-expanded="false">☰</button>
-  <nav class="avd-academy-header__nav" id="avd-academy-main-nav"><a href="/training-material-java-grundlagen/" aria-current="page">Start</a><a href="/training-material-java-grundlagen/oop-mit-java/">Objektorientierte Programmierung mit Java</a>
+  <nav class="avd-academy-header__nav" id="avd-academy-main-nav"><a href="/training-material-java-grundlagen/">Start</a><a href="/training-material-java-grundlagen/oop-mit-java/" aria-current="page">Objektorientierte Programmierung mit Java</a>
     <button class="avd-academy-btn avd-academy-btn--ghost" data-avd-academy-theme-toggle
             aria-label="Farbschema umschalten">◐</button>
   </nav>
 </header>
-<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-grundlagen/">Home</a></nav>
+<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-grundlagen/">Home</a><span>/</span><span aria-current="page">OOP mit Java</span></nav>
     <div class="avd-academy-guide-hero__meta">
       <div class="avd-academy-guide-hero__tags">
       </div>
       <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
               data-avd-academy-copy-md="#avd-academy-md-source"
               title="Markdown kopieren" aria-label="Markdown kopieren"></button>
-    </div><h1></h1>
+    </div><h1>Objektorientierte Programmierung mit Java</h1>
   </section>
 
   <div class="avd-academy-guide-layout">
     <main class="avd-academy-guide-main" id="avd-academy-content">
-      <h1 id="java-grundlagen">Java-Grundlagen</h1>
+      <h1 id="objektorientierte-programmierung-mit-java">Objektorientierte Programmierung mit Java</h1>
 
-<blockquote>
-  <p>Für dieses Training sind <strong>noch keine Schulungsunterlagen</strong> verfügbar.
-Sie werden in Kürze ergänzt.</p>
-</blockquote>
-<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Java-Grundlagen
+<p>Willkommen! In dieser Woche wechselst Du vom prozeduralen Denken in die
+objektorientierte Welt von Java — Schritt für Schritt, vom ersten Programm bis
+zum kleinen eigenen Projekt.</p>
+
+<ul>
+  <li><a href="/training-material-java-grundlagen/oop-mit-java/kursbeschreibung.html">Kursbeschreibung</a></li>
+</ul>
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Objektorientierte Programmierung mit Java
 
 {% if site.audience == &apos;learner&apos; %}
 
-&gt; Für dieses Training sind **noch keine Schulungsunterlagen** verfügbar.
-&gt; Sie werden in Kürze ergänzt.
+Willkommen! In dieser Woche wechselst Du vom prozeduralen Denken in die
+objektorientierte Welt von Java — Schritt für Schritt, vom ersten Programm bis
+zum kleinen eigenen Projekt.
+
+- [Kursbeschreibung](/training-material-java-grundlagen/oop-mit-java/kursbeschreibung.html)
 
 {%- comment -%}
-Leerer Zustand: KEINE Platzhalter-Links (die würden 404en). Sobald Übungen/
-Visualisierungen existieren, ersetzt der Skill konzept-erstellen diesen Hinweis
-durch Kacheln je Schulung (avd-academy-card im avd-academy-grid, Link auf …/issue.html).
+Noch keine Übungen ausgearbeitet — daher (außer der Kursbeschreibung) keine
+Lernenden-Links (die würden 404en). Sobald Übungen existieren, hier je Übung
+direkt auf …/issue.html verlinken.
 {%- endcomment -%}
 
 {% else %}
 
-Dieses Repository bündelt die **Schulungskonzepte** der ATVANTAGE Academy zum
-Themenbereich Java-Grundlagen.
-
 ## Allgemeines
 
-- [Didaktisches Manifest](shared/didaktisches-manifest.md)
+- [Kursbeschreibung](/training-material-java-grundlagen/oop-mit-java/kursbeschreibung.html)
+- [Sales Asset](sales-asset.md)
+- [Trainerleitfaden](trainerleitfaden.md)
 
-## Konzepte im Überblick
+## Zeitplan (Grob-Agenda, 5 Tage)
 
-Die folgenden Kurskonzepte sind **geplant** (noch nicht als Unterlagen
-ausgearbeitet). Sie bauen **modular** aufeinander auf (prozedural →
-objektorientiert → Aufbau) und unterscheiden sich vor allem in den
-**Vorkenntnissen**. Die Tabelle vergleicht ihre groben didaktischen Lernziele —
-je Spalte ein Konzept:
+1. **Tag 1 — Ankommen in Java:** Plattform &amp; Ökosystem, Werkzeuge, Java-Syntax für Umsteiger
+2. **Tag 2 — Vom Prozeduralen zum Objekt:** OO-Grundlagen (Klassen, Objekte, Kapselung)
+3. **Tag 3 — Wiederverwendung &amp; Abstraktion:** Vererbung, Polymorphie, Interfaces
+4. **Tag 4 — Robuste Programme:** Ausnahmen, Collections, Generics
+5. **Tag 5 — Zusammenspiel &amp; Praxis:** Build/Ökosystem, Testen, Integrationsprojekt, Ausblick
 
-| Lernziel / Merkmal                                                           | Prozedurale Programmierung mit Java | Objektorientierte Programmierung mit Java           | Java-Aufbau                         | Java für OO-Umsteiger                  | Java-Update           |
-|------------------------------------------------------------------------------|-------------------------------------|-----------------------------------------------------|-------------------------------------|----------------------------------------|-----------------------|
-| **Vorkenntnisse**                                                            | keine                               | prozedurale Programmierkenntnisse (z.B. COBOL/PL-I) | OOP mit Java (bzw. Java-Grundlagen) | OOP in anderer Sprache (z. B. C#/.NET) | Java 8 (OO + Lambdas) |
-| **Dauer (ca.)**                                                              | 3 Tage                              | 5 Tage                                              | 3–5 Tage                            | 3 Tage                                 | 2 Tage                |
-| **Einführung in Java** (Entstehung, Plattform)                               | ✅                                  | ✅                                                  | 🎓                                  | ✅                                     | 🎓                    |
-| **Programmier-Grundlagen** (Variablen, Kontrollfluss, Methoden, Algorithmen) | 🎯                                  | 🎓                                                  | 🎓                                  | 🎓                                     | 🎓                    |
-| **OO-Grundlagen** (Klassen, Objekte, Kapselung)                              | ➖                                  | 🎯                                                  | 🎓                                  | 🎓                                     | 🎓                    |
-| **Vererbung, Polymorphie, Interfaces**                                       | ➖                                  | ✅                                                  | ✅                                  | 🌗                                     | 🎓                    |
-| **Java-Sprache &amp; -Syntax** (Java-Spezifika)                                  | ✅                                  | ✅                                                  | ✅                                  | 🎯                                     | 🌗                    |
-| **Java-Ökosystem** (JVM, IDE, Maven/Gradle, Bibliotheken)                    | ✅                                  | ✅                                                  | 🎓                                  | 🎯                                     | 🎓                    |
-| **Collections, Generics, Exceptions**                                        | 🌗                                  | ✅                                                  | ✅                                  | ✅                                     | 🌗                    |
-| **Funktionale Programmierung** (Lambdas, Streams)                            | ➖                                  | ➖                                                  | 🎯                                  | ✅                                     | 🌗                    |
-| **Moderne Sprachfeatures** (Records, Sealed, Pattern Matching, `var`)        | ➖                                  | ➖                                                  | ✅                                  | 🌗                                     | 🎯                    |
-| **Modulsystem (JPMS) &amp; Java-9+-Neuerungen**                                  | ➖                                  | ➖                                                  | 🌗                                  | ➖                                     | 🎯                    |
-
-**Legende:** 🎯 Schwerpunkt · ✅ behandelt · 🌗 kompakt / im Überblick · 🎓 vorausgesetzt · ➖ nicht enthalten
-
-Ablesbar z. B.: Die Grundlagenkurse (prozedurale und objektorientierte
-Programmierung) führen **Lambdas/Streams** noch nicht ein, während **Java für
-OO-Umsteiger** sie direkt mitnimmt — dort müssen keine OO-Grundlagen vermittelt
-werden, sodass Zeit für funktionale Konzepte bleibt. Wer ohne Vorkenntnisse
-startet, belegt zunächst **Prozedurale Programmierung mit Java** (3 Tage) und
-darauf aufbauend **Objektorientierte Programmierung mit Java** (5 Tage).
-
-## Ausgearbeitete Konzepte
-
-- [Objektorientierte Programmierung mit Java](/training-material-java-grundlagen/oop-mit-java/) — 5 Tage, für OO-Einsteiger mit prozeduralen Vorkenntnissen
-
-{%- comment -%}
-Weitere Konzepte hier ergänzen, sobald sie mit `didaktikon:konzept-erstellen`
-ausgearbeitet sind (je Konzept ein Link auf /«konzept»/).
-{%- endcomment -%}
+Details siehe [Kursbeschreibung](/training-material-java-grundlagen/oop-mit-java/kursbeschreibung.html) und [Trainerleitfaden](trainerleitfaden.md).
 
 {% endif %}</textarea>
     </main>

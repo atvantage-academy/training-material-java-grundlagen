@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<!--
+  ATVANTAGE-Academy — EINZIGES Seitenlayout (Jekyll)
+  --------------------------------------------------
+  Ein Layout für alles: allgemeine Doku-Seiten UND Guides (Übungen/Anleitungen).
+  Optik nach der ATVANTAGE-Website: Meta-Nav, weiße sticky Kopfzeile, Hero-Band,
+  zweispaltig mit rechter Sidebar (automatisches Inhaltsverzeichnis, Fortschritt
+  aus Task-Listen, weiterführende Ressourcen). Überschriften ohne Emoji-Icons.
+
+  Verwendung im Front Matter:  layout: default
+
+  Alle Front-Matter-Felder sind OPTIONAL (Convention over Configuration). Nur der
+  Titel ist faktisch erforderlich — als `title:` ODER als erste `#`-Überschrift:
+
+    title:       "…"                → sonst erste #-Überschrift (eins von beiden nötig)
+    description: "…"                → Meta-Description
+    duration:    8                  → Zahl in Minuten → Hero-Tag „ca. 8 Minuten"
+                                       (ungefähre LESEDAUER; bei Guides/Übungen die
+                                       Dauer der Übung). Aktiviert zugleich die
+                                       automatische Prev/Next-Navigation zwischen
+                                       gleichartigen Geschwister-Seiten.
+    topics:      ["Cloud & DevOps"] → weitere Hero-Tags
+    resources:   [{titel, url, icon}, …] → Sidebar-Karte „Weiterführende Informationen".
+                                       titel und/oder icon (Bildpfad); icon erscheint
+                                       rechts und wird kreisrund dargestellt.
+    breadcrumb:                     → Brotkrumen anpassen (beides optional):
+      label: "…"                    → überschreibt den Ordnernamen dieser Ebene;
+                                       in der Ordner-`index.md` gesetzt gilt es für
+                                       ALLE Seiten im Ordner und in Unterordnern.
+      path: [{title, url}, …]       → explizite Vorfahren-Kette OHNE die aktuelle
+                                       Seite (diese wird automatisch angehängt); in
+                                       der `index.md` gesetzt wird sie vererbt.
+    zurueck / weiter: {title, url}  → explizite Prev/Next-Links (sonst automatisch)
+
+  „Markdown kopieren" (Button im Hero) erscheint auf allen Markdown-Seiten
+  (`page.ext == '.md'`), nicht auf reinen HTML-Seiten.
+-->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kursbeschreibung · Java-Grundlagen (ATVANTAGE Academy)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/atvantage/styles.css?v=1786445370"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/tokens.css?v=1786445370">
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/base.css?v=1786445370">
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/components.css?v=1786445370">
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/jekyll/site.css?v=1786445370"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/print.css?v=1786445370">
+<script src="/training-material-java-grundlagen/theme/academy/atvantage.js?v=1786445370" defer></script>
+<script src="/training-material-java-grundlagen/theme/jekyll/site.js?v=1786445370" defer></script>
+<link rel="icon" href="/training-material-java-grundlagen/theme/atvantage/assets/logo-orange.svg">
+
+  <link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/guide.css?v=1786445370">
+</head>
+<body class="avd-academy-guide">
+  <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
+
+  <div class="avd-academy-metanav">
+    <span>ATVANTAGE Academy</span>
+  </div>
+
+  <header class="avd-academy-header">
+  <a class="avd-academy-header__brand" href="/training-material-java-grundlagen/" aria-label="Startseite">
+    <img class="avd-academy-header__logo"
+         src="/training-material-java-grundlagen/theme/atvantage/assets/logo-orange.svg"
+         alt="ATVANTAGE Academy">
+  </a>
+  <button class="avd-academy-btn avd-academy-btn--ghost avd-academy-header__burger" data-avd-academy-nav-toggle="#avd-academy-main-nav"
+          aria-label="Navigation umschalten" aria-expanded="false">☰</button>
+  <nav class="avd-academy-header__nav" id="avd-academy-main-nav"><a href="/training-material-java-grundlagen/">Start</a><a href="/training-material-java-grundlagen/oop-mit-java/">Objektorientierte Programmierung mit Java</a>
+    <button class="avd-academy-btn avd-academy-btn--ghost" data-avd-academy-theme-toggle
+            aria-label="Farbschema umschalten">◐</button>
+  </nav>
+</header>
+<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-grundlagen/">Home</a><span>/</span><a href="/training-material-java-grundlagen/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Kursbeschreibung</span></nav>
+    <div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags">
+      </div>
+      <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
+              data-avd-academy-copy-md="#avd-academy-md-source"
+              title="Markdown kopieren" aria-label="Markdown kopieren"></button>
+    </div><h1>Kursbeschreibung</h1>
+  </section>
+
+  <div class="avd-academy-guide-layout">
+    <main class="avd-academy-guide-main" id="avd-academy-content">
+      <h1 id="objektorientierte-programmierung-mit-java">Objektorientierte Programmierung mit Java</h1>
+
+<h2 id="zielgruppe">Zielgruppe</h2>
+
+<p>Entwickler:innen mit <strong>prozeduralen Programmierkenntnissen</strong> (Sprache egal — z. B.
+C, COBOL, PL/I, PL/SQL, Basic), die <strong>erstmals objektorientiert</strong> und in <strong>Java</strong>
+arbeiten. Kontrollstrukturen, Variablen und Funktionen sind vertraut;
+Objektorientierung ist neu.</p>
+
+<h2 id="überblick">Überblick</h2>
+
+<p>Der Sprung von prozeduraler zu objektorientierter Programmierung ist kein neuer
+Dialekt, sondern eine neue Denkweise: Statt Daten und Funktionen getrennt zu
+betrachten, modellierst Du die Welt als zusammenspielende <strong>Objekte</strong> mit Zustand
+und Verhalten. In fünf Tagen wechselst Du dieses Denken ein — vom ersten
+Java-Programm über die tragenden OO-Konzepte bis zu einem kleinen eigenen Projekt.
+Breite vor Tiefe: Du lernst das gesamte Fundament kennen, auf dem der
+Java-Aufbaukurs später aufsetzt.</p>
+
+<h2 id="lernziele">Lernziele</h2>
+
+<ul>
+  <li>Wir finden uns in der <strong>Java-Plattform</strong> und den Werkzeugen (JDK, IDE, Build)
+zurecht und übertragen prozedurale Grundlagen in Java-Syntax.</li>
+  <li>Wir <strong>denken in Objekten</strong>: Klassen, Objekte, Kapselung und Verantwortlichkeiten.</li>
+  <li>Wir nutzen <strong>Vererbung, Polymorphie und Interfaces</strong> zur Wiederverwendung und
+Abstraktion.</li>
+  <li>Wir schreiben <strong>robuste Programme</strong> mit Ausnahmebehandlung, Collections und
+Generics.</li>
+  <li>Wir führen das Gelernte in einem <strong>kleinen Projekt</strong> zusammen und kennen Qualität
+(Tests) sowie Ökosystem (Maven, Bibliotheken) im Überblick.</li>
+</ul>
+
+<h2 id="agenda-5-tage">Agenda (5 Tage)</h2>
+
+<h3 id="tag-1-ankommen-in-java">Tag 1: Ankommen in Java</h3>
+
+<ul>
+  <li>Einführung in Java: Entstehung, JVM/Plattform, „Write once, run anywhere”</li>
+  <li>Ökosystem im Überblick: JDK, IDE, Kompilieren &amp; Ausführen, Bytecode</li>
+  <li>Java-Syntax für Umsteiger: Variablen, Typen, Operatoren, Kontrollfluss, Methoden</li>
+  <li>Erstes lauffähiges Programm</li>
+</ul>
+
+<h3 id="tag-2-vom-prozeduralen-zum-objekt">Tag 2: Vom Prozeduralen zum Objekt</h3>
+
+<ul>
+  <li>Motivation: Grenzen prozeduraler Strukturierung — warum Objektorientierung?</li>
+  <li>Klassen &amp; Objekte: Zustand (Felder) und Verhalten (Methoden), Konstruktoren</li>
+  <li>Kapselung: Sichtbarkeiten, Zugriff, Verantwortlichkeiten</li>
+  <li>Objektbeziehungen: Referenzen, Assoziation und Komposition</li>
+</ul>
+
+<h3 id="tag-3-wiederverwendung--abstraktion">Tag 3: Wiederverwendung &amp; Abstraktion</h3>
+
+<ul>
+  <li>Vererbung: Ober-/Unterklassen, Überschreiben, <code class="language-plaintext highlighter-rouge">super</code></li>
+  <li>Polymorphie: dynamische Bindung, Programmieren gegen Typen statt Implementierungen</li>
+  <li>Abstraktion: abstrakte Klassen und Interfaces</li>
+  <li><code class="language-plaintext highlighter-rouge">Object</code>-Grundlagen (<code class="language-plaintext highlighter-rouge">toString</code>/<code class="language-plaintext highlighter-rouge">equals</code>/<code class="language-plaintext highlighter-rouge">hashCode</code>) im Überblick</li>
+</ul>
+
+<h3 id="tag-4-robuste-programme">Tag 4: Robuste Programme</h3>
+
+<ul>
+  <li>Ausnahmebehandlung: <code class="language-plaintext highlighter-rouge">try</code>/<code class="language-plaintext highlighter-rouge">catch</code>/<code class="language-plaintext highlighter-rouge">finally</code>, checked vs. unchecked, eigene Exceptions</li>
+  <li>Collections-Framework: <code class="language-plaintext highlighter-rouge">List</code>, <code class="language-plaintext highlighter-rouge">Set</code>, <code class="language-plaintext highlighter-rouge">Map</code> — die passende Struktur wählen</li>
+  <li>Generics: typsichere Container verstehen und nutzen</li>
+</ul>
+
+<h3 id="tag-5-zusammenspiel--praxis">Tag 5: Zusammenspiel &amp; Praxis</h3>
+
+<ul>
+  <li>Build &amp; Ökosystem: Maven-Grundlagen, Projektstruktur, Bibliotheken einbinden</li>
+  <li>Qualität: Testen mit JUnit im Überblick, Debugging</li>
+  <li>Integrationsprojekt: Konzepte der Woche kombiniert anwenden</li>
+  <li>Ausblick &amp; nächste Schritte (Java-Aufbau: Lambdas/Streams, moderne Sprachfeatures)</li>
+</ul>
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Objektorientierte Programmierung mit Java
+
+## Zielgruppe
+
+Entwickler:innen mit **prozeduralen Programmierkenntnissen** (Sprache egal — z. B.
+C, COBOL, PL/I, PL/SQL, Basic), die **erstmals objektorientiert** und in **Java**
+arbeiten. Kontrollstrukturen, Variablen und Funktionen sind vertraut;
+Objektorientierung ist neu.
+
+## Überblick
+
+Der Sprung von prozeduraler zu objektorientierter Programmierung ist kein neuer
+Dialekt, sondern eine neue Denkweise: Statt Daten und Funktionen getrennt zu
+betrachten, modellierst Du die Welt als zusammenspielende **Objekte** mit Zustand
+und Verhalten. In fünf Tagen wechselst Du dieses Denken ein — vom ersten
+Java-Programm über die tragenden OO-Konzepte bis zu einem kleinen eigenen Projekt.
+Breite vor Tiefe: Du lernst das gesamte Fundament kennen, auf dem der
+Java-Aufbaukurs später aufsetzt.
+
+## Lernziele
+
+- Wir finden uns in der **Java-Plattform** und den Werkzeugen (JDK, IDE, Build)
+  zurecht und übertragen prozedurale Grundlagen in Java-Syntax.
+- Wir **denken in Objekten**: Klassen, Objekte, Kapselung und Verantwortlichkeiten.
+- Wir nutzen **Vererbung, Polymorphie und Interfaces** zur Wiederverwendung und
+  Abstraktion.
+- Wir schreiben **robuste Programme** mit Ausnahmebehandlung, Collections und
+  Generics.
+- Wir führen das Gelernte in einem **kleinen Projekt** zusammen und kennen Qualität
+  (Tests) sowie Ökosystem (Maven, Bibliotheken) im Überblick.
+
+## Agenda (5 Tage)
+
+### Tag 1: Ankommen in Java
+
+- Einführung in Java: Entstehung, JVM/Plattform, „Write once, run anywhere&quot;
+- Ökosystem im Überblick: JDK, IDE, Kompilieren &amp; Ausführen, Bytecode
+- Java-Syntax für Umsteiger: Variablen, Typen, Operatoren, Kontrollfluss, Methoden
+- Erstes lauffähiges Programm
+
+### Tag 2: Vom Prozeduralen zum Objekt
+
+- Motivation: Grenzen prozeduraler Strukturierung — warum Objektorientierung?
+- Klassen &amp; Objekte: Zustand (Felder) und Verhalten (Methoden), Konstruktoren
+- Kapselung: Sichtbarkeiten, Zugriff, Verantwortlichkeiten
+- Objektbeziehungen: Referenzen, Assoziation und Komposition
+
+### Tag 3: Wiederverwendung &amp; Abstraktion
+
+- Vererbung: Ober-/Unterklassen, Überschreiben, `super`
+- Polymorphie: dynamische Bindung, Programmieren gegen Typen statt Implementierungen
+- Abstraktion: abstrakte Klassen und Interfaces
+- `Object`-Grundlagen (`toString`/`equals`/`hashCode`) im Überblick
+
+### Tag 4: Robuste Programme
+
+- Ausnahmebehandlung: `try`/`catch`/`finally`, checked vs. unchecked, eigene Exceptions
+- Collections-Framework: `List`, `Set`, `Map` — die passende Struktur wählen
+- Generics: typsichere Container verstehen und nutzen
+
+### Tag 5: Zusammenspiel &amp; Praxis
+
+- Build &amp; Ökosystem: Maven-Grundlagen, Projektstruktur, Bibliotheken einbinden
+- Qualität: Testen mit JUnit im Überblick, Debugging
+- Integrationsprojekt: Konzepte der Woche kombiniert anwenden
+- Ausblick &amp; nächste Schritte (Java-Aufbau: Lambdas/Streams, moderne Sprachfeatures)</textarea>
+    </main>
+
+    <aside class="avd-academy-guide-sidebar">
+      <div class="avd-academy-guide-side avd-academy-guide-side--toc" data-avd-academy-toc-box hidden>
+        <div class="avd-academy-guide-side__label">Auf dieser Seite</div>
+        <nav class="avd-academy-toc" data-avd-academy-toc aria-label="Inhaltsverzeichnis"></nav>
+      </div><div class="avd-academy-guide-side avd-academy-guide-side--bordered" data-avd-academy-progress hidden>
+        <div class="avd-academy-guide-side__label">Fortschritt</div>
+        <div class="avd-academy-progress__bar"><div class="avd-academy-progress__fill"></div></div>
+        <div class="avd-academy-progress__text"></div>
+      </div>
+    </aside>
+  </div><div class="avd-academy-print-contact" aria-hidden="true">
+    <span>Kontakt: <a href="mailto:academy@atvantage.com">academy@atvantage.com</a></span>
+    <span><a href="https://atvantage-academy.github.io/academy-online/">ATVANTAGE Academy</a></span>
+  </div>
+
+  <footer class="avd-academy-footer">
+  <div class="avd-academy-footer__grid">
+    <div>
+      <strong>Java-Grundlagen (ATVANTAGE Academy)</strong>
+      <p>Schulungen im Bereich 'Java-Grundlagen'</p>
+    </div>
+    <div>
+      <strong>Kontakt</strong>
+      <p><a href="mailto:academy@atvantage.com">academy@atvantage.com</a><br>
+      </p>
+    </div><div>
+      <strong>Weitere Informationen</strong>
+      <p><a href="https://atvantage-academy.github.io/academy-online/" target="_blank" rel="noopener">ATVANTAGE Academy</a></p>
+    </div></div>
+  <div class="avd-academy-footer__legal">
+    © <span data-avd-academy-year>2026</span> ATVANTAGE
+  </div>
+</footer>
+
+</body>
+</html>
