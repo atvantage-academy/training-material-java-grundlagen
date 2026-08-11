@@ -41,7 +41,7 @@
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java-Grundlagen (ATVANTAGE Academy)</title>
-<meta name="description" content="Schütze den Zustand von Kunde und Konto durch Kapselung und Validierung."><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="description" content="Baue das Banking-Projekt reproduzierbar und binde eine externe Bibliothek ein."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/atvantage/styles.css?v=1786455592"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/tokens.css?v=1786455592">
 <link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/base.css?v=1786455592">
@@ -73,129 +73,124 @@
             aria-label="Farbschema umschalten">◐</button>
   </nav>
 </header>
-<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-grundlagen/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Kapselung und Validierung durchsetzen</span></nav>
+<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-grundlagen/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Das Projekt bauen und eine Bibliothek einbinden</span></nav>
     <div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 90 Minuten</span><span class="avd-academy-tag">Kapselung</span><span class="avd-academy-tag">Banking</span>
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 60 Minuten</span><span class="avd-academy-tag">Build & Ökosystem</span><span class="avd-academy-tag">Banking</span>
       </div>
       <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
               data-avd-academy-copy-md="#avd-academy-md-source"
               title="Markdown kopieren" aria-label="Markdown kopieren"></button>
-    </div><h1>Kapselung und Validierung durchsetzen</h1>
+    </div><h1>Das Projekt bauen und eine Bibliothek einbinden</h1>
   </section>
 
   <div class="avd-academy-guide-layout">
     <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
-      <h1 id="kapselung-und-validierung-durchsetzen">Kapselung und Validierung durchsetzen</h1>
+      <h1 id="das-projekt-bauen-und-eine-bibliothek-einbinden">Das Projekt bauen und eine Bibliothek einbinden</h1>
 
-<p>Als Entwickler:in möchte ich, dass Kunde und Konto niemals in einen ungültigen Zustand geraten, damit ich mich im restlichen Programm auf gültige Objekte verlassen kann.</p>
+<p>Als Entwickler:in möchte ich Abhängigkeiten deklarativ verwalten, damit mein Build reproduzierbar ist und ich fremde Bibliotheken ohne manuelles Kopieren nutzen kann.</p>
 
 <h2 id="lernziele">Lernziele</h2>
 
 <p>Die Lernenden…</p>
 
 <ul>
-  <li>deklarieren Felder <code class="language-plaintext highlighter-rouge">private</code> und steuern den Zugriff über Getter/Setter.</li>
-  <li>validieren Eingaben in Konstruktor und Settern und lehnen ungültige Werte ab.</li>
-  <li>begründen, welche Prüfungen in die Klasse gehören.</li>
+  <li>bauen das Projekt mit dem Build-Werkzeug (Gradle/Maven) reproduzierbar.</li>
+  <li>deklarieren eine externe Abhängigkeit in der Build-Datei.</li>
+  <li>nutzen eine Klasse der eingebundenen Bibliothek im eigenen Code.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Alle Felder von <code class="language-plaintext highlighter-rouge">Customer</code> und <code class="language-plaintext highlighter-rouge">Account</code> sind <code class="language-plaintext highlighter-rouge">private</code>.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der Konstruktor lehnt <code class="language-plaintext highlighter-rouge">null</code>-Werte für Pflichtfelder ab.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">setName</code> (o. ä.) verhindert <code class="language-plaintext highlighter-rouge">null</code> bzw. leere Werte.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der Kontostand kann nicht direkt von außen gesetzt werden (kein öffentlicher Setter dafür).</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Das Projekt baut mit einem einzigen Build-Befehl.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />In der Build-Datei (<code class="language-plaintext highlighter-rouge">build.gradle</code>/<code class="language-plaintext highlighter-rouge">pom.xml</code>) ist eine neue Abhängigkeit deklariert.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Eine Klasse der Bibliothek wird im Code verwendet und das Programm läuft.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
 <h2 id="arbeitsschritte">Arbeitsschritte</h2>
 
-<h3 id="felder-privat-machen">Felder privat machen</h3>
+<h3 id="das-projekt-bauen">Das Projekt bauen</h3>
 
-<p>Stelle sicher, dass alle Felder <code class="language-plaintext highlighter-rouge">private</code> sind. Biete nur dort Getter/Setter an, wo Zugriff wirklich nötig ist.</p>
+<p>Baue das Banking-Projekt und stelle sicher, dass der Build grün ist.</p>
 
-<blockquote>
-  <p><strong>Hinweis:</strong> Nicht jedes Feld braucht einen Setter. Der Kontostand ändert sich nur über Ein-/Auszahlungen — nicht über einen freien Setter.</p>
-</blockquote>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./gradlew build
+</code></pre></div></div>
 
-<h3 id="pflichtfelder-im-konstruktor-prüfen">Pflichtfelder im Konstruktor prüfen</h3>
+<h3 id="eine-abhängigkeit-deklarieren">Eine Abhängigkeit deklarieren</h3>
 
-<p>Wirf eine Ausnahme, wenn ein Pflichtwert fehlt, sodass gar kein ungültiges Objekt entstehen kann.</p>
+<p>Ergänze in der Build-Datei eine kleine, nützliche Bibliothek (z. B. Apache Commons Lang) im <code class="language-plaintext highlighter-rouge">dependencies</code>-Block.</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="nf">Customer</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nc">String</span> <span class="n">city</span><span class="o">)</span> <span class="o">{</span>
-  <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="nc">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="s">"name darf nicht null sein"</span><span class="o">);</span>
-  <span class="k">this</span><span class="o">.</span><span class="na">city</span> <span class="o">=</span> <span class="nc">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">city</span><span class="o">,</span> <span class="s">"city darf nicht null sein"</span><span class="o">);</span>
-  <span class="k">this</span><span class="o">.</span><span class="na">id</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">();</span>
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dependencies</span> <span class="o">{</span>
+    <span class="n">implementation</span> <span class="s1">'org.apache.commons:commons-lang3:3.14.0'</span>
 <span class="o">}</span>
 </code></pre></div></div>
 
-<h3 id="setter-validieren">Setter validieren</h3>
-
-<p>Lass den Setter für den Namen <code class="language-plaintext highlighter-rouge">null</code> (und optional Leerstrings) ablehnen, bevor er den Wert übernimmt.</p>
-
 <blockquote>
-  <p><strong>Hinweis:</strong> Prüfe zuerst, übernimm dann. So bleibt bei ungültiger Eingabe der alte, gültige Wert erhalten.</p>
+  <p><strong>Hinweis:</strong> Nach dem Ändern der Build-Datei muss das Projekt neu synchronisiert/gebaut werden, damit die IDE die Bibliothek kennt.</p>
 </blockquote>
+
+<h3 id="die-bibliothek-verwenden">Die Bibliothek verwenden</h3>
+
+<p>Nutze eine Methode der Bibliothek an einer sinnvollen Stelle (z. B. <code class="language-plaintext highlighter-rouge">StringUtils.isBlank(...)</code> bei der Kunden-Validierung).</p>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Welche Zusicherung gibst Du dem Rest des Programms, wenn der Konstruktor keine ungültigen Objekte zulässt?</li>
-  <li>Warum ist ein fehlender Setter manchmal die bessere Entwurfsentscheidung als ein vorhandener?</li>
-  <li>Was spricht dafür, die Validierung in der Klasse statt in jedem Aufrufer zu wiederholen?</li>
+  <li>Warum ist es besser, Abhängigkeiten zu deklarieren, statt <code class="language-plaintext highlighter-rouge">.jar</code>-Dateien manuell abzulegen?</li>
+  <li>Was gehört in die Versionsverwaltung — die Bibliotheken selbst oder die Build-Beschreibung?</li>
+  <li>Was könnte passieren, wenn zwei Bibliotheken unterschiedliche Versionen derselben Abhängigkeit verlangen?</li>
 </ul>
-<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Kapselung und Validierung durchsetzen
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Das Projekt bauen und eine Bibliothek einbinden
 
-Als Entwickler:in möchte ich, dass Kunde und Konto niemals in einen ungültigen Zustand geraten, damit ich mich im restlichen Programm auf gültige Objekte verlassen kann.
+Als Entwickler:in möchte ich Abhängigkeiten deklarativ verwalten, damit mein Build reproduzierbar ist und ich fremde Bibliotheken ohne manuelles Kopieren nutzen kann.
 
 ## Lernziele
 
 Die Lernenden…
 
-* deklarieren Felder `private` und steuern den Zugriff über Getter/Setter.
-* validieren Eingaben in Konstruktor und Settern und lehnen ungültige Werte ab.
-* begründen, welche Prüfungen in die Klasse gehören.
+* bauen das Projekt mit dem Build-Werkzeug (Gradle/Maven) reproduzierbar.
+* deklarieren eine externe Abhängigkeit in der Build-Datei.
+* nutzen eine Klasse der eingebundenen Bibliothek im eigenen Code.
 
 ## Definition of Done
 
-* [ ] Alle Felder von `Customer` und `Account` sind `private`.
-* [ ] Der Konstruktor lehnt `null`-Werte für Pflichtfelder ab.
-* [ ] `setName` (o. ä.) verhindert `null` bzw. leere Werte.
-* [ ] Der Kontostand kann nicht direkt von außen gesetzt werden (kein öffentlicher Setter dafür).
+* [ ] Das Projekt baut mit einem einzigen Build-Befehl.
+* [ ] In der Build-Datei (`build.gradle`/`pom.xml`) ist eine neue Abhängigkeit deklariert.
+* [ ] Eine Klasse der Bibliothek wird im Code verwendet und das Programm läuft.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
 ## Arbeitsschritte
 
-### Felder privat machen
+### Das Projekt bauen
 
-Stelle sicher, dass alle Felder `private` sind. Biete nur dort Getter/Setter an, wo Zugriff wirklich nötig ist.
+Baue das Banking-Projekt und stelle sicher, dass der Build grün ist.
 
-&gt; **Hinweis:** Nicht jedes Feld braucht einen Setter. Der Kontostand ändert sich nur über Ein-/Auszahlungen — nicht über einen freien Setter.
+```bash
+./gradlew build
+```
 
-### Pflichtfelder im Konstruktor prüfen
+### Eine Abhängigkeit deklarieren
 
-Wirf eine Ausnahme, wenn ein Pflichtwert fehlt, sodass gar kein ungültiges Objekt entstehen kann.
+Ergänze in der Build-Datei eine kleine, nützliche Bibliothek (z. B. Apache Commons Lang) im `dependencies`-Block.
 
-```java
-public Customer(String name, String city) {
-  this.name = Objects.requireNonNull(name, &quot;name darf nicht null sein&quot;);
-  this.city = Objects.requireNonNull(city, &quot;city darf nicht null sein&quot;);
-  this.id = UUID.randomUUID();
+```groovy
+dependencies {
+    implementation &apos;org.apache.commons:commons-lang3:3.14.0&apos;
 }
 ```
 
-### Setter validieren
+&gt; **Hinweis:** Nach dem Ändern der Build-Datei muss das Projekt neu synchronisiert/gebaut werden, damit die IDE die Bibliothek kennt.
 
-Lass den Setter für den Namen `null` (und optional Leerstrings) ablehnen, bevor er den Wert übernimmt.
+### Die Bibliothek verwenden
 
-&gt; **Hinweis:** Prüfe zuerst, übernimm dann. So bleibt bei ungültiger Eingabe der alte, gültige Wert erhalten.
+Nutze eine Methode der Bibliothek an einer sinnvollen Stelle (z. B. `StringUtils.isBlank(...)` bei der Kunden-Validierung).
 
 ## Reflexionsfragen
 
-* Welche Zusicherung gibst Du dem Rest des Programms, wenn der Konstruktor keine ungültigen Objekte zulässt?
-* Warum ist ein fehlender Setter manchmal die bessere Entwurfsentscheidung als ein vorhandener?
-* Was spricht dafür, die Validierung in der Klasse statt in jedem Aufrufer zu wiederholen?</textarea>
+* Warum ist es besser, Abhängigkeiten zu deklarieren, statt `.jar`-Dateien manuell abzulegen?
+* Was gehört in die Versionsverwaltung — die Bibliotheken selbst oder die Build-Beschreibung?
+* Was könnte passieren, wenn zwei Bibliotheken unterschiedliche Versionen derselben Abhängigkeit verlangen?</textarea>
     </main>
 
     <aside class="avd-academy-guide-sidebar">

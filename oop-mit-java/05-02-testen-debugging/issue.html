@@ -41,7 +41,7 @@
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java-Grundlagen (ATVANTAGE Academy)</title>
-<meta name="description" content="Schütze den Zustand von Kunde und Konto durch Kapselung und Validierung."><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="description" content="Sichere das Verhalten eines Kontos mit JUnit-Tests ab und finde einen Fehler mit dem Debugger."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/atvantage/styles.css?v=1786455592"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/tokens.css?v=1786455592">
 <link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/base.css?v=1786455592">
@@ -73,129 +73,131 @@
             aria-label="Farbschema umschalten">◐</button>
   </nav>
 </header>
-<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-grundlagen/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Kapselung und Validierung durchsetzen</span></nav>
+<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-grundlagen/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Das Konto mit JUnit testen</span></nav>
     <div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 90 Minuten</span><span class="avd-academy-tag">Kapselung</span><span class="avd-academy-tag">Banking</span>
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 90 Minuten</span><span class="avd-academy-tag">Testen</span><span class="avd-academy-tag">Debugging</span><span class="avd-academy-tag">Banking</span>
       </div>
       <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
               data-avd-academy-copy-md="#avd-academy-md-source"
               title="Markdown kopieren" aria-label="Markdown kopieren"></button>
-    </div><h1>Kapselung und Validierung durchsetzen</h1>
+    </div><h1>Das Konto mit JUnit testen</h1>
   </section>
 
   <div class="avd-academy-guide-layout">
     <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
-      <h1 id="kapselung-und-validierung-durchsetzen">Kapselung und Validierung durchsetzen</h1>
+      <h1 id="das-konto-mit-junit-testen">Das Konto mit JUnit testen</h1>
 
-<p>Als Entwickler:in möchte ich, dass Kunde und Konto niemals in einen ungültigen Zustand geraten, damit ich mich im restlichen Programm auf gültige Objekte verlassen kann.</p>
+<p>Als Entwickler:in möchte ich das Verhalten von Ein- und Auszahlungen automatisiert absichern, damit ich Änderungen später ohne Angst vor Regressionen vornehmen kann.</p>
 
 <h2 id="lernziele">Lernziele</h2>
 
 <p>Die Lernenden…</p>
 
 <ul>
-  <li>deklarieren Felder <code class="language-plaintext highlighter-rouge">private</code> und steuern den Zugriff über Getter/Setter.</li>
-  <li>validieren Eingaben in Konstruktor und Settern und lehnen ungültige Werte ab.</li>
-  <li>begründen, welche Prüfungen in die Klasse gehören.</li>
+  <li>schreiben einen JUnit-Test für eine Domänenklasse und lassen ihn laufen.</li>
+  <li>formulieren Erwartungen als Assertions und interpretieren einen fehlschlagenden Test.</li>
+  <li>setzen einen Breakpoint und inspizieren Variablen im Debugger.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Alle Felder von <code class="language-plaintext highlighter-rouge">Customer</code> und <code class="language-plaintext highlighter-rouge">Account</code> sind <code class="language-plaintext highlighter-rouge">private</code>.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der Konstruktor lehnt <code class="language-plaintext highlighter-rouge">null</code>-Werte für Pflichtfelder ab.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">setName</code> (o. ä.) verhindert <code class="language-plaintext highlighter-rouge">null</code> bzw. leere Werte.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der Kontostand kann nicht direkt von außen gesetzt werden (kein öffentlicher Setter dafür).</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt eine Testklasse mit mindestens zwei Tests (z. B. erfolgreiche Einzahlung, abgelehnte Überziehung).</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Die Tests laufen grün.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast einen Test bewusst zum Fehlschlagen gebracht, die Meldung gelesen und wieder repariert.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast einen Breakpoint gesetzt und den Kontostand während der Ausführung inspiziert.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
 <h2 id="arbeitsschritte">Arbeitsschritte</h2>
 
-<h3 id="felder-privat-machen">Felder privat machen</h3>
+<h3 id="einen-ersten-test-schreiben">Einen ersten Test schreiben</h3>
 
-<p>Stelle sicher, dass alle Felder <code class="language-plaintext highlighter-rouge">private</code> sind. Biete nur dort Getter/Setter an, wo Zugriff wirklich nötig ist.</p>
+<p>Schreibe einen Test, der nach einer Einzahlung den erwarteten Kontostand prüft.</p>
 
-<blockquote>
-  <p><strong>Hinweis:</strong> Nicht jedes Feld braucht einen Setter. Der Kontostand ändert sich nur über Ein-/Auszahlungen — nicht über einen freien Setter.</p>
-</blockquote>
-
-<h3 id="pflichtfelder-im-konstruktor-prüfen">Pflichtfelder im Konstruktor prüfen</h3>
-
-<p>Wirf eine Ausnahme, wenn ein Pflichtwert fehlt, sodass gar kein ungültiges Objekt entstehen kann.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="nf">Customer</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nc">String</span> <span class="n">city</span><span class="o">)</span> <span class="o">{</span>
-  <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="nc">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="s">"name darf nicht null sein"</span><span class="o">);</span>
-  <span class="k">this</span><span class="o">.</span><span class="na">city</span> <span class="o">=</span> <span class="nc">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">city</span><span class="o">,</span> <span class="s">"city darf nicht null sein"</span><span class="o">);</span>
-  <span class="k">this</span><span class="o">.</span><span class="na">id</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">();</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Test</span>
+<span class="kt">void</span> <span class="nf">einzahlungErhoehtDenSaldo</span><span class="o">()</span> <span class="o">{</span>
+  <span class="nc">Account</span> <span class="n">account</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SavingsAccount</span><span class="o">(</span><span class="s">"DE..."</span><span class="o">,</span> <span class="n">alice</span><span class="o">);</span>
+  <span class="n">account</span><span class="o">.</span><span class="na">deposit</span><span class="o">(</span><span class="nc">Money</span><span class="o">.</span><span class="na">euro</span><span class="o">(</span><span class="mi">50</span><span class="o">));</span>
+  <span class="n">assertEquals</span><span class="o">(</span><span class="nc">Money</span><span class="o">.</span><span class="na">euro</span><span class="o">(</span><span class="mi">50</span><span class="o">),</span> <span class="n">account</span><span class="o">.</span><span class="na">getBalance</span><span class="o">());</span>
 <span class="o">}</span>
 </code></pre></div></div>
 
-<h3 id="setter-validieren">Setter validieren</h3>
+<blockquote>
+  <p><strong>Hinweis:</strong> Ein Test folgt dem Muster <em>Arrange – Act – Assert</em>: Objekt aufbauen, Aktion ausführen, Erwartung prüfen.</p>
+</blockquote>
 
-<p>Lass den Setter für den Namen <code class="language-plaintext highlighter-rouge">null</code> (und optional Leerstrings) ablehnen, bevor er den Wert übernimmt.</p>
+<h3 id="einen-fehlerfall-testen">Einen Fehlerfall testen</h3>
+
+<p>Prüfe, dass eine unzulässige Abhebung die erwartete Ausnahme wirft.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Prüfe zuerst, übernimm dann. So bleibt bei ungültiger Eingabe der alte, gültige Wert erhalten.</p>
+  <p><strong>Hinweis:</strong> Für erwartete Ausnahmen eignet sich <code class="language-plaintext highlighter-rouge">assertThrows(InsufficientFundsException.class, () -&gt; account.withdraw(...))</code>.</p>
 </blockquote>
+
+<h3 id="mit-dem-debugger-nachsehen">Mit dem Debugger nachsehen</h3>
+
+<p>Setze im <code class="language-plaintext highlighter-rouge">withdraw</code>-Pfad einen Breakpoint und verfolge, wie sich der Saldo verändert.</p>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Welche Zusicherung gibst Du dem Rest des Programms, wenn der Konstruktor keine ungültigen Objekte zulässt?</li>
-  <li>Warum ist ein fehlender Setter manchmal die bessere Entwurfsentscheidung als ein vorhandener?</li>
-  <li>Was spricht dafür, die Validierung in der Klasse statt in jedem Aufrufer zu wiederholen?</li>
+  <li>Was sagt Dir ein grüner Test — und was ausdrücklich nicht?</li>
+  <li>Warum ist ein automatisierter Test wertvoller als eine einmalige <code class="language-plaintext highlighter-rouge">println</code>-Kontrolle?</li>
+  <li>Wann bringt Dich der Debugger schneller ans Ziel als zusätzliche Ausgaben?</li>
 </ul>
-<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Kapselung und Validierung durchsetzen
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Das Konto mit JUnit testen
 
-Als Entwickler:in möchte ich, dass Kunde und Konto niemals in einen ungültigen Zustand geraten, damit ich mich im restlichen Programm auf gültige Objekte verlassen kann.
+Als Entwickler:in möchte ich das Verhalten von Ein- und Auszahlungen automatisiert absichern, damit ich Änderungen später ohne Angst vor Regressionen vornehmen kann.
 
 ## Lernziele
 
 Die Lernenden…
 
-* deklarieren Felder `private` und steuern den Zugriff über Getter/Setter.
-* validieren Eingaben in Konstruktor und Settern und lehnen ungültige Werte ab.
-* begründen, welche Prüfungen in die Klasse gehören.
+* schreiben einen JUnit-Test für eine Domänenklasse und lassen ihn laufen.
+* formulieren Erwartungen als Assertions und interpretieren einen fehlschlagenden Test.
+* setzen einen Breakpoint und inspizieren Variablen im Debugger.
 
 ## Definition of Done
 
-* [ ] Alle Felder von `Customer` und `Account` sind `private`.
-* [ ] Der Konstruktor lehnt `null`-Werte für Pflichtfelder ab.
-* [ ] `setName` (o. ä.) verhindert `null` bzw. leere Werte.
-* [ ] Der Kontostand kann nicht direkt von außen gesetzt werden (kein öffentlicher Setter dafür).
+* [ ] Es gibt eine Testklasse mit mindestens zwei Tests (z. B. erfolgreiche Einzahlung, abgelehnte Überziehung).
+* [ ] Die Tests laufen grün.
+* [ ] Du hast einen Test bewusst zum Fehlschlagen gebracht, die Meldung gelesen und wieder repariert.
+* [ ] Du hast einen Breakpoint gesetzt und den Kontostand während der Ausführung inspiziert.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
 ## Arbeitsschritte
 
-### Felder privat machen
+### Einen ersten Test schreiben
 
-Stelle sicher, dass alle Felder `private` sind. Biete nur dort Getter/Setter an, wo Zugriff wirklich nötig ist.
-
-&gt; **Hinweis:** Nicht jedes Feld braucht einen Setter. Der Kontostand ändert sich nur über Ein-/Auszahlungen — nicht über einen freien Setter.
-
-### Pflichtfelder im Konstruktor prüfen
-
-Wirf eine Ausnahme, wenn ein Pflichtwert fehlt, sodass gar kein ungültiges Objekt entstehen kann.
+Schreibe einen Test, der nach einer Einzahlung den erwarteten Kontostand prüft.
 
 ```java
-public Customer(String name, String city) {
-  this.name = Objects.requireNonNull(name, &quot;name darf nicht null sein&quot;);
-  this.city = Objects.requireNonNull(city, &quot;city darf nicht null sein&quot;);
-  this.id = UUID.randomUUID();
+@Test
+void einzahlungErhoehtDenSaldo() {
+  Account account = new SavingsAccount(&quot;DE...&quot;, alice);
+  account.deposit(Money.euro(50));
+  assertEquals(Money.euro(50), account.getBalance());
 }
 ```
 
-### Setter validieren
+&gt; **Hinweis:** Ein Test folgt dem Muster *Arrange – Act – Assert*: Objekt aufbauen, Aktion ausführen, Erwartung prüfen.
 
-Lass den Setter für den Namen `null` (und optional Leerstrings) ablehnen, bevor er den Wert übernimmt.
+### Einen Fehlerfall testen
 
-&gt; **Hinweis:** Prüfe zuerst, übernimm dann. So bleibt bei ungültiger Eingabe der alte, gültige Wert erhalten.
+Prüfe, dass eine unzulässige Abhebung die erwartete Ausnahme wirft.
+
+&gt; **Hinweis:** Für erwartete Ausnahmen eignet sich `assertThrows(InsufficientFundsException.class, () -&gt; account.withdraw(...))`.
+
+### Mit dem Debugger nachsehen
+
+Setze im `withdraw`-Pfad einen Breakpoint und verfolge, wie sich der Saldo verändert.
 
 ## Reflexionsfragen
 
-* Welche Zusicherung gibst Du dem Rest des Programms, wenn der Konstruktor keine ungültigen Objekte zulässt?
-* Warum ist ein fehlender Setter manchmal die bessere Entwurfsentscheidung als ein vorhandener?
-* Was spricht dafür, die Validierung in der Klasse statt in jedem Aufrufer zu wiederholen?</textarea>
+* Was sagt Dir ein grüner Test — und was ausdrücklich nicht?
+* Warum ist ein automatisierter Test wertvoller als eine einmalige `println`-Kontrolle?
+* Wann bringt Dich der Debugger schneller ans Ziel als zusätzliche Ausgaben?</textarea>
     </main>
 
     <aside class="avd-academy-guide-sidebar">

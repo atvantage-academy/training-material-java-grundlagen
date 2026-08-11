@@ -41,7 +41,7 @@
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java-Grundlagen (ATVANTAGE Academy)</title>
-<meta name="description" content="Schütze den Zustand von Kunde und Konto durch Kapselung und Validierung."><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="description" content="Erweitere das Banking-System um eine eigene Funktion und kombiniere die Konzepte der Woche."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/atvantage/styles.css?v=1786455592"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/tokens.css?v=1786455592">
 <link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/base.css?v=1786455592">
@@ -73,129 +73,106 @@
             aria-label="Farbschema umschalten">◐</button>
   </nav>
 </header>
-<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-grundlagen/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Kapselung und Validierung durchsetzen</span></nav>
+<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-grundlagen/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Das Banking-System um eine Funktion erweitern</span></nav>
     <div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 90 Minuten</span><span class="avd-academy-tag">Kapselung</span><span class="avd-academy-tag">Banking</span>
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 180 Minuten</span><span class="avd-academy-tag">Integrationsprojekt</span><span class="avd-academy-tag">Banking</span>
       </div>
       <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
               data-avd-academy-copy-md="#avd-academy-md-source"
               title="Markdown kopieren" aria-label="Markdown kopieren"></button>
-    </div><h1>Kapselung und Validierung durchsetzen</h1>
+    </div><h1>Das Banking-System um eine Funktion erweitern</h1>
   </section>
 
   <div class="avd-academy-guide-layout">
     <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
-      <h1 id="kapselung-und-validierung-durchsetzen">Kapselung und Validierung durchsetzen</h1>
+      <h1 id="das-banking-system-um-eine-funktion-erweitern">Das Banking-System um eine Funktion erweitern</h1>
 
-<p>Als Entwickler:in möchte ich, dass Kunde und Konto niemals in einen ungültigen Zustand geraten, damit ich mich im restlichen Programm auf gültige Objekte verlassen kann.</p>
+<p>Als Entwickler:in möchte ich eine sinnvolle Funktion zum Banking-System hinzufügen, damit ich die Konzepte der Woche in einem zusammenhängenden Stück Software anwende.</p>
 
 <h2 id="lernziele">Lernziele</h2>
 
 <p>Die Lernenden…</p>
 
 <ul>
-  <li>deklarieren Felder <code class="language-plaintext highlighter-rouge">private</code> und steuern den Zugriff über Getter/Setter.</li>
-  <li>validieren Eingaben in Konstruktor und Settern und lehnen ungültige Werte ab.</li>
-  <li>begründen, welche Prüfungen in die Klasse gehören.</li>
+  <li>erweitern das Banking-System um eine eigene Funktion und kombinieren dabei Klassen, Vererbung, Ausnahmen und Collections.</li>
+  <li>begründen ihre Entwurfsentscheidungen (Verantwortlichkeiten, Sichtbarkeiten) gegenüber anderen.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Alle Felder von <code class="language-plaintext highlighter-rouge">Customer</code> und <code class="language-plaintext highlighter-rouge">Account</code> sind <code class="language-plaintext highlighter-rouge">private</code>.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der Konstruktor lehnt <code class="language-plaintext highlighter-rouge">null</code>-Werte für Pflichtfelder ab.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">setName</code> (o. ä.) verhindert <code class="language-plaintext highlighter-rouge">null</code> bzw. leere Werte.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der Kontostand kann nicht direkt von außen gesetzt werden (kein öffentlicher Setter dafür).</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Eine selbst gewählte Funktion ist umgesetzt und lauffähig.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Die Lösung nutzt mindestens drei Konzepte der Woche (z. B. eigene Klasse, Vererbung/Polymorphie, Ausnahme, Collection).</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Mindestens ein zentraler Teil ist mit einem JUnit-Test abgesichert.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du kannst Deine Entwurfsentscheidungen in 2–3 Sätzen begründen.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
 <h2 id="arbeitsschritte">Arbeitsschritte</h2>
 
-<h3 id="felder-privat-machen">Felder privat machen</h3>
+<h3 id="eine-funktion-auswählen">Eine Funktion auswählen</h3>
 
-<p>Stelle sicher, dass alle Felder <code class="language-plaintext highlighter-rouge">private</code> sind. Biete nur dort Getter/Setter an, wo Zugriff wirklich nötig ist.</p>
-
-<blockquote>
-  <p><strong>Hinweis:</strong> Nicht jedes Feld braucht einen Setter. Der Kontostand ändert sich nur über Ein-/Auszahlungen — nicht über einen freien Setter.</p>
-</blockquote>
-
-<h3 id="pflichtfelder-im-konstruktor-prüfen">Pflichtfelder im Konstruktor prüfen</h3>
-
-<p>Wirf eine Ausnahme, wenn ein Pflichtwert fehlt, sodass gar kein ungültiges Objekt entstehen kann.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="nf">Customer</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nc">String</span> <span class="n">city</span><span class="o">)</span> <span class="o">{</span>
-  <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="nc">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="s">"name darf nicht null sein"</span><span class="o">);</span>
-  <span class="k">this</span><span class="o">.</span><span class="na">city</span> <span class="o">=</span> <span class="nc">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">city</span><span class="o">,</span> <span class="s">"city darf nicht null sein"</span><span class="o">);</span>
-  <span class="k">this</span><span class="o">.</span><span class="na">id</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">();</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<h3 id="setter-validieren">Setter validieren</h3>
-
-<p>Lass den Setter für den Namen <code class="language-plaintext highlighter-rouge">null</code> (und optional Leerstrings) ablehnen, bevor er den Wert übernimmt.</p>
+<p>Wähle eine Erweiterung, die Dich reizt — zum Beispiel:</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Prüfe zuerst, übernimm dann. So bleibt bei ungültiger Eingabe der alte, gültige Wert erhalten.</p>
+  <p><strong>Hinweis:</strong> Beispiele: Zinsberechnung für Sparkonten, ein einfacher Kontoauszug (Liste der Transaktionen), Kundensuche nach Namen, Überweisung zwischen zwei Konten.</p>
 </blockquote>
+
+<h3 id="umsetzen">Umsetzen</h3>
+
+<p>Implementiere die Funktion in passenden Klassen. Achte auf Kapselung und klare Verantwortlichkeiten; wirf bei Fehlerfällen eine passende Ausnahme.</p>
+
+<h3 id="absichern-und-zeigen">Absichern und zeigen</h3>
+
+<p>Schreibe mindestens einen JUnit-Test für den Kern Deiner Funktion und bereite eine kurze Demo (2–3 Minuten) vor.</p>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Welche Zusicherung gibst Du dem Rest des Programms, wenn der Konstruktor keine ungültigen Objekte zulässt?</li>
-  <li>Warum ist ein fehlender Setter manchmal die bessere Entwurfsentscheidung als ein vorhandener?</li>
-  <li>Was spricht dafür, die Validierung in der Klasse statt in jedem Aufrufer zu wiederholen?</li>
+  <li>Welche Konzepte der Woche hast Du genutzt — und warum gerade diese?</li>
+  <li>An welcher Stelle war die Entscheidung „Vererbung vs. eigenes Feld” oder „Ausnahme vs. Rückgabewert” relevant?</li>
+  <li>Was würdest Du mit mehr Zeit refaktorieren — und woran erkennst Du das?</li>
 </ul>
-<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Kapselung und Validierung durchsetzen
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Das Banking-System um eine Funktion erweitern
 
-Als Entwickler:in möchte ich, dass Kunde und Konto niemals in einen ungültigen Zustand geraten, damit ich mich im restlichen Programm auf gültige Objekte verlassen kann.
+Als Entwickler:in möchte ich eine sinnvolle Funktion zum Banking-System hinzufügen, damit ich die Konzepte der Woche in einem zusammenhängenden Stück Software anwende.
 
 ## Lernziele
 
 Die Lernenden…
 
-* deklarieren Felder `private` und steuern den Zugriff über Getter/Setter.
-* validieren Eingaben in Konstruktor und Settern und lehnen ungültige Werte ab.
-* begründen, welche Prüfungen in die Klasse gehören.
+* erweitern das Banking-System um eine eigene Funktion und kombinieren dabei Klassen, Vererbung, Ausnahmen und Collections.
+* begründen ihre Entwurfsentscheidungen (Verantwortlichkeiten, Sichtbarkeiten) gegenüber anderen.
 
 ## Definition of Done
 
-* [ ] Alle Felder von `Customer` und `Account` sind `private`.
-* [ ] Der Konstruktor lehnt `null`-Werte für Pflichtfelder ab.
-* [ ] `setName` (o. ä.) verhindert `null` bzw. leere Werte.
-* [ ] Der Kontostand kann nicht direkt von außen gesetzt werden (kein öffentlicher Setter dafür).
+* [ ] Eine selbst gewählte Funktion ist umgesetzt und lauffähig.
+* [ ] Die Lösung nutzt mindestens drei Konzepte der Woche (z. B. eigene Klasse, Vererbung/Polymorphie, Ausnahme, Collection).
+* [ ] Mindestens ein zentraler Teil ist mit einem JUnit-Test abgesichert.
+* [ ] Du kannst Deine Entwurfsentscheidungen in 2–3 Sätzen begründen.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
 ## Arbeitsschritte
 
-### Felder privat machen
+### Eine Funktion auswählen
 
-Stelle sicher, dass alle Felder `private` sind. Biete nur dort Getter/Setter an, wo Zugriff wirklich nötig ist.
+Wähle eine Erweiterung, die Dich reizt — zum Beispiel:
 
-&gt; **Hinweis:** Nicht jedes Feld braucht einen Setter. Der Kontostand ändert sich nur über Ein-/Auszahlungen — nicht über einen freien Setter.
+&gt; **Hinweis:** Beispiele: Zinsberechnung für Sparkonten, ein einfacher Kontoauszug (Liste der Transaktionen), Kundensuche nach Namen, Überweisung zwischen zwei Konten.
 
-### Pflichtfelder im Konstruktor prüfen
+### Umsetzen
 
-Wirf eine Ausnahme, wenn ein Pflichtwert fehlt, sodass gar kein ungültiges Objekt entstehen kann.
+Implementiere die Funktion in passenden Klassen. Achte auf Kapselung und klare Verantwortlichkeiten; wirf bei Fehlerfällen eine passende Ausnahme.
 
-```java
-public Customer(String name, String city) {
-  this.name = Objects.requireNonNull(name, &quot;name darf nicht null sein&quot;);
-  this.city = Objects.requireNonNull(city, &quot;city darf nicht null sein&quot;);
-  this.id = UUID.randomUUID();
-}
-```
+### Absichern und zeigen
 
-### Setter validieren
-
-Lass den Setter für den Namen `null` (und optional Leerstrings) ablehnen, bevor er den Wert übernimmt.
-
-&gt; **Hinweis:** Prüfe zuerst, übernimm dann. So bleibt bei ungültiger Eingabe der alte, gültige Wert erhalten.
+Schreibe mindestens einen JUnit-Test für den Kern Deiner Funktion und bereite eine kurze Demo (2–3 Minuten) vor.
 
 ## Reflexionsfragen
 
-* Welche Zusicherung gibst Du dem Rest des Programms, wenn der Konstruktor keine ungültigen Objekte zulässt?
-* Warum ist ein fehlender Setter manchmal die bessere Entwurfsentscheidung als ein vorhandener?
-* Was spricht dafür, die Validierung in der Klasse statt in jedem Aufrufer zu wiederholen?</textarea>
+* Welche Konzepte der Woche hast Du genutzt — und warum gerade diese?
+* An welcher Stelle war die Entscheidung „Vererbung vs. eigenes Feld&quot; oder „Ausnahme vs. Rückgabewert&quot; relevant?
+* Was würdest Du mit mehr Zeit refaktorieren — und woran erkennst Du das?</textarea>
     </main>
 
     <aside class="avd-academy-guide-sidebar">
