@@ -36,15 +36,15 @@
 <title> · Java-Grundlagen (ATVANTAGE Academy)</title>
 <meta name="description" content="Schulungskonzepte der ATVANTAGE Academy."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/atvantage/styles.css?v=1786368250"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/tokens.css?v=1786368250">
-<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/base.css?v=1786368250">
-<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/components.css?v=1786368250">
-<link rel="stylesheet" href="/training-material-java-grundlagen/theme/jekyll/site.css?v=1786368250"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/print.css?v=1786368250">
-<script src="/training-material-java-grundlagen/theme/academy/atvantage.js?v=1786368250" defer></script>
-<script src="/training-material-java-grundlagen/theme/jekyll/site.js?v=1786368250" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/atvantage/styles.css?v=1786422526"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/tokens.css?v=1786422526">
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/base.css?v=1786422526">
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/components.css?v=1786422526">
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/jekyll/site.css?v=1786422526"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/print.css?v=1786422526">
+<script src="/training-material-java-grundlagen/theme/academy/atvantage.js?v=1786422526" defer></script>
+<script src="/training-material-java-grundlagen/theme/jekyll/site.js?v=1786422526" defer></script>
 <link rel="icon" href="/training-material-java-grundlagen/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/guide.css?v=1786368250">
+  <link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/guide.css?v=1786422526">
 </head>
 <body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
@@ -100,22 +100,46 @@ durch Kacheln je Schulung (avd-academy-card im avd-academy-grid, Link auf …/is
 
 {% else %}
 
-Dieses Repository bündelt die **Schulungskonzepte** der ATVANTAGE Academy.
+Dieses Repository bündelt die **Schulungskonzepte** der ATVANTAGE Academy zum
+Themenbereich Java-Grundlagen.
 
 ## Allgemeines
 
 - [Didaktisches Manifest](shared/didaktisches-manifest.html)
 
-## Konzepte
+## Konzepte im Überblick
 
-&gt; In diesem Repository existiert **noch kein Schulungskonzept**. Lege eines mit dem
-&gt; Skill `didaktikon:konzept-erstellen` an — in Claude Code z. B.:
-&gt; „Lege ein Konzept an für ein Training zum Thema …&quot;.
+Die folgenden Kurskonzepte sind **geplant** (noch nicht als Unterlagen
+ausgearbeitet). Sie unterscheiden sich vor allem in den **Vorkenntnissen** der
+Teilnehmenden. Die Tabelle vergleicht ihre groben didaktischen Lernziele — je
+Spalte ein Konzept:
+
+| Lernziel / Merkmal                                                           | Kompletteinsteiger | OOP-Einsteiger                                       | Java-Aufbau                            | C#-Umsteiger                           | Java-Update           |
+|------------------------------------------------------------------------------|--------------------|------------------------------------------------------|----------------------------------------|----------------------------------------|-----------------------|
+| **Vorkenntnisse**                                                            | keine              | prozedurale Programmierung (COBOL, PL/I …), keine OO | Java-Grundlagen (z. B. OOP-Einsteiger) | OOP in anderer Sprache (z. B. C#/.NET) | Java 8 (OO + Lambdas) |
+| **Dauer (ca.)**                                                              | 8 Tage (3 + 5)     | 5 Tage                                               | 3–5 Tage                               | 3 Tage                                 | 2 Tage                |
+| **Programmier-Grundlagen** (Variablen, Kontrollfluss, Methoden, Algorithmen) | 🎯                  | 🎓                                                    | 🎓                                      | 🎓                                      | 🎓                     |
+| **OO-Grundlagen** (Klassen, Objekte, Kapselung)                              | 🎯                  | 🎯                                                    | 🎓                                      | 🎓                                      | 🎓                     |
+| **Vererbung, Polymorphie, Interfaces**                                       | ✅                 | ✅                                                   | ✅                                     | 🌗                                      | 🎓                     |
+| **Java-Sprache &amp; -Syntax** (Java-Spezifika)                                  | ✅                 | ✅                                                   | ✅                                     | 🎯                                      | 🌗                     |
+| **Java-Ökosystem** (JVM, IDE, Maven/Gradle, Bibliotheken)                    | 🌗                  | ✅                                                   | ✅                                     | 🎯                                      | 🌗                     |
+| **Collections, Generics, Exceptions**                                        | 🌗                  | ✅                                                   | ✅                                     | ✅                                     | 🌗                     |
+| **Funktionale Programmierung** (Lambdas, Streams)                            | ➖                  | ➖                                                    | 🎯                                      | ✅                                     | 🌗                     |
+| **Moderne Sprachfeatures** (Records, Sealed, Pattern Matching, `var`)        | ➖                  | ➖                                                    | ✅                                     | 🌗                                      | 🎯                     |
+| **Modulsystem (JPMS) &amp; Java-9+-Neuerungen**                                  | ➖                  | ➖                                                    | 🌗                                      | ➖                                      | 🎯                     |
+
+**Legende:** 🎯 Schwerpunkt · ✅ behandelt · 🌗 kompakt / im Überblick · 🎓 vorausgesetzt · ➖ nicht enthalten
+
+Ablesbar z. B.: Die Grundlagenkurse (Komplett- und OOP-Einsteiger) führen
+**Lambdas/Streams** zunächst nicht ein, während der **C#-Umsteiger** sie direkt
+mitnimmt — dort müssen keine OO-Grundlagen vermittelt werden, sodass Zeit für
+funktionale Konzepte bleibt. Der **Kompletteinsteiger**-Kurs stellt den fünf
+OO/Java-Tagen drei Tage reine Programmier-Grundlagen (Schleifen, Variablen,
+Algorithmen, Funktionen) voran.
 
 {%- comment -%}
-Leerer Zustand: KEINE Platzhalter-Links (die würden 404en). Sobald ein Konzept
-existiert, ersetzt der Skill konzept-erstellen diesen Hinweis durch die Konzept-Links
-(je Konzept ein Listeneintrag auf /«konzept»/).
+Sobald ein Konzept mit dem Skill `didaktikon:konzept-erstellen` ausgearbeitet ist,
+je Konzept einen Link ergänzen (auf /«konzept»/).
 {%- endcomment -%}
 
 {% endif %}</textarea>
