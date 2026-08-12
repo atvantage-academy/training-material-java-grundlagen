@@ -40,8 +40,8 @@
 <head>
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Java-Grundlagen (ATVANTAGE Academy)</title>
-<meta name="description" content="Baue das Banking-Projekt reproduzierbar und binde eine externe Bibliothek ein."><link rel="preconnect" href="https://fonts.googleapis.com">
+<title>Visualisierungen · Java-Grundlagen (ATVANTAGE Academy)</title>
+<meta name="description" content="Interaktive Grafiken zur Veranschaulichung von Schulungsinhalten."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/atvantage/styles.css?v=1786544339"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/tokens.css?v=1786544339">
 <link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/base.css?v=1786544339">
@@ -68,129 +68,49 @@
   </a>
   <button class="avd-academy-btn avd-academy-btn--ghost avd-academy-header__burger" data-avd-academy-nav-toggle="#avd-academy-main-nav"
           aria-label="Navigation umschalten" aria-expanded="false">☰</button>
-  <nav class="avd-academy-header__nav" id="avd-academy-main-nav"><a href="/training-material-java-grundlagen/">Start</a><a href="/training-material-java-grundlagen/oop-mit-java/">Objektorientierte Programmierung mit Java</a><a href="/training-material-java-grundlagen/shared/visualisierungen/">Visualisierungen</a>
+  <nav class="avd-academy-header__nav" id="avd-academy-main-nav"><a href="/training-material-java-grundlagen/">Start</a><a href="/training-material-java-grundlagen/oop-mit-java/">Objektorientierte Programmierung mit Java</a><a href="/training-material-java-grundlagen/shared/visualisierungen/" aria-current="page">Visualisierungen</a>
     <button class="avd-academy-btn avd-academy-btn--ghost" data-avd-academy-theme-toggle
             aria-label="Farbschema umschalten">◐</button>
   </nav>
 </header>
-<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-grundlagen/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Das Projekt bauen und eine Bibliothek einbinden</span></nav>
+<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><span aria-current="page">Visualisierungen</span></nav>
     <div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 60 Minuten</span><span class="avd-academy-tag">Build & Ökosystem</span><span class="avd-academy-tag">Banking</span>
+      <div class="avd-academy-guide-hero__tags">
       </div>
       <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
               data-avd-academy-copy-md="#avd-academy-md-source"
               title="Markdown kopieren" aria-label="Markdown kopieren"></button>
-    </div><h1>Das Projekt bauen und eine Bibliothek einbinden</h1>
+    </div><h1>Visualisierungen</h1>
   </section>
 
   <div class="avd-academy-guide-layout">
-    <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
-      <h1 id="das-projekt-bauen-und-eine-bibliothek-einbinden">Das Projekt bauen und eine Bibliothek einbinden</h1>
+    <main class="avd-academy-guide-main" id="avd-academy-content">
+      <h1 id="visualisierungen">Visualisierungen</h1>
 
-<p>Als Entwickler:in möchte ich Abhängigkeiten deklarativ verwalten, damit mein Build reproduzierbar ist und ich fremde Bibliotheken ohne manuelles Kopieren nutzen kann.</p>
+<p>Interaktive Grafiken, die zentrale Zusammenhänge veranschaulichen. Du kannst sie am
+Bildschirm erkunden und über „Als PDF drucken“ als Handout ausgeben.</p>
 
-<h2 id="lernziele">Lernziele</h2>
+<div class="avd-academy-grid">
 
-<p>Die Lernenden…</p>
+  <div class="avd-academy-card">
+    <h3 id="java-lts-evolution"><a href="/training-material-java-grundlagen/shared/visualisierungen/java-lts-evolution.html">Java-LTS-Evolution</a></h3>
+    <p>Eine Zeitleiste der Java-Versionen von 1.0 bis 25: Wann erschien welche Version, welche sind Long-Term-Support-Releases (LTS), und welche wichtigen Sprach- und API-Features kamen jeweils dazu? Klicke eine Version an, um ihre Kern-Features mit kurzen Code-Beispielen zu sehen.</p>
+  </div>
 
-<ul>
-  <li>bauen das Projekt mit dem Build-Werkzeug (Gradle/Maven) reproduzierbar.</li>
-  <li>deklarieren eine externe Abhängigkeit in der Build-Datei.</li>
-  <li>nutzen eine Klasse der eingebundenen Bibliothek im eigenen Code.</li>
-</ul>
+</div>
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Visualisierungen
 
-<h2 id="definition-of-done">Definition of Done</h2>
+Interaktive Grafiken, die zentrale Zusammenhänge veranschaulichen. Du kannst sie am
+Bildschirm erkunden und über „Als PDF drucken“ als Handout ausgeben.
 
-<ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Das Projekt baut mit einem einzigen Build-Befehl.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />In der Build-Datei (<code class="language-plaintext highlighter-rouge">build.gradle</code>/<code class="language-plaintext highlighter-rouge">pom.xml</code>) ist eine neue Abhängigkeit deklariert.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Eine Klasse der Bibliothek wird im Code verwendet und das Programm läuft.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
-</ul>
+&lt;div class=&quot;avd-academy-grid&quot; markdown=&quot;1&quot;&gt;
 
-<h2 id="arbeitsschritte">Arbeitsschritte</h2>
+&lt;div class=&quot;avd-academy-card&quot; markdown=&quot;1&quot;&gt;
+### [Java-LTS-Evolution](/training-material-java-grundlagen/shared/visualisierungen/java-lts-evolution.html)
+Eine Zeitleiste der Java-Versionen von 1.0 bis 25: Wann erschien welche Version, welche sind Long-Term-Support-Releases (LTS), und welche wichtigen Sprach- und API-Features kamen jeweils dazu? Klicke eine Version an, um ihre Kern-Features mit kurzen Code-Beispielen zu sehen.
+&lt;/div&gt;
 
-<h3 id="das-projekt-bauen">Das Projekt bauen</h3>
-
-<p>Baue das Banking-Projekt und stelle sicher, dass der Build grün ist.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./gradlew build
-</code></pre></div></div>
-
-<h3 id="eine-abhängigkeit-deklarieren">Eine Abhängigkeit deklarieren</h3>
-
-<p>Ergänze in der Build-Datei eine kleine, nützliche Bibliothek (z. B. Apache Commons Lang) im <code class="language-plaintext highlighter-rouge">dependencies</code>-Block.</p>
-
-<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dependencies</span> <span class="o">{</span>
-    <span class="n">implementation</span> <span class="s1">'org.apache.commons:commons-lang3:3.14.0'</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<blockquote>
-  <p><strong>Hinweis:</strong> Nach dem Ändern der Build-Datei muss das Projekt neu synchronisiert/gebaut werden, damit die IDE die Bibliothek kennt.</p>
-</blockquote>
-
-<h3 id="die-bibliothek-verwenden">Die Bibliothek verwenden</h3>
-
-<p>Nutze eine Methode der Bibliothek an einer sinnvollen Stelle (z. B. <code class="language-plaintext highlighter-rouge">StringUtils.isBlank(...)</code> bei der Kunden-Validierung).</p>
-
-<h2 id="reflexionsfragen">Reflexionsfragen</h2>
-
-<ul>
-  <li>Warum ist es besser, Abhängigkeiten zu deklarieren, statt <code class="language-plaintext highlighter-rouge">.jar</code>-Dateien manuell abzulegen?</li>
-  <li>Was gehört in die Versionsverwaltung — die Bibliotheken selbst oder die Build-Beschreibung?</li>
-  <li>Was könnte passieren, wenn zwei Bibliotheken unterschiedliche Versionen derselben Abhängigkeit verlangen?</li>
-</ul>
-<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Das Projekt bauen und eine Bibliothek einbinden
-
-Als Entwickler:in möchte ich Abhängigkeiten deklarativ verwalten, damit mein Build reproduzierbar ist und ich fremde Bibliotheken ohne manuelles Kopieren nutzen kann.
-
-## Lernziele
-
-Die Lernenden…
-
-* bauen das Projekt mit dem Build-Werkzeug (Gradle/Maven) reproduzierbar.
-* deklarieren eine externe Abhängigkeit in der Build-Datei.
-* nutzen eine Klasse der eingebundenen Bibliothek im eigenen Code.
-
-## Definition of Done
-
-* [ ] Das Projekt baut mit einem einzigen Build-Befehl.
-* [ ] In der Build-Datei (`build.gradle`/`pom.xml`) ist eine neue Abhängigkeit deklariert.
-* [ ] Eine Klasse der Bibliothek wird im Code verwendet und das Programm läuft.
-* [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
-
-## Arbeitsschritte
-
-### Das Projekt bauen
-
-Baue das Banking-Projekt und stelle sicher, dass der Build grün ist.
-
-```bash
-./gradlew build
-```
-
-### Eine Abhängigkeit deklarieren
-
-Ergänze in der Build-Datei eine kleine, nützliche Bibliothek (z. B. Apache Commons Lang) im `dependencies`-Block.
-
-```groovy
-dependencies {
-    implementation &apos;org.apache.commons:commons-lang3:3.14.0&apos;
-}
-```
-
-&gt; **Hinweis:** Nach dem Ändern der Build-Datei muss das Projekt neu synchronisiert/gebaut werden, damit die IDE die Bibliothek kennt.
-
-### Die Bibliothek verwenden
-
-Nutze eine Methode der Bibliothek an einer sinnvollen Stelle (z. B. `StringUtils.isBlank(...)` bei der Kunden-Validierung).
-
-## Reflexionsfragen
-
-* Warum ist es besser, Abhängigkeiten zu deklarieren, statt `.jar`-Dateien manuell abzulegen?
-* Was gehört in die Versionsverwaltung — die Bibliotheken selbst oder die Build-Beschreibung?
-* Was könnte passieren, wenn zwei Bibliotheken unterschiedliche Versionen derselben Abhängigkeit verlangen?</textarea>
+&lt;/div&gt;</textarea>
     </main>
 
     <aside class="avd-academy-guide-sidebar">
