@@ -75,6 +75,15 @@
   font-weight: var(--headline-weight, 600);
 }
 
+/* --- Visualisierung (layout: visualization) ------------------------------- */
+/* Fokussierte, ablenkungsarme Ansicht: keine obere Navigation, keine Brotkrumen
+   (im Layout ausgeblendet), schmalerer Hero-Balken. */
+.avd-academy-guide-hero--slim {
+  padding-top: 1.1rem;
+  padding-bottom: 1.1rem;
+}
+.avd-academy-guide-hero--slim h1 { font-size: var(--h1-base, 38px); }
+
 /* --- Tag-Pillen ----------------------------------------------------------- */
 .avd-academy-tag {
   display: inline-block;

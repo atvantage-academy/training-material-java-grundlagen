@@ -10,6 +10,10 @@
   Verwendung im Front Matter:  layout: default   (oder `layout: guide` — Alias,
   siehe guide.html; beides rendert dieselbe Guide-Ansicht)
 
+  `layout: visualization` (siehe visualization.html) rendert dieselbe Seite OHNE
+  obere Navigation (Meta-Leiste + Kopfzeile/TopNav) und OHNE Brotkrumen, mit einem
+  schmaleren Hero-Balken — für eigenständige Visualisierungen/Simulationen.
+
   Alle Front-Matter-Felder sind OPTIONAL (Convention over Configuration). Nur der
   Titel ist faktisch erforderlich — als `title:` ODER als erste `#`-Überschrift:
 
@@ -43,19 +47,16 @@
 <title>Java-Grundlagen (ATVANTAGE Academy)</title>
 <meta name="description" content="Ersetze doppelte Repository-Klassen durch ein typsicheres, generisches Repository."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/atvantage/styles.css?v=1786544339"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/tokens.css?v=1786544339">
-<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/base.css?v=1786544339">
-<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/components.css?v=1786544339">
-<link rel="stylesheet" href="/training-material-java-grundlagen/theme/jekyll/site.css?v=1786544339"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/print.css?v=1786544339">
-<script src="/training-material-java-grundlagen/theme/academy/atvantage.js?v=1786544339" defer></script>
-<script src="/training-material-java-grundlagen/theme/jekyll/site.js?v=1786544339" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/atvantage/styles.css?v=1786545531"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/tokens.css?v=1786545531">
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/base.css?v=1786545531">
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/components.css?v=1786545531">
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/jekyll/site.css?v=1786545531"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/print.css?v=1786545531">
+<script src="/training-material-java-grundlagen/theme/academy/atvantage.js?v=1786545531" defer></script>
+<script src="/training-material-java-grundlagen/theme/jekyll/site.js?v=1786545531" defer></script>
 <link rel="icon" href="/training-material-java-grundlagen/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/guide.css?v=1786544339">
-</head>
-<body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/guide.css?v=1786545531"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
-
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
   </div>
@@ -73,8 +74,7 @@
             aria-label="Farbschema umschalten">◐</button>
   </nav>
 </header>
-<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-grundlagen/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Ein generisches Repository bauen</span></nav>
-    <div class="avd-academy-guide-hero__meta">
+<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-grundlagen/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Ein generisches Repository bauen</span></nav><div class="avd-academy-guide-hero__meta">
       <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 75 Minuten</span><span class="avd-academy-tag">Generics</span><span class="avd-academy-tag">Banking</span>
       </div>
       <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
