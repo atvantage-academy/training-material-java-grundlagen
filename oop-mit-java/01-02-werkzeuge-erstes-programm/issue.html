@@ -45,15 +45,15 @@
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java SE (ATVANTAGE Academy)</title>
-<meta name="description" content="Richte das Banking-Beispielprojekt ein, baue es und bring es zum Laufen."><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="description" content="Lege ein eigenes Java-Projekt in der IDE an, bring den Code aus der ersten Übung hinein und starte ihn."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786623117"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786623117">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786623117">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786623117">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786623117"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786623117">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786623117" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786623117" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786623117">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786655842"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786655842">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786655842">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786655842">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786655842"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786655842">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786655842" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786655842" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786655842">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -65,8 +65,8 @@
 </script>
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786623117">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786623117"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786655842">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786655842"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -85,119 +85,166 @@
             aria-label="Farbschema umschalten">◐</button>
   </nav>
 </header>
-<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Das Banking-Projekt einrichten und starten</span></nav><div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 45 Minuten</span><span class="avd-academy-tag">Werkzeuge</span><span class="avd-academy-tag">Banking</span>
+<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Das erste Projekt in der IDE anlegen und starten</span></nav><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 25 Minuten</span><span class="avd-academy-tag">Werkzeuge</span><span class="avd-academy-tag">IDE</span>
       </div>
       <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
               data-avd-academy-copy-md="#avd-academy-md-source"
               title="Markdown kopieren" aria-label="Markdown kopieren"></button>
-    </div><h1>Das Banking-Projekt einrichten und starten</h1>
+    </div><h1>Das erste Projekt in der IDE anlegen und starten</h1>
   </section>
 
   <div class="avd-academy-guide-layout">
     <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
-      <h1 id="das-banking-projekt-einrichten-und-starten">Das Banking-Projekt einrichten und starten</h1>
+      <h1 id="das-erste-projekt-in-der-ide-anlegen-und-starten">Das erste Projekt in der IDE anlegen und starten</h1>
 
-<p>Als Entwickler:in möchte ich das Beispielprojekt bauen und starten können, damit ich für die ganze Woche eine funktionierende Arbeitsumgebung habe.</p>
+<p>Als Entwickler:in möchte ich mein erstes eigenes Projekt in einer IDE anlegen und starten, damit ich für den Rest der Woche komfortabel arbeiten kann, statt jeden Schritt von Hand auf der Kommandozeile zu tippen.</p>
 
 <h2 id="lernziele">Lernziele</h2>
 
 <p>Die Lernenden…</p>
 
 <ul>
-  <li>öffnen ein bestehendes Java-Projekt in der IDE.</li>
-  <li>bauen das Projekt mit dem Build-Werkzeug und starten die Anwendung.</li>
-  <li>lesen eine Compiler-Fehlermeldung und beheben den Fehler.</li>
+  <li>legen ein neues Java-Projekt in der IDE an und wählen dabei ein JDK aus.</li>
+  <li>übernehmen vorhandenen Quellcode in das Projekt und benennen, was die IDE gegenüber dem einfachen Texteditor zusätzlich leistet.</li>
+  <li>starten das Programm aus der IDE und finden die Ausgabe wieder.</li>
+  <li>lesen eine Compiler-Fehlermeldung in der IDE und beheben den Fehler.</li>
+  <li>halten den Programmlauf an einem Breakpoint an und sehen sich den Zustand an.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Das Banking-Projekt ist in der IDE geöffnet und der Build läuft fehlerfrei.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Die <code>main</code>-Methode startet und gibt etwas aus.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Das Projekt <code>my-first-project</code> ist in der IDE angelegt und ein JDK ist zugeordnet.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Die Klasse <code>HelloWorld</code> aus der ersten Übung liegt im Projekt.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Das Programm läuft aus der IDE und gibt „Hello, World!“ aus.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast bewusst einen kleinen Fehler (z. B. fehlendes Semikolon) erzeugt, die Meldung gelesen und ihn behoben.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast einen Breakpoint gesetzt, den Lauf angehalten und Dir den Zustand angesehen.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
 <h2 id="arbeitsschritte">Arbeitsschritte</h2>
 
-<h3 id="projekt-öffnen-und-bauen">Projekt öffnen und bauen</h3>
+<h3 id="ein-neues-projekt-anlegen">Ein neues Projekt anlegen</h3>
 
-<p>Öffne das Projekt in Deiner IDE und baue es mit dem mitgelieferten Build-Werkzeug.</p>
-
-<pre><code class="language-bash">./gradlew build
-</code></pre>
+<p>Lege in der IDE ein neues Java-Projekt mit dem Namen <code>my-first-project</code> an und wähle das installierte JDK aus.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Beim ersten Build lädt das Werkzeug Abhängigkeiten aus dem Netz — je nach Verbindung dauert das einen Moment.</p>
+  <p><strong>Hinweis:</strong> Ein Build-Werkzeug brauchst Du dafür noch nicht — nimm die einfachste
+Variante, die Deine IDE anbietet. Gradle und Maven kommen an Tag 5.</p>
 </blockquote>
 
-<h3 id="die-anwendung-starten">Die Anwendung starten</h3>
+<h3 id="den-code-aus-der-ersten-übung-übernehmen">Den Code aus der ersten Übung übernehmen</h3>
 
-<p>Führe die <code>main</code>-Methode aus (aus der IDE oder per Build-Werkzeug) und beobachte die Ausgabe.</p>
+<p>Lege im Projekt eine Klasse <code>HelloWorld</code> an und bring den Quellcode der ersten Übung hinein. Tippe ihn dabei bewusst selbst, statt ihn zu kopieren, und schau der IDE zu:</p>
+
+<ul>
+  <li>Wie färbt sie Schlüsselwörter, Typen und Zeichenketten ein?</li>
+  <li>Was schlägt sie Dir beim Tippen von <code>System.out.</code> vor?</li>
+  <li>Was passiert, wenn Du eine Zeile unvollständig lässt?</li>
+</ul>
+
+<h3 id="das-programm-starten">Das Programm starten</h3>
+
+<p>Starte das Programm aus der IDE und finde die Ausgabe im Ausgabefenster wieder.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Vergleiche mit der ersten Übung: <code>javac</code> und <code>java</code> hast Du dort selbst
+aufgerufen — die IDE nimmt Dir genau diese Schritte ab.</p>
+</blockquote>
 
 <h3 id="einen-fehler-provozieren-und-lesen">Einen Fehler provozieren und lesen</h3>
 
-<p>Entferne testweise ein Semikolon, baue erneut und lies die Fehlermeldung. Stelle den Zustand danach wieder her.</p>
+<p>Entferne testweise ein Semikolon. Sieh nach, wann die IDE den Fehler anzeigt, lies die Meldung und stelle den Zustand danach wieder her.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Achte auf Datei, Zeile und die eigentliche Ursache in der Meldung — nicht nur auf die erste rote Zeile.</p>
+  <p><strong>Hinweis:</strong> Achte auf Datei, Zeile und die eigentliche Ursache in der Meldung —
+nicht nur auf die erste rote Markierung.</p>
+</blockquote>
+
+<h3 id="einen-breakpoint-setzen">Einen Breakpoint setzen</h3>
+
+<p>Setze einen Breakpoint auf die Ausgabezeile und starte das Programm im Debug-Modus. Halte am Breakpoint an und sieh Dir an, was die IDE Dir über den angehaltenen Lauf zeigt.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Ein erster Blick genügt — die Grundgriffe des Debuggers schaust Du Dir
+an Tag 5 systematisch an.</p>
 </blockquote>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Was passiert beim „Bauen” im Hintergrund zwischen Deinem Quellcode und der lauffähigen Anwendung?</li>
   <li>Wodurch ist die IDE mehr als ein Texteditor?</li>
-  <li>Wie hilft Dir die Struktur der Fehlermeldung dabei, die Ursache schnell zu finden?</li>
+  <li>Was nimmt Dir die IDE beim Start des Programms ab — welche Befehle hast Du in der ersten Übung dafür noch selbst getippt?</li>
+  <li>Wann bringt Dich ein Breakpoint schneller weiter als eine zusätzliche Ausgabe mit <code>System.out.println</code>?</li>
 </ul>
 
-<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Das Banking-Projekt einrichten und starten
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Das erste Projekt in der IDE anlegen und starten
 
-Als Entwickler:in möchte ich das Beispielprojekt bauen und starten können, damit ich für die ganze Woche eine funktionierende Arbeitsumgebung habe.
+Als Entwickler:in möchte ich mein erstes eigenes Projekt in einer IDE anlegen und starten, damit ich für den Rest der Woche komfortabel arbeiten kann, statt jeden Schritt von Hand auf der Kommandozeile zu tippen.
 
 ## Lernziele
 
 Die Lernenden…
 
-* öffnen ein bestehendes Java-Projekt in der IDE.
-* bauen das Projekt mit dem Build-Werkzeug und starten die Anwendung.
-* lesen eine Compiler-Fehlermeldung und beheben den Fehler.
+* legen ein neues Java-Projekt in der IDE an und wählen dabei ein JDK aus.
+* übernehmen vorhandenen Quellcode in das Projekt und benennen, was die IDE gegenüber dem einfachen Texteditor zusätzlich leistet.
+* starten das Programm aus der IDE und finden die Ausgabe wieder.
+* lesen eine Compiler-Fehlermeldung in der IDE und beheben den Fehler.
+* halten den Programmlauf an einem Breakpoint an und sehen sich den Zustand an.
 
 ## Definition of Done
 
-* [ ] Das Banking-Projekt ist in der IDE geöffnet und der Build läuft fehlerfrei.
-* [ ] Die `main`-Methode startet und gibt etwas aus.
+* [ ] Das Projekt `my-first-project` ist in der IDE angelegt und ein JDK ist zugeordnet.
+* [ ] Die Klasse `HelloWorld` aus der ersten Übung liegt im Projekt.
+* [ ] Das Programm läuft aus der IDE und gibt „Hello, World!“ aus.
 * [ ] Du hast bewusst einen kleinen Fehler (z. B. fehlendes Semikolon) erzeugt, die Meldung gelesen und ihn behoben.
+* [ ] Du hast einen Breakpoint gesetzt, den Lauf angehalten und Dir den Zustand angesehen.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
 ## Arbeitsschritte
 
-### Projekt öffnen und bauen
+### Ein neues Projekt anlegen
 
-Öffne das Projekt in Deiner IDE und baue es mit dem mitgelieferten Build-Werkzeug.
+Lege in der IDE ein neues Java-Projekt mit dem Namen `my-first-project` an und wähle das installierte JDK aus.
 
-```bash
-./gradlew build
-```
+&gt; **Hinweis:** Ein Build-Werkzeug brauchst Du dafür noch nicht — nimm die einfachste
+&gt; Variante, die Deine IDE anbietet. Gradle und Maven kommen an Tag 5.
 
-&gt; **Hinweis:** Beim ersten Build lädt das Werkzeug Abhängigkeiten aus dem Netz — je nach Verbindung dauert das einen Moment.
+### Den Code aus der ersten Übung übernehmen
 
-### Die Anwendung starten
+Lege im Projekt eine Klasse `HelloWorld` an und bring den Quellcode der ersten Übung hinein. Tippe ihn dabei bewusst selbst, statt ihn zu kopieren, und schau der IDE zu:
 
-Führe die `main`-Methode aus (aus der IDE oder per Build-Werkzeug) und beobachte die Ausgabe.
+* Wie färbt sie Schlüsselwörter, Typen und Zeichenketten ein?
+* Was schlägt sie Dir beim Tippen von `System.out.` vor?
+* Was passiert, wenn Du eine Zeile unvollständig lässt?
+
+### Das Programm starten
+
+Starte das Programm aus der IDE und finde die Ausgabe im Ausgabefenster wieder.
+
+&gt; **Hinweis:** Vergleiche mit der ersten Übung: `javac` und `java` hast Du dort selbst
+&gt; aufgerufen — die IDE nimmt Dir genau diese Schritte ab.
 
 ### Einen Fehler provozieren und lesen
 
-Entferne testweise ein Semikolon, baue erneut und lies die Fehlermeldung. Stelle den Zustand danach wieder her.
+Entferne testweise ein Semikolon. Sieh nach, wann die IDE den Fehler anzeigt, lies die Meldung und stelle den Zustand danach wieder her.
 
-&gt; **Hinweis:** Achte auf Datei, Zeile und die eigentliche Ursache in der Meldung — nicht nur auf die erste rote Zeile.
+&gt; **Hinweis:** Achte auf Datei, Zeile und die eigentliche Ursache in der Meldung —
+&gt; nicht nur auf die erste rote Markierung.
+
+### Einen Breakpoint setzen
+
+Setze einen Breakpoint auf die Ausgabezeile und starte das Programm im Debug-Modus. Halte am Breakpoint an und sieh Dir an, was die IDE Dir über den angehaltenen Lauf zeigt.
+
+&gt; **Hinweis:** Ein erster Blick genügt — die Grundgriffe des Debuggers schaust Du Dir
+&gt; an Tag 5 systematisch an.
 
 ## Reflexionsfragen
 
-* Was passiert beim „Bauen&quot; im Hintergrund zwischen Deinem Quellcode und der lauffähigen Anwendung?
 * Wodurch ist die IDE mehr als ein Texteditor?
-* Wie hilft Dir die Struktur der Fehlermeldung dabei, die Ursache schnell zu finden?</textarea>
+* Was nimmt Dir die IDE beim Start des Programms ab — welche Befehle hast Du in der ersten Übung dafür noch selbst getippt?
+* Wann bringt Dich ein Breakpoint schneller weiter als eine zusätzliche Ausgabe mit `System.out.println`?</textarea>
     </main>
 
     <aside class="avd-academy-guide-sidebar">
