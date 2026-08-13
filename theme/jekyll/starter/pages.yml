@@ -15,6 +15,9 @@
 #   3. Läuft das Repo auf öffentlichem github.com, müssen die Runner
 #      `npm.timetoact.ghe.com` erreichen können (Registry via Variable
 #      `NPM_REGISTRY` überschreibbar). Theme-Version via Variable `THEME_VERSION`.
+#   4. Org-Variable `ACADEMY_WEBSITE` = URL der Academy-Website (Link in der
+#      Druck-Kontaktzeile). Org-weit gesetzt, pro Repo nichts nachzuhinterlegen;
+#      fehlt sie, greift der Theme-Default.
 # =============================================================================
 name: Pages
 
@@ -69,13 +72,32 @@ jobs:
         with:
           ruby-version: "3.3"
 
-      - name: Jekyll bauen (Theme-Defaults + Projekt-_config)
+      # Druck-Kontaktzeile: Link auf die Academy-Website aus der Org-Variablen
+      # ACADEMY_WEBSITE — so steht die URL an genau einer Stelle und muss in keinem
+      # Schulungs-Repo gepflegt werden. Gesetzt wird ausschließlich footer.homepage;
+      # Jekyll merget Config-Hashes tief, alle übrigen footer.*-Werte aus der
+      # projekteigenen _config.yml bleiben erhalten. Fehlt die Variable (Fork,
+      # lokaler Build), greift der Theme-Default.
+      # Diese Verdrahtung unverändert übernehmen. `_config.ci.yml` gehört in die
+      # .gitignore; Jekyll liefert Dateien mit `_`-Präfix ohnehin nicht aus.
+      - name: Academy-Website aus Org-Variable ins Config-Overlay schreiben
+        env:
+          ACADEMY_WEBSITE: ${{ vars.ACADEMY_WEBSITE }}
+        run: |
+          : > _config.ci.yml
+          if [ -n "$ACADEMY_WEBSITE" ]; then
+            printf 'footer:\n  homepage: "%s"\n' "$ACADEMY_WEBSITE" >> _config.ci.yml
+          else
+            echo "::warning::Org-Variable ACADEMY_WEBSITE ist nicht gesetzt — die Druck-Kontaktzeile nutzt den Theme-Default."
+          fi
+
+      - name: Jekyll bauen (Theme-Defaults + Projekt-_config + CI-Overlay)
         env:
           JEKYLL_ENV: production
         run: |
           gem install jekyll --no-document
           jekyll build \
-            --config "node_modules/${THEME_PACKAGE}/jekyll/_config.defaults.yml,_config.yml" \
+            --config "node_modules/${THEME_PACKAGE}/jekyll/_config.defaults.yml,_config.yml,_config.ci.yml" \
             --strict_front_matter --trace
 
       - uses: actions/upload-pages-artifact@v3
