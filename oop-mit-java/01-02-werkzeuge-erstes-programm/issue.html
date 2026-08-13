@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <!--
-  ATVANTAGE-Academy — EINZIGES Seitenlayout (Jekyll)
+  ATVANTAGE-Academy – EINZIGES Seitenlayout (Jekyll)
   --------------------------------------------------
   Ein Layout für alles: allgemeine Doku-Seiten UND Guides (Übungen/Anleitungen).
   Optik nach der ATVANTAGE-Website: Meta-Nav, weiße sticky Kopfzeile, Hero-Band,
   zweispaltig mit rechter Sidebar (automatisches Inhaltsverzeichnis, Fortschritt
   aus Task-Listen, weiterführende Ressourcen). Überschriften ohne Emoji-Icons.
 
-  Verwendung im Front Matter:  layout: default   (oder `layout: guide` — Alias,
+  Verwendung im Front Matter:  layout: default   (oder `layout: guide` – Alias,
   siehe guide.html; beides rendert dieselbe Guide-Ansicht)
 
   `layout: visualization` (siehe visualization.html) rendert dieselbe Seite OHNE
   obere Navigation (Meta-Leiste + Kopfzeile/TopNav) und OHNE Brotkrumen, mit einem
-  schmaleren Hero-Balken — für eigenständige Visualisierungen/Simulationen.
+  schmaleren Hero-Balken – für eigenständige Visualisierungen/Simulationen.
 
   Alle Front-Matter-Felder sind OPTIONAL (Convention over Configuration). Nur der
-  Titel ist faktisch erforderlich — als `title:` ODER als erste `#`-Überschrift:
+  Titel ist faktisch erforderlich – als `title:` ODER als erste `#`-Überschrift:
 
     title:       "…"                → sonst erste #-Überschrift (eins von beiden nötig)
     description: "…"                → Meta-Description
-    duration:    8                  → Zahl in Minuten → Hero-Tag „ca. 8 Minuten"
+    duration:    8                  → Zahl in Minuten → Hero-Tag „ca. 8 Minuten“
                                        (ungefähre LESEDAUER; bei Guides/Übungen die
                                        Dauer der Übung). Aktiviert zugleich die
                                        automatische Prev/Next-Navigation zwischen
                                        gleichartigen Geschwister-Seiten.
     topics:      ["Cloud & DevOps"] → weitere Hero-Tags
-    resources:   [{titel, url, icon}, …] → Sidebar-Karte „Weiterführende Informationen".
+    resources:   [{titel, url, icon}, …] → Sidebar-Karte „Weiterführende Informationen“.
                                        titel und/oder icon (Bildpfad); icon erscheint
                                        rechts und wird kreisrund dargestellt.
     breadcrumb:                     → Brotkrumen anpassen (beides optional):
@@ -37,7 +37,7 @@
                                        der `index.md` gesetzt wird sie vererbt.
     zurueck / weiter: {title, url}  → explizite Prev/Next-Links (sonst automatisch)
 
-  „Markdown kopieren" (Button im Hero) erscheint auf allen Markdown-Seiten
+  „Markdown kopieren“ (Button im Hero) erscheint auf allen Markdown-Seiten
   (`page.ext == '.md'`), nicht auf reinen HTML-Seiten.
 -->
 <html lang="de">
@@ -47,13 +47,13 @@
 <title>Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Lege ein eigenes Java-Projekt in der IDE an, bring den Code aus der ersten Übung hinein und starte ihn."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786655842"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786655842">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786655842">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786655842">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786655842"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786655842">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786655842" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786655842" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786655842">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786658038"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786658038">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786658038">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786658038">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786658038"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786658038">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786658038" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786658038" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786658038">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -65,8 +65,8 @@
 </script>
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786655842">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786655842"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786658038">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786658038"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>

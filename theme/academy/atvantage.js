@@ -1,5 +1,5 @@
 /* =============================================================================
-   ATVANTAGE Brand — interaktives Verhalten
+   ATVANTAGE Brand – interaktives Verhalten
    -----------------------------------------------------------------------------
    Kleines, abhängigkeitsfreies Skript für markenweite Interaktionen, die in
    JEDER Unterlage verfügbar sein sollen. Bewusst schlank gehalten; unterlagen-
@@ -170,7 +170,7 @@
 
     // Doc-Layout: rechte Sidebar nur zeigen, wenn sie sichtbaren Inhalt hat
     // (Inhaltsverzeichnis mit >= 2 Einträgen und/oder „Weiterführende
-    // Informationen"). Sonst einspaltig.
+    // Informationen“). Sonst einspaltig.
     var docLayout = document.querySelector(".avd-academy-doc-layout");
     if (docLayout) {
       var sidebar = docLayout.querySelector(".avd-academy-doc-sidebar");
@@ -188,7 +188,7 @@
      Funktioniert im Guide- wie im Doc-Layout (Definition of Done bzw.
      Voraussetzungen). Läuft VOR der Doc-Sidebar-Sichtbarkeitsprüfung in
      initGuideToc(), damit die (per [hidden]) versteckte Fortschrittskarte dort
-     korrekt als „leer" zählt. */
+     korrekt als „leer“ zählt. */
   function initGuideProgress() {
     var box = document.querySelector("[data-avd-academy-progress]");
     var main = document.querySelector(".avd-academy-guide-main, .avd-academy-doc-main");

@@ -1,12 +1,12 @@
 /* =============================================================================
-   Drucklayout (@media print) — ATVANTAGE Academy
+   Drucklayout (@media print) – ATVANTAGE Academy
    -----------------------------------------------------------------------------
    Sauberer Ausdruck von Doku-/Guide-Seiten:
-   - IMMER Light (dunkle Schrift auf hellem Grund) — unabhängig vom Screen-Farbschema
+   - IMMER Light (dunkle Schrift auf hellem Grund) – unabhängig vom Screen-Farbschema
      (Dark-Mode/System-Präferenz werden per !important-Token-Reset überstimmt).
    - Screen-Chrome wird ausgeblendet: Meta-Nav, Kopf-Navigation (Burger/Links/
      Theme-Umschalter), Brotkrumen, rechte Sidebar (Inhaltsverzeichnis/Fortschritt/
-     Ressourcen), Prev/Next, Footer, „Markdown kopieren".
+     Ressourcen), Prev/Next, Footer, „Markdown kopieren“.
    - ERHALTEN bleiben: ATVANTAGE-Logo (Briefkopf), Seitentitel, Inhalt und eine
      Druck-Kontaktzeile (E-Mail + ATVANTAGE-Homepage), die den Footer ersetzt.
 
@@ -18,7 +18,7 @@
 .avd-academy-print-contact { display: none; }
 
 @media print {
-  /* Light erzwingen — überstimmt Dark-Mode-Tokens (Attribut + prefers-color-scheme). */
+  /* Light erzwingen – überstimmt Dark-Mode-Tokens (Attribut + prefers-color-scheme). */
   :root {
     color-scheme: light !important;
     --avd-academy-color-ink:       #343E3F !important;

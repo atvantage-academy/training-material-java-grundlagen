@@ -1,9 +1,9 @@
 /* =============================================================================
-   Web / GitHub Pages — Seitenlayout
+   Web / GitHub Pages – Seitenlayout
    -----------------------------------------------------------------------------
    Layout- und Seitenstile für allgemeine Webseiten (Doku, Landing Pages,
    Teilnehmerunterlagen als Website). Baut auf dem ATVANTAGE-Fundament (theme/)
-   auf und nutzt ausschließlich dessen Tokens — KEINE eigenen Farben/Schriften.
+   auf und nutzt ausschließlich dessen Tokens – KEINE eigenen Farben/Schriften.
 
    Verlinkt wird zusätzlich zu theme/academy/atvantage.css:
      <link rel="stylesheet" href="<BASISPFAD>/theme/academy/atvantage.css">
@@ -68,7 +68,7 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
 .avd-academy-grid > * { flex: 1 1 320px; }   /* min. 320px, wachsen zum Füllen der Zeile */
 
 /* Kachel-Variante: feste Breite, annähernd quadratisch (Verhältnis max. 3:2).
-   Anders als das Standard-Raster wachsen die Kacheln NICHT auf die Zeilenbreite —
+   Anders als das Standard-Raster wachsen die Kacheln NICHT auf die Zeilenbreite –
    sie behalten ihre Breite und stehen linksbündig nebeneinander. */
 .avd-academy-grid--tiles { justify-content: flex-start; }
 .avd-academy-grid--tiles > * {
@@ -121,7 +121,7 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
 
 /* Standardmäßig einspaltig; die rechte Sidebar wird per JS eingeblendet
    (…--with-sidebar), sobald sie Inhalt hat (TOC ab 2 Überschriften und/oder
-   „Weiterführende Informationen"). So bleibt ohne/vor JS keine leere Spalte. */
+   „Weiterführende Informationen“). So bleibt ohne/vor JS keine leere Spalte. */
 .avd-academy-doc-layout {
   padding: 3rem var(--avd-academy-doc-gutter);
   display: grid; grid-template-columns: minmax(0, 1fr); gap: 3.5rem;
@@ -169,11 +169,11 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
 
 /* --- Doku: Checklisten & Fortschritt ---------------------------------------
    GFM-Task-Listen im default-Layout als Checklisten-Karte (grau hinterlegt, nur
-   Checkboxen, KEINE Aufzählungspunkte) — analog zur Definition of Done in den
+   Checkboxen, KEINE Aufzählungspunkte) – analog zur Definition of Done in den
    Übungen (guide.css). Plus Fortschrittsanzeiger in der Sidebar. Zentral im Theme
    gelöst, damit jede Consumer-Seite es ohne eigenes CSS erbt.
 
-   Die Checkbox wird absolut positioniert (NICHT das <li> als Flex-Container) —
+   Die Checkbox wird absolut positioniert (NICHT das <li> als Flex-Container) –
    sonst würde jedes Inline-Kind (Text, <code>, <a>) zu einem eigenen Flex-Item
    mit Abständen. So fließt der Inhalt als normaler Text. */
 .avd-academy-doc-main ul:has(> li > input[type="checkbox"]) {

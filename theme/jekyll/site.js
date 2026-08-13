@@ -1,5 +1,5 @@
 /* =============================================================================
-   Web / GitHub Pages — Seitenverhalten
+   Web / GitHub Pages – Seitenverhalten
    -----------------------------------------------------------------------------
    Optionales Verhalten für Webseiten-Layouts, das ÜBER das markenweite
    theme/academy/atvantage.js hinausgeht (z. B. Hervorheben des aktiven Nav-Punkts).

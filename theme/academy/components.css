@@ -1,5 +1,5 @@
 /* =============================================================================
-   ATVANTAGE Academy — Components
+   ATVANTAGE Academy – Components
    -----------------------------------------------------------------------------
    Interaktive Bausteine (Buttons, Callouts, Karten, Badges, Header, Footer).
    Wo atvantage eine Vorgabe macht, folgen wir ihr: Buttons nutzen die
@@ -27,7 +27,7 @@
 .avd-academy-btn--ghost:hover { border-color: var(--avd-academy-color-headline); }
 
 /* Kopier-Buttons als kompakte Icon-Buttons: Icon = Klemmbrett (echtes SVG per
-   CSS-Mask in currentColor — KEIN Emoji). „Kopieren"/„Kopiert!" nur als Tooltip
+   CSS-Mask in currentColor – KEIN Emoji). „Kopieren“/„Kopiert!“ nur als Tooltip
    (title) und aria-label; nach dem Kopieren wechselt das Icon per .is-copied auf
    einen Haken. */
 .avd-academy-copy, .avd-academy-copy-md { padding: 7px; gap: 0; line-height: 0; }
@@ -69,8 +69,8 @@
   margin-bottom: var(--avd-academy-space-3);
 }
 /* Letztes Element bündig, ohne Zusatzabstand. Empfohlenes Muster: die
-   Karten-Überschrift IST der Link (siehe theme/README.md → „avd-academy-card");
-   ein separater „Mehr dazu →"/„Loslegen →"-CTA-Absatz ist nicht mehr nötig. */
+   Karten-Überschrift IST der Link (siehe theme/README.md → „avd-academy-card“);
+   ein separater „Mehr dazu →“/„Loslegen →“-CTA-Absatz ist nicht mehr nötig. */
 .avd-academy-card > :last-child { margin-bottom: 0; }
 .avd-academy-card a {
   color: var(--avd-orange);
@@ -92,8 +92,8 @@
 
 /* --- Fortschritt: Vollständig-Zustand (grüner Haken) ----------------------
    Die Basis-Styles (.avd-academy-progress__*) liegen in guide.css/site.css; hier
-   nur der „fertig"-Zustand. JS setzt .is-complete auf die Fortschrittskarte, sobald
-   alle Checkboxen erledigt sind. Balken und Text bleiben sichtbar — es kommt nur
+   nur der „fertig“-Zustand. JS setzt .is-complete auf die Fortschrittskarte, sobald
+   alle Checkboxen erledigt sind. Balken und Text bleiben sichtbar – es kommt nur
    ein grüner Haken hinzu. */
 [data-avd-academy-progress].is-complete .avd-academy-progress__text {
   display: flex; align-items: center; gap: 8px;
@@ -172,7 +172,7 @@
 .avd-academy-header__group:focus-within .avd-academy-header__grouptoggle { color: var(--avd-orange); }
 .avd-academy-header__caret { font-size: 11px; line-height: 1; }
 /* Inline-Icon in Link-Labels (TopNav, Footer, Ressourcen). Quadratische Quellbilder
-   werden — wie GitHub-Profilbilder — KREISRUND dargestellt (quadratisch + border-radius
+   werden – wie GitHub-Profilbilder – KREISRUND dargestellt (quadratisch + border-radius
    50% + object-fit: cover). */
 .avd-academy-linkicon {
   width: 1.15em; height: 1.15em; vertical-align: -0.2em;
@@ -205,7 +205,7 @@
 }
 /* Unsichtbare Hover-Brücke über die Lücke (margin-top) zwischen Toggle und
    Untermenü. GROSSZÜGIG überlappend (nicht exakt 8px), damit der :hover beim
-   Runterfahren der Maus garantiert NICHT abreißt — auch kein Sub-Pixel-Spalt durch
+   Runterfahren der Maus garantiert NICHT abreißt – auch kein Sub-Pixel-Spalt durch
    Rahmen/Padding. Das Untermenü bleibt so im :hover der Gruppe. */
 .avd-academy-header__submenu::before {
   content: ""; position: absolute; left: 0; right: 0;
@@ -230,8 +230,14 @@
     position: static; min-width: 0; margin: 6px 0 0; padding: 0 0 0 14px;
     border: 0; border-radius: 0; box-shadow: none; background: transparent;
   }
-  .avd-academy-header__group:hover .avd-academy-header__submenu,
-  .avd-academy-header__group:focus-within .avd-academy-header__submenu { display: none; }
+  /* Hover/Fokus dürfen hier NICHT aufklappen — aber sie dürfen ein per Klick
+     geöffnetes Untermenü auch nicht zuhalten. Ohne das `:not([data-open])` gewinnt
+     `…__group:focus-within …__submenu` (Spezifität 0,3,0) gegen
+     `…__submenu[data-open]` (0,2,0): Der Klick auf den Toggle setzt zwar
+     `data-open`, gibt dem Button aber gleichzeitig den Fokus — die Gruppe matcht
+     `:focus-within`, `display: none` bleibt, und das Menü klappt nie auf. */
+  .avd-academy-header__group:hover .avd-academy-header__submenu:not([data-open]),
+  .avd-academy-header__group:focus-within .avd-academy-header__submenu:not([data-open]) { display: none; }
   .avd-academy-header__submenu[data-open] { display: flex; }
 }
 

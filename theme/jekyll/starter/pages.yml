@@ -1,5 +1,5 @@
 # =============================================================================
-# GitHub Pages — Build & Deploy für ein Academy-Schulungsrepo
+# GitHub Pages – Build & Deploy für ein Academy-Schulungsrepo
 # -----------------------------------------------------------------------------
 # VORLAGE aus @avd-academy-tools/academy-theme. In das Schulungsrepo als
 # `.github/workflows/pages.yml` übernehmen.
@@ -10,7 +10,7 @@
 # projekteigenen _config.yml.
 #
 # Voraussetzungen (einmalig):
-#   1. Settings → Pages → Source: „GitHub Actions".
+#   1. Settings → Pages → Source: „GitHub Actions“.
 #   2. Actions-Secret `THEME_NPM_TOKEN` = GHE-Token mit `read:packages`.
 #   3. Läuft das Repo auf öffentlichem github.com, müssen die Runner
 #      `npm.timetoact.ghe.com` erreichen können (Registry via Variable
@@ -73,7 +73,7 @@ jobs:
           ruby-version: "3.3"
 
       # Druck-Kontaktzeile: Link auf die Academy-Website aus der Org-Variablen
-      # ACADEMY_WEBSITE — so steht die URL an genau einer Stelle und muss in keinem
+      # ACADEMY_WEBSITE – so steht die URL an genau einer Stelle und muss in keinem
       # Schulungs-Repo gepflegt werden. Gesetzt wird ausschließlich footer.homepage;
       # Jekyll merget Config-Hashes tief, alle übrigen footer.*-Werte aus der
       # projekteigenen _config.yml bleiben erhalten. Fehlt die Variable (Fork,
@@ -88,7 +88,7 @@ jobs:
           if [ -n "$ACADEMY_WEBSITE" ]; then
             printf 'footer:\n  homepage: "%s"\n' "$ACADEMY_WEBSITE" >> _config.ci.yml
           else
-            echo "::warning::Org-Variable ACADEMY_WEBSITE ist nicht gesetzt — die Druck-Kontaktzeile nutzt den Theme-Default."
+            echo "::warning::Org-Variable ACADEMY_WEBSITE ist nicht gesetzt – die Druck-Kontaktzeile nutzt den Theme-Default."
           fi
 
       - name: Jekyll bauen (Theme-Defaults + Projekt-_config + CI-Overlay)

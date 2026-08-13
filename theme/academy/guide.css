@@ -1,5 +1,5 @@
 /* =============================================================================
-   ATVANTAGE Academy — Guide-Layout (Schulungsunterlagen, Anleitungen)
+   ATVANTAGE Academy – Guide-Layout (Schulungsunterlagen, Anleitungen)
    -----------------------------------------------------------------------------
    Academy-spezifische Styles für eine Guide-Seite (Meta-Nav, Kopf, Hero mit
    Zeitschätzung, zweispaltiges Layout mit rechter Sidebar: Inhaltsverzeichnis,
@@ -59,7 +59,7 @@
 .avd-academy-guide-hero__crumbs a { color: inherit; text-decoration: none; }
 .avd-academy-guide-hero__crumbs a:hover { color: var(--avd-orange); }
 .avd-academy-guide-hero__crumbs [aria-current] { color: var(--avd-academy-color-headline); }
-/* Meta-Zeile im Hero: Tags links, „Markdown kopieren" rechts (auf Topics-Höhe). */
+/* Meta-Zeile im Hero: Tags links, „Markdown kopieren“ rechts (auf Topics-Höhe). */
 .avd-academy-guide-hero__meta {
   display: flex; align-items: center; justify-content: space-between;
   gap: 1rem; margin-bottom: 1rem;
@@ -110,7 +110,7 @@
 /* Schritt-Zähler nur auf nummerierten Seiten (Übungen/Guides, s. u.). */
 .avd-academy-guide-main--numbered { counter-reset: avd-academy-step; }
 
-/* „Markdown kopieren"-Leiste (Academy-Funktion), dezent oben rechts */
+/* „Markdown kopieren“-Leiste (Academy-Funktion), dezent oben rechts */
 
 /* Einleitung / User Story: erster Absatz (Titel steht im Hero). */
 .avd-academy-guide-lead,
@@ -135,7 +135,7 @@
   line-height: 1.2;
 }
 
-/* H3-Überschriften (Basis, ohne Nummer) — für allgemeine Seiten. */
+/* H3-Überschriften (Basis, ohne Nummer) – für allgemeine Seiten. */
 .avd-academy-guide-main h3 {
   margin: 1.5rem 0 0.25rem;
   font-size: var(--h5-base, 22px);
@@ -173,7 +173,7 @@
   border-radius: var(--radius-dark, 8px);
   gap: 14px;
 }
-/* Checkbox absolut positionieren (NICHT das <li> als Flex-Container) — sonst
+/* Checkbox absolut positionieren (NICHT das <li> als Flex-Container) – sonst
    würde jedes Inline-Kind (Text, <code>, <a>) zu einem eigenen Flex-Item mit
    Abständen. So fließt der Inhalt als normaler Text; mehrzeilige Items hängen
    sauber unter der ersten Zeile ein. */

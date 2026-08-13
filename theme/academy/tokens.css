@@ -1,5 +1,5 @@
 /* =============================================================================
-   ATVANTAGE Academy — Token-Mapping auf das ATVANTAGE-Fundament
+   ATVANTAGE Academy – Token-Mapping auf das ATVANTAGE-Fundament
    -----------------------------------------------------------------------------
    Farben und Schriften kommen AUSSCHLIESSLICH aus dem ATVANTAGE-Design-System
    (`../atvantage/`, unveränderlich). Diese Datei definiert KEINE eigenen
@@ -29,7 +29,7 @@
   --avd-academy-color-accent-contrast: var(--avd-white);
 
   /* --- Neutrale / Flächenfarben (theme-fähig; Light-Defaults) -------------
-     Light-Werte kommen aus atvantage. Das Dark-Theme kennt atvantage NICHT —
+     Light-Werte kommen aus atvantage. Das Dark-Theme kennt atvantage NICHT –
      wir erarbeiten es selbst (siehe Dark-Block unten). Deshalb liegen alle
      umschaltbaren Oberflächen als eigene Academy-Tokens vor. */
   --avd-academy-color-ink:        var(--avd-anthracite);       /* Fließtext */
@@ -99,7 +99,7 @@
 }
 
 /* -----------------------------------------------------------------------------
-   Dark-Theme — SELBST ERARBEITET (atvantage liefert keins). Startpunkt ist Light;
+   Dark-Theme – SELBST ERARBEITET (atvantage liefert keins). Startpunkt ist Light;
    die Systempräferenz greift als Default (`prefers-color-scheme`), eine explizite
    Wahl per data-Attribut hat Vorrang. Damit explizites Light auch bei
    System-Dark gewinnt, ist der System-Dark-Block gegen [data-…="light"]

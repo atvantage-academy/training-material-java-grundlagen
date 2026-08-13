@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <!--
-  ATVANTAGE-Academy — EINZIGES Seitenlayout (Jekyll)
+  ATVANTAGE-Academy – EINZIGES Seitenlayout (Jekyll)
   --------------------------------------------------
   Ein Layout für alles: allgemeine Doku-Seiten UND Guides (Übungen/Anleitungen).
   Optik nach der ATVANTAGE-Website: Meta-Nav, weiße sticky Kopfzeile, Hero-Band,
   zweispaltig mit rechter Sidebar (automatisches Inhaltsverzeichnis, Fortschritt
   aus Task-Listen, weiterführende Ressourcen). Überschriften ohne Emoji-Icons.
 
-  Verwendung im Front Matter:  layout: default   (oder `layout: guide` — Alias,
+  Verwendung im Front Matter:  layout: default   (oder `layout: guide` – Alias,
   siehe guide.html; beides rendert dieselbe Guide-Ansicht)
 
   `layout: visualization` (siehe visualization.html) rendert dieselbe Seite OHNE
   obere Navigation (Meta-Leiste + Kopfzeile/TopNav) und OHNE Brotkrumen, mit einem
-  schmaleren Hero-Balken — für eigenständige Visualisierungen/Simulationen.
+  schmaleren Hero-Balken – für eigenständige Visualisierungen/Simulationen.
 
   Alle Front-Matter-Felder sind OPTIONAL (Convention over Configuration). Nur der
-  Titel ist faktisch erforderlich — als `title:` ODER als erste `#`-Überschrift:
+  Titel ist faktisch erforderlich – als `title:` ODER als erste `#`-Überschrift:
 
     title:       "…"                → sonst erste #-Überschrift (eins von beiden nötig)
     description: "…"                → Meta-Description
-    duration:    8                  → Zahl in Minuten → Hero-Tag „ca. 8 Minuten"
+    duration:    8                  → Zahl in Minuten → Hero-Tag „ca. 8 Minuten“
                                        (ungefähre LESEDAUER; bei Guides/Übungen die
                                        Dauer der Übung). Aktiviert zugleich die
                                        automatische Prev/Next-Navigation zwischen
                                        gleichartigen Geschwister-Seiten.
     topics:      ["Cloud & DevOps"] → weitere Hero-Tags
-    resources:   [{titel, url, icon}, …] → Sidebar-Karte „Weiterführende Informationen".
+    resources:   [{titel, url, icon}, …] → Sidebar-Karte „Weiterführende Informationen“.
                                        titel und/oder icon (Bildpfad); icon erscheint
                                        rechts und wird kreisrund dargestellt.
     breadcrumb:                     → Brotkrumen anpassen (beides optional):
@@ -37,7 +37,7 @@
                                        der `index.md` gesetzt wird sie vererbt.
     zurueck / weiter: {title, url}  → explizite Prev/Next-Links (sonst automatisch)
 
-  „Markdown kopieren" (Button im Hero) erscheint auf allen Markdown-Seiten
+  „Markdown kopieren“ (Button im Hero) erscheint auf allen Markdown-Seiten
   (`page.ext == '.md'`), nicht auf reinen HTML-Seiten.
 -->
 <html lang="de">
@@ -45,15 +45,15 @@
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java SE (ATVANTAGE Academy)</title>
-<meta name="description" content="Baue das Banking-Projekt reproduzierbar und binde eine externe Bibliothek ein."><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="description" content="Lege für Deinen Code ein Gradle-Projekt an, baue es reproduzierbar und binde eine externe Bibliothek ein."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786655842"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786655842">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786655842">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786655842">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786655842"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786655842">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786655842" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786655842" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786655842">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786658038"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786658038">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786658038">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786658038">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786658038"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786658038">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786658038" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786658038" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786658038">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -65,8 +65,8 @@
 </script>
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786655842">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786655842"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786658038">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786658038"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -85,27 +85,28 @@
             aria-label="Farbschema umschalten">◐</button>
   </nav>
 </header>
-<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Das Projekt bauen und eine Bibliothek einbinden</span></nav><div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 45 Minuten</span><span class="avd-academy-tag">Build & Ökosystem</span><span class="avd-academy-tag">Banking</span>
+<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Das Projekt mit Gradle anlegen und eine Bibliothek einbinden</span></nav><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 50 Minuten</span><span class="avd-academy-tag">Build & Ökosystem</span><span class="avd-academy-tag">Banking</span>
       </div>
       <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
               data-avd-academy-copy-md="#avd-academy-md-source"
               title="Markdown kopieren" aria-label="Markdown kopieren"></button>
-    </div><h1>Das Projekt bauen und eine Bibliothek einbinden</h1>
+    </div><h1>Das Projekt mit Gradle anlegen und eine Bibliothek einbinden</h1>
   </section>
 
   <div class="avd-academy-guide-layout">
     <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
-      <h1 id="das-projekt-bauen-und-eine-bibliothek-einbinden">Das Projekt bauen und eine Bibliothek einbinden</h1>
+      <h1 id="das-projekt-mit-gradle-anlegen-und-eine-bibliothek-einbinden">Das Projekt mit Gradle anlegen und eine Bibliothek einbinden</h1>
 
-<p>Als Entwickler:in möchte ich Abhängigkeiten deklarativ verwalten, damit mein Build reproduzierbar ist und ich fremde Bibliotheken ohne manuelles Kopieren nutzen kann.</p>
+<p>Als Entwickler:in möchte ich mein Projekt von einem Build-Werkzeug verwalten lassen, damit der Build reproduzierbar ist und ich fremde Bibliotheken ohne manuelles Kopieren nutzen kann.</p>
 
 <h2 id="lernziele">Lernziele</h2>
 
 <p>Die Lernenden…</p>
 
 <ul>
-  <li>bauen das Projekt mit dem Build-Werkzeug (Gradle/Maven) reproduzierbar.</li>
+  <li>legen ein Java-Projekt mit Gradle an und ordnen dessen Standard-Verzeichnisstruktur ein.</li>
+  <li>bauen das Projekt mit einem einzigen Befehl reproduzierbar.</li>
   <li>deklarieren eine externe Abhängigkeit in der Build-Datei.</li>
   <li>nutzen eine Klasse der eingebundenen Bibliothek im eigenen Code.</li>
 </ul>
@@ -113,24 +114,63 @@
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Das Projekt baut mit einem einzigen Build-Befehl.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />In der Build-Datei (<code>build.gradle</code>/<code>pom.xml</code>) ist eine neue Abhängigkeit deklariert.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt ein Gradle-Projekt mit Build-Datei, Wrapper (<code>gradlew</code>) und dem Ordner <code>src/main/java</code>.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der bisherige Banking-Code liegt im Projekt und wird mitgebaut.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Das Projekt baut mit einem einzigen Befehl fehlerfrei.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />In der Build-Datei ist eine neue Abhängigkeit deklariert.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Eine Klasse der Bibliothek wird im Code verwendet und das Programm läuft.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
 <h2 id="arbeitsschritte">Arbeitsschritte</h2>
 
+<h3 id="ein-gradle-projekt-anlegen">Ein Gradle-Projekt anlegen</h3>
+
+<p>Lege ein neues Projekt mit dem Build-System <strong>Gradle</strong> an — über den Projekt-Assistenten Deiner IDE oder auf der Kommandozeile:</p>
+
+<pre><code class="language-bash">gradle init --type java-application
+</code></pre>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Beide Wege erzeugen dasselbe Gerüst: eine Build-Datei
+(<code>build.gradle</code> bzw. <code>build.gradle.kts</code>), den Wrapper (<code>gradlew</code>) und die
+Standard-Ordner <code>src/main/java</code> und <code>src/test/java</code>.</p>
+</blockquote>
+
+<h3 id="den-bisherigen-code-übernehmen">Den bisherigen Code übernehmen</h3>
+
+<p>Bring Deine Klassen aus dem bisherigen Projekt nach <code>src/main/java</code> — die Paketstruktur behältst Du bei.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Dass der Code genau dort liegt, ist Konvention: Gradle findet ihn
+ohne eine einzige Zeile Konfiguration.</p>
+</blockquote>
+
 <h3 id="das-projekt-bauen">Das Projekt bauen</h3>
 
-<p>Baue das Banking-Projekt und stelle sicher, dass der Build grün ist.</p>
+<p>Baue das Projekt und stelle sicher, dass der Build grün ist.</p>
 
 <pre><code class="language-bash">./gradlew build
 </code></pre>
 
+<blockquote>
+  <p><strong>Hinweis:</strong> Der Wrapper lädt beim ersten Aufruf die passende Gradle-Version aus
+dem Netz — deshalb dauert der erste Build länger. Genau dadurch bauen alle im
+Team mit derselben Version.</p>
+</blockquote>
+
+<h3 id="die-build-datei-ansehen">Die Build-Datei ansehen</h3>
+
+<p>Sieh Dir die erzeugte Build-Datei an und finde die Java-Version, den <code>repositories</code>- und den <code>dependencies</code>-Block.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Eine Abhängigkeit steht schon drin — die Test-Bibliothek. Die
+brauchst Du im nächsten Modul.</p>
+</blockquote>
+
 <h3 id="eine-abhängigkeit-deklarieren">Eine Abhängigkeit deklarieren</h3>
 
-<p>Ergänze in der Build-Datei eine kleine, nützliche Bibliothek (z. B. Apache Commons Lang) im <code>dependencies</code>-Block.</p>
+<p>Ergänze im <code>dependencies</code>-Block eine kleine, nützliche Bibliothek (z. B. Apache Commons Lang).</p>
 
 <pre><code class="language-groovy">dependencies {
     implementation 'org.apache.commons:commons-lang3:3.14.0'
@@ -153,38 +193,71 @@
   <li>Was könnte passieren, wenn zwei Bibliotheken unterschiedliche Versionen derselben Abhängigkeit verlangen?</li>
 </ul>
 
-<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Das Projekt bauen und eine Bibliothek einbinden
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Das Projekt mit Gradle anlegen und eine Bibliothek einbinden
 
-Als Entwickler:in möchte ich Abhängigkeiten deklarativ verwalten, damit mein Build reproduzierbar ist und ich fremde Bibliotheken ohne manuelles Kopieren nutzen kann.
+Als Entwickler:in möchte ich mein Projekt von einem Build-Werkzeug verwalten lassen, damit der Build reproduzierbar ist und ich fremde Bibliotheken ohne manuelles Kopieren nutzen kann.
 
 ## Lernziele
 
 Die Lernenden…
 
-* bauen das Projekt mit dem Build-Werkzeug (Gradle/Maven) reproduzierbar.
+* legen ein Java-Projekt mit Gradle an und ordnen dessen Standard-Verzeichnisstruktur ein.
+* bauen das Projekt mit einem einzigen Befehl reproduzierbar.
 * deklarieren eine externe Abhängigkeit in der Build-Datei.
 * nutzen eine Klasse der eingebundenen Bibliothek im eigenen Code.
 
 ## Definition of Done
 
-* [ ] Das Projekt baut mit einem einzigen Build-Befehl.
-* [ ] In der Build-Datei (`build.gradle`/`pom.xml`) ist eine neue Abhängigkeit deklariert.
+* [ ] Es gibt ein Gradle-Projekt mit Build-Datei, Wrapper (`gradlew`) und dem Ordner `src/main/java`.
+* [ ] Der bisherige Banking-Code liegt im Projekt und wird mitgebaut.
+* [ ] Das Projekt baut mit einem einzigen Befehl fehlerfrei.
+* [ ] In der Build-Datei ist eine neue Abhängigkeit deklariert.
 * [ ] Eine Klasse der Bibliothek wird im Code verwendet und das Programm läuft.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
 ## Arbeitsschritte
 
+### Ein Gradle-Projekt anlegen
+
+Lege ein neues Projekt mit dem Build-System **Gradle** an — über den Projekt-Assistenten Deiner IDE oder auf der Kommandozeile:
+
+```bash
+gradle init --type java-application
+```
+
+&gt; **Hinweis:** Beide Wege erzeugen dasselbe Gerüst: eine Build-Datei
+&gt; (`build.gradle` bzw. `build.gradle.kts`), den Wrapper (`gradlew`) und die
+&gt; Standard-Ordner `src/main/java` und `src/test/java`.
+
+### Den bisherigen Code übernehmen
+
+Bring Deine Klassen aus dem bisherigen Projekt nach `src/main/java` — die Paketstruktur behältst Du bei.
+
+&gt; **Hinweis:** Dass der Code genau dort liegt, ist Konvention: Gradle findet ihn
+&gt; ohne eine einzige Zeile Konfiguration.
+
 ### Das Projekt bauen
 
-Baue das Banking-Projekt und stelle sicher, dass der Build grün ist.
+Baue das Projekt und stelle sicher, dass der Build grün ist.
 
 ```bash
 ./gradlew build
 ```
 
+&gt; **Hinweis:** Der Wrapper lädt beim ersten Aufruf die passende Gradle-Version aus
+&gt; dem Netz — deshalb dauert der erste Build länger. Genau dadurch bauen alle im
+&gt; Team mit derselben Version.
+
+### Die Build-Datei ansehen
+
+Sieh Dir die erzeugte Build-Datei an und finde die Java-Version, den `repositories`- und den `dependencies`-Block.
+
+&gt; **Hinweis:** Eine Abhängigkeit steht schon drin — die Test-Bibliothek. Die
+&gt; brauchst Du im nächsten Modul.
+
 ### Eine Abhängigkeit deklarieren
 
-Ergänze in der Build-Datei eine kleine, nützliche Bibliothek (z. B. Apache Commons Lang) im `dependencies`-Block.
+Ergänze im `dependencies`-Block eine kleine, nützliche Bibliothek (z. B. Apache Commons Lang).
 
 ```groovy
 dependencies {
