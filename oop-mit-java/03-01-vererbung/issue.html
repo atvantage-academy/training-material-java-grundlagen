@@ -47,15 +47,26 @@
 <title>Java-Grundlagen (ATVANTAGE Academy)</title>
 <meta name="description" content="Bilde Giro- und Sparkonto als Unterklassen einer abstrakten Basisklasse Account."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/atvantage/styles.css?v=1786545531"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/tokens.css?v=1786545531">
-<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/base.css?v=1786545531">
-<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/components.css?v=1786545531">
-<link rel="stylesheet" href="/training-material-java-grundlagen/theme/jekyll/site.css?v=1786545531"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/print.css?v=1786545531">
-<script src="/training-material-java-grundlagen/theme/academy/atvantage.js?v=1786545531" defer></script>
-<script src="/training-material-java-grundlagen/theme/jekyll/site.js?v=1786545531" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/atvantage/styles.css?v=1786601094"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/tokens.css?v=1786601094">
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/base.css?v=1786601094">
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/components.css?v=1786601094">
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/jekyll/site.css?v=1786601094"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/print.css?v=1786601094">
+<script src="/training-material-java-grundlagen/theme/academy/atvantage.js?v=1786601094" defer></script>
+<script src="/training-material-java-grundlagen/theme/jekyll/site.js?v=1786601094" defer></script>
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/highlight.css?v=1786601094">
+<script type="module">
+  const _hlbase = "/training-material-java-grundlagen/theme/academy/hljs/";
+  Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
+    .then(([core, java]) => {
+      const hljs = core.default;
+      hljs.registerLanguage("java", java.default);
+      document.querySelectorAll("pre code.language-java").forEach((el) => hljs.highlightElement(el));
+    });
+</script>
 <link rel="icon" href="/training-material-java-grundlagen/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/guide.css?v=1786545531"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/guide.css?v=1786601094">
+  <link rel="stylesheet" href="/training-material-java-grundlagen/assets/custom.css?v=1786601094"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -64,7 +75,7 @@
   <header class="avd-academy-header">
   <a class="avd-academy-header__brand" href="/training-material-java-grundlagen/" aria-label="Startseite">
     <img class="avd-academy-header__logo"
-         src="/training-material-java-grundlagen/theme/atvantage/assets/logo-orange.svg"
+         src="/training-material-java-grundlagen/assets/logo-schulung.svg"
          alt="ATVANTAGE Academy">
   </a>
   <button class="avd-academy-btn avd-academy-btn--ghost avd-academy-header__burger" data-avd-academy-nav-toggle="#avd-academy-main-nav"
@@ -95,17 +106,17 @@
 
 <ul>
   <li>definieren eine abstrakte Basisklasse mit gemeinsamem Zustand/Verhalten.</li>
-  <li>leiten Unterklassen mit <code class="language-plaintext highlighter-rouge">extends</code> ab und initialisieren sie mit <code class="language-plaintext highlighter-rouge">super(...)</code>.</li>
+  <li>leiten Unterklassen mit <code>extends</code> ab und initialisieren sie mit <code>super(...)</code>.</li>
   <li>begründen, welches Verhalten in die Basisklasse gehört.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">Account</code> ist <code class="language-plaintext highlighter-rouge">abstract</code> und lässt sich nicht direkt instanziieren.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">CurrentAccount</code> und <code class="language-plaintext highlighter-rouge">SavingsAccount</code> erben von <code class="language-plaintext highlighter-rouge">Account</code>.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Beide Unterklassen rufen im Konstruktor <code class="language-plaintext highlighter-rouge">super(iban, owner)</code> auf.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">CurrentAccount</code> ergänzt einen Dispositionskredit, <code class="language-plaintext highlighter-rouge">SavingsAccount</code> einen Habenzins.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>Account</code> ist <code>abstract</code> und lässt sich nicht direkt instanziieren.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>CurrentAccount</code> und <code>SavingsAccount</code> erben von <code>Account</code>.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Beide Unterklassen rufen im Konstruktor <code>super(iban, owner)</code> auf.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>CurrentAccount</code> ergänzt einen Dispositionskredit, <code>SavingsAccount</code> einen Habenzins.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Das Programm erzeugt je ein Objekt beider Kontoarten und gibt sie aus.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
@@ -114,39 +125,40 @@
 
 <h3 id="account-abstrakt-machen">Account abstrakt machen</h3>
 
-<p>Wandle <code class="language-plaintext highlighter-rouge">Account</code> in eine abstrakte Klasse mit den gemeinsamen Feldern (IBAN, Saldo, Inhaber) um.</p>
+<p>Wandle <code>Account</code> in eine abstrakte Klasse mit den gemeinsamen Feldern (IBAN, Saldo, Inhaber) um.</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Account</span> <span class="o">{</span>
-  <span class="kd">private</span> <span class="kd">final</span> <span class="nc">String</span> <span class="n">iban</span><span class="o">;</span>
-  <span class="kd">private</span> <span class="nc">Money</span> <span class="n">balance</span><span class="o">;</span>
-  <span class="kd">private</span> <span class="nc">Customer</span> <span class="n">owner</span><span class="o">;</span>
-  <span class="c1">// ...</span>
-<span class="o">}</span>
-</code></pre></div></div>
+<pre><code class="language-java">public abstract class Account {
+  private final String iban;
+  private Money balance;
+  private Customer owner;
+  // ...
+}
+</code></pre>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> <code class="language-plaintext highlighter-rouge">abstract</code> bedeutet: „nicht direkt erzeugbar”. <code class="language-plaintext highlighter-rouge">new Account(...)</code> muss zu einem Compilerfehler führen.</p>
+  <p><strong>Hinweis:</strong> <code>abstract</code> bedeutet: „nicht direkt erzeugbar”. <code>new Account(...)</code> muss zu einem Compilerfehler führen.</p>
 </blockquote>
 
 <h3 id="unterklassen-ableiten">Unterklassen ableiten</h3>
 
-<p>Lege <code class="language-plaintext highlighter-rouge">CurrentAccount</code> und <code class="language-plaintext highlighter-rouge">SavingsAccount</code> an, die von <code class="language-plaintext highlighter-rouge">Account</code> erben und im Konstruktor <code class="language-plaintext highlighter-rouge">super(...)</code> aufrufen.</p>
+<p>Lege <code>CurrentAccount</code> und <code>SavingsAccount</code> an, die von <code>Account</code> erben und im Konstruktor <code>super(...)</code> aufrufen.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Ergänze nur das, was die Kontoart wirklich unterscheidet (z. B. <code class="language-plaintext highlighter-rouge">limit</code> beim Girokonto, <code class="language-plaintext highlighter-rouge">creditInterestRate</code> beim Sparkonto).</p>
+  <p><strong>Hinweis:</strong> Ergänze nur das, was die Kontoart wirklich unterscheidet (z. B. <code>limit</code> beim Girokonto, <code>creditInterestRate</code> beim Sparkonto).</p>
 </blockquote>
 
 <h3 id="objekte-erzeugen">Objekte erzeugen</h3>
 
-<p>Erzeuge in <code class="language-plaintext highlighter-rouge">Main</code> je ein Giro- und ein Sparkonto und gib beide aus.</p>
+<p>Erzeuge in <code>Main</code> je ein Giro- und ein Sparkonto und gib beide aus.</p>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Welches Verhalten gehört in <code class="language-plaintext highlighter-rouge">Account</code>, welches nur in eine bestimmte Kontoart?</li>
+  <li>Welches Verhalten gehört in <code>Account</code>, welches nur in eine bestimmte Kontoart?</li>
   <li>Woran würdest Du merken, dass Vererbung hier <em>nicht</em> das richtige Mittel ist?</li>
   <li>Was gewinnst Du dadurch, dass die gemeinsamen Felder nur einmal in der Basisklasse stehen?</li>
 </ul>
+
 <textarea id="avd-academy-md-source" hidden aria-hidden="true"># Kontoarten per Vererbung modellieren
 
 Als Entwickler:in möchte ich Giro- und Sparkonten als Spezialisierungen eines gemeinsamen Kontos abbilden, damit gemeinsames Verhalten nur einmal existiert und Besonderheiten je Kontoart ergänzt werden.

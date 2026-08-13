@@ -47,15 +47,26 @@
 <title>Java-Grundlagen (ATVANTAGE Academy)</title>
 <meta name="description" content="Führe einen gemeinsamen Vertrag (Identifiable) ein und programmiere gegen das Interface."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/atvantage/styles.css?v=1786545531"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/tokens.css?v=1786545531">
-<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/base.css?v=1786545531">
-<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/components.css?v=1786545531">
-<link rel="stylesheet" href="/training-material-java-grundlagen/theme/jekyll/site.css?v=1786545531"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/print.css?v=1786545531">
-<script src="/training-material-java-grundlagen/theme/academy/atvantage.js?v=1786545531" defer></script>
-<script src="/training-material-java-grundlagen/theme/jekyll/site.js?v=1786545531" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/atvantage/styles.css?v=1786601094"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/tokens.css?v=1786601094">
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/base.css?v=1786601094">
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/components.css?v=1786601094">
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/jekyll/site.css?v=1786601094"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/print.css?v=1786601094">
+<script src="/training-material-java-grundlagen/theme/academy/atvantage.js?v=1786601094" defer></script>
+<script src="/training-material-java-grundlagen/theme/jekyll/site.js?v=1786601094" defer></script>
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/highlight.css?v=1786601094">
+<script type="module">
+  const _hlbase = "/training-material-java-grundlagen/theme/academy/hljs/";
+  Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
+    .then(([core, java]) => {
+      const hljs = core.default;
+      hljs.registerLanguage("java", java.default);
+      document.querySelectorAll("pre code.language-java").forEach((el) => hljs.highlightElement(el));
+    });
+</script>
 <link rel="icon" href="/training-material-java-grundlagen/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/guide.css?v=1786545531"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/guide.css?v=1786601094">
+  <link rel="stylesheet" href="/training-material-java-grundlagen/assets/custom.css?v=1786601094"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -64,7 +75,7 @@
   <header class="avd-academy-header">
   <a class="avd-academy-header__brand" href="/training-material-java-grundlagen/" aria-label="Startseite">
     <img class="avd-academy-header__logo"
-         src="/training-material-java-grundlagen/theme/atvantage/assets/logo-orange.svg"
+         src="/training-material-java-grundlagen/assets/logo-schulung.svg"
          alt="ATVANTAGE Academy">
   </a>
   <button class="avd-academy-btn avd-academy-btn--ghost avd-academy-header__burger" data-avd-academy-nav-toggle="#avd-academy-main-nav"
@@ -102,10 +113,10 @@
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt ein Interface <code class="language-plaintext highlighter-rouge">Identifiable</code> mit einer Methode <code class="language-plaintext highlighter-rouge">getId()</code>.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">Customer</code> und <code class="language-plaintext highlighter-rouge">Account</code> implementieren <code class="language-plaintext highlighter-rouge">Identifiable</code>.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt eine Methode, die ein <code class="language-plaintext highlighter-rouge">Identifiable</code> entgegennimmt und dessen ID nutzt (z. B. <code class="language-plaintext highlighter-rouge">describe(Identifiable)</code>).</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der Aufruf funktioniert mit <code class="language-plaintext highlighter-rouge">Customer</code>- und <code class="language-plaintext highlighter-rouge">Account</code>-Objekten.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt ein Interface <code>Identifiable</code> mit einer Methode <code>getId()</code>.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>Customer</code> und <code>Account</code> implementieren <code>Identifiable</code>.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt eine Methode, die ein <code>Identifiable</code> entgegennimmt und dessen ID nutzt (z. B. <code>describe(Identifiable)</code>).</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der Aufruf funktioniert mit <code>Customer</code>- und <code>Account</code>-Objekten.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
@@ -115,10 +126,10 @@
 
 <p>Lege ein Interface an, das den Vertrag „hat eine ID” beschreibt.</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Identifiable</span> <span class="o">{</span>
-  <span class="nc">String</span> <span class="nf">getId</span><span class="o">();</span>
-<span class="o">}</span>
-</code></pre></div></div>
+<pre><code class="language-java">public interface Identifiable {
+  String getId();
+}
+</code></pre>
 
 <blockquote>
   <p><strong>Hinweis:</strong> Ein Interface beschreibt nur <em>was</em> möglich ist, nicht <em>wie</em>. Es enthält (klassisch) keine Felder und keine Implementierung.</p>
@@ -126,28 +137,29 @@
 
 <h3 id="den-vertrag-implementieren">Den Vertrag implementieren</h3>
 
-<p>Lass <code class="language-plaintext highlighter-rouge">Customer</code> und <code class="language-plaintext highlighter-rouge">Account</code> <code class="language-plaintext highlighter-rouge">Identifiable</code> implementieren und <code class="language-plaintext highlighter-rouge">getId()</code> passend zurückgeben.</p>
+<p>Lass <code>Customer</code> und <code>Account</code> <code>Identifiable</code> implementieren und <code>getId()</code> passend zurückgeben.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Falls die IDs unterschiedliche Typen haben (UUID vs. IBAN), liefere sie hier einheitlich als <code class="language-plaintext highlighter-rouge">String</code>.</p>
+  <p><strong>Hinweis:</strong> Falls die IDs unterschiedliche Typen haben (UUID vs. IBAN), liefere sie hier einheitlich als <code>String</code>.</p>
 </blockquote>
 
 <h3 id="gegen-das-interface-programmieren">Gegen das Interface programmieren</h3>
 
-<p>Schreibe eine Methode, die ein <code class="language-plaintext highlighter-rouge">Identifiable</code> annimmt — nicht einen konkreten Typ.</p>
+<p>Schreibe eine Methode, die ein <code>Identifiable</code> annimmt — nicht einen konkreten Typ.</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">static</span> <span class="kt">void</span> <span class="nf">describe</span><span class="o">(</span><span class="nc">Identifiable</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
-  <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Objekt mit ID: "</span> <span class="o">+</span> <span class="n">item</span><span class="o">.</span><span class="na">getId</span><span class="o">());</span>
-<span class="o">}</span>
-</code></pre></div></div>
+<pre><code class="language-java">static void describe(Identifiable item) {
+  System.out.println("Objekt mit ID: " + item.getId());
+}
+</code></pre>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Warum kann <code class="language-plaintext highlighter-rouge">describe</code> mit Kunden <em>und</em> Konten umgehen, ohne deren konkrete Klasse zu kennen?</li>
+  <li>Warum kann <code>describe</code> mit Kunden <em>und</em> Konten umgehen, ohne deren konkrete Klasse zu kennen?</li>
   <li>Wann würdest Du statt eines Interfaces eine abstrakte Klasse wählen?</li>
   <li>Welche künftige Erweiterung wird durch „Programmieren gegen das Interface” einfacher?</li>
 </ul>
+
 <textarea id="avd-academy-md-source" hidden aria-hidden="true"># Einen gemeinsamen Vertrag per Interface einführen
 
 Als Entwickler:in möchte ich alles, was eine fachliche ID besitzt, über einen gemeinsamen Vertrag ansprechen, damit ich Hilfscode einmal schreibe und für Kunde und Konto gleichermaßen nutze.

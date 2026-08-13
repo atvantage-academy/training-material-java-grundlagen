@@ -47,15 +47,26 @@
 <title>Kursbeschreibung · Java-Grundlagen (ATVANTAGE Academy)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/atvantage/styles.css?v=1786545531"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/tokens.css?v=1786545531">
-<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/base.css?v=1786545531">
-<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/components.css?v=1786545531">
-<link rel="stylesheet" href="/training-material-java-grundlagen/theme/jekyll/site.css?v=1786545531"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/print.css?v=1786545531">
-<script src="/training-material-java-grundlagen/theme/academy/atvantage.js?v=1786545531" defer></script>
-<script src="/training-material-java-grundlagen/theme/jekyll/site.js?v=1786545531" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/atvantage/styles.css?v=1786601094"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/tokens.css?v=1786601094">
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/base.css?v=1786601094">
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/components.css?v=1786601094">
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/jekyll/site.css?v=1786601094"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/print.css?v=1786601094">
+<script src="/training-material-java-grundlagen/theme/academy/atvantage.js?v=1786601094" defer></script>
+<script src="/training-material-java-grundlagen/theme/jekyll/site.js?v=1786601094" defer></script>
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/highlight.css?v=1786601094">
+<script type="module">
+  const _hlbase = "/training-material-java-grundlagen/theme/academy/hljs/";
+  Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
+    .then(([core, java]) => {
+      const hljs = core.default;
+      hljs.registerLanguage("java", java.default);
+      document.querySelectorAll("pre code.language-java").forEach((el) => hljs.highlightElement(el));
+    });
+</script>
 <link rel="icon" href="/training-material-java-grundlagen/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/guide.css?v=1786545531"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/guide.css?v=1786601094">
+  <link rel="stylesheet" href="/training-material-java-grundlagen/assets/custom.css?v=1786601094"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -64,7 +75,7 @@
   <header class="avd-academy-header">
   <a class="avd-academy-header__brand" href="/training-material-java-grundlagen/" aria-label="Startseite">
     <img class="avd-academy-header__logo"
-         src="/training-material-java-grundlagen/theme/atvantage/assets/logo-orange.svg"
+         src="/training-material-java-grundlagen/assets/logo-schulung.svg"
          alt="ATVANTAGE Academy">
   </a>
   <button class="avd-academy-btn avd-academy-btn--ghost avd-academy-header__burger" data-avd-academy-nav-toggle="#avd-academy-main-nav"
@@ -141,17 +152,17 @@ Java-Aufbaukurs später aufsetzt.</p>
 <h3 id="tag-3-wiederverwendung--abstraktion">Tag 3: Wiederverwendung &amp; Abstraktion</h3>
 
 <ul>
-  <li>Vererbung: Ober-/Unterklassen, Überschreiben, <code class="language-plaintext highlighter-rouge">super</code></li>
+  <li>Vererbung: Ober-/Unterklassen, Überschreiben, <code>super</code></li>
   <li>Polymorphie: dynamische Bindung, Programmieren gegen Typen statt Implementierungen</li>
   <li>Abstraktion: abstrakte Klassen und Interfaces</li>
-  <li><code class="language-plaintext highlighter-rouge">Object</code>-Grundlagen (<code class="language-plaintext highlighter-rouge">toString</code>/<code class="language-plaintext highlighter-rouge">equals</code>/<code class="language-plaintext highlighter-rouge">hashCode</code>) im Überblick</li>
+  <li><code>Object</code>-Grundlagen (<code>toString</code>/<code>equals</code>/<code>hashCode</code>) im Überblick</li>
 </ul>
 
 <h3 id="tag-4-robuste-programme">Tag 4: Robuste Programme</h3>
 
 <ul>
-  <li>Ausnahmebehandlung: <code class="language-plaintext highlighter-rouge">try</code>/<code class="language-plaintext highlighter-rouge">catch</code>/<code class="language-plaintext highlighter-rouge">finally</code>, checked vs. unchecked, eigene Exceptions</li>
-  <li>Collections-Framework: <code class="language-plaintext highlighter-rouge">List</code>, <code class="language-plaintext highlighter-rouge">Set</code>, <code class="language-plaintext highlighter-rouge">Map</code> — die passende Struktur wählen</li>
+  <li>Ausnahmebehandlung: <code>try</code>/<code>catch</code>/<code>finally</code>, checked vs. unchecked, eigene Exceptions</li>
+  <li>Collections-Framework: <code>List</code>, <code>Set</code>, <code>Map</code> — die passende Struktur wählen</li>
   <li>Generics: typsichere Container verstehen und nutzen</li>
 </ul>
 

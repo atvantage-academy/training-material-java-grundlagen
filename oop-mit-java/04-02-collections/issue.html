@@ -47,15 +47,26 @@
 <title>Java-Grundlagen (ATVANTAGE Academy)</title>
 <meta name="description" content="Verwalte Transaktionen eines Kontos in einer Liste und schütze sie durch eine unveränderbare Sicht."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/atvantage/styles.css?v=1786545531"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/tokens.css?v=1786545531">
-<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/base.css?v=1786545531">
-<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/components.css?v=1786545531">
-<link rel="stylesheet" href="/training-material-java-grundlagen/theme/jekyll/site.css?v=1786545531"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/print.css?v=1786545531">
-<script src="/training-material-java-grundlagen/theme/academy/atvantage.js?v=1786545531" defer></script>
-<script src="/training-material-java-grundlagen/theme/jekyll/site.js?v=1786545531" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/atvantage/styles.css?v=1786601094"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/tokens.css?v=1786601094">
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/base.css?v=1786601094">
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/components.css?v=1786601094">
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/jekyll/site.css?v=1786601094"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/print.css?v=1786601094">
+<script src="/training-material-java-grundlagen/theme/academy/atvantage.js?v=1786601094" defer></script>
+<script src="/training-material-java-grundlagen/theme/jekyll/site.js?v=1786601094" defer></script>
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/highlight.css?v=1786601094">
+<script type="module">
+  const _hlbase = "/training-material-java-grundlagen/theme/academy/hljs/";
+  Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
+    .then(([core, java]) => {
+      const hljs = core.default;
+      hljs.registerLanguage("java", java.default);
+      document.querySelectorAll("pre code.language-java").forEach((el) => hljs.highlightElement(el));
+    });
+</script>
 <link rel="icon" href="/training-material-java-grundlagen/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/guide.css?v=1786545531"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/guide.css?v=1786601094">
+  <link rel="stylesheet" href="/training-material-java-grundlagen/assets/custom.css?v=1786601094"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -64,7 +75,7 @@
   <header class="avd-academy-header">
   <a class="avd-academy-header__brand" href="/training-material-java-grundlagen/" aria-label="Startseite">
     <img class="avd-academy-header__logo"
-         src="/training-material-java-grundlagen/theme/atvantage/assets/logo-orange.svg"
+         src="/training-material-java-grundlagen/assets/logo-schulung.svg"
          alt="ATVANTAGE Academy">
   </a>
   <button class="avd-academy-btn avd-academy-btn--ghost avd-academy-header__burger" data-avd-academy-nav-toggle="#avd-academy-main-nav"
@@ -94,7 +105,7 @@
 <p>Die Lernenden…</p>
 
 <ul>
-  <li>wählen eine passende Collection (<code class="language-plaintext highlighter-rouge">List</code>/<code class="language-plaintext highlighter-rouge">Set</code>/<code class="language-plaintext highlighter-rouge">Map</code>) für eine Aufgabe aus.</li>
+  <li>wählen eine passende Collection (<code>List</code>/<code>Set</code>/<code>Map</code>) für eine Aufgabe aus.</li>
   <li>fügen Elemente hinzu und iterieren über die Collection.</li>
   <li>geben eine interne Liste als unveränderbare Sicht heraus.</li>
 </ul>
@@ -102,10 +113,10 @@
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Ein <code class="language-plaintext highlighter-rouge">Account</code> führt seine Transaktionen in einer <code class="language-plaintext highlighter-rouge">List&lt;Transaction&gt;</code>.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Ein <code>Account</code> führt seine Transaktionen in einer <code>List&lt;Transaction&gt;</code>.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Jede Ein-/Auszahlung ergänzt die Liste.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">getTransactions()</code> liefert eine <strong>unveränderbare</strong> Sicht (kein direkter Schreibzugriff von außen).</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Konten werden in einer <code class="language-plaintext highlighter-rouge">Map&lt;String, Account&gt;</code> (IBAN → Konto) nachschlagbar gehalten.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>getTransactions()</code> liefert eine <strong>unveränderbare</strong> Sicht (kein direkter Schreibzugriff von außen).</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Konten werden in einer <code>Map&lt;String, Account&gt;</code> (IBAN → Konto) nachschlagbar gehalten.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
@@ -113,28 +124,28 @@
 
 <h3 id="transaktionen-als-liste-führen">Transaktionen als Liste führen</h3>
 
-<p>Gib <code class="language-plaintext highlighter-rouge">Account</code> ein Feld <code class="language-plaintext highlighter-rouge">List&lt;Transaction&gt;</code> und ergänze es bei jeder Buchung.</p>
+<p>Gib <code>Account</code> ein Feld <code>List&lt;Transaction&gt;</code> und ergänze es bei jeder Buchung.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Eine <code class="language-plaintext highlighter-rouge">ArrayList</code> bewahrt die Reihenfolge — passend für einen chronologischen Buchungsverlauf.</p>
+  <p><strong>Hinweis:</strong> Eine <code>ArrayList</code> bewahrt die Reihenfolge — passend für einen chronologischen Buchungsverlauf.</p>
 </blockquote>
 
 <h3 id="die-liste-schützen">Die Liste schützen</h3>
 
 <p>Gib die Liste nur als unveränderbare Sicht zurück.</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Transaction</span><span class="o">&gt;</span> <span class="nf">getTransactions</span><span class="o">()</span> <span class="o">{</span>
-  <span class="k">return</span> <span class="nc">Collections</span><span class="o">.</span><span class="na">unmodifiableList</span><span class="o">(</span><span class="n">transactions</span><span class="o">);</span>
-<span class="o">}</span>
-</code></pre></div></div>
+<pre><code class="language-java">public List&lt;Transaction&gt; getTransactions() {
+  return Collections.unmodifiableList(transactions);
+}
+</code></pre>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> So kann außen niemand <code class="language-plaintext highlighter-rouge">add</code>/<code class="language-plaintext highlighter-rouge">remove</code> aufrufen; Buchungen laufen ausschließlich über die Konto-Methoden.</p>
+  <p><strong>Hinweis:</strong> So kann außen niemand <code>add</code>/<code>remove</code> aufrufen; Buchungen laufen ausschließlich über die Konto-Methoden.</p>
 </blockquote>
 
 <h3 id="konten-nachschlagbar-machen">Konten nachschlagbar machen</h3>
 
-<p>Verwalte Konten in einer <code class="language-plaintext highlighter-rouge">Map&lt;String, Account&gt;</code> und schlage per IBAN nach.</p>
+<p>Verwalte Konten in einer <code>Map&lt;String, Account&gt;</code> und schlage per IBAN nach.</p>
 
 <blockquote>
   <p><strong>Hinweis:</strong> Frage Dich: brauche ich Reihenfolge (List), Eindeutigkeit (Set) oder schnellen Zugriff per Schlüssel (Map)?</p>
@@ -143,10 +154,11 @@
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Warum ist die IBAN ein guter Schlüssel für eine <code class="language-plaintext highlighter-rouge">Map</code> der Konten?</li>
-  <li>Welche Gefahr bestünde, wenn <code class="language-plaintext highlighter-rouge">getTransactions()</code> die echte, veränderbare Liste zurückgäbe?</li>
+  <li>Warum ist die IBAN ein guter Schlüssel für eine <code>Map</code> der Konten?</li>
+  <li>Welche Gefahr bestünde, wenn <code>getTransactions()</code> die echte, veränderbare Liste zurückgäbe?</li>
   <li>Für die Menge aller Kunden-IDs — welche Collection passt und warum?</li>
 </ul>
+
 <textarea id="avd-academy-md-source" hidden aria-hidden="true"># Transaktionen und Konten in Collections verwalten
 
 Als Entwickler:in möchte ich die Transaktionen eines Kontos geordnet festhalten und Konten nachschlagen können, damit die Domäne mehrere Objekte sauber verwaltet.

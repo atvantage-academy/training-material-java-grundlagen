@@ -47,15 +47,26 @@
 <title>Java-Grundlagen (ATVANTAGE Academy)</title>
 <meta name="description" content="Baue das Banking-Projekt reproduzierbar und binde eine externe Bibliothek ein."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/atvantage/styles.css?v=1786545531"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/tokens.css?v=1786545531">
-<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/base.css?v=1786545531">
-<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/components.css?v=1786545531">
-<link rel="stylesheet" href="/training-material-java-grundlagen/theme/jekyll/site.css?v=1786545531"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/print.css?v=1786545531">
-<script src="/training-material-java-grundlagen/theme/academy/atvantage.js?v=1786545531" defer></script>
-<script src="/training-material-java-grundlagen/theme/jekyll/site.js?v=1786545531" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/atvantage/styles.css?v=1786601094"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/tokens.css?v=1786601094">
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/base.css?v=1786601094">
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/components.css?v=1786601094">
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/jekyll/site.css?v=1786601094"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/print.css?v=1786601094">
+<script src="/training-material-java-grundlagen/theme/academy/atvantage.js?v=1786601094" defer></script>
+<script src="/training-material-java-grundlagen/theme/jekyll/site.js?v=1786601094" defer></script>
+<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/highlight.css?v=1786601094">
+<script type="module">
+  const _hlbase = "/training-material-java-grundlagen/theme/academy/hljs/";
+  Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
+    .then(([core, java]) => {
+      const hljs = core.default;
+      hljs.registerLanguage("java", java.default);
+      document.querySelectorAll("pre code.language-java").forEach((el) => hljs.highlightElement(el));
+    });
+</script>
 <link rel="icon" href="/training-material-java-grundlagen/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/guide.css?v=1786545531"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/guide.css?v=1786601094">
+  <link rel="stylesheet" href="/training-material-java-grundlagen/assets/custom.css?v=1786601094"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -64,7 +75,7 @@
   <header class="avd-academy-header">
   <a class="avd-academy-header__brand" href="/training-material-java-grundlagen/" aria-label="Startseite">
     <img class="avd-academy-header__logo"
-         src="/training-material-java-grundlagen/theme/atvantage/assets/logo-orange.svg"
+         src="/training-material-java-grundlagen/assets/logo-schulung.svg"
          alt="ATVANTAGE Academy">
   </a>
   <button class="avd-academy-btn avd-academy-btn--ghost avd-academy-header__burger" data-avd-academy-nav-toggle="#avd-academy-main-nav"
@@ -103,7 +114,7 @@
 
 <ul class="task-list">
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Das Projekt baut mit einem einzigen Build-Befehl.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />In der Build-Datei (<code class="language-plaintext highlighter-rouge">build.gradle</code>/<code class="language-plaintext highlighter-rouge">pom.xml</code>) ist eine neue Abhängigkeit deklariert.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />In der Build-Datei (<code>build.gradle</code>/<code>pom.xml</code>) ist eine neue Abhängigkeit deklariert.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Eine Klasse der Bibliothek wird im Code verwendet und das Programm läuft.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
@@ -114,17 +125,17 @@
 
 <p>Baue das Banking-Projekt und stelle sicher, dass der Build grün ist.</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./gradlew build
-</code></pre></div></div>
+<pre><code class="language-bash">./gradlew build
+</code></pre>
 
 <h3 id="eine-abhängigkeit-deklarieren">Eine Abhängigkeit deklarieren</h3>
 
-<p>Ergänze in der Build-Datei eine kleine, nützliche Bibliothek (z. B. Apache Commons Lang) im <code class="language-plaintext highlighter-rouge">dependencies</code>-Block.</p>
+<p>Ergänze in der Build-Datei eine kleine, nützliche Bibliothek (z. B. Apache Commons Lang) im <code>dependencies</code>-Block.</p>
 
-<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dependencies</span> <span class="o">{</span>
-    <span class="n">implementation</span> <span class="s1">'org.apache.commons:commons-lang3:3.14.0'</span>
-<span class="o">}</span>
-</code></pre></div></div>
+<pre><code class="language-groovy">dependencies {
+    implementation 'org.apache.commons:commons-lang3:3.14.0'
+}
+</code></pre>
 
 <blockquote>
   <p><strong>Hinweis:</strong> Nach dem Ändern der Build-Datei muss das Projekt neu synchronisiert/gebaut werden, damit die IDE die Bibliothek kennt.</p>
@@ -132,15 +143,16 @@
 
 <h3 id="die-bibliothek-verwenden">Die Bibliothek verwenden</h3>
 
-<p>Nutze eine Methode der Bibliothek an einer sinnvollen Stelle (z. B. <code class="language-plaintext highlighter-rouge">StringUtils.isBlank(...)</code> bei der Kunden-Validierung).</p>
+<p>Nutze eine Methode der Bibliothek an einer sinnvollen Stelle (z. B. <code>StringUtils.isBlank(...)</code> bei der Kunden-Validierung).</p>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Warum ist es besser, Abhängigkeiten zu deklarieren, statt <code class="language-plaintext highlighter-rouge">.jar</code>-Dateien manuell abzulegen?</li>
+  <li>Warum ist es besser, Abhängigkeiten zu deklarieren, statt <code>.jar</code>-Dateien manuell abzulegen?</li>
   <li>Was gehört in die Versionsverwaltung — die Bibliotheken selbst oder die Build-Beschreibung?</li>
   <li>Was könnte passieren, wenn zwei Bibliotheken unterschiedliche Versionen derselben Abhängigkeit verlangen?</li>
 </ul>
+
 <textarea id="avd-academy-md-source" hidden aria-hidden="true"># Das Projekt bauen und eine Bibliothek einbinden
 
 Als Entwickler:in möchte ich Abhängigkeiten deklarativ verwalten, damit mein Build reproduzierbar ist und ich fremde Bibliotheken ohne manuelles Kopieren nutzen kann.
