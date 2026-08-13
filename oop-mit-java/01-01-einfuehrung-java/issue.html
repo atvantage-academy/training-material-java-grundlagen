@@ -47,13 +47,13 @@
 <title>Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Kompiliere eine vorgegebene Java-Klasse und sieh Dir den Bytecode an, um die Plattform zu verstehen."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786622590"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786622590">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786622590">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786622590">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786622590"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786622590">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786622590" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786622590" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786622590">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786623117"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786623117">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786623117">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786623117">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786623117"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786623117">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786623117" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786623117" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786623117">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -65,8 +65,8 @@
 </script>
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786622590">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786622590"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786623117">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786623117"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -108,6 +108,7 @@
   <li>kompilieren eine vorgegebene <code>.java</code>-Datei mit <code>javac</code> zu einer <code>.class</code>-Datei.</li>
   <li>betrachten den erzeugten Bytecode mit <code>javap</code> und ordnen die Rolle der JVM ein.</li>
   <li>erklären am Beispiel das Prinzip „Write once, run anywhere”.</li>
+  <li>benennen, wozu der Classpath dient.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
@@ -156,12 +157,19 @@ javap -c HelloWorld
 <pre><code class="language-bash">java HelloWorld
 </code></pre>
 
+<blockquote>
+  <p><strong>Hinweis:</strong> Die JVM findet <code>HelloWorld</code>, weil sie im aktuellen Verzeichnis sucht.
+Wo sie überhaupt nach Klassen sucht, steuert der Classpath – probier zum
+Vergleich einen Start aus einem anderen Verzeichnis, einmal ohne und einmal mit
+<code>java -cp &lt;Verzeichnis&gt; HelloWorld</code>.</p>
+</blockquote>
+
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Warum liegt zwischen Deinem Quellcode und der Ausführung überhaupt ein Kompilierschritt?</li>
-  <li>Wieso ist der Bytecode auf jedem Betriebssystem gleich, das Ergebnis aber dennoch überall lauffähig?</li>
-  <li>Wozu brauchst Du beim Entwickeln das JDK, obwohl zum reinen Ausführen die JVM genügt?</li>
+  <li>Warum übersetzt Java den Quellcode in Bytecode und nicht direkt in ein nativ ausführbares Format?</li>
+  <li>Worauf musst Du beim Entwickeln achten, damit Deine Anwendung wirklich plattformunabhängig bleibt?</li>
+  <li>Was ist der sogenannte „Classpath“?</li>
 </ul>
 
 <textarea id="avd-academy-md-source" hidden aria-hidden="true"># Die Java-Plattform erkunden
@@ -175,6 +183,7 @@ Die Lernenden…
 * kompilieren eine vorgegebene `.java`-Datei mit `javac` zu einer `.class`-Datei.
 * betrachten den erzeugten Bytecode mit `javap` und ordnen die Rolle der JVM ein.
 * erklären am Beispiel das Prinzip „Write once, run anywhere&quot;.
+* benennen, wozu der Classpath dient.
 
 ## Definition of Done
 
@@ -219,11 +228,21 @@ Starte das Programm über die JVM.
 java HelloWorld
 ```
 
+&gt; **Hinweis:** Die JVM findet `HelloWorld`, weil sie im aktuellen Verzeichnis sucht.
+&gt; Wo sie überhaupt nach Klassen sucht, steuert der Classpath – probier zum
+&gt; Vergleich einen Start aus einem anderen Verzeichnis, einmal ohne und einmal mit
+&gt; `java -cp &lt;Verzeichnis&gt; HelloWorld`.
+
 ## Reflexionsfragen
 
-* Warum liegt zwischen Deinem Quellcode und der Ausführung überhaupt ein Kompilierschritt?
-* Wieso ist der Bytecode auf jedem Betriebssystem gleich, das Ergebnis aber dennoch überall lauffähig?
-* Wozu brauchst Du beim Entwickeln das JDK, obwohl zum reinen Ausführen die JVM genügt?</textarea>
+* Warum übersetzt Java den Quellcode in Bytecode und nicht direkt in ein nativ ausführbares Format?
+* Worauf musst Du beim Entwickeln achten, damit Deine Anwendung wirklich plattformunabhängig bleibt?
+* Was ist der sogenannte „Classpath“?
+
+## Weiterführende Informationen
+
+- [Visualisierung: Java-LTS-Evolution](../../shared/visualisierungen/java-lts-evolution.html)
+</textarea>
     </main>
 
     <aside class="avd-academy-guide-sidebar">
@@ -234,6 +253,11 @@ java HelloWorld
         <div class="avd-academy-guide-side__label">Fortschritt</div>
         <div class="avd-academy-progress__bar"><div class="avd-academy-progress__fill"></div></div>
         <div class="avd-academy-progress__text"></div>
+      </div>
+      <div class="avd-academy-guide-side avd-academy-guide-side--bordered">
+        <div class="avd-academy-guide-side__label">Weiterführende Informationen</div>
+        <div class="avd-academy-guide-side__links"><a href="../../shared/visualisierungen/java-lts-evolution.html"><span>Visualisierung: Java-LTS-Evolution</span></a>
+        </div>
       </div>
     </aside>
   </div><div class="avd-academy-print-contact" aria-hidden="true">
