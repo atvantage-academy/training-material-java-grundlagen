@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 34" role="img" aria-label="ATVANTAGE Academy · Java-Grundlagen">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 290 34" role="img" aria-label="ATVANTAGE Academy · Java SE">
   <!-- Wortmarke für dieses Schulungs-Repo (Teil der verpflichtenden Schulungs-
        Customization, siehe assets/custom.css und `logo:` in _config.yml). Grün,
        damit sie auf hellem UND dunklem Header lesbar ist. `textLength` sorgt für
@@ -7,5 +7,5 @@
        Bei Bedarf durch ein echtes Logo ersetzen und `logo:` darauf zeigen lassen. -->
   <text x="0" y="24" font-family="'Outfit', 'Segoe UI', system-ui, sans-serif"
         font-size="18" font-weight="700" fill="#0e9e7d"
-        textLength="376" lengthAdjust="spacingAndGlyphs">ATVANTAGE<tspan font-weight="500"> Academy · Java-Grundlagen</tspan></text>
+        textLength="286" lengthAdjust="spacingAndGlyphs">ATVANTAGE<tspan font-weight="500"> Academy · Java SE</tspan></text>
 </svg>

@@ -44,18 +44,18 @@
 <head>
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Java-Grundlagen (ATVANTAGE Academy)</title>
+<title>Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Definiere Gleichheit (equals/hashCode), eine lesbare Darstellung und die Beziehung Konto–Inhaber."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/atvantage/styles.css?v=1786601094"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/tokens.css?v=1786601094">
-<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/base.css?v=1786601094">
-<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/components.css?v=1786601094">
-<link rel="stylesheet" href="/training-material-java-grundlagen/theme/jekyll/site.css?v=1786601094"><link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/print.css?v=1786601094">
-<script src="/training-material-java-grundlagen/theme/academy/atvantage.js?v=1786601094" defer></script>
-<script src="/training-material-java-grundlagen/theme/jekyll/site.js?v=1786601094" defer></script>
-<link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/highlight.css?v=1786601094">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786602100"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786602100">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786602100">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786602100">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786602100"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786602100">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786602100" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786602100" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786602100">
 <script type="module">
-  const _hlbase = "/training-material-java-grundlagen/theme/academy/hljs/";
+  const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
     .then(([core, java]) => {
       const hljs = core.default;
@@ -63,29 +63,29 @@
       document.querySelectorAll("pre code.language-java").forEach((el) => hljs.highlightElement(el));
     });
 </script>
-<link rel="icon" href="/training-material-java-grundlagen/theme/atvantage/assets/logo-orange.svg">
+<link rel="icon" href="/training-material-java-se/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-grundlagen/theme/academy/guide.css?v=1786601094">
-  <link rel="stylesheet" href="/training-material-java-grundlagen/assets/custom.css?v=1786601094"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786602100">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786602100"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
   </div>
 
   <header class="avd-academy-header">
-  <a class="avd-academy-header__brand" href="/training-material-java-grundlagen/" aria-label="Startseite">
+  <a class="avd-academy-header__brand" href="/training-material-java-se/" aria-label="Startseite">
     <img class="avd-academy-header__logo"
-         src="/training-material-java-grundlagen/assets/logo-schulung.svg"
+         src="/training-material-java-se/assets/logo-schulung.svg"
          alt="ATVANTAGE Academy">
   </a>
   <button class="avd-academy-btn avd-academy-btn--ghost avd-academy-header__burger" data-avd-academy-nav-toggle="#avd-academy-main-nav"
           aria-label="Navigation umschalten" aria-expanded="false">☰</button>
-  <nav class="avd-academy-header__nav" id="avd-academy-main-nav"><a href="/training-material-java-grundlagen/">Start</a><a href="/training-material-java-grundlagen/oop-mit-java/">Objektorientierte Programmierung mit Java</a><a href="/training-material-java-grundlagen/shared/visualisierungen/">Visualisierungen</a>
+  <nav class="avd-academy-header__nav" id="avd-academy-main-nav"><a href="/training-material-java-se/">Start</a><a href="/training-material-java-se/oop-mit-java/">Objektorientierte Programmierung mit Java</a><a href="/training-material-java-se/shared/visualisierungen/">Visualisierungen</a>
     <button class="avd-academy-btn avd-academy-btn--ghost" data-avd-academy-theme-toggle
             aria-label="Farbschema umschalten">◐</button>
   </nav>
 </header>
-<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-grundlagen/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Gleichheit und Beziehungen modellieren</span></nav><div class="avd-academy-guide-hero__meta">
+<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Gleichheit und Beziehungen modellieren</span></nav><div class="avd-academy-guide-hero__meta">
       <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 90 Minuten</span><span class="avd-academy-tag">equals/hashCode/toString</span><span class="avd-academy-tag">Objektbeziehungen</span><span class="avd-academy-tag">Banking</span>
       </div>
       <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
@@ -240,8 +240,8 @@ Lege zwei `Customer` mit derselben `id` in ein `HashSet` und prüfe die Größe.
   <footer class="avd-academy-footer">
   <div class="avd-academy-footer__grid">
     <div>
-      <strong>Java-Grundlagen (ATVANTAGE Academy)</strong>
-      <p>Schulungen im Bereich 'Java-Grundlagen'</p>
+      <strong>Java SE (ATVANTAGE Academy)</strong>
+      <p>Schulungen im Bereich 'Java SE'</p>
     </div>
     <div>
       <strong>Kontakt</strong>
