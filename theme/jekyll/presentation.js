@@ -115,11 +115,37 @@
 
   function go(to) {
     var next = Math.max(0, Math.min(slides.length - 1, to));
-    if (next === index) return;
+    // Auch wenn sich nichts ändert (erste/letzte Folie): rendern. Nach einer
+    // Wischgeste steht die Schiene sonst verschoben stehen, statt zurückzurasten.
+    if (next === index) { render(); return; }
     index = next;
     slides[index].scrollTop = 0;
     render();
   }
+
+  /* --- Gemeinsames Ziehen (Trackpad UND Touch) ------------------------------
+     Beide Gesten fühlen sich nur dann gut an, wenn die Schiene SOFORT mitgeht und
+     erst beim Loslassen entschieden wird. Deshalb teilen sie sich diese Helfer:
+     `dragTo` verschiebt die Schiene relativ zur aktuellen Folie, `dragStart`
+     schaltet die Übergangsanimation ab (sonst läuft sie dem Finger hinterher),
+     `dragStop` schaltet sie wieder ein, damit das Einrasten animiert ist. */
+  var DRAGGING = "avd-academy-deck__track--dragging";
+
+  function dragStart() { track.classList.add(DRAGGING); }
+  function dragStop() { track.classList.remove(DRAGGING); }
+
+  function dragTo(px) {
+    // An erster und letzter Folie nur gedämpft mitziehen – sichtbar „hier ist Schluss“.
+    if ((index === 0 && px > 0) || (index === slides.length - 1 && px < 0)) px *= 0.35;
+    track.style.transform = "translateX(calc(" + -index * 100 + "% + " + px + "px))";
+  }
+
+  // Schwelle für den Folienwechsel. Zwei Werte, weil die Eingaben verschieden
+  // sind: Der Finger schiebt die Folie 1:1 – dort ist ein längerer Weg natürlich.
+  // Die Trackpad-Geste ist indirekt und liefert je Wisch deutlich weniger
+  // „Pixel“; mit demselben Wert fühlte sie sich zäh an.
+  function dragSchwelle() { return Math.min(80, (deck.clientWidth || 1) * 0.12); }
+  function wischSchwelle() { return Math.min(50, (deck.clientWidth || 1) * 0.06); }
 
   function fromHash() {
     var m = /^#\/(\d+)$/.exec(location.hash || "");
@@ -175,74 +201,207 @@
     }
   });
 
-  // Wischen (Trackpad/Magic Mouse): Zwei-Finger-Geste nach links = nächste Folie,
-  // nach rechts = zurück. Der Browser meldet sie als `wheel` mit waagerechtem
-  // deltaX (nach links wischen ⇒ deltaX positiv, wie „weiter rechts schauen“).
+  // Wischen (Trackpad/Magic Mouse): Der Browser meldet die Zwei-Finger-Geste als
+  // `wheel` mit waagerechtem deltaX (nach links wischen ⇒ deltaX positiv).
   //
-  // Drei Dinge sind dabei zu regeln:
-  //   1. GESTE STATT EREIGNIS – ein Wisch erzeugt Dutzende wheel-Events samt
-  //      Nachlauf (Momentum). Deshalb wird deltaX aufsummiert, EINMAL geblättert
-  //      und danach gesperrt, bis 220 ms lang nichts mehr kommt.
-  //   2. SENKRECHTES SCROLLEN nicht kapern – überwiegt deltaY, gehört die Geste
-  //      der langen Folie. Ebenso Pinch-Zoom (ctrlKey).
+  // Die Folie geht SOFORT mit – gewechselt wird aber erst, wenn die Geste die
+  // Schwelle überschreitet. Darunter rastet sie zurück. So gibt es in jedem Fall
+  // eine Rückmeldung, statt dass ein zu kurzer Wisch spurlos verpufft.
+  //
+  //   1. ACHSE EINMAL FESTLEGEN – nach dem ersten Ereignis steht fest, ob die
+  //      Geste blättert oder scrollt, und sie wechselt bis zum Ende nicht mehr.
+  //      Sonst fällt ein leicht schräger Wisch zwischen beide Fälle und ruckelt.
+  //   2. GESTE STATT EREIGNIS – ein Wisch erzeugt Dutzende Ereignisse samt
+  //      Nachlauf (Momentum). Nach dem Wechsel wird der Rest der Geste ignoriert,
+  //      bis 150 ms lang nichts mehr kommt; ein Flick blättert also genau einmal.
   //   3. WAAGERECHT SCROLLBARE INHALTE haben Vorrang: Wer in einem breiten
-  //      Codeblock oder einer breiten Tabelle wischt, will dort scrollen – erst
-  //      am Anschlag blättert die Folie weiter.
+  //      Codeblock oder einer breiten Tabelle wischt, scrollt dort – erst am
+  //      Anschlag blättert die Folie weiter.
+  //
   // preventDefault() ist nötig, damit die Geste nicht zusätzlich die
   // Verlaufsnavigation des Browsers („zurück“) auslöst.
-  var wheelSum = 0, wheelLocked = false, wheelTimer = null;
+  var wSum = 0, wAxis = 0, wDone = false, wTimer = null;
+  var wLetzter = 0, wRichtung = 0, wAbfall = 0;
 
-  function wheelIdle() {
-    clearTimeout(wheelTimer);
-    wheelTimer = setTimeout(function () { wheelLocked = false; wheelSum = 0; }, 220);
+  function wheelEnde() {
+    if (wAxis === 1) {
+      dragStop();
+      if (!wDone) render();          // unter der Schwelle → zurückrasten
+    }
+    wAxis = 0; wSum = 0; wDone = false; wLetzter = 0; wRichtung = 0; wAbfall = 0;
   }
 
+  function wheelIdle() {
+    clearTimeout(wTimer);
+    wTimer = setTimeout(wheelEnde, 120);
+  }
+
+  // EIN Wisch = EIN Folienwechsel. Nach dem Wechsel wird der Rest der Geste
+  // ignoriert – der Nutzer muss loslassen, kann dann aber sofort wieder wischen.
+  //
+  // Das Loslassen selbst meldet der Browser nicht. Erkennbar ist es am Verlauf:
+  // Nach dem Loslassen läuft der NACHLAUF (Momentum), dessen Beträge monoton
+  // abklingen. Erst wenn dieses Abklingen deutlich zu sehen war (`wAbfall`), gilt
+  // ein danach wieder ANSTEIGENDER Betrag als neuer Wisch.
+  //
+  // Die Hürde ist bewusst hoch (Abklingen über mehrere Ereignisse UND mehr als
+  // doppelter Betrag): Innerhalb eines einzelnen Wischs schwanken die Beträge
+  // ständig – beschleunigen, abbremsen, wieder beschleunigen. Eine weichere
+  // Regel deutete das als zweiten Wisch und blätterte gleich mehrere Folien.
+  //
+  // Eine klare Richtungsumkehr zählt immer als neue Absicht: Nachlauf läuft nie
+  // rückwärts.
+  function neueGeste(dx) {
+    var betrag = Math.abs(dx);
+    if (betrag <= 2) return false;                                   // Zittern
+    if (wRichtung !== 0 && (dx > 0) !== (wRichtung > 0) && betrag > 4) return true;
+    return wAbfall >= 4 && betrag > wLetzter * 2 + 2;
+  }
+
+  // Nur ECHTE Scroll-Container zählen: `overflow-x: auto|scroll` UND noch Weg in
+  // der Wischrichtung. Die Schiene ist ausdrücklich ausgenommen – sie ist n-mal
+  // so breit wie die Bühne (n Folien nebeneinander) und sähe sonst wie ein
+  // scrollbarer Inhalt aus, der jedes Vorwärtsblättern schluckt.
   function scrollsHorizontally(node, delta) {
-    while (node && node !== deck) {
-      if (node.scrollWidth - node.clientWidth > 1) {
-        var max = node.scrollWidth - node.clientWidth;
-        if ((delta > 0 && node.scrollLeft < max - 1) || (delta < 0 && node.scrollLeft > 1)) return true;
+    while (node && node !== document && node !== document.documentElement) {
+      if (node.nodeType === 1 && node !== track) {
+        var ox = getComputedStyle(node).overflowX;
+        if (ox === "auto" || ox === "scroll") {
+          var max = node.scrollWidth - node.clientWidth;
+          if (max > 1 &&
+              ((delta > 0 && node.scrollLeft < max - 1) ||
+               (delta < 0 && node.scrollLeft > 1))) return true;
+        }
       }
       node = node.parentNode;
     }
     return false;
   }
 
-  deck.addEventListener("wheel", function (e) {
+  // Zuständig ist das DOKUMENT, nicht die Bühne: `wheel`-Ereignisse gehen an das
+  // Element unter dem Zeiger. Steht der über der Kopfleiste oder den fixierten
+  // Blätter-Knöpfen – genau dort landet er nach einem Klick auf „weiter“ –, dann
+  // liegen sie AUSSERHALB der Bühne, und ein Wisch lief ins Leere, bis man den
+  // Zeiger wieder über die Folie bewegte.
+  document.addEventListener("wheel", function (e) {
     if (e.ctrlKey) return;                                   // Pinch-Zoom
-    if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;    // senkrecht → Folie scrollen
-    var dx = e.deltaX;
-    if (e.deltaMode === 1) dx *= 16;                         // Zeilen
-    else if (e.deltaMode === 2) dx *= deck.clientWidth;      // Seiten
-    if (scrollsHorizontally(e.target, dx)) return;
+    var dx = e.deltaX, dy = e.deltaY;
+    if (e.deltaMode === 1) { dx *= 16; dy *= 16; }                                  // Zeilen
+    else if (e.deltaMode === 2) { dx *= deck.clientWidth; dy *= deck.clientHeight; } // Seiten
 
-    e.preventDefault();
-    if (wheelLocked) { wheelIdle(); return; }
-    wheelSum += dx;
-    if (Math.abs(wheelSum) >= 60) {
-      go(wheelSum > 0 ? index + 1 : index - 1);
-      wheelLocked = true;
-      wheelSum = 0;
+    var betrag = Math.abs(dx);
+
+    // Läuft nur noch der Nachlauf (oder ist die Geste als „scrollen“ abgehakt),
+    // aber es kommt sichtbar ein neuer Wisch: alte Geste beenden, neue beginnen.
+    if (wAxis !== 0 && betrag > Math.abs(dy) && (wDone || wAxis === 2) && neueGeste(dx)) {
+      if (wAxis === 1) { dragStop(); if (!wDone) render(); }
+      wAxis = 0; wSum = 0; wDone = false; wAbfall = 0;
+    } else if (wDone && wAbfall >= 4 && betrag < 2) {
+      // Der Nachlauf ist ausgelaufen – Geste beenden, ohne aufs Zeitfenster zu
+      // warten. Sonst hielten die letzten Ein-Pixel-Ereignisse sie am Leben.
+      // Das auslösende Ereignis selbst beginnt NICHTS: Es ist der letzte Zucker
+      // des Nachlaufs. Startete es eine Geste, trüge die dessen zufällige
+      // Richtung – und die Richtungsumkehr-Regel zündete dann mitten im nächsten
+      // Wisch, was mehrere Folien auf einmal weiterblätterte.
+      wAxis = 0; wSum = 0; wDone = false; wAbfall = 0; wLetzter = betrag; wRichtung = 0;
+      clearTimeout(wTimer);
+      return;
+    }
+
+    // Abklingen mitzählen: Nur eine LÜCKENLOSE Folge nicht steigender Beträge ist
+    // der Nachlauf. Jeder Anstieg setzt den Zähler zurück.
+    if (betrag <= wLetzter + 0.5) wAbfall++; else wAbfall = 0;
+    wLetzter = betrag;
+
+    if (wAxis === 0) {                                       // Achse festlegen
+      // Rauschen (Nachlauf-Zittern, Trackpad-Jitter) beginnt keine Geste – sonst
+      // stünde die Richtung der Geste auf einem zufälligen Ein-Pixel-Ereignis.
+      if (betrag <= 2) { wheelIdle(); return; }
+      if (Math.abs(dx) <= Math.abs(dy)) { wAxis = 2; wheelIdle(); return; }
+      if (scrollsHorizontally(e.target, dx)) { wAxis = 2; wheelIdle(); return; }
+      wAxis = 1; wSum = 0; wDone = false; wRichtung = dx;
+      dragStart();
     }
     wheelIdle();
+    if (wAxis !== 1) return;                                 // senkrecht → Browser scrollt
+
+    e.preventDefault();
+    if (wDone) return;                                       // Nachlauf der Geste
+
+    wSum += dx;
+    dragTo(-wSum);                                           // Folie folgt sofort
+
+    if (Math.abs(wSum) >= wischSchwelle()) {
+      wDone = true;
+      wRichtung = wSum;      // die Richtung, in die tatsächlich gewischt wurde
+      dragStop();
+      go(wSum > 0 ? index + 1 : index - 1);
+    }
   }, { passive: false });
 
-  // Wischen (Touch): waagerechte Geste ab 60 px blättert; senkrechtes Scrollen
-  // innerhalb einer langen Folie bleibt unberührt.
-  var startX = 0, startY = 0, tracking = false;
-  deck.addEventListener("touchstart", function (e) {
-    if (e.touches.length !== 1) { tracking = false; return; }
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
-    tracking = true;
+  // Wischen (Touch): Die Folie folgt dem Finger und rastet beim Loslassen ein.
+  //
+  // Die Geste entscheidet sich EINMAL – nach den ersten paar Pixeln steht die
+  // Achse fest (`axis`) und wechselt bis zum Loslassen nicht mehr. Damit gerät
+  // ein Wisch nicht zwischen Blättern und Scrollen.
+  //   axis 1 = waagerecht → wir blättern, die Schiene folgt dem Finger
+  //   axis 2 = senkrecht ODER waagerecht scrollbarer Inhalt → der Browser scrollt
+  //
+  // Ausgelöst wird beim Loslassen über Strecke ODER Tempo: Ein kurzer, schneller
+  // Flick zählt genauso wie ein langes Ziehen – sonst fühlt sich die Geste
+  // schwerfällig an, weil kurze Wische unter der Strecken-Schwelle verpuffen.
+  var tStartX = 0, tStartY = 0, tStartTime = 0, tDelta = 0, tAxis = 0, tActive = false;
+
+  function dragOff() {
+    dragStop();
+    tActive = false; tAxis = 0; tDelta = 0;
+  }
+
+  document.addEventListener("touchstart", function (e) {
+    if (e.touches.length !== 1) { if (tActive) { dragOff(); render(); } return; }
+    tActive = true; tAxis = 0; tDelta = 0;
+    tStartX = e.touches[0].clientX;
+    tStartY = e.touches[0].clientY;
+    tStartTime = e.timeStamp;
   }, { passive: true });
-  deck.addEventListener("touchend", function (e) {
-    if (!tracking) return;
-    tracking = false;
-    var touch = e.changedTouches[0];
-    var dx = touch.clientX - startX;
-    var dy = touch.clientY - startY;
-    if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy)) return;
-    go(dx < 0 ? index + 1 : index - 1);
+
+  document.addEventListener("touchmove", function (e) {
+    if (!tActive) return;
+    if (e.touches.length !== 1) { dragOff(); render(); return; }   // Pinch o. Ä.
+    var dx = e.touches[0].clientX - tStartX;
+    var dy = e.touches[0].clientY - tStartY;
+
+    if (tAxis === 0) {
+      if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;             // noch unentschieden
+      if (Math.abs(dx) <= Math.abs(dy)) { tAxis = 2; return; }      // senkrecht
+      if (scrollsHorizontally(e.target, -dx)) { tAxis = 2; return; } // Inhalt scrollt
+      tAxis = 1;
+      dragStart();
+    }
+    if (tAxis !== 1) return;
+
+    tDelta = dx;
+    dragTo(dx);
+    e.preventDefault();
+  }, { passive: false });
+
+  document.addEventListener("touchend", function (e) {
+    if (!tActive) return;
+    if (tAxis !== 1) { dragOff(); return; }
+    var dx = tDelta;
+    var dt = e.timeStamp - tStartTime;
+    var weit = Math.abs(dx) > dragSchwelle();
+    var flink = dt < 300 && Math.abs(dx) > 40;
+    var ziel = index;
+    if (weit || flink) ziel = dx < 0 ? index + 1 : index - 1;
+    dragOff();
+    if (ziel !== index) go(ziel); else render();   // sonst zurückrasten
+  }, { passive: true });
+
+  document.addEventListener("touchcancel", function () {
+    if (!tActive) return;
+    var war = tAxis === 1;
+    dragOff();
+    if (war) render();
   }, { passive: true });
 })();

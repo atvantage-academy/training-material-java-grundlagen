@@ -55,15 +55,15 @@
 <head>
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Prozedurale Logik nach Java übertragen · Java SE (ATVANTAGE Academy)</title>
-<meta name="description" content="Übertrage vertraute prozedurale Konstrukte in gültige Java-Syntax."><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="description" content="Übertrage vertraute prozedurale Konstrukte in gültige Java-Syntax – an einer Methode, die den Durchschnitt berechnet."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786724525"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786724525">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786724525">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786724525">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786724525"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786724525">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786724525" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786724525" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786724525">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786738064"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786738064">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786738064">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786738064">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786738064"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786738064">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786738064" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786738064" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786738064">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -77,8 +77,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786724525">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786724525"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786738064">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786738064"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -98,7 +98,7 @@
   </nav>
 </header>
 <section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Prozedurale Logik nach Java übertragen</span></nav><div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 50 Minuten</span><span class="avd-academy-tag">Java-Syntax</span><span class="avd-academy-tag">Banking</span>
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 50 Minuten</span><span class="avd-academy-tag">Java-Syntax</span><span class="avd-academy-tag">Methoden</span>
       </div>
       <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
               data-avd-academy-copy-md="#avd-academy-md-source"
@@ -115,7 +115,9 @@
 <blockquote>
   <p><strong>Hinweis:</strong> Die Visualisierung <em>Java-Syntax auf einen Blick</em> (rechts unter
 „Weiterführende Informationen“) fasst Datentypen, Schreibweisen, Typumwandlung,
-Methoden und Kontrollstrukturen zum Nachschlagen zusammen.</p>
+Methoden und Kontrollstrukturen zum Nachschlagen zusammen. Hier steht bewusst
+<strong>keine</strong> fertige Lösung – schreib den Code selbst und schlag nach, wenn Du
+hängst.</p>
 </blockquote>
 
 <h2 id="lernziele">Lernziele</h2>
@@ -123,80 +125,89 @@ Methoden und Kontrollstrukturen zum Nachschlagen zusammen.</p>
 <p>Die Lernenden…</p>
 
 <ul>
-  <li>deklarieren Variablen mit passenden primitiven Datentypen und nutzen Kontrollstrukturen in Java.</li>
   <li>schreiben eine Methode mit Parametern und Rückgabewert und rufen sie auf.</li>
+  <li>nutzen eine Schleife und eine Bedingung, um über ein Array zu laufen.</li>
   <li>benennen die Signatur einer Methode und überladen sie.</li>
-  <li>wandeln Typen bewusst um und setzen dort einen Cast, wo er nötig ist.</li>
+  <li>erklären, warum die Division zweier <code>int</code>-Werte nicht den erwarteten Durchschnitt liefert, und setzen den Cast an der richtigen Stelle.</li>
+  <li>geben Ergebnisse mit <code>System.out.println(…)</code> aus.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt eine Methode <code>sumCents(int[] amounts)</code>, die eine Summe berechnet und zurückgibt.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt eine Methode, die ein <code>int[]</code> entgegennimmt und den Durchschnitt seiner Werte als <code>double</code> zurückgibt.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt eine zweite, <strong>überladene</strong> Methode gleichen Namens mit einem zusätzlichen Parameter: Sie liefert diesen Wert zurück, wenn das Array leer ist.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Eine Schleife und eine Bedingung kommen sinnvoll zum Einsatz.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der Zinsbetrag wird aus einem <code>double</code> auf ganze Cent umgewandelt.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt zwei überladene Varianten von <code>format</code>.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>main</code> ruft die Methoden auf und gibt die Ergebnisse aus.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>main</code> ruft beide Varianten auf – auch einmal mit einem leeren Array – und gibt die Ergebnisse aus.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
 <h2 id="arbeitsschritte">Arbeitsschritte</h2>
 
-<h3 id="eine-methode-schreiben">Eine Methode schreiben</h3>
+<h3 id="den-durchschnitt-berechnen">Den Durchschnitt berechnen</h3>
 
-<p>Schreibe eine statische Methode, die ein <code>int[]</code> mit Cent-Beträgen aufsummiert.</p>
-
-<pre><code class="language-java">static int sumCents(int[] amounts) {
-  int sum = 0;
-  for (int a : amounts) {
-    sum += a;
-  }
-  return sum;
-}
-</code></pre>
+<p>Schreibe eine statische Methode, die ein <code>int[]</code> entgegennimmt und den Durchschnitt
+seiner Werte zurückgibt. Überleg Dir zuerst, welchen <strong>Rückgabetyp</strong> das Ergebnis
+braucht – der Durchschnitt ganzer Zahlen ist selten wieder eine ganze Zahl.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Beträge als ganze Cent (<code>int</code>) zu führen vermeidet Rundungsfehler von
-<code>float</code>/<code>double</code> – ein Muster, das später die Klasse <code>Money</code> aufgreift. Die Anzahl der
-Elemente liefert <code>amounts.length</code> – beim Array ohne Klammern.</p>
+  <p><strong>Hinweis:</strong> Die Anzahl der Elemente liefert <code>values.length</code> – beim Array ohne
+Klammern, anders als <code>length()</code> beim <code>String</code>. Über die Elemente kommst Du mit
+einer klassischen <code>for</code>-Schleife oder mit <code>for-each</code>.</p>
 </blockquote>
-
-<h3 id="eine-bedingung-ergänzen">Eine Bedingung ergänzen</h3>
-
-<p>Gib je nach Summe eine unterschiedliche Meldung aus (z. B. „im Plus“ / „ausgeglichen“ / „im Minus“). Probiere für den einfachen Fall auch den Bedingungsoperator <code>?:</code> aus.</p>
-
-<h3 id="den-zinsbetrag-umwandeln">Den Zinsbetrag umwandeln</h3>
-
-<p>Berechne aus dem Saldo einen Zinsbetrag als <code>double</code> und wandle ihn in ganze Cent um.</p>
-
-<pre><code class="language-java">final double ZINSSATZ = 0.015;
-double zins = sumCents(amounts) * ZINSSATZ;
-int zinsCent = (int) zins;   // schneidet ab, rundet nicht
-</code></pre>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Lass den Cast testweise weg und lies die Fehlermeldung des Compilers.</p>
+  <p><strong>Achtung, Stolperstein:</strong> Teilst Du zwei <code>int</code>-Werte, rechnet Java <strong>ganzzahlig</strong>
+und schneidet den Rest ab – <code>7 / 2</code> ergibt <code>3</code>, nicht <code>3.5</code>. Probiere es zuerst
+falsch aus, sieh Dir das Ergebnis an und setze dann den Cast an der Stelle, an der
+er wirkt.</p>
 </blockquote>
+
+<h3 id="den-leeren-sonderfall-behandeln">Den leeren Sonderfall behandeln</h3>
+
+<p>Was passiert, wenn das Array leer ist? Probiere es aus und sieh Dir an, was Dein
+Programm tut. Fange den Fall dann mit einer Bedingung ab.</p>
 
 <h3 id="die-methode-überladen">Die Methode überladen</h3>
 
-<p>Schreibe eine Methode <code>format(int cents)</code>, die einen Betrag lesbar ausgibt, und daneben eine zweite Variante <code>format(int cents, String waehrung)</code>, die zusätzlich die Währung anhängt.</p>
+<p>Schreibe eine <strong>zweite Methode mit demselben Namen</strong>, die zusätzlich einen
+Standardwert entgegennimmt. Ist das Array leer, gibt sie diesen Wert zurück,
+sonst den berechneten Durchschnitt.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Beide heißen gleich und unterscheiden sich nur in der Parameterliste – genau
-das ist Überladen. Ein anderer Rückgabetyp allein würde dafür nicht genügen.</p>
+  <p><strong>Hinweis:</strong> Beide Methoden heißen gleich und unterscheiden sich nur in der
+Parameterliste – genau das ist Überladen. Ein anderer Rückgabetyp allein würde
+dafür nicht genügen. Ruf am Ende die eine Variante aus der anderen auf, statt die
+Berechnung zu kopieren.</p>
 </blockquote>
 
-<h3 id="die-gültigkeit-im-block-ausprobieren">Die Gültigkeit im Block ausprobieren</h3>
+<h3 id="die-ergebnisse-ausgeben">Die Ergebnisse ausgeben</h3>
 
-<p>Deklariere eine Variable innerhalb eines <code>if</code>-Blocks und versuche, sie nach dem Block zu verwenden. Sieh Dir die Fehlermeldung an und behebe sie.</p>
+<p>Ruf beide Varianten in <code>main</code> auf – mit einem gefüllten und mit einem leeren Array –
+und gib die Ergebnisse aus.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Ausgaben schreibst Du mit <code>System.out.println(…)</code>; die Variante
+<code>System.out.print(…)</code> verzichtet auf den Zeilenumbruch. Mit <code>+</code> hängst Du Text und
+Werte aneinander: <code>System.out.println("Durchschnitt: " + schnitt);</code></p>
+</blockquote>
+
+<h3 id="für-schnelle-einmal-im-debugger-anhalten">Für Schnelle: einmal im Debugger anhalten</h3>
+
+<p>Setze in Deiner Methode einen <strong>Breakpoint</strong> (Klick links neben die Zeilennummer),
+starte das Programm über <em>Debug</em> statt <em>Run</em> und geh mit <em>Step Over</em> Zeile für Zeile
+durch die Schleife. Beobachte, wie sich Summe und Zähler verändern.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Das ist hier nur ein erster Blick auf das Werkzeug – ausführlich
+kommt das Debugging später an der Reihe.</p>
+</blockquote>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
   <li>Was gehört zur Signatur einer Methode – und wodurch unterscheiden sich zwei überladene Methoden?</li>
-  <li>Warum braucht die Umwandlung von <code>double</code> nach <code>int</code> einen Cast, umgekehrt aber nicht?</li>
-  <li>Welche Java-Schreibweise musst Du gegenüber Deiner bisherigen Sprache bewusst anders machen?</li>
+  <li>Warum liefert die Division zweier <code>int</code>-Werte nicht den erwarteten Durchschnitt – und wo genau muss der Cast stehen, damit er hilft?</li>
 </ul>
 
 <textarea id="avd-academy-md-source" hidden aria-hidden="true"># Prozedurale Logik nach Java übertragen
@@ -205,78 +216,83 @@ Als Umsteiger:in möchte ich vertraute Konstrukte wie Variablen, Schleifen und M
 
 &gt; **Hinweis:** Die Visualisierung *Java-Syntax auf einen Blick* (rechts unter
 &gt; „Weiterführende Informationen“) fasst Datentypen, Schreibweisen, Typumwandlung,
-&gt; Methoden und Kontrollstrukturen zum Nachschlagen zusammen.
+&gt; Methoden und Kontrollstrukturen zum Nachschlagen zusammen. Hier steht bewusst
+&gt; **keine** fertige Lösung – schreib den Code selbst und schlag nach, wenn Du
+&gt; hängst.
 
 ## Lernziele
 
 Die Lernenden…
 
-* deklarieren Variablen mit passenden primitiven Datentypen und nutzen Kontrollstrukturen in Java.
 * schreiben eine Methode mit Parametern und Rückgabewert und rufen sie auf.
+* nutzen eine Schleife und eine Bedingung, um über ein Array zu laufen.
 * benennen die Signatur einer Methode und überladen sie.
-* wandeln Typen bewusst um und setzen dort einen Cast, wo er nötig ist.
+* erklären, warum die Division zweier `int`-Werte nicht den erwarteten Durchschnitt liefert, und setzen den Cast an der richtigen Stelle.
+* geben Ergebnisse mit `System.out.println(…)` aus.
 
 ## Definition of Done
 
-* [ ] Es gibt eine Methode `sumCents(int[] amounts)`, die eine Summe berechnet und zurückgibt.
+* [ ] Es gibt eine Methode, die ein `int[]` entgegennimmt und den Durchschnitt seiner Werte als `double` zurückgibt.
+* [ ] Es gibt eine zweite, **überladene** Methode gleichen Namens mit einem zusätzlichen Parameter: Sie liefert diesen Wert zurück, wenn das Array leer ist.
 * [ ] Eine Schleife und eine Bedingung kommen sinnvoll zum Einsatz.
-* [ ] Der Zinsbetrag wird aus einem `double` auf ganze Cent umgewandelt.
-* [ ] Es gibt zwei überladene Varianten von `format`.
-* [ ] `main` ruft die Methoden auf und gibt die Ergebnisse aus.
+* [ ] `main` ruft beide Varianten auf – auch einmal mit einem leeren Array – und gibt die Ergebnisse aus.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
 ## Arbeitsschritte
 
-### Eine Methode schreiben
+### Den Durchschnitt berechnen
 
-Schreibe eine statische Methode, die ein `int[]` mit Cent-Beträgen aufsummiert.
+Schreibe eine statische Methode, die ein `int[]` entgegennimmt und den Durchschnitt
+seiner Werte zurückgibt. Überleg Dir zuerst, welchen **Rückgabetyp** das Ergebnis
+braucht – der Durchschnitt ganzer Zahlen ist selten wieder eine ganze Zahl.
 
-```java
-static int sumCents(int[] amounts) {
-  int sum = 0;
-  for (int a : amounts) {
-    sum += a;
-  }
-  return sum;
-}
-```
+&gt; **Hinweis:** Die Anzahl der Elemente liefert `values.length` – beim Array ohne
+&gt; Klammern, anders als `length()` beim `String`. Über die Elemente kommst Du mit
+&gt; einer klassischen `for`-Schleife oder mit `for-each`.
 
-&gt; **Hinweis:** Beträge als ganze Cent (`int`) zu führen vermeidet Rundungsfehler von
-&gt; `float`/`double` – ein Muster, das später die Klasse `Money` aufgreift. Die Anzahl der
-&gt; Elemente liefert `amounts.length` – beim Array ohne Klammern.
+&gt; **Achtung, Stolperstein:** Teilst Du zwei `int`-Werte, rechnet Java **ganzzahlig**
+&gt; und schneidet den Rest ab – `7 / 2` ergibt `3`, nicht `3.5`. Probiere es zuerst
+&gt; falsch aus, sieh Dir das Ergebnis an und setze dann den Cast an der Stelle, an der
+&gt; er wirkt.
 
-### Eine Bedingung ergänzen
+### Den leeren Sonderfall behandeln
 
-Gib je nach Summe eine unterschiedliche Meldung aus (z. B. „im Plus“ / „ausgeglichen“ / „im Minus“). Probiere für den einfachen Fall auch den Bedingungsoperator `?:` aus.
-
-### Den Zinsbetrag umwandeln
-
-Berechne aus dem Saldo einen Zinsbetrag als `double` und wandle ihn in ganze Cent um.
-
-```java
-final double ZINSSATZ = 0.015;
-double zins = sumCents(amounts) * ZINSSATZ;
-int zinsCent = (int) zins;   // schneidet ab, rundet nicht
-```
-
-&gt; **Hinweis:** Lass den Cast testweise weg und lies die Fehlermeldung des Compilers.
+Was passiert, wenn das Array leer ist? Probiere es aus und sieh Dir an, was Dein
+Programm tut. Fange den Fall dann mit einer Bedingung ab.
 
 ### Die Methode überladen
 
-Schreibe eine Methode `format(int cents)`, die einen Betrag lesbar ausgibt, und daneben eine zweite Variante `format(int cents, String waehrung)`, die zusätzlich die Währung anhängt.
+Schreibe eine **zweite Methode mit demselben Namen**, die zusätzlich einen
+Standardwert entgegennimmt. Ist das Array leer, gibt sie diesen Wert zurück,
+sonst den berechneten Durchschnitt.
 
-&gt; **Hinweis:** Beide heißen gleich und unterscheiden sich nur in der Parameterliste – genau
-&gt; das ist Überladen. Ein anderer Rückgabetyp allein würde dafür nicht genügen.
+&gt; **Hinweis:** Beide Methoden heißen gleich und unterscheiden sich nur in der
+&gt; Parameterliste – genau das ist Überladen. Ein anderer Rückgabetyp allein würde
+&gt; dafür nicht genügen. Ruf am Ende die eine Variante aus der anderen auf, statt die
+&gt; Berechnung zu kopieren.
 
-### Die Gültigkeit im Block ausprobieren
+### Die Ergebnisse ausgeben
 
-Deklariere eine Variable innerhalb eines `if`-Blocks und versuche, sie nach dem Block zu verwenden. Sieh Dir die Fehlermeldung an und behebe sie.
+Ruf beide Varianten in `main` auf – mit einem gefüllten und mit einem leeren Array –
+und gib die Ergebnisse aus.
+
+&gt; **Hinweis:** Ausgaben schreibst Du mit `System.out.println(…)`; die Variante
+&gt; `System.out.print(…)` verzichtet auf den Zeilenumbruch. Mit `+` hängst Du Text und
+&gt; Werte aneinander: `System.out.println(&quot;Durchschnitt: &quot; + schnitt);`
+
+### Für Schnelle: einmal im Debugger anhalten
+
+Setze in Deiner Methode einen **Breakpoint** (Klick links neben die Zeilennummer),
+starte das Programm über *Debug* statt *Run* und geh mit *Step Over* Zeile für Zeile
+durch die Schleife. Beobachte, wie sich Summe und Zähler verändern.
+
+&gt; **Hinweis:** Das ist hier nur ein erster Blick auf das Werkzeug – ausführlich
+&gt; kommt das Debugging später an der Reihe.
 
 ## Reflexionsfragen
 
 * Was gehört zur Signatur einer Methode – und wodurch unterscheiden sich zwei überladene Methoden?
-* Warum braucht die Umwandlung von `double` nach `int` einen Cast, umgekehrt aber nicht?
-* Welche Java-Schreibweise musst Du gegenüber Deiner bisherigen Sprache bewusst anders machen?
+* Warum liefert die Division zweier `int`-Werte nicht den erwarteten Durchschnitt – und wo genau muss der Cast stehen, damit er hilft?
 
 ## Weiterführende Informationen
 
