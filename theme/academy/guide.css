@@ -84,6 +84,36 @@
 }
 .avd-academy-guide-hero--slim h1 { font-size: var(--h1-base, 38px); }
 
+/* Der rechte Bereich wird bei Visualisierungen gar nicht gerendert (default.html).
+   Das Raster ist deshalb EINSPALTIG, und der Inhalt bekommt mehr Breite als im
+   zweispaltigen Layout (~836px) – aber deutlich weniger als die volle Seite.
+
+   Warum 1040px: Für Fließtext gilt der typografische Korridor von 45–75 Zeichen je
+   Zeile (Ideal ~66, Bringhurst). Bei 18px Fließtext (`--text-size: 1.125rem`)
+   entspricht das ca. 580–690px. Eine Visualisierung ist aber kein Fließtext: Sie
+   braucht Platz für Diagramme, Raster und Simulationen. 1040px ist der Mittelweg –
+   gut 200px mehr Raum für Grafik als vorher, und auf einem 1512px-Schirm bleiben
+   je Seite 236px Rand, der Inhalt wirkt also gerahmt statt randlos.
+
+   Der Wert wirkt über den Gutter auch auf den Hero – Hero-Balken und Inhalt bleiben
+   damit auf derselben Kante.
+
+   Kompound-Selektor (beide Klassen, Spezifität 0,2,0), damit die Überschreibung
+   unabhängig von der Quellordnung gegen `.avd-academy-guide` (0,1,0) gewinnt. */
+.avd-academy-guide.avd-academy-guide--viz { --avd-academy-guide-max: 1040px; }
+.avd-academy-guide--viz .avd-academy-guide-layout {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+}
+/* Der Hero-Titel ist regulär auf 900px begrenzt – eine Lesebreite, die zur ~836px
+   schmalen Inhaltsspalte des zweispaltigen Layouts passt und dort nie auffällt.
+   In dieser Ansicht läuft der Inhalt auf 1040px; die Kappung ließe den Titel 140px
+   früher enden und damit sichtbar nicht mehr bündig mit dem Inhalt stehen. Hier
+   also aufheben: Hero-Titel und Inhalt teilen dieselbe Box.
+   Spezifität 0,2,1 gegen die Basisregel 0,1,1 – gewinnt unabhängig von der
+   Quellordnung. */
+.avd-academy-guide--viz .avd-academy-guide-hero h1 { max-width: none; }
+
 /* --- Tag-Pillen ----------------------------------------------------------- */
 .avd-academy-tag {
   display: inline-block;

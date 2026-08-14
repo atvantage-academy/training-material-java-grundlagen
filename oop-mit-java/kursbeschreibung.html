@@ -11,8 +11,10 @@
   siehe guide.html; beides rendert dieselbe Guide-Ansicht)
 
   `layout: visualization` (siehe visualization.html) rendert dieselbe Seite OHNE
-  obere Navigation (Meta-Leiste + Kopfzeile/TopNav) und OHNE Brotkrumen, mit einem
-  schmaleren Hero-Balken – für eigenständige Visualisierungen/Simulationen.
+  obere Navigation (Meta-Leiste + Kopfzeile/TopNav), OHNE Brotkrumen und OHNE den
+  rechten Bereich (Inhaltsverzeichnis, Fortschritt, Ressourcen – auch bei gesetztem
+  `resources`), mit schmalerem Hero-Balken und breiterem, zentriertem Inhalt – für
+  eigenständige Visualisierungen/Simulationen.
 
   Alle Front-Matter-Felder sind OPTIONAL (Convention over Configuration). Nur der
   Titel ist faktisch erforderlich – als `title:` ODER als erste `#`-Überschrift:
@@ -37,8 +39,16 @@
                                        der `index.md` gesetzt wird sie vererbt.
     zurueck / weiter: {title, url}  → explizite Prev/Next-Links (sonst automatisch)
 
-  „Markdown kopieren“ (Button im Hero) erscheint auf allen Markdown-Seiten
-  (`page.ext == '.md'`), nicht auf reinen HTML-Seiten.
+  „Markdown kopieren“ (Button im Hero) erscheint NUR auf Guides (Übungen,
+  Anleitungen) – dort ist das Übernehmen des Quelltexts der Zweck. Bedingungen:
+  Markdown-Seite (`.md`, nicht reines HTML) UND als Guide erkennbar UND keine
+  Visualisierung. Guide ist eine Seite mit `layout: guide` ODER gesetztem
+  `duration` – letzteres ist der etablierte Marker (er schaltet auch die
+  nummerierten Arbeitsschritte und Prev/Next frei), und die Guide-Vorlage des
+  Themes wie auch die von didaktikon erzeugten Übungen nutzen `layout: default`
+  plus `duration`. Nur auf `layout: guide` zu prüfen würde den Button dort
+  entfernen. Doku-Seiten haben kein `duration`; Visualisierungen sind
+  ausgeschlossen, weil ihr Inhalt nicht sinnvoll als Markdown kopierbar ist.
 -->
 <html lang="de">
 <head>
@@ -47,13 +57,13 @@
 <title>Kursbeschreibung · Java SE (ATVANTAGE Academy)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786686980"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786686980">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786686980">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786686980">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786686980"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786686980">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786686980" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786686980" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786686980">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786694425"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786694425">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786694425">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786694425">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786694425"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786694425">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786694425" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786694425" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786694425">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -65,8 +75,8 @@
 </script>
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786686980">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786686980"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786694425">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786694425"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -88,9 +98,6 @@
 <section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/">Home</a><span>/</span><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Kursbeschreibung</span></nav><div class="avd-academy-guide-hero__meta">
       <div class="avd-academy-guide-hero__tags">
       </div>
-      <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
-              data-avd-academy-copy-md="#avd-academy-md-source"
-              title="Markdown kopieren" aria-label="Markdown kopieren"></button>
     </div><h1>Kursbeschreibung</h1>
   </section>
 
@@ -174,82 +181,12 @@ Java-Aufbaukurs später aufsetzt.</p>
   <li>Integrationsprojekt: Konzepte der Woche kombiniert anwenden</li>
   <li>Ausblick &amp; nächste Schritte (Java-Aufbau: Lambdas/Streams, moderne Sprachfeatures)</li>
 </ul>
-<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Objektorientierte Programmierung mit Java
 
-## Zielgruppe
-
-Entwickler:innen mit **prozeduralen Programmierkenntnissen** (Sprache egal — z. B.
-C, COBOL, PL/I, PL/SQL, Basic), die **erstmals objektorientiert** und in **Java**
-arbeiten. Kontrollstrukturen, Variablen und Funktionen sind vertraut;
-Objektorientierung ist neu.
-
-## Überblick
-
-Der Sprung von prozeduraler zu objektorientierter Programmierung ist kein neuer
-Dialekt, sondern eine neue Denkweise: Statt Daten und Funktionen getrennt zu
-betrachten, modellierst Du die Welt als zusammenspielende **Objekte** mit Zustand
-und Verhalten. In fünf Tagen wechselst Du dieses Denken ein — vom ersten
-Java-Programm über die tragenden OO-Konzepte bis zu einem kleinen eigenen Projekt.
-Breite vor Tiefe: Du lernst das gesamte Fundament kennen, auf dem der
-Java-Aufbaukurs später aufsetzt.
-
-## Lernziele
-
-Die Lernenden…
-
-- richten eine Java-Entwicklungsumgebung ein, kompilieren und starten ein eigenes Programm.
-- übertragen prozedurale Konstrukte (Variablen, Kontrollfluss, Methoden) in Java-Syntax.
-- erstellen eigene Klassen mit Feldern, Methoden und Konstruktoren und erzeugen daraus Objekte.
-- kapseln den Zustand von Objekten über Sichtbarkeiten und begründen ihre Aufteilung von Verantwortlichkeiten.
-- setzen Vererbung, Polymorphie und Interfaces zur Wiederverwendung und Abstraktion ein und grenzen die drei Konzepte voneinander ab.
-- behandeln Fehlerfälle mit Ausnahmen und wählen für gegebene Daten eine passende Collection (mit Generics) aus.
-- führen die Konzepte der Woche in einem kleinen Programm zusammen und prüfen zentrale Teile mit JUnit-Tests.
-
-## Agenda (5 Tage)
-
-### Tag 1: Ankommen in Java
-
-- Einführung in Java: Entstehung, Eigenschaften, JVM/Plattform, Versionen (LTS), „Write once, run anywhere&quot;
-- Ökosystem im Überblick: JDK, IDE, Kompilieren &amp; Ausführen, Bytecode
-- Java-Syntax für Umsteiger: Variablen, Typen, Operatoren, Kontrollfluss, Methoden
-- Erstes lauffähiges Programm
-
-### Tag 2: Vom Prozeduralen zum Objekt
-
-- Motivation: Grenzen prozeduraler Strukturierung — warum Objektorientierung?
-- Klassen &amp; Objekte: Zustand (Felder) und Verhalten (Methoden), Konstruktoren
-- Kapselung: Sichtbarkeiten, Zugriff, Verantwortlichkeiten
-- Objektbeziehungen: Referenzen, Assoziation und Komposition
-
-### Tag 3: Wiederverwendung &amp; Abstraktion
-
-- Vererbung: Ober-/Unterklassen, Überschreiben, `super`
-- Polymorphie: dynamische Bindung, Programmieren gegen Typen statt Implementierungen
-- Abstraktion: abstrakte Klassen und Interfaces
-- `Object`-Grundlagen (`toString`/`equals`/`hashCode`) im Überblick
-
-### Tag 4: Robuste Programme
-
-- Ausnahmebehandlung: `try`/`catch`/`finally`, checked vs. unchecked, eigene Exceptions
-- Collections-Framework: `List`, `Set`, `Map` — die passende Struktur wählen
-- Generics: typsichere Container verstehen und nutzen
-
-### Tag 5: Zusammenspiel &amp; Praxis
-
-- Build &amp; Ökosystem: Maven-Grundlagen, Projektstruktur, Bibliotheken einbinden
-- Qualität: Testen mit JUnit im Überblick, Debugging
-- Integrationsprojekt: Konzepte der Woche kombiniert anwenden
-- Ausblick &amp; nächste Schritte (Java-Aufbau: Lambdas/Streams, moderne Sprachfeatures)</textarea>
     </main>
-
     <aside class="avd-academy-guide-sidebar">
       <div class="avd-academy-guide-side avd-academy-guide-side--toc" data-avd-academy-toc-box hidden>
         <div class="avd-academy-guide-side__label">Auf dieser Seite</div>
         <nav class="avd-academy-toc" data-avd-academy-toc aria-label="Inhaltsverzeichnis"></nav>
-      </div><div class="avd-academy-guide-side avd-academy-guide-side--bordered" data-avd-academy-progress hidden>
-        <div class="avd-academy-guide-side__label">Fortschritt</div>
-        <div class="avd-academy-progress__bar"><div class="avd-academy-progress__fill"></div></div>
-        <div class="avd-academy-progress__text"></div>
       </div>
     </aside>
   </div><div class="avd-academy-print-contact" aria-hidden="true">

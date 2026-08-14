@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<!--
+  ATVANTAGE-Academy – EINZIGES Seitenlayout (Jekyll)
+  --------------------------------------------------
+  Ein Layout für alles: allgemeine Doku-Seiten UND Guides (Übungen/Anleitungen).
+  Optik nach der ATVANTAGE-Website: Meta-Nav, weiße sticky Kopfzeile, Hero-Band,
+  zweispaltig mit rechter Sidebar (automatisches Inhaltsverzeichnis, Fortschritt
+  aus Task-Listen, weiterführende Ressourcen). Überschriften ohne Emoji-Icons.
+
+  Verwendung im Front Matter:  layout: default   (oder `layout: guide` – Alias,
+  siehe guide.html; beides rendert dieselbe Guide-Ansicht)
+
+  `layout: visualization` (siehe visualization.html) rendert dieselbe Seite OHNE
+  obere Navigation (Meta-Leiste + Kopfzeile/TopNav), OHNE Brotkrumen und OHNE den
+  rechten Bereich (Inhaltsverzeichnis, Fortschritt, Ressourcen – auch bei gesetztem
+  `resources`), mit schmalerem Hero-Balken und breiterem, zentriertem Inhalt – für
+  eigenständige Visualisierungen/Simulationen.
+
+  Alle Front-Matter-Felder sind OPTIONAL (Convention over Configuration). Nur der
+  Titel ist faktisch erforderlich – als `title:` ODER als erste `#`-Überschrift:
+
+    title:       "…"                → sonst erste #-Überschrift (eins von beiden nötig)
+    description: "…"                → Meta-Description
+    duration:    8                  → Zahl in Minuten → Hero-Tag „ca. 8 Minuten“
+                                       (ungefähre LESEDAUER; bei Guides/Übungen die
+                                       Dauer der Übung). Aktiviert zugleich die
+                                       automatische Prev/Next-Navigation zwischen
+                                       gleichartigen Geschwister-Seiten.
+    topics:      ["Cloud & DevOps"] → weitere Hero-Tags
+    resources:   [{titel, url, icon}, …] → Sidebar-Karte „Weiterführende Informationen“.
+                                       titel und/oder icon (Bildpfad); icon erscheint
+                                       rechts und wird kreisrund dargestellt.
+    breadcrumb:                     → Brotkrumen anpassen (beides optional):
+      label: "…"                    → überschreibt den Ordnernamen dieser Ebene;
+                                       in der Ordner-`index.md` gesetzt gilt es für
+                                       ALLE Seiten im Ordner und in Unterordnern.
+      path: [{title, url}, …]       → explizite Vorfahren-Kette OHNE die aktuelle
+                                       Seite (diese wird automatisch angehängt); in
+                                       der `index.md` gesetzt wird sie vererbt.
+    zurueck / weiter: {title, url}  → explizite Prev/Next-Links (sonst automatisch)
+
+  „Markdown kopieren“ (Button im Hero) erscheint NUR auf Guides (Übungen,
+  Anleitungen) – dort ist das Übernehmen des Quelltexts der Zweck. Bedingungen:
+  Markdown-Seite (`.md`, nicht reines HTML) UND als Guide erkennbar UND keine
+  Visualisierung. Guide ist eine Seite mit `layout: guide` ODER gesetztem
+  `duration` – letzteres ist der etablierte Marker (er schaltet auch die
+  nummerierten Arbeitsschritte und Prev/Next frei), und die Guide-Vorlage des
+  Themes wie auch die von didaktikon erzeugten Übungen nutzen `layout: default`
+  plus `duration`. Nur auf `layout: guide` zu prüfen würde den Button dort
+  entfernen. Doku-Seiten haben kein `duration`; Visualisierungen sind
+  ausgeschlossen, weil ihr Inhalt nicht sinnvoll als Markdown kopierbar ist.
+-->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Java-Syntax auf einen Blick · Java SE (ATVANTAGE Academy)</title>
+<meta name="description" content="Kompakte Übersicht der Java-Grundsyntax: Einstieg über main, primitive Datentypen, Variablen, Strings und Arrays, Typumwandlung, Methoden und Kontrollstrukturen."><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786694425"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786694425">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786694425">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786694425">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786694425"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786694425">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786694425" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786694425" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786694425">
+<script type="module">
+  const _hlbase = "/training-material-java-se/theme/academy/hljs/";
+  Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
+    .then(([core, java]) => {
+      const hljs = core.default;
+      hljs.registerLanguage("java", java.default);
+      document.querySelectorAll("pre code.language-java").forEach((el) => hljs.highlightElement(el));
+    });
+</script>
+<link rel="icon" href="/training-material-java-se/theme/atvantage/assets/logo-orange.svg">
+
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786694425">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786694425"></head><body class="avd-academy-guide avd-academy-guide--viz">
+  <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a><section class="avd-academy-guide-hero avd-academy-guide-hero--slim"><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags">
+      </div>
+    </div><h1>Java-Syntax auf einen Blick</h1>
+  </section>
+
+  <div class="avd-academy-guide-layout">
+    <main class="avd-academy-guide-main" id="avd-academy-content">
+      
+<style>
+.jsg-root{max-width:72rem;margin-inline:auto;}
+.jsg-lead{max-width:48rem;opacity:.85;margin:0 0 2rem;}
+h1.jsg-has-print{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
+.jsg-print-btn{flex:none;margin-left:auto;display:inline-flex;align-items:center;justify-content:center;width:2.5rem;height:2.5rem;padding:0;border:1px solid var(--avd-academy-color-border,#ccc);border-radius:var(--radius,5px);background:transparent;color:inherit;cursor:pointer;opacity:.75;transition:opacity .15s,border-color .15s,color .15s;}
+.jsg-print-btn:hover{opacity:1;border-color:var(--color-orange,#FF5401);color:var(--color-orange,#FF5401);}
+.jsg-print-btn svg{width:1.25rem;height:1.25rem;}
+
+.jsg-sec{margin:0 0 2.75rem;}
+.jsg-sec > h2{display:flex;align-items:baseline;gap:.7rem;margin:0 0 1rem;font-size:1.45rem;line-height:1.2;border-bottom:1px solid var(--avd-academy-color-border,#e2e2e2);padding-bottom:.5rem;}
+.jsg-num{flex:none;display:inline-flex;align-items:center;justify-content:center;width:1.9rem;height:1.9rem;border-radius:var(--radius,5px);background:var(--avd-slate,#303E4F);color:#fff;font-size:.9rem;font-weight:700;}
+.jsg-note{margin:.9rem 0 0;font-size:.92rem;opacity:.85;}
+.jsg-note strong{color:var(--color-orange,#FF5401);}
+
+.jsg-table-wrap{overflow-x:auto;}
+.jsg-table{width:100%;border-collapse:collapse;font-size:.88rem;}
+.jsg-table th,.jsg-table td{text-align:left;vertical-align:top;padding:.5rem .7rem;border-bottom:1px solid var(--avd-academy-color-border,#e2e2e2);}
+.jsg-table th{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;opacity:.75;white-space:nowrap;}
+.jsg-table td:first-child{white-space:nowrap;font-weight:700;color:var(--color-orange,#FF5401);}
+.jsg-table code{white-space:nowrap;}
+.jsg-num-col{white-space:nowrap;}
+
+.jsg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(19rem,1fr));gap:1.1rem;}
+.jsg-card{background:var(--avd-academy-color-bg-subtle,var(--color-surface-card,#EDEDED));border:1px solid var(--avd-academy-color-border,#e2e2e2);border-radius:var(--radius,5px);padding:1rem 1.15rem;}
+.jsg-card--wide{grid-column:1/-1;}
+.jsg-card h3{margin:0 0 .5rem;font-size:1rem;line-height:1.25;}
+.jsg-card p{margin:0 0 .6rem;font-size:.88rem;opacity:.85;}
+.jsg-card p:last-child{margin-bottom:0;}
+.jsg-card pre{margin:0;overflow-x:auto;}
+.jsg-card pre + p{margin-top:.6rem;}
+.jsg-tag{display:inline-block;margin-left:.4rem;padding:.05rem .45rem;font-size:.6rem;font-weight:800;letter-spacing:.08em;vertical-align:middle;color:#fff;background:var(--color-orange,#FF5401);border-radius:999px;}
+.jsg-root pre code.hljs{border-radius:var(--radius-dark,8px);font-size:.8rem;line-height:1.5;}
+
+@media print{
+  .jsg-print-btn{display:none !important;}
+  .jsg-root{max-width:none;}
+  .jsg-lead{font-size:10.5pt;opacity:1;}
+  .jsg-sec{break-inside:auto;margin:0 0 14pt;}
+  .jsg-sec > h2{font-size:14pt;margin:0 0 6pt;padding-bottom:3pt;border-bottom:2px solid var(--color-orange,#FF5401);break-after:avoid;}
+  .jsg-num{width:auto;height:auto;background:transparent !important;color:#000 !important;font-size:14pt;}
+  .jsg-table{font-size:8.5pt;}
+  .jsg-table th,.jsg-table td{padding:2pt 4pt;}
+  .jsg-table td:first-child{color:#000 !important;}
+  .jsg-grid{display:block;}
+  .jsg-card{break-inside:avoid;background:transparent !important;border:none !important;padding:0 !important;margin:0 0 9pt;}
+  .jsg-card h3{font-size:10.5pt;margin:0 0 2pt;}
+  .jsg-card p{font-size:9pt;margin:0 0 3pt;opacity:1;}
+  .jsg-note{font-size:9pt;opacity:1;margin-top:5pt;}
+  .jsg-note strong{color:#000 !important;}
+  .jsg-tag{color:#000 !important;background:transparent !important;border:1px solid #000;}
+  .jsg-root pre,.jsg-root pre code,.jsg-root pre code *{color:#000 !important;background:transparent !important;}
+  .jsg-root pre{white-space:pre-wrap;word-break:break-word;font-size:8pt;border:none !important;padding:2pt 0 !important;margin:0;break-inside:avoid;}
+}
+</style>
+
+<div class="jsg-root">
+
+<p class="jsg-lead">Die Java-Grundsyntax auf wenigen Seiten: Womit rechnet Java, wie schreibst Du Variablen, Methoden und Kontrollstrukturen — und was passiert beim Umwandeln von Typen? Gedacht als Nachschlagewerk beim Übertragen vertrauter Konstrukte in Java.</p>
+
+<section class="jsg-sec" id="main">
+<h2><span class="jsg-num">1</span> Jedes Programm startet in <code>main</code></h2>
+
+<div class="jsg-grid">
+<div class="jsg-card">
+<h3>Die klassische Schreibweise</h3>
+<pre><code class="language-java">public class HelloWorld {
+
+    // Einstiegspunkt: hier startet die JVM
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}</code></pre>
+<p>Der Dateiname muss zum Klassennamen passen: <code>HelloWorld.java</code>. Die JVM sucht beim Start genau diese Methode — <code>public static void main(String[])</code>. In <code>args</code> stehen die Argumente von der Kommandozeile.</p>
+</div>
+<div class="jsg-card">
+<h3>Die verkürzte Schreibweise <span class="jsg-tag">ab Java 25</span></h3>
+<pre><code class="language-java">void main() {
+    IO.println("Hello, World!");
+}</code></pre>
+<p>Seit <strong>Java 25</strong> (16. September 2025) darf eine Quelldatei ohne Klasse auskommen, <code>main</code> weder <code>public</code> noch <code>static</code> sein und die Parameterliste entfallen; <code>IO.println</code> steht ohne Import bereit. Von Java 21 bis 24 gab es das nur als Vorschau-Feature. Gedacht für kleine Programme und den Einstieg — in diesem Kurs bleiben wir bei der klassischen Form.</p>
+</div>
+</div>
+</section>
+
+<section class="jsg-sec" id="primitive">
+<h2><span class="jsg-num">2</span> Primitive Datentypen</h2>
+
+<div class="jsg-table-wrap">
+<table class="jsg-table">
+<thead>
+<tr><th>Typ</th><th class="jsg-num-col">Größe</th><th>Wertebereich</th><th>Beispiele</th></tr>
+</thead>
+<tbody>
+<tr><td>boolean</td><td class="jsg-num-col">nicht festgelegt</td><td><code>true</code> oder <code>false</code></td><td><code>boolean ok = true;</code></td></tr>
+<tr><td>byte</td><td class="jsg-num-col">8 Bit</td><td>−128 … 127</td><td><code>byte b = -128;</code></td></tr>
+<tr><td>short</td><td class="jsg-num-col">16 Bit</td><td>−32.768 … 32.767</td><td><code>short s = 30_000;</code></td></tr>
+<tr><td>char</td><td class="jsg-num-col">16 Bit</td><td>0 … 65.535 (eine Unicode-Codeeinheit, vorzeichenlos)</td><td><code>'A'</code> · <code>'ä'</code> · <code>'\u00e4'</code> · <code>'\n'</code></td></tr>
+<tr><td>int</td><td class="jsg-num-col">32 Bit</td><td>−2.147.483.648 … 2.147.483.647</td><td><code>42</code> · <code>0x2A</code> · <code>0b101010</code> · <code>052</code></td></tr>
+<tr><td>long</td><td class="jsg-num-col">64 Bit</td><td>−9.223.372.036.854.775.808 … 9.223.372.036.854.775.807</td><td><code>9_000_000_000L</code></td></tr>
+<tr><td>float</td><td class="jsg-num-col">32 Bit</td><td>ca. ±3,4·10<sup>38</sup>, ca. 7 signifikante Stellen</td><td><code>3.14f</code> · <code>1.5e3f</code></td></tr>
+<tr><td>double</td><td class="jsg-num-col">64 Bit</td><td>ca. ±1,8·10<sup>308</sup>, ca. 15 signifikante Stellen</td><td><code>3.14</code> · <code>1e-9</code></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="jsg-grid" style="margin-top:1.2rem">
+<div class="jsg-card">
+<h3>Ganzzahl-Literale: vier Schreibweisen</h3>
+<pre><code class="language-java">int dezimal = 42;
+
+// hexadezimal, Präfix 0x → 42
+int hexadezimal = 0x2A;
+
+// binär, Präfix 0b → 42
+int binaer = 0b101010;
+
+// oktal, führende 0 → 42
+int oktal = 052;
+
+// Unterstriche als Trenner, nur fürs Auge
+int lesbar = 1_000_000;</code></pre>
+<p>Alle vier Zeilen erzeugen denselben Wert — nur die Notation unterscheidet sich.</p>
+<p>Ein <strong>Suffix</strong> legt den Typ des Literals fest: <code>9_000_000_000L</code> ist ein <code>long</code> (ohne <code>L</code> wäre es ein zu großes <code>int</code>), <code>3.14f</code> ein <code>float</code> statt eines <code>double</code>.</p>
+</div>
+<div class="jsg-card">
+<h3>Zeichen: <code>char</code> und Escape-Sequenzen</h3>
+<pre><code class="language-java">char a = 'A';
+char umlaut = 'ä';
+
+// Unicode-Escape: dasselbe Zeichen wie 'ä'
+char gleich = '\u00e4';
+
+// Escape-Sequenzen: \t \\ \' \" ebenso
+char zeilenende = '\n';
+
+// char ist eine Zahl: 65
+int code = a;</code></pre>
+<p>Unicode-Escapes stehen für ein Zeichen — auch in Zeichenketten: <code>"Gr\u00fc\u00dfe"</code> ist dasselbe wie <code>"Grüße"</code>.</p>
+</div>
+</div>
+
+<p class="jsg-note"><strong>Merke:</strong> Nachkommastellen mit <code>float</code>/<code>double</code> rechnen binär und runden ungenau — Geldbeträge führt man deshalb als ganze Cent in <code>int</code> oder <code>long</code>.</p>
+</section>
+
+<section class="jsg-sec" id="variablen">
+<h2><span class="jsg-num">3</span> Syntax-Grundlagen</h2>
+
+<div class="jsg-grid">
+<div class="jsg-card">
+<h3>Deklaration von Variablen</h3>
+<pre><code class="language-java">// deklarieren
+int anzahl;
+
+// zuweisen
+anzahl = 3;
+
+// beides in einem Schritt
+int summe = 0;
+
+// Konstante: nur einmal zuweisbar
+final int MAX_KONTEN = 5;
+
+// MAX_KONTEN = 6;  → Fehler, MAX_KONTEN ist final</code></pre>
+<p>Der Typ steht immer <em>vor</em> dem Namen. <code>final</code> heißt: genau einmal zuweisbar — die Variable ist danach eine Konstante.</p>
+</div>
+<div class="jsg-card">
+<h3>Blöcke, Umbrüche, Einrückung</h3>
+<pre><code class="language-java">// { … } fasst Anweisungen zu einem Block zusammen
+if (betrag &gt; 0) {
+    // jede Anweisung endet mit einem Semikolon
+    einzahlen(betrag);
+}
+
+// gleichwertig für den Compiler, nur schlechter zu lesen
+if (betrag &gt; 0) { einzahlen(betrag); }</code></pre>
+<p>Zeilenumbrüche und Einrückung sind dem Compiler egal — sie dienen den Lesenden. Struktur entsteht durch <code>{ }</code> und <code>;</code>.</p>
+</div>
+<div class="jsg-card">
+<h3>Bezeichner: erlaubt ist viel</h3>
+<pre><code class="language-java">// Umlaute sind erlaubt
+int zähler = 0;
+
+// derselbe Name als Unicode-Escape geschrieben — der
+// Compiler liest in beiden Zeilen „zähler", die Zeile
+// wäre also eine doppelte Deklaration:
+// int z\u00e4hler = 0;
+
+// die Länge ist unbegrenzt
+int anzahlDerOffenenKontenImBestand;
+
+// zwei verschiedene Variablen: Java ist case-sensitive
+int wert, Wert;</code></pre>
+<p>Java ist <strong>case-sensitive</strong>. Namen dürfen Buchstaben (auch Umlaute), Ziffern, <code>_</code> und <code>$</code> enthalten, aber nicht mit einer Ziffer beginnen. Üblich sind <em>lowerCamelCase</em> für Variablen und Methoden, <em>UpperCamelCase</em> für Klassen, <em>GROSS_MIT_UNTERSTRICH</em> für Konstanten.</p>
+</div>
+<div class="jsg-card">
+<h3>Kommentare</h3>
+<pre><code class="language-java">// bis zum Zeilenende
+
+/* über mehrere
+   Zeilen */
+
+/** Javadoc — beschreibt das, was danach kommt. */</code></pre>
+</div>
+</div>
+</section>
+
+<section class="jsg-sec" id="strings-arrays">
+<h2><span class="jsg-num">4</span> Strings und Arrays</h2>
+
+<div class="jsg-grid">
+<div class="jsg-card">
+<h3><code>String</code><span class="jsg-tag">Länge: length()</span></h3>
+<pre><code class="language-java">String iban = "DE02120300000000202051";
+
+// Länge über die Methode length()
+int laenge = iban.length();
+
+// einzelnes Zeichen, zählt ab 0 → 'D'
+char erstes = iban.charAt(0);
+
+// Teilstring → "DE"
+String kurz = iban.substring(0, 2);
+
+// + verkettet Zeichenketten
+String zusammen = "IBAN: " + iban;</code></pre>
+<p>Ein <code>String</code> ist <strong>unveränderlich</strong>: Jede Operation liefert ein neues Objekt, das Original bleibt, wie es war.</p>
+</div>
+<div class="jsg-card">
+<h3>Array<span class="jsg-tag">Länge: length</span></h3>
+<pre><code class="language-java">// drei Elemente, alle mit dem Wert 0
+int[] betraege = new int[3];
+
+// Zugriff über den Index, ab 0
+betraege[0] = 1250;
+
+// length ist ein Feld, keine Methode → 3
+int anzahl = betraege.length;
+
+// direkt mit Werten füllen
+int[] direkt = { 1250, -300, 80 };
+
+// betraege[3] = 1;  → ArrayIndexOutOfBoundsException</code></pre>
+<p>Die Länge steht bei der Erzeugung fest und lässt sich <strong>nicht</strong> ändern. Wer wachsen können muss, nimmt später eine <code>List</code>.</p>
+</div>
+</div>
+
+<p class="jsg-note"><strong>Achtung:</strong> <code>length</code> ohne Klammern gilt für Arrays, <code>length()</code> mit Klammern für <code>String</code> — eine klassische Stolperstelle.</p>
+</section>
+
+<section class="jsg-sec" id="casting">
+<h2><span class="jsg-num">5</span> Typumwandlung: implizit und explizit</h2>
+
+<div class="jsg-grid">
+<div class="jsg-card">
+<h3>Implizit — der Compiler wandelt selbst</h3>
+<pre><code class="language-java">int cent = 1250;
+
+// int → long
+long gross = cent;
+
+// int → double: 1250.0
+double genau = cent;
+
+char c = 'A';
+
+// char → int: 65
+int code = c;</code></pre>
+<p>Erlaubt, solange der Zieltyp <strong>größer</strong> ist und nichts verloren gehen kann: <code>byte → short → int → long → float → double</code>.</p>
+</div>
+<div class="jsg-card">
+<h3>Explizit — Du entscheidest, mit Verlust</h3>
+<pre><code class="language-java">double zins = 12.99;
+
+// schneidet ab, rundet nicht → 12
+int cent = (int) zins;
+
+int gross = 200;
+
+// passt nicht in 8 Bit, Überlauf → -56
+byte klein = (byte) gross;
+
+// int falsch = zins;  → Fehler, der Cast fehlt</code></pre>
+<p>Der Cast <code>(typ)</code> ist Deine Zusicherung, den möglichen Verlust in Kauf zu nehmen.</p>
+</div>
+</div>
+
+<p class="jsg-note"><strong>Merke:</strong> Java wandelt niemals stillschweigend in einen kleineren Typ. Fehlt der Cast, meldet es der Compiler — nicht erst die Laufzeit.</p>
+</section>
+
+<section class="jsg-sec" id="methoden">
+<h2><span class="jsg-num">6</span> Methoden: Signatur, Rückgabe, Überladen</h2>
+
+<div class="jsg-grid">
+<div class="jsg-card">
+<h3>Aufbau und Signatur</h3>
+<pre><code class="language-java">static int sumCents(int[] amounts) {
+    int summe = 0;
+    for (int a : amounts) {
+        summe += a;
+    }
+    // liefert den Wert an den Aufrufer zurück
+    return summe;
+}</code></pre>
+<p>Die <strong>Signatur</strong> ist <em>Name + Parametertypen</em>: <code>sumCents(int[])</code>. Der Rückgabetyp gehört <strong>nicht</strong> dazu.</p>
+</div>
+<div class="jsg-card">
+<h3><code>void</code> oder Rückgabewert</h3>
+<pre><code class="language-java">static void ausgeben(int cent) {
+    System.out.println(cent + " Cent");
+
+    // return;  wäre optional und bricht früher ab
+}
+
+static boolean istPositiv(int cent) {
+    // Pflicht bei jedem Rückgabetyp außer void
+    return cent &gt; 0;
+}</code></pre>
+<p><code>void</code> heißt: liefert nichts zurück. Bei allen anderen Rückgabetypen muss jeder Pfad ein <code>return</code> erreichen.</p>
+</div>
+<div class="jsg-card jsg-card--wide">
+<h3>Überladen (Overloading)</h3>
+<pre><code class="language-java">static String format(int cent) {
+    return cent / 100 + "," + Math.abs(cent % 100);
+}
+
+static String format(int cent, String waehrung) {
+    return format(cent) + " " + waehrung;
+}</code></pre>
+<p>Gleicher Name, <strong>verschiedene Parameterlisten</strong> — also verschiedene Signaturen. Der Compiler wählt anhand der Argumente aus. Ein anderer Rückgabetyp allein genügt <strong>nicht</strong>.</p>
+</div>
+</div>
+</section>
+
+<section class="jsg-sec" id="kontrollstrukturen">
+<h2><span class="jsg-num">7</span> Kontrollstrukturen und Blöcke</h2>
+
+<div class="jsg-grid">
+<div class="jsg-card">
+<h3>Verzweigung und <code>?:</code></h3>
+<pre><code class="language-java">if (saldo &gt; 0) {
+    System.out.println("im Plus");
+} else if (saldo == 0) {
+    System.out.println("ausgeglichen");
+} else {
+    System.out.println("im Minus");
+}
+
+String text = saldo &gt;= 0
+        ? "im Plus"
+        : "im Minus";</code></pre>
+<p>Der Bedingungsoperator <code>?:</code> ist ein <em>Ausdruck</em>: Er liefert einen Wert, statt Anweisungen auszuführen.</p>
+</div>
+<div class="jsg-card">
+<h3><code>switch</code></h3>
+<pre><code class="language-java">switch (kontoart) {
+    case "giro":
+        gebuehr = 0;
+        // ohne break läuft es in den nächsten case weiter!
+        break;
+    case "spar":
+        gebuehr = 100;
+        break;
+    default:
+        gebuehr = 50;
+}</code></pre>
+</div>
+<div class="jsg-card">
+<h3>Zählschleife: klassisches <code>for</code></h3>
+<pre><code class="language-java">for (int i = 0; i &lt; betraege.length; i++) {
+    System.out.println(betraege[i]);
+}</code></pre>
+<p>Start · Bedingung · Fortschaltung — passend, wenn Du den Index brauchst.</p>
+</div>
+<div class="jsg-card">
+<h3>Durchlaufen: <code>for-each</code></h3>
+<pre><code class="language-java">for (int betrag : betraege) {
+    System.out.println(betrag);
+}</code></pre>
+<p>Kürzer und weniger fehleranfällig, wenn der Index egal ist.</p>
+</div>
+<div class="jsg-card">
+<h3>Kopfgesteuert: <code>while</code></h3>
+<pre><code class="language-java">int rest = betrag;
+while (rest &gt; 0) {
+    rest -= abbuchen(rest);
+}</code></pre>
+<p>Prüft <strong>vor</strong> dem ersten Durchlauf — der Rumpf läuft womöglich nie.</p>
+</div>
+<div class="jsg-card">
+<h3>Fußgesteuert: <code>do-while</code></h3>
+<pre><code class="language-java">int versuch = 0;
+do {
+    versuch++;
+} while (versuch &lt; 3);</code></pre>
+<p>Prüft <strong>nach</strong> dem Durchlauf — der Rumpf läuft mindestens einmal.</p>
+</div>
+</div>
+
+<div class="jsg-card" style="margin-top:1.1rem">
+<h3>Gültigkeit: eine Variable lebt nur in ihrem Block</h3>
+<pre><code class="language-java">if (saldo &gt; 0) {
+    int bonus = 10;        // entsteht hier …
+    System.out.println(bonus);
+}                          // … und endet hier
+
+// System.out.println(bonus);   // Fehler: bonus ist unbekannt
+
+for (int i = 0; i &lt; 3; i++) { }
+// System.out.println(i);       // Fehler: i gehört zum for-Block</code></pre>
+<p>Alles zwischen <code>{</code> und <code>}</code> ist ein Block. Was darin deklariert wird, ist außerhalb nicht sichtbar — deshalb wandern Variablen, die länger leben sollen, vor den Block.</p>
+</div>
+</section>
+
+</div>
+
+
+<script>
+  (function () {
+    function addPrintButton() {
+      var h1 = document.querySelector('h1');
+      if (!h1 || h1.querySelector('.jsg-print-btn')) return;
+      h1.classList.add('jsg-has-print');
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'jsg-print-btn';
+      b.title = 'Drucken';
+      b.setAttribute('aria-label', 'Drucken');
+      b.onclick = function () { window.print(); };
+      b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>';
+      h1.appendChild(b);
+    }
+    if (document.readyState !== 'loading') addPrintButton();
+    else document.addEventListener('DOMContentLoaded', addPrintButton);
+  })();
+</script>
+
+
+    </main>
+  </div><div class="avd-academy-print-contact" aria-hidden="true">
+    <span>Kontakt: <a href="mailto:academy@atvantage.com">academy@atvantage.com</a></span>
+    <span><a href="https://www.atvantage.com">ATVANTAGE Academy</a></span>
+  </div>
+
+  <footer class="avd-academy-footer">
+  <div class="avd-academy-footer__grid">
+    <div>
+      <strong>Java SE (ATVANTAGE Academy)</strong>
+      <p>Schulungen im Bereich 'Java SE'</p>
+    </div>
+    <div>
+      <strong>Kontakt</strong>
+      <p><a href="mailto:academy@atvantage.com">academy@atvantage.com</a><br>
+      </p>
+    </div><div>
+      <strong>Weitere Informationen</strong>
+      <p><a href="https://atvantage-academy.github.io/academy-online/" target="_blank" rel="noopener">ATVANTAGE Academy</a></p>
+    </div></div>
+  <div class="avd-academy-footer__legal">
+    © <span data-avd-academy-year>2026</span> ATVANTAGE
+  </div>
+</footer>
+
+</body>
+</html>

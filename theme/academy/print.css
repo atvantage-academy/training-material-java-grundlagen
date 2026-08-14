@@ -6,7 +6,8 @@
      (Dark-Mode/System-Präferenz werden per !important-Token-Reset überstimmt).
    - Screen-Chrome wird ausgeblendet: Meta-Nav, Kopf-Navigation (Burger/Links/
      Theme-Umschalter), Brotkrumen, rechte Sidebar (Inhaltsverzeichnis/Fortschritt/
-     Ressourcen), Prev/Next, Footer, „Markdown kopieren“.
+     Ressourcen), Prev/Next, Footer sowie BEIDE Kopier-Buttons („Markdown kopieren“
+     im Hero und der Button an Code-Blöcken).
    - ERHALTEN bleiben: ATVANTAGE-Logo (Briefkopf), Seitentitel, Inhalt und eine
      Druck-Kontaktzeile (E-Mail + ATVANTAGE-Homepage), die den Footer ersetzt.
 
@@ -46,6 +47,7 @@
   .avd-academy-footer,
   .avd-academy-skip-link,
   .avd-academy-copy-md,
+  .avd-academy-copy,
   [data-avd-academy-toc-box],
   [data-avd-academy-progress] { display: none !important; }
 
