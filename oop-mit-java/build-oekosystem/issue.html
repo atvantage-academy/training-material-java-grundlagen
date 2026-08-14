@@ -51,21 +51,19 @@
   plus `duration`. Nur auf `layout: guide` zu prüfen würde den Button dort
   entfernen. Doku-Seiten haben kein `duration`; Visualisierungen sind
   ausgeschlossen, weil ihr Inhalt nicht sinnvoll als Markdown kopierbar ist.
--->
-<html lang="de">
+--><html lang="de">
 <head>
   <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Java SE (ATVANTAGE Academy)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Das Projekt mit Gradle anlegen und eine Bibliothek einbinden · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Lege für Deinen Code ein Gradle-Projekt an, baue es reproduzierbar und binde eine externe Bibliothek ein."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786695916">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786695916">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786695916">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786695916">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786695916" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786695916" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786695916">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786697809"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786697809">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786697809">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786697809">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786697809"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786697809">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786697809" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786697809" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786697809">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -77,8 +75,8 @@
 </script>
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786695916">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786695916"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786697809">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786697809"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -138,7 +136,7 @@
 
 <h3 id="ein-gradle-projekt-anlegen">Ein Gradle-Projekt anlegen</h3>
 
-<p>Lege ein neues Projekt mit dem Build-System <strong>Gradle</strong> an — über den Projekt-Assistenten Deiner IDE oder auf der Kommandozeile:</p>
+<p>Lege ein neues Projekt mit dem Build-System <strong>Gradle</strong> an – über den Projekt-Assistenten Deiner IDE oder auf der Kommandozeile:</p>
 
 <pre><code class="language-bash">gradle init --type java-application
 </code></pre>
@@ -151,7 +149,7 @@ Standard-Ordner <code>src/main/java</code> und <code>src/test/java</code>.</p>
 
 <h3 id="den-bisherigen-code-übernehmen">Den bisherigen Code übernehmen</h3>
 
-<p>Bring Deine Klassen aus dem bisherigen Projekt nach <code>src/main/java</code> — die Paketstruktur behältst Du bei.</p>
+<p>Bring Deine Klassen aus dem bisherigen Projekt nach <code>src/main/java</code> – die Paketstruktur behältst Du bei.</p>
 
 <blockquote>
   <p><strong>Hinweis:</strong> Dass der Code genau dort liegt, ist Konvention: Gradle findet ihn
@@ -167,7 +165,7 @@ ohne eine einzige Zeile Konfiguration.</p>
 
 <blockquote>
   <p><strong>Hinweis:</strong> Der Wrapper lädt beim ersten Aufruf die passende Gradle-Version aus
-dem Netz — deshalb dauert der erste Build länger. Genau dadurch bauen alle im
+dem Netz – deshalb dauert der erste Build länger. Genau dadurch bauen alle im
 Team mit derselben Version.</p>
 </blockquote>
 
@@ -176,7 +174,7 @@ Team mit derselben Version.</p>
 <p>Sieh Dir die erzeugte Build-Datei an und finde die Java-Version, den <code>repositories</code>- und den <code>dependencies</code>-Block.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Eine Abhängigkeit steht schon drin — die Test-Bibliothek. Die
+  <p><strong>Hinweis:</strong> Eine Abhängigkeit steht schon drin – die Test-Bibliothek. Die
 brauchst Du im nächsten Modul.</p>
 </blockquote>
 
@@ -201,7 +199,7 @@ brauchst Du im nächsten Modul.</p>
 
 <ul>
   <li>Warum ist es besser, Abhängigkeiten zu deklarieren, statt <code>.jar</code>-Dateien manuell abzulegen?</li>
-  <li>Was gehört in die Versionsverwaltung — die Bibliotheken selbst oder die Build-Beschreibung?</li>
+  <li>Was gehört in die Versionsverwaltung – die Bibliotheken selbst oder die Build-Beschreibung?</li>
   <li>Was könnte passieren, wenn zwei Bibliotheken unterschiedliche Versionen derselben Abhängigkeit verlangen?</li>
 </ul>
 
@@ -231,7 +229,7 @@ Die Lernenden…
 
 ### Ein Gradle-Projekt anlegen
 
-Lege ein neues Projekt mit dem Build-System **Gradle** an — über den Projekt-Assistenten Deiner IDE oder auf der Kommandozeile:
+Lege ein neues Projekt mit dem Build-System **Gradle** an – über den Projekt-Assistenten Deiner IDE oder auf der Kommandozeile:
 
 ```bash
 gradle init --type java-application
@@ -243,7 +241,7 @@ gradle init --type java-application
 
 ### Den bisherigen Code übernehmen
 
-Bring Deine Klassen aus dem bisherigen Projekt nach `src/main/java` — die Paketstruktur behältst Du bei.
+Bring Deine Klassen aus dem bisherigen Projekt nach `src/main/java` – die Paketstruktur behältst Du bei.
 
 &gt; **Hinweis:** Dass der Code genau dort liegt, ist Konvention: Gradle findet ihn
 &gt; ohne eine einzige Zeile Konfiguration.
@@ -257,14 +255,14 @@ Baue das Projekt und stelle sicher, dass der Build grün ist.
 ```
 
 &gt; **Hinweis:** Der Wrapper lädt beim ersten Aufruf die passende Gradle-Version aus
-&gt; dem Netz — deshalb dauert der erste Build länger. Genau dadurch bauen alle im
+&gt; dem Netz – deshalb dauert der erste Build länger. Genau dadurch bauen alle im
 &gt; Team mit derselben Version.
 
 ### Die Build-Datei ansehen
 
 Sieh Dir die erzeugte Build-Datei an und finde die Java-Version, den `repositories`- und den `dependencies`-Block.
 
-&gt; **Hinweis:** Eine Abhängigkeit steht schon drin — die Test-Bibliothek. Die
+&gt; **Hinweis:** Eine Abhängigkeit steht schon drin – die Test-Bibliothek. Die
 &gt; brauchst Du im nächsten Modul.
 
 ### Eine Abhängigkeit deklarieren
@@ -286,7 +284,7 @@ Nutze eine Methode der Bibliothek an einer sinnvollen Stelle (z. B. `StringUtils
 ## Reflexionsfragen
 
 * Warum ist es besser, Abhängigkeiten zu deklarieren, statt `.jar`-Dateien manuell abzulegen?
-* Was gehört in die Versionsverwaltung — die Bibliotheken selbst oder die Build-Beschreibung?
+* Was gehört in die Versionsverwaltung – die Bibliotheken selbst oder die Build-Beschreibung?
 * Was könnte passieren, wenn zwei Bibliotheken unterschiedliche Versionen derselben Abhängigkeit verlangen?</textarea>
     </main>
     <aside class="avd-academy-guide-sidebar">

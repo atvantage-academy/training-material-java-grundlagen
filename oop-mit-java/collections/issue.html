@@ -51,21 +51,19 @@
   plus `duration`. Nur auf `layout: guide` zu prüfen würde den Button dort
   entfernen. Doku-Seiten haben kein `duration`; Visualisierungen sind
   ausgeschlossen, weil ihr Inhalt nicht sinnvoll als Markdown kopierbar ist.
--->
-<html lang="de">
+--><html lang="de">
 <head>
   <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Java SE (ATVANTAGE Academy)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Transaktionen und Konten in Collections verwalten · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Verwalte Transaktionen eines Kontos in einer Liste und schütze sie durch eine unveränderbare Sicht."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786695916">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786695916">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786695916">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786695916">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786695916" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786695916" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786695916">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786697809"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786697809">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786697809">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786697809">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786697809"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786697809">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786697809" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786697809" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786697809">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -77,8 +75,8 @@
 </script>
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786695916">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786695916"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786697809">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786697809"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -139,7 +137,7 @@
 <p>Gib <code>Account</code> ein Feld <code>List&lt;Transaction&gt;</code> und ergänze es bei jeder Buchung.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Eine <code>ArrayList</code> bewahrt die Reihenfolge — passend für einen chronologischen Buchungsverlauf.</p>
+  <p><strong>Hinweis:</strong> Eine <code>ArrayList</code> bewahrt die Reihenfolge – passend für einen chronologischen Buchungsverlauf.</p>
 </blockquote>
 
 <h3 id="die-liste-schützen">Die Liste schützen</h3>
@@ -168,7 +166,7 @@
 <ul>
   <li>Warum ist die IBAN ein guter Schlüssel für eine <code>Map</code> der Konten?</li>
   <li>Welche Gefahr bestünde, wenn <code>getTransactions()</code> die echte, veränderbare Liste zurückgäbe?</li>
-  <li>Für die Menge aller Kunden-IDs — welche Collection passt und warum?</li>
+  <li>Für die Menge aller Kunden-IDs – welche Collection passt und warum?</li>
 </ul>
 
 <textarea id="avd-academy-md-source" hidden aria-hidden="true"># Transaktionen und Konten in Collections verwalten
@@ -197,7 +195,7 @@ Die Lernenden…
 
 Gib `Account` ein Feld `List&lt;Transaction&gt;` und ergänze es bei jeder Buchung.
 
-&gt; **Hinweis:** Eine `ArrayList` bewahrt die Reihenfolge — passend für einen chronologischen Buchungsverlauf.
+&gt; **Hinweis:** Eine `ArrayList` bewahrt die Reihenfolge – passend für einen chronologischen Buchungsverlauf.
 
 ### Die Liste schützen
 
@@ -221,7 +219,7 @@ Verwalte Konten in einer `Map&lt;String, Account&gt;` und schlage per IBAN nach.
 
 * Warum ist die IBAN ein guter Schlüssel für eine `Map` der Konten?
 * Welche Gefahr bestünde, wenn `getTransactions()` die echte, veränderbare Liste zurückgäbe?
-* Für die Menge aller Kunden-IDs — welche Collection passt und warum?</textarea>
+* Für die Menge aller Kunden-IDs – welche Collection passt und warum?</textarea>
     </main>
     <aside class="avd-academy-guide-sidebar">
       <div class="avd-academy-guide-side avd-academy-guide-side--toc" data-avd-academy-toc-box hidden>

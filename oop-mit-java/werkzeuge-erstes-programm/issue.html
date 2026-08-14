@@ -51,21 +51,19 @@
   plus `duration`. Nur auf `layout: guide` zu prüfen würde den Button dort
   entfernen. Doku-Seiten haben kein `duration`; Visualisierungen sind
   ausgeschlossen, weil ihr Inhalt nicht sinnvoll als Markdown kopierbar ist.
--->
-<html lang="de">
+--><html lang="de">
 <head>
   <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Java SE (ATVANTAGE Academy)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Das erste Projekt in der IDE anlegen und starten · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Lege ein eigenes Java-Projekt in der IDE an, bring den Code aus der ersten Übung hinein und starte ihn."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786695916">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786695916">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786695916">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786695916">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786695916" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786695916" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786695916">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786697809"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786697809">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786697809">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786697809">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786697809"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786697809">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786697809" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786697809" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786697809">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -77,8 +75,8 @@
 </script>
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786695916">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786695916"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786697809">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786697809"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -142,7 +140,7 @@
 <p>Lege in der IDE ein neues Java-Projekt mit dem Namen <code>my-first-project</code> an und wähle das installierte JDK aus.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Ein Build-Werkzeug brauchst Du dafür noch nicht — nimm die einfachste
+  <p><strong>Hinweis:</strong> Ein Build-Werkzeug brauchst Du dafür noch nicht – nimm die einfachste
 Variante, die Deine IDE anbietet. Gradle und Maven kommen an Tag 5.</p>
 </blockquote>
 
@@ -162,7 +160,7 @@ Variante, die Deine IDE anbietet. Gradle und Maven kommen an Tag 5.</p>
 
 <blockquote>
   <p><strong>Hinweis:</strong> Vergleiche mit der ersten Übung: <code>javac</code> und <code>java</code> hast Du dort selbst
-aufgerufen — die IDE nimmt Dir genau diese Schritte ab.</p>
+aufgerufen – die IDE nimmt Dir genau diese Schritte ab.</p>
 </blockquote>
 
 <h3 id="einen-fehler-provozieren-und-lesen">Einen Fehler provozieren und lesen</h3>
@@ -170,7 +168,7 @@ aufgerufen — die IDE nimmt Dir genau diese Schritte ab.</p>
 <p>Entferne testweise ein Semikolon. Sieh nach, wann die IDE den Fehler anzeigt, lies die Meldung und stelle den Zustand danach wieder her.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Achte auf Datei, Zeile und die eigentliche Ursache in der Meldung —
+  <p><strong>Hinweis:</strong> Achte auf Datei, Zeile und die eigentliche Ursache in der Meldung –
 nicht nur auf die erste rote Markierung.</p>
 </blockquote>
 
@@ -179,14 +177,14 @@ nicht nur auf die erste rote Markierung.</p>
 <p>Setze einen Breakpoint auf die Ausgabezeile und starte das Programm im Debug-Modus. Halte am Breakpoint an und sieh Dir an, was die IDE Dir über den angehaltenen Lauf zeigt.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Ein erster Blick genügt — die Grundgriffe des Debuggers schaust Du Dir
+  <p><strong>Hinweis:</strong> Ein erster Blick genügt – die Grundgriffe des Debuggers schaust Du Dir
 an Tag 5 systematisch an.</p>
 </blockquote>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Welche Funktionen bietet Dir die IDE — wie unterstützt sie Dich bei der Java-Entwicklung?</li>
+  <li>Welche Funktionen bietet Dir die IDE – wie unterstützt sie Dich bei der Java-Entwicklung?</li>
   <li>Ist sie ein vollwertiger Ersatz für die Arbeit mit der Kommandozeile (CLI)?</li>
 </ul>
 
@@ -219,7 +217,7 @@ Die Lernenden…
 
 Lege in der IDE ein neues Java-Projekt mit dem Namen `my-first-project` an und wähle das installierte JDK aus.
 
-&gt; **Hinweis:** Ein Build-Werkzeug brauchst Du dafür noch nicht — nimm die einfachste
+&gt; **Hinweis:** Ein Build-Werkzeug brauchst Du dafür noch nicht – nimm die einfachste
 &gt; Variante, die Deine IDE anbietet. Gradle und Maven kommen an Tag 5.
 
 ### Den Code aus der ersten Übung übernehmen
@@ -235,25 +233,25 @@ Lege im Projekt eine Klasse `HelloWorld` an und bring den Quellcode der ersten �
 Starte das Programm aus der IDE und finde die Ausgabe im Ausgabefenster wieder.
 
 &gt; **Hinweis:** Vergleiche mit der ersten Übung: `javac` und `java` hast Du dort selbst
-&gt; aufgerufen — die IDE nimmt Dir genau diese Schritte ab.
+&gt; aufgerufen – die IDE nimmt Dir genau diese Schritte ab.
 
 ### Einen Fehler provozieren und lesen
 
 Entferne testweise ein Semikolon. Sieh nach, wann die IDE den Fehler anzeigt, lies die Meldung und stelle den Zustand danach wieder her.
 
-&gt; **Hinweis:** Achte auf Datei, Zeile und die eigentliche Ursache in der Meldung —
+&gt; **Hinweis:** Achte auf Datei, Zeile und die eigentliche Ursache in der Meldung –
 &gt; nicht nur auf die erste rote Markierung.
 
 ### Einen Breakpoint setzen
 
 Setze einen Breakpoint auf die Ausgabezeile und starte das Programm im Debug-Modus. Halte am Breakpoint an und sieh Dir an, was die IDE Dir über den angehaltenen Lauf zeigt.
 
-&gt; **Hinweis:** Ein erster Blick genügt — die Grundgriffe des Debuggers schaust Du Dir
+&gt; **Hinweis:** Ein erster Blick genügt – die Grundgriffe des Debuggers schaust Du Dir
 &gt; an Tag 5 systematisch an.
 
 ## Reflexionsfragen
 
-* Welche Funktionen bietet Dir die IDE — wie unterstützt sie Dich bei der Java-Entwicklung?
+* Welche Funktionen bietet Dir die IDE – wie unterstützt sie Dich bei der Java-Entwicklung?
 * Ist sie ein vollwertiger Ersatz für die Arbeit mit der Kommandozeile (CLI)?</textarea>
     </main>
     <aside class="avd-academy-guide-sidebar">

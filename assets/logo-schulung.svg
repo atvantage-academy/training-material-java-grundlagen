@@ -2,7 +2,7 @@
   <!-- Wortmarke für dieses Schulungs-Repo (Teil der verpflichtenden Schulungs-
        Customization, siehe assets/custom.css und `logo:` in _config.yml). Grün,
        damit sie auf hellem UND dunklem Header lesbar ist. `textLength` sorgt für
-       eine feste Breite unabhängig von der verfügbaren Schrift — die Wortmarke
+       eine feste Breite unabhängig von der verfügbaren Schrift – die Wortmarke
        wird als <img> geladen und kann die Theme-Schrift Outfit nicht nutzen.
        Bei Bedarf durch ein echtes Logo ersetzen und `logo:` darauf zeigen lassen. -->
   <text x="0" y="24" font-family="'Outfit', 'Segoe UI', system-ui, sans-serif"

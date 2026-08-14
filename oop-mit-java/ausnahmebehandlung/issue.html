@@ -51,21 +51,19 @@
   plus `duration`. Nur auf `layout: guide` zu prüfen würde den Button dort
   entfernen. Doku-Seiten haben kein `duration`; Visualisierungen sind
   ausgeschlossen, weil ihr Inhalt nicht sinnvoll als Markdown kopierbar ist.
--->
-<html lang="de">
+--><html lang="de">
 <head>
   <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Java SE (ATVANTAGE Academy)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Fehlerfälle mit Ausnahmen behandeln · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Behandle unzureichendes Guthaben mit einer eigenen checked Exception."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786695916">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786695916">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786695916">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786695916">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786695916" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786695916" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786695916">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786697809"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786697809">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786697809">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786697809">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786697809"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786697809">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786697809" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786697809" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786697809">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -77,8 +75,8 @@
 </script>
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786695916">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786695916"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786697809">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786697809"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -146,7 +144,7 @@
 </code></pre>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> „Checked” = erbt von <code>Exception</code> (nicht <code>RuntimeException</code>). Der Compiler erzwingt dann die Behandlung.</p>
+  <p><strong>Hinweis:</strong> „Checked“ = erbt von <code>Exception</code> (nicht <code>RuntimeException</code>). Der Compiler erzwingt dann die Behandlung.</p>
 </blockquote>
 
 <h3 id="die-ausnahme-werfen">Die Ausnahme werfen</h3>
@@ -154,7 +152,7 @@
 <p>Lass <code>withdraw</code> die Ausnahme werfen, wenn <code>isAmountAvailable</code> <code>false</code> liefert. Deklariere sie mit <code>throws</code>.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Prüfe zuerst die Vorbedingung; erst wenn sie erfüllt ist, verändere den Saldo — sonst bleibt das Konto im gültigen Zustand.</p>
+  <p><strong>Hinweis:</strong> Prüfe zuerst die Vorbedingung; erst wenn sie erfüllt ist, verändere den Saldo – sonst bleibt das Konto im gültigen Zustand.</p>
 </blockquote>
 
 <h3 id="den-fehler-behandeln">Den Fehler behandeln</h3>
@@ -171,7 +169,7 @@
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Warum ist „unzureichendes Guthaben” eine checked, ein <code>null</code>-Argument aber eine unchecked Exception?</li>
+  <li>Warum ist „unzureichendes Guthaben“ eine checked, ein <code>null</code>-Argument aber eine unchecked Exception?</li>
   <li>Was wäre der Nachteil, den Fehlerfall über einen <code>boolean</code>-Rückgabewert zu lösen?</li>
   <li>Wozu dient <code>finally</code>, und was gehört dort typischerweise hinein?</li>
 </ul>
@@ -210,13 +208,13 @@ public class InsufficientFundsException extends Exception {
 }
 ```
 
-&gt; **Hinweis:** „Checked&quot; = erbt von `Exception` (nicht `RuntimeException`). Der Compiler erzwingt dann die Behandlung.
+&gt; **Hinweis:** „Checked“ = erbt von `Exception` (nicht `RuntimeException`). Der Compiler erzwingt dann die Behandlung.
 
 ### Die Ausnahme werfen
 
 Lass `withdraw` die Ausnahme werfen, wenn `isAmountAvailable` `false` liefert. Deklariere sie mit `throws`.
 
-&gt; **Hinweis:** Prüfe zuerst die Vorbedingung; erst wenn sie erfüllt ist, verändere den Saldo — sonst bleibt das Konto im gültigen Zustand.
+&gt; **Hinweis:** Prüfe zuerst die Vorbedingung; erst wenn sie erfüllt ist, verändere den Saldo – sonst bleibt das Konto im gültigen Zustand.
 
 ### Den Fehler behandeln
 
@@ -232,7 +230,7 @@ try {
 
 ## Reflexionsfragen
 
-* Warum ist „unzureichendes Guthaben&quot; eine checked, ein `null`-Argument aber eine unchecked Exception?
+* Warum ist „unzureichendes Guthaben“ eine checked, ein `null`-Argument aber eine unchecked Exception?
 * Was wäre der Nachteil, den Fehlerfall über einen `boolean`-Rückgabewert zu lösen?
 * Wozu dient `finally`, und was gehört dort typischerweise hinein?</textarea>
     </main>

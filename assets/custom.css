@@ -1,10 +1,10 @@
 /* =============================================================================
-   Schulungs-Customization — VERPFLICHTEND für jedes Schulungs-Repo.
+   Schulungs-Customization – VERPFLICHTEND für jedes Schulungs-Repo.
    -----------------------------------------------------------------------------
    Sorgt für eine klar erkennbare Abweichung vom academy-online-Look:
    „Schulungs-Grün“ als Akzentfarbe plus Schulungs-Logo (siehe `logo:` in
    _config.yml). Diese Datei wird über `custom_css` in _config.yml NACH dem Theme
-   geladen und überschreibt daher die Design-Tokens (`--avd-*`) — für Light & Dark.
+   geladen und überschreibt daher die Design-Tokens (`--avd-*`) – für Light & Dark.
 
    Trainer:innen dürfen die Werte anpassen (andere Farbe, eigenes Logo). Die Datei
    MUSS aber bestehen bleiben, damit Schulungsunterlagen erkennbar anders aussehen
@@ -30,5 +30,5 @@
   }
 }
 
-/* Grüner Akzentstreifen unter der Kopfzeile — deutliches Erkennungsmerkmal. */
+/* Grüner Akzentstreifen unter der Kopfzeile – deutliches Erkennungsmerkmal. */
 .avd-academy-header { border-bottom: 3px solid var(--avd-schulung-accent); }

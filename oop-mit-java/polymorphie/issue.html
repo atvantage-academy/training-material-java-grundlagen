@@ -51,21 +51,19 @@
   plus `duration`. Nur auf `layout: guide` zu prüfen würde den Button dort
   entfernen. Doku-Seiten haben kein `duration`; Visualisierungen sind
   ausgeschlossen, weil ihr Inhalt nicht sinnvoll als Markdown kopierbar ist.
--->
-<html lang="de">
+--><html lang="de">
 <head>
   <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Java SE (ATVANTAGE Academy)</title>
-<meta name="description" content="Lass Giro- und Sparkonto dieselbe Abhebe-Logik unterschiedlich ausführen — über Polymorphie."><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Kontoarten polymorph behandeln · Java SE (ATVANTAGE Academy)</title>
+<meta name="description" content="Lass Giro- und Sparkonto dieselbe Abhebe-Logik unterschiedlich ausführen – über Polymorphie."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786695916">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786695916">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786695916">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786695916">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786695916" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786695916" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786695916">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786697809"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786697809">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786697809">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786697809">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786697809"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786697809">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786697809" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786697809" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786697809">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -77,8 +75,8 @@
 </script>
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786695916">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786695916"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786697809">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786697809"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -139,7 +137,7 @@
 <p>Gib <code>Account</code> eine Methode <code>isAmountAvailable(Money amount)</code>, die standardmäßig nur den Saldo prüft, und nutze sie in <code>withdraw</code>.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> <code>withdraw</code> bleibt in der Basisklasse — es ruft nur <code>isAmountAvailable(...)</code> auf. Genau darüber greift später die Polymorphie.</p>
+  <p><strong>Hinweis:</strong> <code>withdraw</code> bleibt in der Basisklasse – es ruft nur <code>isAmountAvailable(...)</code> auf. Genau darüber greift später die Polymorphie.</p>
 </blockquote>
 
 <h3 id="verhalten-im-girokonto-überschreiben">Verhalten im Girokonto überschreiben</h3>
@@ -154,7 +152,7 @@ protected boolean isAmountAvailable(Money amount) {
 </code></pre>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> <code>SavingsAccount</code> überschreibt nichts — es erbt die strengere Standardprüfung. Auch das ist eine bewusste Entwurfsaussage.</p>
+  <p><strong>Hinweis:</strong> <code>SavingsAccount</code> überschreibt nichts – es erbt die strengere Standardprüfung. Auch das ist eine bewusste Entwurfsaussage.</p>
 </blockquote>
 
 <h3 id="einheitlich-über-den-basistyp-arbeiten">Einheitlich über den Basistyp arbeiten</h3>
@@ -165,7 +163,7 @@ protected boolean isAmountAvailable(Money amount) {
 
 <ul>
   <li>Warum musst Du <code>withdraw</code> nicht ändern, obwohl sich das Verhalten je Kontoart unterscheidet?</li>
-  <li>Was müsstest Du für eine neue Kontoart (z. B. „Festgeld”) tun — und was ausdrücklich nicht?</li>
+  <li>Was müsstest Du für eine neue Kontoart (z. B. „Festgeld“) tun – und was ausdrücklich nicht?</li>
   <li>Wo liegt der Unterschied zwischen dem <em>deklarierten</em> Typ (<code>Account</code>) und dem <em>tatsächlichen</em> Typ (<code>CurrentAccount</code>) beim Methodenaufruf?</li>
 </ul>
 
@@ -195,7 +193,7 @@ Die Lernenden…
 
 Gib `Account` eine Methode `isAmountAvailable(Money amount)`, die standardmäßig nur den Saldo prüft, und nutze sie in `withdraw`.
 
-&gt; **Hinweis:** `withdraw` bleibt in der Basisklasse — es ruft nur `isAmountAvailable(...)` auf. Genau darüber greift später die Polymorphie.
+&gt; **Hinweis:** `withdraw` bleibt in der Basisklasse – es ruft nur `isAmountAvailable(...)` auf. Genau darüber greift später die Polymorphie.
 
 ### Verhalten im Girokonto überschreiben
 
@@ -209,7 +207,7 @@ protected boolean isAmountAvailable(Money amount) {
 }
 ```
 
-&gt; **Hinweis:** `SavingsAccount` überschreibt nichts — es erbt die strengere Standardprüfung. Auch das ist eine bewusste Entwurfsaussage.
+&gt; **Hinweis:** `SavingsAccount` überschreibt nichts – es erbt die strengere Standardprüfung. Auch das ist eine bewusste Entwurfsaussage.
 
 ### Einheitlich über den Basistyp arbeiten
 
@@ -218,7 +216,7 @@ Lege beide Konten in eine `List&lt;Account&gt;` und versuche in einer Schleife, 
 ## Reflexionsfragen
 
 * Warum musst Du `withdraw` nicht ändern, obwohl sich das Verhalten je Kontoart unterscheidet?
-* Was müsstest Du für eine neue Kontoart (z. B. „Festgeld&quot;) tun — und was ausdrücklich nicht?
+* Was müsstest Du für eine neue Kontoart (z. B. „Festgeld“) tun – und was ausdrücklich nicht?
 * Wo liegt der Unterschied zwischen dem *deklarierten* Typ (`Account`) und dem *tatsächlichen* Typ (`CurrentAccount`) beim Methodenaufruf?</textarea>
     </main>
     <aside class="avd-academy-guide-sidebar">

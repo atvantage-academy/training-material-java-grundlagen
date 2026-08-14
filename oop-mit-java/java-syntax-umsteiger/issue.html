@@ -51,21 +51,19 @@
   plus `duration`. Nur auf `layout: guide` zu prüfen würde den Button dort
   entfernen. Doku-Seiten haben kein `duration`; Visualisierungen sind
   ausgeschlossen, weil ihr Inhalt nicht sinnvoll als Markdown kopierbar ist.
--->
-<html lang="de">
+--><html lang="de">
 <head>
   <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Java SE (ATVANTAGE Academy)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Prozedurale Logik nach Java übertragen · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Übertrage vertraute prozedurale Konstrukte in gültige Java-Syntax."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786695916">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786695916">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786695916">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786695916">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786695916" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786695916" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786695916">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786697809"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786697809">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786697809">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786697809">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786697809"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786697809">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786697809" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786697809" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786697809">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -77,8 +75,8 @@
 </script>
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786695916">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786695916"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786697809">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786697809"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -157,13 +155,13 @@ Methoden und Kontrollstrukturen zum Nachschlagen zusammen.</p>
 
 <blockquote>
   <p><strong>Hinweis:</strong> Beträge als ganze Cent (<code>int</code>) zu führen vermeidet Rundungsfehler von
-<code>float</code>/<code>double</code> — ein Muster, das später die Klasse <code>Money</code> aufgreift. Die Anzahl der
-Elemente liefert <code>amounts.length</code> — beim Array ohne Klammern.</p>
+<code>float</code>/<code>double</code> – ein Muster, das später die Klasse <code>Money</code> aufgreift. Die Anzahl der
+Elemente liefert <code>amounts.length</code> – beim Array ohne Klammern.</p>
 </blockquote>
 
 <h3 id="eine-bedingung-ergänzen">Eine Bedingung ergänzen</h3>
 
-<p>Gib je nach Summe eine unterschiedliche Meldung aus (z. B. „im Plus” / „ausgeglichen” / „im Minus”). Probiere für den einfachen Fall auch den Bedingungsoperator <code>?:</code> aus.</p>
+<p>Gib je nach Summe eine unterschiedliche Meldung aus (z. B. „im Plus“ / „ausgeglichen“ / „im Minus“). Probiere für den einfachen Fall auch den Bedingungsoperator <code>?:</code> aus.</p>
 
 <h3 id="den-zinsbetrag-umwandeln">Den Zinsbetrag umwandeln</h3>
 
@@ -183,7 +181,7 @@ int zinsCent = (int) zins;   // schneidet ab, rundet nicht
 <p>Schreibe eine Methode <code>format(int cents)</code>, die einen Betrag lesbar ausgibt, und daneben eine zweite Variante <code>format(int cents, String waehrung)</code>, die zusätzlich die Währung anhängt.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Beide heißen gleich und unterscheiden sich nur in der Parameterliste — genau
+  <p><strong>Hinweis:</strong> Beide heißen gleich und unterscheiden sich nur in der Parameterliste – genau
 das ist Überladen. Ein anderer Rückgabetyp allein würde dafür nicht genügen.</p>
 </blockquote>
 
@@ -194,7 +192,7 @@ das ist Überladen. Ein anderer Rückgabetyp allein würde dafür nicht genügen
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Was gehört zur Signatur einer Methode — und wodurch unterscheiden sich zwei überladene Methoden?</li>
+  <li>Was gehört zur Signatur einer Methode – und wodurch unterscheiden sich zwei überladene Methoden?</li>
   <li>Warum braucht die Umwandlung von <code>double</code> nach <code>int</code> einen Cast, umgekehrt aber nicht?</li>
   <li>Welche Java-Schreibweise musst Du gegenüber Deiner bisherigen Sprache bewusst anders machen?</li>
 </ul>
@@ -242,12 +240,12 @@ static int sumCents(int[] amounts) {
 ```
 
 &gt; **Hinweis:** Beträge als ganze Cent (`int`) zu führen vermeidet Rundungsfehler von
-&gt; `float`/`double` — ein Muster, das später die Klasse `Money` aufgreift. Die Anzahl der
-&gt; Elemente liefert `amounts.length` — beim Array ohne Klammern.
+&gt; `float`/`double` – ein Muster, das später die Klasse `Money` aufgreift. Die Anzahl der
+&gt; Elemente liefert `amounts.length` – beim Array ohne Klammern.
 
 ### Eine Bedingung ergänzen
 
-Gib je nach Summe eine unterschiedliche Meldung aus (z. B. „im Plus&quot; / „ausgeglichen&quot; / „im Minus&quot;). Probiere für den einfachen Fall auch den Bedingungsoperator `?:` aus.
+Gib je nach Summe eine unterschiedliche Meldung aus (z. B. „im Plus“ / „ausgeglichen“ / „im Minus“). Probiere für den einfachen Fall auch den Bedingungsoperator `?:` aus.
 
 ### Den Zinsbetrag umwandeln
 
@@ -265,7 +263,7 @@ int zinsCent = (int) zins;   // schneidet ab, rundet nicht
 
 Schreibe eine Methode `format(int cents)`, die einen Betrag lesbar ausgibt, und daneben eine zweite Variante `format(int cents, String waehrung)`, die zusätzlich die Währung anhängt.
 
-&gt; **Hinweis:** Beide heißen gleich und unterscheiden sich nur in der Parameterliste — genau
+&gt; **Hinweis:** Beide heißen gleich und unterscheiden sich nur in der Parameterliste – genau
 &gt; das ist Überladen. Ein anderer Rückgabetyp allein würde dafür nicht genügen.
 
 ### Die Gültigkeit im Block ausprobieren
@@ -274,7 +272,7 @@ Deklariere eine Variable innerhalb eines `if`-Blocks und versuche, sie nach dem 
 
 ## Reflexionsfragen
 
-* Was gehört zur Signatur einer Methode — und wodurch unterscheiden sich zwei überladene Methoden?
+* Was gehört zur Signatur einer Methode – und wodurch unterscheiden sich zwei überladene Methoden?
 * Warum braucht die Umwandlung von `double` nach `int` einen Cast, umgekehrt aber nicht?
 * Welche Java-Schreibweise musst Du gegenüber Deiner bisherigen Sprache bewusst anders machen?
 

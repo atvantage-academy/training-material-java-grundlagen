@@ -51,21 +51,19 @@
   plus `duration`. Nur auf `layout: guide` zu prüfen würde den Button dort
   entfernen. Doku-Seiten haben kein `duration`; Visualisierungen sind
   ausgeschlossen, weil ihr Inhalt nicht sinnvoll als Markdown kopierbar ist.
--->
-<html lang="de">
+--><html lang="de">
 <head>
   <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Java SE (ATVANTAGE Academy)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Kunden und Konten als Klassen modellieren · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Modelliere Kunde und Konto als eigene Klassen und erzeuge daraus Objekte."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786695916">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786695916">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786695916">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786695916">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786695916" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786695916" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786695916">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786697809"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786697809">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786697809">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786697809">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786697809"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786697809">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786697809" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786697809" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786697809">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -77,8 +75,8 @@
 </script>
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786695916">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786695916"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786697809">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786697809"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -144,10 +142,10 @@
 
 <h3 id="die-klasse-account-anlegen">Die Klasse Account anlegen</h3>
 
-<p>Lege eine Klasse <code>Account</code> an, die eine <code>iban</code>, einen Kontostand und den Inhaber (<code>Customer</code>) kennt. Ein Konto „hat einen” Kunden als Inhaber.</p>
+<p>Lege eine Klasse <code>Account</code> an, die eine <code>iban</code>, einen Kontostand und den Inhaber (<code>Customer</code>) kennt. Ein Konto „hat einen“ Kunden als Inhaber.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Überlege, welche Felder beim Erzeugen zwingend nötig sind — die gehören in den Konstruktor.</p>
+  <p><strong>Hinweis:</strong> Überlege, welche Felder beim Erzeugen zwingend nötig sind – die gehören in den Konstruktor.</p>
 </blockquote>
 
 <h3 id="objekte-erzeugen-und-benutzen">Objekte erzeugen und benutzen</h3>
@@ -160,13 +158,13 @@ System.out.println(account);
 </code></pre>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Wenn die Ausgabe kryptisch aussieht (<code>Account@1b6d3586</code>), ist das erwartbar — eine schöne Textform folgt im Modul <em>Objektbeziehungen &amp; equals/hashCode</em>.</p>
+  <p><strong>Hinweis:</strong> Wenn die Ausgabe kryptisch aussieht (<code>Account@1b6d3586</code>), ist das erwartbar – eine schöne Textform folgt im Modul <em>Objektbeziehungen &amp; equals/hashCode</em>.</p>
 </blockquote>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Welche Daten und welches Verhalten „gehören” zu einem Konto — und was gehört bewusst nicht hinein?</li>
+  <li>Welche Daten und welches Verhalten „gehören“ zu einem Konto – und was gehört bewusst nicht hinein?</li>
   <li>Was wäre der Nachteil, Kontostand und Inhaber in getrennten Arrays statt in einem <code>Account</code>-Objekt zu halten?</li>
   <li>Warum ist es sinnvoll, dass ein Konto seine ID/IBAN nicht nachträglich ändern lässt?</li>
 </ul>
@@ -201,9 +199,9 @@ Lege im Paket `domain` eine Klasse `Customer` mit den Feldern für Name und Stad
 
 ### Die Klasse Account anlegen
 
-Lege eine Klasse `Account` an, die eine `iban`, einen Kontostand und den Inhaber (`Customer`) kennt. Ein Konto „hat einen&quot; Kunden als Inhaber.
+Lege eine Klasse `Account` an, die eine `iban`, einen Kontostand und den Inhaber (`Customer`) kennt. Ein Konto „hat einen“ Kunden als Inhaber.
 
-&gt; **Hinweis:** Überlege, welche Felder beim Erzeugen zwingend nötig sind — die gehören in den Konstruktor.
+&gt; **Hinweis:** Überlege, welche Felder beim Erzeugen zwingend nötig sind – die gehören in den Konstruktor.
 
 ### Objekte erzeugen und benutzen
 
@@ -215,11 +213,11 @@ Account account = new Account(&quot;DE...&quot;, alice);
 System.out.println(account);
 ```
 
-&gt; **Hinweis:** Wenn die Ausgabe kryptisch aussieht (`Account@1b6d3586`), ist das erwartbar — eine schöne Textform folgt im Modul *Objektbeziehungen &amp; equals/hashCode*.
+&gt; **Hinweis:** Wenn die Ausgabe kryptisch aussieht (`Account@1b6d3586`), ist das erwartbar – eine schöne Textform folgt im Modul *Objektbeziehungen &amp; equals/hashCode*.
 
 ## Reflexionsfragen
 
-* Welche Daten und welches Verhalten „gehören&quot; zu einem Konto — und was gehört bewusst nicht hinein?
+* Welche Daten und welches Verhalten „gehören“ zu einem Konto – und was gehört bewusst nicht hinein?
 * Was wäre der Nachteil, Kontostand und Inhaber in getrennten Arrays statt in einem `Account`-Objekt zu halten?
 * Warum ist es sinnvoll, dass ein Konto seine ID/IBAN nicht nachträglich ändern lässt?</textarea>
     </main>
