@@ -14,7 +14,8 @@
 #   2. Actions-Secret `THEME_NPM_TOKEN` = GHE-Token mit `read:packages`.
 #   3. Läuft das Repo auf öffentlichem github.com, müssen die Runner
 #      `npm.timetoact.ghe.com` erreichen können (Registry via Variable
-#      `NPM_REGISTRY` überschreibbar). Theme-Version via Variable `THEME_VERSION`.
+#      `NPM_REGISTRY` überschreibbar). Theme-Version via Variable `THEME_VERSION`;
+#      Standard ist die kompatible Spanne `^1`, nicht `latest`.
 #   4. Org-Variable `ACADEMY_WEBSITE` = URL der Academy-Website (Link in der
 #      Druck-Kontaktzeile). Org-weit gesetzt, pro Repo nichts nachzuhinterlegen;
 #      fehlt sie, greift der Theme-Default.
@@ -38,7 +39,10 @@ concurrency:
 env:
   THEME_PACKAGE: "@avd-academy-tools/academy-theme"
   NPM_REGISTRY: ${{ vars.NPM_REGISTRY || 'https://npm.timetoact.ghe.com' }}
-  THEME_VERSION: ${{ vars.THEME_VERSION || 'latest' }}
+  # Kompatible Spanne statt `latest`: ^1 löst zu >=1.0.0 <2.0.0 auf. Innerhalb von
+  # Major 1 sind Updates verträglich; ein inkompatibles Release erhöht die Major-
+  # Stelle und wird damit NICHT automatisch gezogen (siehe CHANGELOG des Pakets).
+  THEME_VERSION: ${{ vars.THEME_VERSION || '^1' }}
 
 jobs:
   build:

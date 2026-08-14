@@ -9,7 +9,8 @@
    Keine eigenen Schriftgrößen/-familien mehr (bewusst an atvantage angeglichen).
 
    Schrift „Outfit“ wird von atvantage (`tokens/fonts.css`) bzw. dem Head-Snippet
-   geladen; self-hosted Variante siehe fonts/.
+   geladen. Eine self-hosted Variante läge im Repo unter academy/fonts/ – sie ist
+   NICHT Teil des npm-Pakets (siehe theme/package.json, `files`).
    ============================================================================= */
 
 /* --- Reset ---------------------------------------------------------------- */
