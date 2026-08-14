@@ -1,0 +1,14 @@
+Bildnachweis zu james-gosling.jpg
+=================================
+
+Motiv:   James Gosling, 2008
+Urheber: Peter Campbell
+Quelle:  https://commons.wikimedia.org/wiki/File:James_Gosling_2008.jpg
+Lizenz:  CC BY-SA 4.0 – https://creativecommons.org/licenses/by-sa/4.0
+
+Bearbeitung: auf 556 Pixel Breite verkleinert, sonst unverändert.
+
+Die Namensnennung steht zusätzlich als Bildunterschrift auf der Folie
+(index.md, Folie „Von „Oak“ zum OpenJDK“). Diese Datei begleitet das Bild,
+damit der Nachweis auch dann mitreist, wenn die Datei ohne die Folie
+weitergegeben wird – das verlangt die Lizenz.
