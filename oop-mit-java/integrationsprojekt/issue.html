@@ -24,8 +24,10 @@
     duration:    8                  → Zahl in Minuten → Hero-Tag „ca. 8 Minuten“
                                        (ungefähre LESEDAUER; bei Guides/Übungen die
                                        Dauer der Übung). Aktiviert zugleich die
+                                       nummerierten Arbeitsschritte und die
                                        automatische Prev/Next-Navigation zwischen
-                                       gleichartigen Geschwister-Seiten.
+                                       gleichartigen Geschwister-Seiten. Alle drei
+                                       entfallen bei `layout: visualization`.
     topics:      ["Cloud & DevOps"] → weitere Hero-Tags
     resources:   [{titel, url, icon}, …] → Sidebar-Karte „Weiterführende Informationen“.
                                        titel und/oder icon (Bildpfad); icon erscheint
@@ -55,15 +57,15 @@
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java SE (ATVANTAGE Academy)</title>
-<meta name="description" content="Schütze den Zustand von Kunde und Konto durch Kapselung und Validierung."><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="description" content="Erweitere das Banking-System um eine eigene Funktion und kombiniere die Konzepte der Woche."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786695007"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786695007">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786695007">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786695007">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786695007"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786695007">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786695007" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786695007" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786695007">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786695916">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786695916">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786695916">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786695916">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786695916" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786695916" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786695916">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -75,8 +77,8 @@
 </script>
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786695007">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786695007"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786695916">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786695916"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -95,129 +97,106 @@
             aria-label="Farbschema umschalten">◐</button>
   </nav>
 </header>
-<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Kapselung und Validierung durchsetzen</span></nav><div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 75 Minuten</span><span class="avd-academy-tag">Kapselung</span><span class="avd-academy-tag">Banking</span>
+<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Das Banking-System um eine Funktion erweitern</span></nav><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 135 Minuten</span><span class="avd-academy-tag">Integrationsprojekt</span><span class="avd-academy-tag">Banking</span>
       </div>
       <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
               data-avd-academy-copy-md="#avd-academy-md-source"
               title="Markdown kopieren" aria-label="Markdown kopieren"></button>
-    </div><h1>Kapselung und Validierung durchsetzen</h1>
+    </div><h1>Das Banking-System um eine Funktion erweitern</h1>
   </section>
 
   <div class="avd-academy-guide-layout">
     <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
-      <h1 id="kapselung-und-validierung-durchsetzen">Kapselung und Validierung durchsetzen</h1>
+      <h1 id="das-banking-system-um-eine-funktion-erweitern">Das Banking-System um eine Funktion erweitern</h1>
 
-<p>Als Entwickler:in möchte ich, dass Kunde und Konto niemals in einen ungültigen Zustand geraten, damit ich mich im restlichen Programm auf gültige Objekte verlassen kann.</p>
+<p>Als Entwickler:in möchte ich eine sinnvolle Funktion zum Banking-System hinzufügen, damit ich die Konzepte der Woche in einem zusammenhängenden Stück Software anwende.</p>
 
 <h2 id="lernziele">Lernziele</h2>
 
 <p>Die Lernenden…</p>
 
 <ul>
-  <li>deklarieren Felder <code>private</code> und steuern den Zugriff über Getter/Setter.</li>
-  <li>validieren Eingaben in Konstruktor und Settern und lehnen ungültige Werte ab.</li>
-  <li>begründen, welche Prüfungen in die Klasse gehören.</li>
+  <li>erweitern das Banking-System um eine eigene Funktion und kombinieren dabei Klassen, Vererbung, Ausnahmen und Collections.</li>
+  <li>begründen ihre Entwurfsentscheidungen (Verantwortlichkeiten, Sichtbarkeiten) gegenüber anderen.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Alle Felder von <code>Customer</code> und <code>Account</code> sind <code>private</code>.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der Konstruktor lehnt <code>null</code>-Werte für Pflichtfelder ab.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>setName</code> (o. ä.) verhindert <code>null</code> bzw. leere Werte.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der Kontostand kann nicht direkt von außen gesetzt werden (kein öffentlicher Setter dafür).</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Eine selbst gewählte Funktion ist umgesetzt und lauffähig.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Die Lösung nutzt mindestens drei Konzepte der Woche (z. B. eigene Klasse, Vererbung/Polymorphie, Ausnahme, Collection).</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Mindestens ein zentraler Teil ist mit einem JUnit-Test abgesichert.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du kannst Deine Entwurfsentscheidungen in 2–3 Sätzen begründen.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
 <h2 id="arbeitsschritte">Arbeitsschritte</h2>
 
-<h3 id="felder-privat-machen">Felder privat machen</h3>
+<h3 id="eine-funktion-auswählen">Eine Funktion auswählen</h3>
 
-<p>Stelle sicher, dass alle Felder <code>private</code> sind. Biete nur dort Getter/Setter an, wo Zugriff wirklich nötig ist.</p>
-
-<blockquote>
-  <p><strong>Hinweis:</strong> Nicht jedes Feld braucht einen Setter. Der Kontostand ändert sich nur über Ein-/Auszahlungen — nicht über einen freien Setter.</p>
-</blockquote>
-
-<h3 id="pflichtfelder-im-konstruktor-prüfen">Pflichtfelder im Konstruktor prüfen</h3>
-
-<p>Wirf eine Ausnahme, wenn ein Pflichtwert fehlt, sodass gar kein ungültiges Objekt entstehen kann.</p>
-
-<pre><code class="language-java">public Customer(String name, String city) {
-  this.name = Objects.requireNonNull(name, "name darf nicht null sein");
-  this.city = Objects.requireNonNull(city, "city darf nicht null sein");
-  this.id = UUID.randomUUID();
-}
-</code></pre>
-
-<h3 id="setter-validieren">Setter validieren</h3>
-
-<p>Lass den Setter für den Namen <code>null</code> (und optional Leerstrings) ablehnen, bevor er den Wert übernimmt.</p>
+<p>Wähle eine Erweiterung, die Dich reizt — zum Beispiel:</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Prüfe zuerst, übernimm dann. So bleibt bei ungültiger Eingabe der alte, gültige Wert erhalten.</p>
+  <p><strong>Hinweis:</strong> Beispiele: Zinsberechnung für Sparkonten, ein einfacher Kontoauszug (Liste der Transaktionen), Kundensuche nach Namen, Überweisung zwischen zwei Konten.</p>
 </blockquote>
+
+<h3 id="umsetzen">Umsetzen</h3>
+
+<p>Implementiere die Funktion in passenden Klassen. Achte auf Kapselung und klare Verantwortlichkeiten; wirf bei Fehlerfällen eine passende Ausnahme.</p>
+
+<h3 id="absichern-und-zeigen">Absichern und zeigen</h3>
+
+<p>Schreibe mindestens einen JUnit-Test für den Kern Deiner Funktion und bereite eine kurze Demo (2–3 Minuten) vor.</p>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Welche Zusicherung gibst Du dem Rest des Programms, wenn der Konstruktor keine ungültigen Objekte zulässt?</li>
-  <li>Warum ist ein fehlender Setter manchmal die bessere Entwurfsentscheidung als ein vorhandener?</li>
-  <li>Was spricht dafür, die Validierung in der Klasse statt in jedem Aufrufer zu wiederholen?</li>
+  <li>Welche Konzepte der Woche hast Du genutzt — und warum gerade diese?</li>
+  <li>An welcher Stelle war die Entscheidung „Vererbung vs. eigenes Feld” oder „Ausnahme vs. Rückgabewert” relevant?</li>
+  <li>Was würdest Du mit mehr Zeit refaktorieren — und woran erkennst Du das?</li>
 </ul>
 
-<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Kapselung und Validierung durchsetzen
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Das Banking-System um eine Funktion erweitern
 
-Als Entwickler:in möchte ich, dass Kunde und Konto niemals in einen ungültigen Zustand geraten, damit ich mich im restlichen Programm auf gültige Objekte verlassen kann.
+Als Entwickler:in möchte ich eine sinnvolle Funktion zum Banking-System hinzufügen, damit ich die Konzepte der Woche in einem zusammenhängenden Stück Software anwende.
 
 ## Lernziele
 
 Die Lernenden…
 
-* deklarieren Felder `private` und steuern den Zugriff über Getter/Setter.
-* validieren Eingaben in Konstruktor und Settern und lehnen ungültige Werte ab.
-* begründen, welche Prüfungen in die Klasse gehören.
+* erweitern das Banking-System um eine eigene Funktion und kombinieren dabei Klassen, Vererbung, Ausnahmen und Collections.
+* begründen ihre Entwurfsentscheidungen (Verantwortlichkeiten, Sichtbarkeiten) gegenüber anderen.
 
 ## Definition of Done
 
-* [ ] Alle Felder von `Customer` und `Account` sind `private`.
-* [ ] Der Konstruktor lehnt `null`-Werte für Pflichtfelder ab.
-* [ ] `setName` (o. ä.) verhindert `null` bzw. leere Werte.
-* [ ] Der Kontostand kann nicht direkt von außen gesetzt werden (kein öffentlicher Setter dafür).
+* [ ] Eine selbst gewählte Funktion ist umgesetzt und lauffähig.
+* [ ] Die Lösung nutzt mindestens drei Konzepte der Woche (z. B. eigene Klasse, Vererbung/Polymorphie, Ausnahme, Collection).
+* [ ] Mindestens ein zentraler Teil ist mit einem JUnit-Test abgesichert.
+* [ ] Du kannst Deine Entwurfsentscheidungen in 2–3 Sätzen begründen.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
 ## Arbeitsschritte
 
-### Felder privat machen
+### Eine Funktion auswählen
 
-Stelle sicher, dass alle Felder `private` sind. Biete nur dort Getter/Setter an, wo Zugriff wirklich nötig ist.
+Wähle eine Erweiterung, die Dich reizt — zum Beispiel:
 
-&gt; **Hinweis:** Nicht jedes Feld braucht einen Setter. Der Kontostand ändert sich nur über Ein-/Auszahlungen — nicht über einen freien Setter.
+&gt; **Hinweis:** Beispiele: Zinsberechnung für Sparkonten, ein einfacher Kontoauszug (Liste der Transaktionen), Kundensuche nach Namen, Überweisung zwischen zwei Konten.
 
-### Pflichtfelder im Konstruktor prüfen
+### Umsetzen
 
-Wirf eine Ausnahme, wenn ein Pflichtwert fehlt, sodass gar kein ungültiges Objekt entstehen kann.
+Implementiere die Funktion in passenden Klassen. Achte auf Kapselung und klare Verantwortlichkeiten; wirf bei Fehlerfällen eine passende Ausnahme.
 
-```java
-public Customer(String name, String city) {
-  this.name = Objects.requireNonNull(name, &quot;name darf nicht null sein&quot;);
-  this.city = Objects.requireNonNull(city, &quot;city darf nicht null sein&quot;);
-  this.id = UUID.randomUUID();
-}
-```
+### Absichern und zeigen
 
-### Setter validieren
-
-Lass den Setter für den Namen `null` (und optional Leerstrings) ablehnen, bevor er den Wert übernimmt.
-
-&gt; **Hinweis:** Prüfe zuerst, übernimm dann. So bleibt bei ungültiger Eingabe der alte, gültige Wert erhalten.
+Schreibe mindestens einen JUnit-Test für den Kern Deiner Funktion und bereite eine kurze Demo (2–3 Minuten) vor.
 
 ## Reflexionsfragen
 
-* Welche Zusicherung gibst Du dem Rest des Programms, wenn der Konstruktor keine ungültigen Objekte zulässt?
-* Warum ist ein fehlender Setter manchmal die bessere Entwurfsentscheidung als ein vorhandener?
-* Was spricht dafür, die Validierung in der Klasse statt in jedem Aufrufer zu wiederholen?</textarea>
+* Welche Konzepte der Woche hast Du genutzt — und warum gerade diese?
+* An welcher Stelle war die Entscheidung „Vererbung vs. eigenes Feld&quot; oder „Ausnahme vs. Rückgabewert&quot; relevant?
+* Was würdest Du mit mehr Zeit refaktorieren — und woran erkennst Du das?</textarea>
     </main>
     <aside class="avd-academy-guide-sidebar">
       <div class="avd-academy-guide-side avd-academy-guide-side--toc" data-avd-academy-toc-box hidden>

@@ -24,8 +24,10 @@
     duration:    8                  → Zahl in Minuten → Hero-Tag „ca. 8 Minuten“
                                        (ungefähre LESEDAUER; bei Guides/Übungen die
                                        Dauer der Übung). Aktiviert zugleich die
+                                       nummerierten Arbeitsschritte und die
                                        automatische Prev/Next-Navigation zwischen
-                                       gleichartigen Geschwister-Seiten.
+                                       gleichartigen Geschwister-Seiten. Alle drei
+                                       entfallen bei `layout: visualization`.
     topics:      ["Cloud & DevOps"] → weitere Hero-Tags
     resources:   [{titel, url, icon}, …] → Sidebar-Karte „Weiterführende Informationen“.
                                        titel und/oder icon (Bildpfad); icon erscheint
@@ -55,15 +57,15 @@
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java SE (ATVANTAGE Academy)</title>
-<meta name="description" content="Definiere Gleichheit (equals/hashCode), eine lesbare Darstellung und die Beziehung Konto–Inhaber."><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="description" content="Lass Giro- und Sparkonto dieselbe Abhebe-Logik unterschiedlich ausführen — über Polymorphie."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786695007"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786695007">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786695007">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786695007">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786695007"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786695007">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786695007" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786695007" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786695007">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786695916">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786695916">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786695916">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786695916">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786695916" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786695916" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786695916">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -75,8 +77,8 @@
 </script>
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786695007">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786695007"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786695916">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786695916"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -95,141 +97,129 @@
             aria-label="Farbschema umschalten">◐</button>
   </nav>
 </header>
-<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Gleichheit und Beziehungen modellieren</span></nav><div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 75 Minuten</span><span class="avd-academy-tag">equals/hashCode/toString</span><span class="avd-academy-tag">Objektbeziehungen</span><span class="avd-academy-tag">Banking</span>
+<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Kontoarten polymorph behandeln</span></nav><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 75 Minuten</span><span class="avd-academy-tag">Polymorphie</span><span class="avd-academy-tag">Banking</span>
       </div>
       <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
               data-avd-academy-copy-md="#avd-academy-md-source"
               title="Markdown kopieren" aria-label="Markdown kopieren"></button>
-    </div><h1>Gleichheit und Beziehungen modellieren</h1>
+    </div><h1>Kontoarten polymorph behandeln</h1>
   </section>
 
   <div class="avd-academy-guide-layout">
     <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
-      <h1 id="gleichheit-und-beziehungen-modellieren">Gleichheit und Beziehungen modellieren</h1>
+      <h1 id="kontoarten-polymorph-behandeln">Kontoarten polymorph behandeln</h1>
 
-<p>Als Entwickler:in möchte ich, dass zwei Objekte mit derselben fachlichen Identität als gleich gelten und sich lesbar ausgeben lassen, damit Suchen, Vergleiche und Ausgaben verlässlich funktionieren.</p>
+<p>Als Entwickler:in möchte ich Konten unterschiedlicher Art einheitlich behandeln und trotzdem das jeweils richtige Verhalten auslösen, damit neue Kontoarten die bestehende Abhebe-Logik nicht anfassen müssen.</p>
 
 <h2 id="lernziele">Lernziele</h2>
 
 <p>Die Lernenden…</p>
 
 <ul>
-  <li>überschreiben <code>toString</code> für eine lesbare Objektausgabe.</li>
-  <li>überschreiben <code>equals</code> und <code>hashCode</code> konsistent auf Basis der fachlichen Identität.</li>
-  <li>drücken die Beziehung zwischen zwei Objekten über eine Referenz aus.</li>
+  <li>überschreiben eine geerbte Methode in einer Unterklasse mit <code>@Override</code>.</li>
+  <li>arbeiten über eine Basisklassen-Referenz und erklären die dynamische Bindung.</li>
+  <li>verarbeiten eine <code>List&lt;Account&gt;</code> einheitlich.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>Customer</code> und <code>Account</code> besitzen ein aussagekräftiges <code>toString</code>.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>equals</code> und <code>hashCode</code> von <code>Customer</code> basieren auf der <code>id</code>.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Ein <code>Account</code> hält eine Referenz auf seinen <code>Customer</code>-Inhaber.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Ein <code>HashSet&lt;Customer&gt;</code> erkennt zwei Objekte mit gleicher <code>id</code> als dasselbe Element.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>Account</code> besitzt eine Methode <code>isAmountAvailable(Money)</code>, die <code>withdraw</code> nutzt.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>CurrentAccount</code> überschreibt <code>isAmountAvailable</code>, sodass der Dispositionskredit berücksichtigt wird.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Eine <code>List&lt;Account&gt;</code> mit Giro- und Sparkonto wird in einer Schleife einheitlich abgefragt.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der Abhebe-Versuch verhält sich je Kontoart korrekt unterschiedlich.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
 <h2 id="arbeitsschritte">Arbeitsschritte</h2>
 
-<h3 id="tostring-überschreiben">toString überschreiben</h3>
+<h3 id="verfügbarkeitsprüfung-in-der-basisklasse">Verfügbarkeitsprüfung in der Basisklasse</h3>
 
-<p>Gib eine lesbare Darstellung zurück (z. B. <code>Customer[id=…, name=Alice, city=Hamburg]</code>).</p>
+<p>Gib <code>Account</code> eine Methode <code>isAmountAvailable(Money amount)</code>, die standardmäßig nur den Saldo prüft, und nutze sie in <code>withdraw</code>.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Die meisten IDEs können <code>toString</code>, <code>equals</code> und <code>hashCode</code> generieren — nutze das, aber lies das Ergebnis bewusst.</p>
+  <p><strong>Hinweis:</strong> <code>withdraw</code> bleibt in der Basisklasse — es ruft nur <code>isAmountAvailable(...)</code> auf. Genau darüber greift später die Polymorphie.</p>
 </blockquote>
 
-<h3 id="equals-und-hashcode-auf-der-id-aufbauen">equals und hashCode auf der id aufbauen</h3>
+<h3 id="verhalten-im-girokonto-überschreiben">Verhalten im Girokonto überschreiben</h3>
 
-<p>Zwei Kunden sind gleich, wenn ihre <code>id</code> gleich ist — unabhängig von Name/Stadt.</p>
+<p>Überschreibe <code>isAmountAvailable</code> in <code>CurrentAccount</code>, sodass zusätzlich der Dispositionskredit zählt.</p>
 
 <pre><code class="language-java">@Override
-public boolean equals(Object o) {
-  if (this == o) return true;
-  if (!(o instanceof Customer other)) return false;
-  return this.id.equals(other.id);
-}
-
-@Override
-public int hashCode() {
-  return Objects.hash(id);
+protected boolean isAmountAvailable(Money amount) {
+  // verfügbar = Saldo + Dispolimit
+  return getBalance().plus(limit).isGreaterOrEqual(amount);
 }
 </code></pre>
 
-<h3 id="gleichheit-im-hashset-prüfen">Gleichheit im HashSet prüfen</h3>
-
-<p>Lege zwei <code>Customer</code> mit derselben <code>id</code> in ein <code>HashSet</code> und prüfe die Größe.</p>
-
 <blockquote>
-  <p><strong>Hinweis:</strong> Ohne konsistente <code>equals</code>/<code>hashCode</code> enthält das Set zwei Einträge — mit korrekter Umsetzung nur einen.</p>
+  <p><strong>Hinweis:</strong> <code>SavingsAccount</code> überschreibt nichts — es erbt die strengere Standardprüfung. Auch das ist eine bewusste Entwurfsaussage.</p>
 </blockquote>
+
+<h3 id="einheitlich-über-den-basistyp-arbeiten">Einheitlich über den Basistyp arbeiten</h3>
+
+<p>Lege beide Konten in eine <code>List&lt;Account&gt;</code> und versuche in einer Schleife, denselben Betrag abzuheben.</p>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Warum sollte die Gleichheit auf einer stabilen <code>id</code> beruhen und nicht auf veränderlichen Feldern wie dem Namen?</li>
-  <li>Was passiert in einer <code>HashMap</code>, wenn <code>hashCode</code> zweier gleicher Objekte unterschiedlich ist?</li>
-  <li>Ist die Beziehung Konto→Inhaber eine Assoziation oder eine Komposition? Begründe.</li>
+  <li>Warum musst Du <code>withdraw</code> nicht ändern, obwohl sich das Verhalten je Kontoart unterscheidet?</li>
+  <li>Was müsstest Du für eine neue Kontoart (z. B. „Festgeld”) tun — und was ausdrücklich nicht?</li>
+  <li>Wo liegt der Unterschied zwischen dem <em>deklarierten</em> Typ (<code>Account</code>) und dem <em>tatsächlichen</em> Typ (<code>CurrentAccount</code>) beim Methodenaufruf?</li>
 </ul>
 
-<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Gleichheit und Beziehungen modellieren
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Kontoarten polymorph behandeln
 
-Als Entwickler:in möchte ich, dass zwei Objekte mit derselben fachlichen Identität als gleich gelten und sich lesbar ausgeben lassen, damit Suchen, Vergleiche und Ausgaben verlässlich funktionieren.
+Als Entwickler:in möchte ich Konten unterschiedlicher Art einheitlich behandeln und trotzdem das jeweils richtige Verhalten auslösen, damit neue Kontoarten die bestehende Abhebe-Logik nicht anfassen müssen.
 
 ## Lernziele
 
 Die Lernenden…
 
-* überschreiben `toString` für eine lesbare Objektausgabe.
-* überschreiben `equals` und `hashCode` konsistent auf Basis der fachlichen Identität.
-* drücken die Beziehung zwischen zwei Objekten über eine Referenz aus.
+* überschreiben eine geerbte Methode in einer Unterklasse mit `@Override`.
+* arbeiten über eine Basisklassen-Referenz und erklären die dynamische Bindung.
+* verarbeiten eine `List&lt;Account&gt;` einheitlich.
 
 ## Definition of Done
 
-* [ ] `Customer` und `Account` besitzen ein aussagekräftiges `toString`.
-* [ ] `equals` und `hashCode` von `Customer` basieren auf der `id`.
-* [ ] Ein `Account` hält eine Referenz auf seinen `Customer`-Inhaber.
-* [ ] Ein `HashSet&lt;Customer&gt;` erkennt zwei Objekte mit gleicher `id` als dasselbe Element.
+* [ ] `Account` besitzt eine Methode `isAmountAvailable(Money)`, die `withdraw` nutzt.
+* [ ] `CurrentAccount` überschreibt `isAmountAvailable`, sodass der Dispositionskredit berücksichtigt wird.
+* [ ] Eine `List&lt;Account&gt;` mit Giro- und Sparkonto wird in einer Schleife einheitlich abgefragt.
+* [ ] Der Abhebe-Versuch verhält sich je Kontoart korrekt unterschiedlich.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
 ## Arbeitsschritte
 
-### toString überschreiben
+### Verfügbarkeitsprüfung in der Basisklasse
 
-Gib eine lesbare Darstellung zurück (z. B. `Customer[id=…, name=Alice, city=Hamburg]`).
+Gib `Account` eine Methode `isAmountAvailable(Money amount)`, die standardmäßig nur den Saldo prüft, und nutze sie in `withdraw`.
 
-&gt; **Hinweis:** Die meisten IDEs können `toString`, `equals` und `hashCode` generieren — nutze das, aber lies das Ergebnis bewusst.
+&gt; **Hinweis:** `withdraw` bleibt in der Basisklasse — es ruft nur `isAmountAvailable(...)` auf. Genau darüber greift später die Polymorphie.
 
-### equals und hashCode auf der id aufbauen
+### Verhalten im Girokonto überschreiben
 
-Zwei Kunden sind gleich, wenn ihre `id` gleich ist — unabhängig von Name/Stadt.
+Überschreibe `isAmountAvailable` in `CurrentAccount`, sodass zusätzlich der Dispositionskredit zählt.
 
 ```java
 @Override
-public boolean equals(Object o) {
-  if (this == o) return true;
-  if (!(o instanceof Customer other)) return false;
-  return this.id.equals(other.id);
-}
-
-@Override
-public int hashCode() {
-  return Objects.hash(id);
+protected boolean isAmountAvailable(Money amount) {
+  // verfügbar = Saldo + Dispolimit
+  return getBalance().plus(limit).isGreaterOrEqual(amount);
 }
 ```
 
-### Gleichheit im HashSet prüfen
+&gt; **Hinweis:** `SavingsAccount` überschreibt nichts — es erbt die strengere Standardprüfung. Auch das ist eine bewusste Entwurfsaussage.
 
-Lege zwei `Customer` mit derselben `id` in ein `HashSet` und prüfe die Größe.
+### Einheitlich über den Basistyp arbeiten
 
-&gt; **Hinweis:** Ohne konsistente `equals`/`hashCode` enthält das Set zwei Einträge — mit korrekter Umsetzung nur einen.
+Lege beide Konten in eine `List&lt;Account&gt;` und versuche in einer Schleife, denselben Betrag abzuheben.
 
 ## Reflexionsfragen
 
-* Warum sollte die Gleichheit auf einer stabilen `id` beruhen und nicht auf veränderlichen Feldern wie dem Namen?
-* Was passiert in einer `HashMap`, wenn `hashCode` zweier gleicher Objekte unterschiedlich ist?
-* Ist die Beziehung Konto→Inhaber eine Assoziation oder eine Komposition? Begründe.</textarea>
+* Warum musst Du `withdraw` nicht ändern, obwohl sich das Verhalten je Kontoart unterscheidet?
+* Was müsstest Du für eine neue Kontoart (z. B. „Festgeld&quot;) tun — und was ausdrücklich nicht?
+* Wo liegt der Unterschied zwischen dem *deklarierten* Typ (`Account`) und dem *tatsächlichen* Typ (`CurrentAccount`) beim Methodenaufruf?</textarea>
     </main>
     <aside class="avd-academy-guide-sidebar">
       <div class="avd-academy-guide-side avd-academy-guide-side--toc" data-avd-academy-toc-box hidden>

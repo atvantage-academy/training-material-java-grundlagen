@@ -24,8 +24,10 @@
     duration:    8                  → Zahl in Minuten → Hero-Tag „ca. 8 Minuten“
                                        (ungefähre LESEDAUER; bei Guides/Übungen die
                                        Dauer der Übung). Aktiviert zugleich die
+                                       nummerierten Arbeitsschritte und die
                                        automatische Prev/Next-Navigation zwischen
-                                       gleichartigen Geschwister-Seiten.
+                                       gleichartigen Geschwister-Seiten. Alle drei
+                                       entfallen bei `layout: visualization`.
     topics:      ["Cloud & DevOps"] → weitere Hero-Tags
     resources:   [{titel, url, icon}, …] → Sidebar-Karte „Weiterführende Informationen“.
                                        titel und/oder icon (Bildpfad); icon erscheint
@@ -55,15 +57,15 @@
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java SE (ATVANTAGE Academy)</title>
-<meta name="description" content="Erweitere das Banking-System um eine eigene Funktion und kombiniere die Konzepte der Woche."><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="description" content="Führe einen gemeinsamen Vertrag (Identifiable) ein und programmiere gegen das Interface."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786695007"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786695007">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786695007">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786695007">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786695007"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786695007">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786695007" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786695007" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786695007">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786695916">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786695916">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786695916">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786695916">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786695916" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786695916" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786695916">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -75,8 +77,8 @@
 </script>
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786695007">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786695007"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786695916">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786695916"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -95,106 +97,136 @@
             aria-label="Farbschema umschalten">◐</button>
   </nav>
 </header>
-<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Das Banking-System um eine Funktion erweitern</span></nav><div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 135 Minuten</span><span class="avd-academy-tag">Integrationsprojekt</span><span class="avd-academy-tag">Banking</span>
+<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Einen gemeinsamen Vertrag per Interface einführen</span></nav><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 60 Minuten</span><span class="avd-academy-tag">Interfaces</span><span class="avd-academy-tag">Banking</span>
       </div>
       <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
               data-avd-academy-copy-md="#avd-academy-md-source"
               title="Markdown kopieren" aria-label="Markdown kopieren"></button>
-    </div><h1>Das Banking-System um eine Funktion erweitern</h1>
+    </div><h1>Einen gemeinsamen Vertrag per Interface einführen</h1>
   </section>
 
   <div class="avd-academy-guide-layout">
     <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
-      <h1 id="das-banking-system-um-eine-funktion-erweitern">Das Banking-System um eine Funktion erweitern</h1>
+      <h1 id="einen-gemeinsamen-vertrag-per-interface-einführen">Einen gemeinsamen Vertrag per Interface einführen</h1>
 
-<p>Als Entwickler:in möchte ich eine sinnvolle Funktion zum Banking-System hinzufügen, damit ich die Konzepte der Woche in einem zusammenhängenden Stück Software anwende.</p>
+<p>Als Entwickler:in möchte ich alles, was eine fachliche ID besitzt, über einen gemeinsamen Vertrag ansprechen, damit ich Hilfscode einmal schreibe und für Kunde und Konto gleichermaßen nutze.</p>
 
 <h2 id="lernziele">Lernziele</h2>
 
 <p>Die Lernenden…</p>
 
 <ul>
-  <li>erweitern das Banking-System um eine eigene Funktion und kombinieren dabei Klassen, Vererbung, Ausnahmen und Collections.</li>
-  <li>begründen ihre Entwurfsentscheidungen (Verantwortlichkeiten, Sichtbarkeiten) gegenüber anderen.</li>
+  <li>definieren ein Interface und implementieren es in mehreren Klassen.</li>
+  <li>schreiben eine Methode, die gegen das Interface statt gegen eine konkrete Klasse arbeitet.</li>
+  <li>grenzen Interface und abstrakte Klasse gegeneinander ab.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Eine selbst gewählte Funktion ist umgesetzt und lauffähig.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Die Lösung nutzt mindestens drei Konzepte der Woche (z. B. eigene Klasse, Vererbung/Polymorphie, Ausnahme, Collection).</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Mindestens ein zentraler Teil ist mit einem JUnit-Test abgesichert.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du kannst Deine Entwurfsentscheidungen in 2–3 Sätzen begründen.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt ein Interface <code>Identifiable</code> mit einer Methode <code>getId()</code>.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>Customer</code> und <code>Account</code> implementieren <code>Identifiable</code>.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt eine Methode, die ein <code>Identifiable</code> entgegennimmt und dessen ID nutzt (z. B. <code>describe(Identifiable)</code>).</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der Aufruf funktioniert mit <code>Customer</code>- und <code>Account</code>-Objekten.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
 <h2 id="arbeitsschritte">Arbeitsschritte</h2>
 
-<h3 id="eine-funktion-auswählen">Eine Funktion auswählen</h3>
+<h3 id="das-interface-definieren">Das Interface definieren</h3>
 
-<p>Wähle eine Erweiterung, die Dich reizt — zum Beispiel:</p>
+<p>Lege ein Interface an, das den Vertrag „hat eine ID” beschreibt.</p>
+
+<pre><code class="language-java">public interface Identifiable {
+  String getId();
+}
+</code></pre>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Beispiele: Zinsberechnung für Sparkonten, ein einfacher Kontoauszug (Liste der Transaktionen), Kundensuche nach Namen, Überweisung zwischen zwei Konten.</p>
+  <p><strong>Hinweis:</strong> Ein Interface beschreibt nur <em>was</em> möglich ist, nicht <em>wie</em>. Es enthält (klassisch) keine Felder und keine Implementierung.</p>
 </blockquote>
 
-<h3 id="umsetzen">Umsetzen</h3>
+<h3 id="den-vertrag-implementieren">Den Vertrag implementieren</h3>
 
-<p>Implementiere die Funktion in passenden Klassen. Achte auf Kapselung und klare Verantwortlichkeiten; wirf bei Fehlerfällen eine passende Ausnahme.</p>
+<p>Lass <code>Customer</code> und <code>Account</code> <code>Identifiable</code> implementieren und <code>getId()</code> passend zurückgeben.</p>
 
-<h3 id="absichern-und-zeigen">Absichern und zeigen</h3>
+<blockquote>
+  <p><strong>Hinweis:</strong> Falls die IDs unterschiedliche Typen haben (UUID vs. IBAN), liefere sie hier einheitlich als <code>String</code>.</p>
+</blockquote>
 
-<p>Schreibe mindestens einen JUnit-Test für den Kern Deiner Funktion und bereite eine kurze Demo (2–3 Minuten) vor.</p>
+<h3 id="gegen-das-interface-programmieren">Gegen das Interface programmieren</h3>
+
+<p>Schreibe eine Methode, die ein <code>Identifiable</code> annimmt — nicht einen konkreten Typ.</p>
+
+<pre><code class="language-java">static void describe(Identifiable item) {
+  System.out.println("Objekt mit ID: " + item.getId());
+}
+</code></pre>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Welche Konzepte der Woche hast Du genutzt — und warum gerade diese?</li>
-  <li>An welcher Stelle war die Entscheidung „Vererbung vs. eigenes Feld” oder „Ausnahme vs. Rückgabewert” relevant?</li>
-  <li>Was würdest Du mit mehr Zeit refaktorieren — und woran erkennst Du das?</li>
+  <li>Warum kann <code>describe</code> mit Kunden <em>und</em> Konten umgehen, ohne deren konkrete Klasse zu kennen?</li>
+  <li>Wann würdest Du statt eines Interfaces eine abstrakte Klasse wählen?</li>
+  <li>Welche künftige Erweiterung wird durch „Programmieren gegen das Interface” einfacher?</li>
 </ul>
 
-<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Das Banking-System um eine Funktion erweitern
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Einen gemeinsamen Vertrag per Interface einführen
 
-Als Entwickler:in möchte ich eine sinnvolle Funktion zum Banking-System hinzufügen, damit ich die Konzepte der Woche in einem zusammenhängenden Stück Software anwende.
+Als Entwickler:in möchte ich alles, was eine fachliche ID besitzt, über einen gemeinsamen Vertrag ansprechen, damit ich Hilfscode einmal schreibe und für Kunde und Konto gleichermaßen nutze.
 
 ## Lernziele
 
 Die Lernenden…
 
-* erweitern das Banking-System um eine eigene Funktion und kombinieren dabei Klassen, Vererbung, Ausnahmen und Collections.
-* begründen ihre Entwurfsentscheidungen (Verantwortlichkeiten, Sichtbarkeiten) gegenüber anderen.
+* definieren ein Interface und implementieren es in mehreren Klassen.
+* schreiben eine Methode, die gegen das Interface statt gegen eine konkrete Klasse arbeitet.
+* grenzen Interface und abstrakte Klasse gegeneinander ab.
 
 ## Definition of Done
 
-* [ ] Eine selbst gewählte Funktion ist umgesetzt und lauffähig.
-* [ ] Die Lösung nutzt mindestens drei Konzepte der Woche (z. B. eigene Klasse, Vererbung/Polymorphie, Ausnahme, Collection).
-* [ ] Mindestens ein zentraler Teil ist mit einem JUnit-Test abgesichert.
-* [ ] Du kannst Deine Entwurfsentscheidungen in 2–3 Sätzen begründen.
+* [ ] Es gibt ein Interface `Identifiable` mit einer Methode `getId()`.
+* [ ] `Customer` und `Account` implementieren `Identifiable`.
+* [ ] Es gibt eine Methode, die ein `Identifiable` entgegennimmt und dessen ID nutzt (z. B. `describe(Identifiable)`).
+* [ ] Der Aufruf funktioniert mit `Customer`- und `Account`-Objekten.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
 ## Arbeitsschritte
 
-### Eine Funktion auswählen
+### Das Interface definieren
 
-Wähle eine Erweiterung, die Dich reizt — zum Beispiel:
+Lege ein Interface an, das den Vertrag „hat eine ID&quot; beschreibt.
 
-&gt; **Hinweis:** Beispiele: Zinsberechnung für Sparkonten, ein einfacher Kontoauszug (Liste der Transaktionen), Kundensuche nach Namen, Überweisung zwischen zwei Konten.
+```java
+public interface Identifiable {
+  String getId();
+}
+```
 
-### Umsetzen
+&gt; **Hinweis:** Ein Interface beschreibt nur *was* möglich ist, nicht *wie*. Es enthält (klassisch) keine Felder und keine Implementierung.
 
-Implementiere die Funktion in passenden Klassen. Achte auf Kapselung und klare Verantwortlichkeiten; wirf bei Fehlerfällen eine passende Ausnahme.
+### Den Vertrag implementieren
 
-### Absichern und zeigen
+Lass `Customer` und `Account` `Identifiable` implementieren und `getId()` passend zurückgeben.
 
-Schreibe mindestens einen JUnit-Test für den Kern Deiner Funktion und bereite eine kurze Demo (2–3 Minuten) vor.
+&gt; **Hinweis:** Falls die IDs unterschiedliche Typen haben (UUID vs. IBAN), liefere sie hier einheitlich als `String`.
+
+### Gegen das Interface programmieren
+
+Schreibe eine Methode, die ein `Identifiable` annimmt — nicht einen konkreten Typ.
+
+```java
+static void describe(Identifiable item) {
+  System.out.println(&quot;Objekt mit ID: &quot; + item.getId());
+}
+```
 
 ## Reflexionsfragen
 
-* Welche Konzepte der Woche hast Du genutzt — und warum gerade diese?
-* An welcher Stelle war die Entscheidung „Vererbung vs. eigenes Feld&quot; oder „Ausnahme vs. Rückgabewert&quot; relevant?
-* Was würdest Du mit mehr Zeit refaktorieren — und woran erkennst Du das?</textarea>
+* Warum kann `describe` mit Kunden *und* Konten umgehen, ohne deren konkrete Klasse zu kennen?
+* Wann würdest Du statt eines Interfaces eine abstrakte Klasse wählen?
+* Welche künftige Erweiterung wird durch „Programmieren gegen das Interface&quot; einfacher?</textarea>
     </main>
     <aside class="avd-academy-guide-sidebar">
       <div class="avd-academy-guide-side avd-academy-guide-side--toc" data-avd-academy-toc-box hidden>

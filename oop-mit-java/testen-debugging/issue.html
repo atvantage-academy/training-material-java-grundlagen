@@ -24,8 +24,10 @@
     duration:    8                  → Zahl in Minuten → Hero-Tag „ca. 8 Minuten“
                                        (ungefähre LESEDAUER; bei Guides/Übungen die
                                        Dauer der Übung). Aktiviert zugleich die
+                                       nummerierten Arbeitsschritte und die
                                        automatische Prev/Next-Navigation zwischen
-                                       gleichartigen Geschwister-Seiten.
+                                       gleichartigen Geschwister-Seiten. Alle drei
+                                       entfallen bei `layout: visualization`.
     topics:      ["Cloud & DevOps"] → weitere Hero-Tags
     resources:   [{titel, url, icon}, …] → Sidebar-Karte „Weiterführende Informationen“.
                                        titel und/oder icon (Bildpfad); icon erscheint
@@ -55,15 +57,15 @@
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java SE (ATVANTAGE Academy)</title>
-<meta name="description" content="Verwalte Transaktionen eines Kontos in einer Liste und schütze sie durch eine unveränderbare Sicht."><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="description" content="Sichere das Verhalten eines Kontos mit JUnit-Tests ab und finde einen Fehler mit dem Debugger."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786695007"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786695007">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786695007">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786695007">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786695007"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786695007">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786695007" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786695007" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786695007">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786695916">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786695916">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786695916">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786695916">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786695916" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786695916" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786695916">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -75,8 +77,8 @@
 </script>
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786695007">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786695007"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786695916">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786695916"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -95,131 +97,131 @@
             aria-label="Farbschema umschalten">◐</button>
   </nav>
 </header>
-<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Transaktionen und Konten in Collections verwalten</span></nav><div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 75 Minuten</span><span class="avd-academy-tag">Collections</span><span class="avd-academy-tag">Banking</span>
+<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Das Konto mit JUnit testen</span></nav><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 75 Minuten</span><span class="avd-academy-tag">Testen</span><span class="avd-academy-tag">Debugging</span><span class="avd-academy-tag">Banking</span>
       </div>
       <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
               data-avd-academy-copy-md="#avd-academy-md-source"
               title="Markdown kopieren" aria-label="Markdown kopieren"></button>
-    </div><h1>Transaktionen und Konten in Collections verwalten</h1>
+    </div><h1>Das Konto mit JUnit testen</h1>
   </section>
 
   <div class="avd-academy-guide-layout">
     <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
-      <h1 id="transaktionen-und-konten-in-collections-verwalten">Transaktionen und Konten in Collections verwalten</h1>
+      <h1 id="das-konto-mit-junit-testen">Das Konto mit JUnit testen</h1>
 
-<p>Als Entwickler:in möchte ich die Transaktionen eines Kontos geordnet festhalten und Konten nachschlagen können, damit die Domäne mehrere Objekte sauber verwaltet.</p>
+<p>Als Entwickler:in möchte ich das Verhalten von Ein- und Auszahlungen automatisiert absichern, damit ich Änderungen später ohne Angst vor Regressionen vornehmen kann.</p>
 
 <h2 id="lernziele">Lernziele</h2>
 
 <p>Die Lernenden…</p>
 
 <ul>
-  <li>wählen eine passende Collection (<code>List</code>/<code>Set</code>/<code>Map</code>) für eine Aufgabe aus.</li>
-  <li>fügen Elemente hinzu und iterieren über die Collection.</li>
-  <li>geben eine interne Liste als unveränderbare Sicht heraus.</li>
+  <li>schreiben einen JUnit-Test für eine Domänenklasse und lassen ihn laufen.</li>
+  <li>formulieren Erwartungen als Assertions und interpretieren einen fehlschlagenden Test.</li>
+  <li>setzen einen Breakpoint und inspizieren Variablen im Debugger.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Ein <code>Account</code> führt seine Transaktionen in einer <code>List&lt;Transaction&gt;</code>.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Jede Ein-/Auszahlung ergänzt die Liste.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>getTransactions()</code> liefert eine <strong>unveränderbare</strong> Sicht (kein direkter Schreibzugriff von außen).</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Konten werden in einer <code>Map&lt;String, Account&gt;</code> (IBAN → Konto) nachschlagbar gehalten.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt eine Testklasse mit mindestens zwei Tests (z. B. erfolgreiche Einzahlung, abgelehnte Überziehung).</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Die Tests laufen grün.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast einen Test bewusst zum Fehlschlagen gebracht, die Meldung gelesen und wieder repariert.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast einen Breakpoint gesetzt und den Kontostand während der Ausführung inspiziert.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
 <h2 id="arbeitsschritte">Arbeitsschritte</h2>
 
-<h3 id="transaktionen-als-liste-führen">Transaktionen als Liste führen</h3>
+<h3 id="einen-ersten-test-schreiben">Einen ersten Test schreiben</h3>
 
-<p>Gib <code>Account</code> ein Feld <code>List&lt;Transaction&gt;</code> und ergänze es bei jeder Buchung.</p>
+<p>Schreibe einen Test, der nach einer Einzahlung den erwarteten Kontostand prüft.</p>
 
-<blockquote>
-  <p><strong>Hinweis:</strong> Eine <code>ArrayList</code> bewahrt die Reihenfolge — passend für einen chronologischen Buchungsverlauf.</p>
-</blockquote>
-
-<h3 id="die-liste-schützen">Die Liste schützen</h3>
-
-<p>Gib die Liste nur als unveränderbare Sicht zurück.</p>
-
-<pre><code class="language-java">public List&lt;Transaction&gt; getTransactions() {
-  return Collections.unmodifiableList(transactions);
+<pre><code class="language-java">@Test
+void einzahlungErhoehtDenSaldo() {
+  Account account = new SavingsAccount("DE...", alice);
+  account.deposit(Money.euro(50));
+  assertEquals(Money.euro(50), account.getBalance());
 }
 </code></pre>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> So kann außen niemand <code>add</code>/<code>remove</code> aufrufen; Buchungen laufen ausschließlich über die Konto-Methoden.</p>
+  <p><strong>Hinweis:</strong> Ein Test folgt dem Muster <em>Arrange – Act – Assert</em>: Objekt aufbauen, Aktion ausführen, Erwartung prüfen.</p>
 </blockquote>
 
-<h3 id="konten-nachschlagbar-machen">Konten nachschlagbar machen</h3>
+<h3 id="einen-fehlerfall-testen">Einen Fehlerfall testen</h3>
 
-<p>Verwalte Konten in einer <code>Map&lt;String, Account&gt;</code> und schlage per IBAN nach.</p>
+<p>Prüfe, dass eine unzulässige Abhebung die erwartete Ausnahme wirft.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Frage Dich: brauche ich Reihenfolge (List), Eindeutigkeit (Set) oder schnellen Zugriff per Schlüssel (Map)?</p>
+  <p><strong>Hinweis:</strong> Für erwartete Ausnahmen eignet sich <code>assertThrows(InsufficientFundsException.class, () -&gt; account.withdraw(...))</code>.</p>
 </blockquote>
+
+<h3 id="mit-dem-debugger-nachsehen">Mit dem Debugger nachsehen</h3>
+
+<p>Setze im <code>withdraw</code>-Pfad einen Breakpoint und verfolge, wie sich der Saldo verändert.</p>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Warum ist die IBAN ein guter Schlüssel für eine <code>Map</code> der Konten?</li>
-  <li>Welche Gefahr bestünde, wenn <code>getTransactions()</code> die echte, veränderbare Liste zurückgäbe?</li>
-  <li>Für die Menge aller Kunden-IDs — welche Collection passt und warum?</li>
+  <li>Was sagt Dir ein grüner Test — und was ausdrücklich nicht?</li>
+  <li>Warum ist ein automatisierter Test wertvoller als eine einmalige <code>println</code>-Kontrolle?</li>
+  <li>Wann bringt Dich der Debugger schneller ans Ziel als zusätzliche Ausgaben?</li>
 </ul>
 
-<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Transaktionen und Konten in Collections verwalten
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Das Konto mit JUnit testen
 
-Als Entwickler:in möchte ich die Transaktionen eines Kontos geordnet festhalten und Konten nachschlagen können, damit die Domäne mehrere Objekte sauber verwaltet.
+Als Entwickler:in möchte ich das Verhalten von Ein- und Auszahlungen automatisiert absichern, damit ich Änderungen später ohne Angst vor Regressionen vornehmen kann.
 
 ## Lernziele
 
 Die Lernenden…
 
-* wählen eine passende Collection (`List`/`Set`/`Map`) für eine Aufgabe aus.
-* fügen Elemente hinzu und iterieren über die Collection.
-* geben eine interne Liste als unveränderbare Sicht heraus.
+* schreiben einen JUnit-Test für eine Domänenklasse und lassen ihn laufen.
+* formulieren Erwartungen als Assertions und interpretieren einen fehlschlagenden Test.
+* setzen einen Breakpoint und inspizieren Variablen im Debugger.
 
 ## Definition of Done
 
-* [ ] Ein `Account` führt seine Transaktionen in einer `List&lt;Transaction&gt;`.
-* [ ] Jede Ein-/Auszahlung ergänzt die Liste.
-* [ ] `getTransactions()` liefert eine **unveränderbare** Sicht (kein direkter Schreibzugriff von außen).
-* [ ] Konten werden in einer `Map&lt;String, Account&gt;` (IBAN → Konto) nachschlagbar gehalten.
+* [ ] Es gibt eine Testklasse mit mindestens zwei Tests (z. B. erfolgreiche Einzahlung, abgelehnte Überziehung).
+* [ ] Die Tests laufen grün.
+* [ ] Du hast einen Test bewusst zum Fehlschlagen gebracht, die Meldung gelesen und wieder repariert.
+* [ ] Du hast einen Breakpoint gesetzt und den Kontostand während der Ausführung inspiziert.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
 ## Arbeitsschritte
 
-### Transaktionen als Liste führen
+### Einen ersten Test schreiben
 
-Gib `Account` ein Feld `List&lt;Transaction&gt;` und ergänze es bei jeder Buchung.
-
-&gt; **Hinweis:** Eine `ArrayList` bewahrt die Reihenfolge — passend für einen chronologischen Buchungsverlauf.
-
-### Die Liste schützen
-
-Gib die Liste nur als unveränderbare Sicht zurück.
+Schreibe einen Test, der nach einer Einzahlung den erwarteten Kontostand prüft.
 
 ```java
-public List&lt;Transaction&gt; getTransactions() {
-  return Collections.unmodifiableList(transactions);
+@Test
+void einzahlungErhoehtDenSaldo() {
+  Account account = new SavingsAccount(&quot;DE...&quot;, alice);
+  account.deposit(Money.euro(50));
+  assertEquals(Money.euro(50), account.getBalance());
 }
 ```
 
-&gt; **Hinweis:** So kann außen niemand `add`/`remove` aufrufen; Buchungen laufen ausschließlich über die Konto-Methoden.
+&gt; **Hinweis:** Ein Test folgt dem Muster *Arrange – Act – Assert*: Objekt aufbauen, Aktion ausführen, Erwartung prüfen.
 
-### Konten nachschlagbar machen
+### Einen Fehlerfall testen
 
-Verwalte Konten in einer `Map&lt;String, Account&gt;` und schlage per IBAN nach.
+Prüfe, dass eine unzulässige Abhebung die erwartete Ausnahme wirft.
 
-&gt; **Hinweis:** Frage Dich: brauche ich Reihenfolge (List), Eindeutigkeit (Set) oder schnellen Zugriff per Schlüssel (Map)?
+&gt; **Hinweis:** Für erwartete Ausnahmen eignet sich `assertThrows(InsufficientFundsException.class, () -&gt; account.withdraw(...))`.
+
+### Mit dem Debugger nachsehen
+
+Setze im `withdraw`-Pfad einen Breakpoint und verfolge, wie sich der Saldo verändert.
 
 ## Reflexionsfragen
 
-* Warum ist die IBAN ein guter Schlüssel für eine `Map` der Konten?
-* Welche Gefahr bestünde, wenn `getTransactions()` die echte, veränderbare Liste zurückgäbe?
-* Für die Menge aller Kunden-IDs — welche Collection passt und warum?</textarea>
+* Was sagt Dir ein grüner Test — und was ausdrücklich nicht?
+* Warum ist ein automatisierter Test wertvoller als eine einmalige `println`-Kontrolle?
+* Wann bringt Dich der Debugger schneller ans Ziel als zusätzliche Ausgaben?</textarea>
     </main>
     <aside class="avd-academy-guide-sidebar">
       <div class="avd-academy-guide-side avd-academy-guide-side--toc" data-avd-academy-toc-box hidden>

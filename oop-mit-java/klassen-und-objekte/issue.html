@@ -24,8 +24,10 @@
     duration:    8                  → Zahl in Minuten → Hero-Tag „ca. 8 Minuten“
                                        (ungefähre LESEDAUER; bei Guides/Übungen die
                                        Dauer der Übung). Aktiviert zugleich die
+                                       nummerierten Arbeitsschritte und die
                                        automatische Prev/Next-Navigation zwischen
-                                       gleichartigen Geschwister-Seiten.
+                                       gleichartigen Geschwister-Seiten. Alle drei
+                                       entfallen bei `layout: visualization`.
     topics:      ["Cloud & DevOps"] → weitere Hero-Tags
     resources:   [{titel, url, icon}, …] → Sidebar-Karte „Weiterführende Informationen“.
                                        titel und/oder icon (Bildpfad); icon erscheint
@@ -55,15 +57,15 @@
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java SE (ATVANTAGE Academy)</title>
-<meta name="description" content="Ersetze doppelte Repository-Klassen durch ein typsicheres, generisches Repository."><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="description" content="Modelliere Kunde und Konto als eigene Klassen und erzeuge daraus Objekte."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786695007"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786695007">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786695007">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786695007">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786695007"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786695007">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786695007" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786695007" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786695007">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786695916">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786695916">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786695916">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786695916">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786695916" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786695916" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786695916">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -75,8 +77,8 @@
 </script>
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786695007">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786695007"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786695916">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786695916"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -95,144 +97,131 @@
             aria-label="Farbschema umschalten">◐</button>
   </nav>
 </header>
-<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Ein generisches Repository bauen</span></nav><div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 60 Minuten</span><span class="avd-academy-tag">Generics</span><span class="avd-academy-tag">Banking</span>
+<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Kunden und Konten als Klassen modellieren</span></nav><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 75 Minuten</span><span class="avd-academy-tag">Klassen & Objekte</span><span class="avd-academy-tag">Banking</span>
       </div>
       <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
               data-avd-academy-copy-md="#avd-academy-md-source"
               title="Markdown kopieren" aria-label="Markdown kopieren"></button>
-    </div><h1>Ein generisches Repository bauen</h1>
+    </div><h1>Kunden und Konten als Klassen modellieren</h1>
   </section>
 
   <div class="avd-academy-guide-layout">
     <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
-      <h1 id="ein-generisches-repository-bauen">Ein generisches Repository bauen</h1>
+      <h1 id="kunden-und-konten-als-klassen-modellieren">Kunden und Konten als Klassen modellieren</h1>
 
-<p>Als Entwickler:in möchte ich Kunden und Konten mit derselben, typsicheren Verwaltungslogik ablegen, damit ich Speicher-Code nicht für jeden Typ dupliziere.</p>
+<p>Als Entwickler:in im Banking-Team möchte ich Kunden und Konten als eigene Klassen abbilden, damit zusammengehörige Daten und Verhalten an einem Ort liegen statt in verstreuten Variablen.</p>
 
 <h2 id="lernziele">Lernziele</h2>
 
 <p>Die Lernenden…</p>
 
 <ul>
-  <li>definieren eine generische Klasse/ein Interface mit Typparameter.</li>
-  <li>schränken einen Typparameter mit <code>extends</code> ein.</li>
-  <li>verwenden das generische Repository typsicher für zwei Typen.</li>
+  <li>legen eine Klasse mit privaten Feldern, einem Konstruktor und Methoden an.</li>
+  <li>erzeugen mit <code>new</code> Objekte und rufen ihre Methoden auf.</li>
+  <li>erklären, warum Bauplan (Klasse) und Instanz (Objekt) verschiedene Dinge sind.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt ein generisches <code>Repository&lt;T extends Identifiable&gt;</code> mit <code>save(T)</code> und <code>findById(String)</code>.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Intern speichert es die Elemente in einer <code>Map&lt;String, T&gt;</code> (ID → Element).</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es existieren ein <code>Repository&lt;Customer&gt;</code> und ein <code>Repository&lt;Account&gt;</code> ohne duplizierten Code.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Die Verwendung kommt ohne explizite Casts aus.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt eine Klasse <code>Customer</code> mit den Feldern <code>name</code> und <code>city</code> sowie einer automatisch erzeugten <code>id</code>.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt eine Klasse <code>Account</code> mit <code>iban</code>, <code>balance</code> und einem <code>owner</code> (ein <code>Customer</code>).</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />In <code>Main</code> werden mindestens zwei Kunden und ein Konto erzeugt und ausgegeben.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Das Programm startet und läuft fehlerfrei.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
 <h2 id="arbeitsschritte">Arbeitsschritte</h2>
 
-<h3 id="das-generische-repository-definieren">Das generische Repository definieren</h3>
+<h3 id="die-klasse-customer-anlegen">Die Klasse Customer anlegen</h3>
 
-<p>Führe einen Typparameter <code>T</code> ein und schränke ihn auf <code>Identifiable</code> ein.</p>
-
-<pre><code class="language-java">public class Repository&lt;T extends Identifiable&gt; {
-  private final Map&lt;String, T&gt; items = new HashMap&lt;&gt;();
-
-  public void save(T item) {
-    items.put(item.getId(), item);
-  }
-
-  public T findById(String id) {
-    return items.get(id);
-  }
-}
-</code></pre>
+<p>Lege im Paket <code>domain</code> eine Klasse <code>Customer</code> mit den Feldern für Name und Stadt an. Erzeuge im Konstruktor eine eindeutige ID.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Nur wegen der Schranke <code>extends Identifiable</code> darfst Du innen <code>item.getId()</code> aufrufen.</p>
+  <p><strong>Hinweis:</strong> Für eindeutige IDs eignet sich <code>java.util.UUID.randomUUID()</code>. Ein Feld, das sich nach der Erzeugung nicht mehr ändern soll, kannst Du <code>final</code> machen.</p>
 </blockquote>
 
-<h3 id="für-zwei-typen-verwenden">Für zwei Typen verwenden</h3>
+<h3 id="die-klasse-account-anlegen">Die Klasse Account anlegen</h3>
 
-<p>Erzeuge je ein Repository für Kunden und Konten und speichere/lies Objekte.</p>
+<p>Lege eine Klasse <code>Account</code> an, die eine <code>iban</code>, einen Kontostand und den Inhaber (<code>Customer</code>) kennt. Ein Konto „hat einen” Kunden als Inhaber.</p>
 
-<pre><code class="language-java">Repository&lt;Customer&gt; customers = new Repository&lt;&gt;();
-customers.save(alice);
-Customer found = customers.findById(alice.getId()); // kein Cast nötig
+<blockquote>
+  <p><strong>Hinweis:</strong> Überlege, welche Felder beim Erzeugen zwingend nötig sind — die gehören in den Konstruktor.</p>
+</blockquote>
+
+<h3 id="objekte-erzeugen-und-benutzen">Objekte erzeugen und benutzen</h3>
+
+<p>Erzeuge in <code>Main</code> zwei <code>Customer</code>-Objekte und daraus ein <code>Account</code>-Objekt. Gib sie mit <code>System.out.println</code> aus.</p>
+
+<pre><code class="language-java">Customer alice = new Customer("Alice", "Hamburg");
+Account account = new Account("DE...", alice);
+System.out.println(account);
 </code></pre>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Beobachte, wie die IDE beim falschen Typ (<code>customers.save(account)</code>) schon vor dem Ausführen meckert — das ist Typsicherheit zur Compile-Zeit.</p>
+  <p><strong>Hinweis:</strong> Wenn die Ausgabe kryptisch aussieht (<code>Account@1b6d3586</code>), ist das erwartbar — eine schöne Textform folgt im Modul <em>Objektbeziehungen &amp; equals/hashCode</em>.</p>
 </blockquote>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Was wäre der Nachteil eines Repositories, das intern <code>Object</code> speichert?</li>
-  <li>Warum brauchst Du die Typschranke <code>extends Identifiable</code> — was ginge ohne sie nicht?</li>
-  <li>An welcher anderen Stelle im Banking-System würde sich ein generischer Typ noch lohnen?</li>
+  <li>Welche Daten und welches Verhalten „gehören” zu einem Konto — und was gehört bewusst nicht hinein?</li>
+  <li>Was wäre der Nachteil, Kontostand und Inhaber in getrennten Arrays statt in einem <code>Account</code>-Objekt zu halten?</li>
+  <li>Warum ist es sinnvoll, dass ein Konto seine ID/IBAN nicht nachträglich ändern lässt?</li>
 </ul>
 
-<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Ein generisches Repository bauen
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Kunden und Konten als Klassen modellieren
 
-Als Entwickler:in möchte ich Kunden und Konten mit derselben, typsicheren Verwaltungslogik ablegen, damit ich Speicher-Code nicht für jeden Typ dupliziere.
+Als Entwickler:in im Banking-Team möchte ich Kunden und Konten als eigene Klassen abbilden, damit zusammengehörige Daten und Verhalten an einem Ort liegen statt in verstreuten Variablen.
 
 ## Lernziele
 
 Die Lernenden…
 
-* definieren eine generische Klasse/ein Interface mit Typparameter.
-* schränken einen Typparameter mit `extends` ein.
-* verwenden das generische Repository typsicher für zwei Typen.
+* legen eine Klasse mit privaten Feldern, einem Konstruktor und Methoden an.
+* erzeugen mit `new` Objekte und rufen ihre Methoden auf.
+* erklären, warum Bauplan (Klasse) und Instanz (Objekt) verschiedene Dinge sind.
 
 ## Definition of Done
 
-* [ ] Es gibt ein generisches `Repository&lt;T extends Identifiable&gt;` mit `save(T)` und `findById(String)`.
-* [ ] Intern speichert es die Elemente in einer `Map&lt;String, T&gt;` (ID → Element).
-* [ ] Es existieren ein `Repository&lt;Customer&gt;` und ein `Repository&lt;Account&gt;` ohne duplizierten Code.
-* [ ] Die Verwendung kommt ohne explizite Casts aus.
+* [ ] Es gibt eine Klasse `Customer` mit den Feldern `name` und `city` sowie einer automatisch erzeugten `id`.
+* [ ] Es gibt eine Klasse `Account` mit `iban`, `balance` und einem `owner` (ein `Customer`).
+* [ ] In `Main` werden mindestens zwei Kunden und ein Konto erzeugt und ausgegeben.
+* [ ] Das Programm startet und läuft fehlerfrei.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
 ## Arbeitsschritte
 
-### Das generische Repository definieren
+### Die Klasse Customer anlegen
 
-Führe einen Typparameter `T` ein und schränke ihn auf `Identifiable` ein.
+Lege im Paket `domain` eine Klasse `Customer` mit den Feldern für Name und Stadt an. Erzeuge im Konstruktor eine eindeutige ID.
 
-```java
-public class Repository&lt;T extends Identifiable&gt; {
-  private final Map&lt;String, T&gt; items = new HashMap&lt;&gt;();
+&gt; **Hinweis:** Für eindeutige IDs eignet sich `java.util.UUID.randomUUID()`. Ein Feld, das sich nach der Erzeugung nicht mehr ändern soll, kannst Du `final` machen.
 
-  public void save(T item) {
-    items.put(item.getId(), item);
-  }
+### Die Klasse Account anlegen
 
-  public T findById(String id) {
-    return items.get(id);
-  }
-}
-```
+Lege eine Klasse `Account` an, die eine `iban`, einen Kontostand und den Inhaber (`Customer`) kennt. Ein Konto „hat einen&quot; Kunden als Inhaber.
 
-&gt; **Hinweis:** Nur wegen der Schranke `extends Identifiable` darfst Du innen `item.getId()` aufrufen.
+&gt; **Hinweis:** Überlege, welche Felder beim Erzeugen zwingend nötig sind — die gehören in den Konstruktor.
 
-### Für zwei Typen verwenden
+### Objekte erzeugen und benutzen
 
-Erzeuge je ein Repository für Kunden und Konten und speichere/lies Objekte.
+Erzeuge in `Main` zwei `Customer`-Objekte und daraus ein `Account`-Objekt. Gib sie mit `System.out.println` aus.
 
 ```java
-Repository&lt;Customer&gt; customers = new Repository&lt;&gt;();
-customers.save(alice);
-Customer found = customers.findById(alice.getId()); // kein Cast nötig
+Customer alice = new Customer(&quot;Alice&quot;, &quot;Hamburg&quot;);
+Account account = new Account(&quot;DE...&quot;, alice);
+System.out.println(account);
 ```
 
-&gt; **Hinweis:** Beobachte, wie die IDE beim falschen Typ (`customers.save(account)`) schon vor dem Ausführen meckert — das ist Typsicherheit zur Compile-Zeit.
+&gt; **Hinweis:** Wenn die Ausgabe kryptisch aussieht (`Account@1b6d3586`), ist das erwartbar — eine schöne Textform folgt im Modul *Objektbeziehungen &amp; equals/hashCode*.
 
 ## Reflexionsfragen
 
-* Was wäre der Nachteil eines Repositories, das intern `Object` speichert?
-* Warum brauchst Du die Typschranke `extends Identifiable` — was ginge ohne sie nicht?
-* An welcher anderen Stelle im Banking-System würde sich ein generischer Typ noch lohnen?</textarea>
+* Welche Daten und welches Verhalten „gehören&quot; zu einem Konto — und was gehört bewusst nicht hinein?
+* Was wäre der Nachteil, Kontostand und Inhaber in getrennten Arrays statt in einem `Account`-Objekt zu halten?
+* Warum ist es sinnvoll, dass ein Konto seine ID/IBAN nicht nachträglich ändern lässt?</textarea>
     </main>
     <aside class="avd-academy-guide-sidebar">
       <div class="avd-academy-guide-side avd-academy-guide-side--toc" data-avd-academy-toc-box hidden>

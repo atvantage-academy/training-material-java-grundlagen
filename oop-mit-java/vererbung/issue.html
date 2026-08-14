@@ -24,8 +24,10 @@
     duration:    8                  → Zahl in Minuten → Hero-Tag „ca. 8 Minuten“
                                        (ungefähre LESEDAUER; bei Guides/Übungen die
                                        Dauer der Übung). Aktiviert zugleich die
+                                       nummerierten Arbeitsschritte und die
                                        automatische Prev/Next-Navigation zwischen
-                                       gleichartigen Geschwister-Seiten.
+                                       gleichartigen Geschwister-Seiten. Alle drei
+                                       entfallen bei `layout: visualization`.
     topics:      ["Cloud & DevOps"] → weitere Hero-Tags
     resources:   [{titel, url, icon}, …] → Sidebar-Karte „Weiterführende Informationen“.
                                        titel und/oder icon (Bildpfad); icon erscheint
@@ -55,15 +57,15 @@
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java SE (ATVANTAGE Academy)</title>
-<meta name="description" content="Lass Giro- und Sparkonto dieselbe Abhebe-Logik unterschiedlich ausführen — über Polymorphie."><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="description" content="Bilde Giro- und Sparkonto als Unterklassen einer abstrakten Basisklasse Account."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786695007"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786695007">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786695007">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786695007">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786695007"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786695007">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786695007" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786695007" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786695007">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786695916">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786695916">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786695916">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786695916">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786695916" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786695916" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786695916">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -75,8 +77,8 @@
 </script>
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786695007">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786695007"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786695916">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786695916"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -95,129 +97,133 @@
             aria-label="Farbschema umschalten">◐</button>
   </nav>
 </header>
-<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Kontoarten polymorph behandeln</span></nav><div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 75 Minuten</span><span class="avd-academy-tag">Polymorphie</span><span class="avd-academy-tag">Banking</span>
+<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Kontoarten per Vererbung modellieren</span></nav><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 75 Minuten</span><span class="avd-academy-tag">Vererbung</span><span class="avd-academy-tag">abstrakte Klassen</span><span class="avd-academy-tag">Banking</span>
       </div>
       <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
               data-avd-academy-copy-md="#avd-academy-md-source"
               title="Markdown kopieren" aria-label="Markdown kopieren"></button>
-    </div><h1>Kontoarten polymorph behandeln</h1>
+    </div><h1>Kontoarten per Vererbung modellieren</h1>
   </section>
 
   <div class="avd-academy-guide-layout">
     <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
-      <h1 id="kontoarten-polymorph-behandeln">Kontoarten polymorph behandeln</h1>
+      <h1 id="kontoarten-per-vererbung-modellieren">Kontoarten per Vererbung modellieren</h1>
 
-<p>Als Entwickler:in möchte ich Konten unterschiedlicher Art einheitlich behandeln und trotzdem das jeweils richtige Verhalten auslösen, damit neue Kontoarten die bestehende Abhebe-Logik nicht anfassen müssen.</p>
+<p>Als Entwickler:in möchte ich Giro- und Sparkonten als Spezialisierungen eines gemeinsamen Kontos abbilden, damit gemeinsames Verhalten nur einmal existiert und Besonderheiten je Kontoart ergänzt werden.</p>
 
 <h2 id="lernziele">Lernziele</h2>
 
 <p>Die Lernenden…</p>
 
 <ul>
-  <li>überschreiben eine geerbte Methode in einer Unterklasse mit <code>@Override</code>.</li>
-  <li>arbeiten über eine Basisklassen-Referenz und erklären die dynamische Bindung.</li>
-  <li>verarbeiten eine <code>List&lt;Account&gt;</code> einheitlich.</li>
+  <li>definieren eine abstrakte Basisklasse mit gemeinsamem Zustand/Verhalten.</li>
+  <li>leiten Unterklassen mit <code>extends</code> ab und initialisieren sie mit <code>super(...)</code>.</li>
+  <li>begründen, welches Verhalten in die Basisklasse gehört.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>Account</code> besitzt eine Methode <code>isAmountAvailable(Money)</code>, die <code>withdraw</code> nutzt.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>CurrentAccount</code> überschreibt <code>isAmountAvailable</code>, sodass der Dispositionskredit berücksichtigt wird.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Eine <code>List&lt;Account&gt;</code> mit Giro- und Sparkonto wird in einer Schleife einheitlich abgefragt.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der Abhebe-Versuch verhält sich je Kontoart korrekt unterschiedlich.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>Account</code> ist <code>abstract</code> und lässt sich nicht direkt instanziieren.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>CurrentAccount</code> und <code>SavingsAccount</code> erben von <code>Account</code>.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Beide Unterklassen rufen im Konstruktor <code>super(iban, owner)</code> auf.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>CurrentAccount</code> ergänzt einen Dispositionskredit, <code>SavingsAccount</code> einen Habenzins.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Das Programm erzeugt je ein Objekt beider Kontoarten und gibt sie aus.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
 <h2 id="arbeitsschritte">Arbeitsschritte</h2>
 
-<h3 id="verfügbarkeitsprüfung-in-der-basisklasse">Verfügbarkeitsprüfung in der Basisklasse</h3>
+<h3 id="account-abstrakt-machen">Account abstrakt machen</h3>
 
-<p>Gib <code>Account</code> eine Methode <code>isAmountAvailable(Money amount)</code>, die standardmäßig nur den Saldo prüft, und nutze sie in <code>withdraw</code>.</p>
+<p>Wandle <code>Account</code> in eine abstrakte Klasse mit den gemeinsamen Feldern (IBAN, Saldo, Inhaber) um.</p>
 
-<blockquote>
-  <p><strong>Hinweis:</strong> <code>withdraw</code> bleibt in der Basisklasse — es ruft nur <code>isAmountAvailable(...)</code> auf. Genau darüber greift später die Polymorphie.</p>
-</blockquote>
-
-<h3 id="verhalten-im-girokonto-überschreiben">Verhalten im Girokonto überschreiben</h3>
-
-<p>Überschreibe <code>isAmountAvailable</code> in <code>CurrentAccount</code>, sodass zusätzlich der Dispositionskredit zählt.</p>
-
-<pre><code class="language-java">@Override
-protected boolean isAmountAvailable(Money amount) {
-  // verfügbar = Saldo + Dispolimit
-  return getBalance().plus(limit).isGreaterOrEqual(amount);
+<pre><code class="language-java">public abstract class Account {
+  private final String iban;
+  private Money balance;
+  private Customer owner;
+  // ...
 }
 </code></pre>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> <code>SavingsAccount</code> überschreibt nichts — es erbt die strengere Standardprüfung. Auch das ist eine bewusste Entwurfsaussage.</p>
+  <p><strong>Hinweis:</strong> <code>abstract</code> bedeutet: „nicht direkt erzeugbar”. <code>new Account(...)</code> muss zu einem Compilerfehler führen.</p>
 </blockquote>
 
-<h3 id="einheitlich-über-den-basistyp-arbeiten">Einheitlich über den Basistyp arbeiten</h3>
+<h3 id="unterklassen-ableiten">Unterklassen ableiten</h3>
 
-<p>Lege beide Konten in eine <code>List&lt;Account&gt;</code> und versuche in einer Schleife, denselben Betrag abzuheben.</p>
+<p>Lege <code>CurrentAccount</code> und <code>SavingsAccount</code> an, die von <code>Account</code> erben und im Konstruktor <code>super(...)</code> aufrufen.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Ergänze nur das, was die Kontoart wirklich unterscheidet (z. B. <code>limit</code> beim Girokonto, <code>creditInterestRate</code> beim Sparkonto).</p>
+</blockquote>
+
+<h3 id="objekte-erzeugen">Objekte erzeugen</h3>
+
+<p>Erzeuge in <code>Main</code> je ein Giro- und ein Sparkonto und gib beide aus.</p>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Warum musst Du <code>withdraw</code> nicht ändern, obwohl sich das Verhalten je Kontoart unterscheidet?</li>
-  <li>Was müsstest Du für eine neue Kontoart (z. B. „Festgeld”) tun — und was ausdrücklich nicht?</li>
-  <li>Wo liegt der Unterschied zwischen dem <em>deklarierten</em> Typ (<code>Account</code>) und dem <em>tatsächlichen</em> Typ (<code>CurrentAccount</code>) beim Methodenaufruf?</li>
+  <li>Welches Verhalten gehört in <code>Account</code>, welches nur in eine bestimmte Kontoart?</li>
+  <li>Woran würdest Du merken, dass Vererbung hier <em>nicht</em> das richtige Mittel ist?</li>
+  <li>Was gewinnst Du dadurch, dass die gemeinsamen Felder nur einmal in der Basisklasse stehen?</li>
 </ul>
 
-<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Kontoarten polymorph behandeln
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Kontoarten per Vererbung modellieren
 
-Als Entwickler:in möchte ich Konten unterschiedlicher Art einheitlich behandeln und trotzdem das jeweils richtige Verhalten auslösen, damit neue Kontoarten die bestehende Abhebe-Logik nicht anfassen müssen.
+Als Entwickler:in möchte ich Giro- und Sparkonten als Spezialisierungen eines gemeinsamen Kontos abbilden, damit gemeinsames Verhalten nur einmal existiert und Besonderheiten je Kontoart ergänzt werden.
 
 ## Lernziele
 
 Die Lernenden…
 
-* überschreiben eine geerbte Methode in einer Unterklasse mit `@Override`.
-* arbeiten über eine Basisklassen-Referenz und erklären die dynamische Bindung.
-* verarbeiten eine `List&lt;Account&gt;` einheitlich.
+* definieren eine abstrakte Basisklasse mit gemeinsamem Zustand/Verhalten.
+* leiten Unterklassen mit `extends` ab und initialisieren sie mit `super(...)`.
+* begründen, welches Verhalten in die Basisklasse gehört.
 
 ## Definition of Done
 
-* [ ] `Account` besitzt eine Methode `isAmountAvailable(Money)`, die `withdraw` nutzt.
-* [ ] `CurrentAccount` überschreibt `isAmountAvailable`, sodass der Dispositionskredit berücksichtigt wird.
-* [ ] Eine `List&lt;Account&gt;` mit Giro- und Sparkonto wird in einer Schleife einheitlich abgefragt.
-* [ ] Der Abhebe-Versuch verhält sich je Kontoart korrekt unterschiedlich.
+* [ ] `Account` ist `abstract` und lässt sich nicht direkt instanziieren.
+* [ ] `CurrentAccount` und `SavingsAccount` erben von `Account`.
+* [ ] Beide Unterklassen rufen im Konstruktor `super(iban, owner)` auf.
+* [ ] `CurrentAccount` ergänzt einen Dispositionskredit, `SavingsAccount` einen Habenzins.
+* [ ] Das Programm erzeugt je ein Objekt beider Kontoarten und gibt sie aus.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
 ## Arbeitsschritte
 
-### Verfügbarkeitsprüfung in der Basisklasse
+### Account abstrakt machen
 
-Gib `Account` eine Methode `isAmountAvailable(Money amount)`, die standardmäßig nur den Saldo prüft, und nutze sie in `withdraw`.
-
-&gt; **Hinweis:** `withdraw` bleibt in der Basisklasse — es ruft nur `isAmountAvailable(...)` auf. Genau darüber greift später die Polymorphie.
-
-### Verhalten im Girokonto überschreiben
-
-Überschreibe `isAmountAvailable` in `CurrentAccount`, sodass zusätzlich der Dispositionskredit zählt.
+Wandle `Account` in eine abstrakte Klasse mit den gemeinsamen Feldern (IBAN, Saldo, Inhaber) um.
 
 ```java
-@Override
-protected boolean isAmountAvailable(Money amount) {
-  // verfügbar = Saldo + Dispolimit
-  return getBalance().plus(limit).isGreaterOrEqual(amount);
+public abstract class Account {
+  private final String iban;
+  private Money balance;
+  private Customer owner;
+  // ...
 }
 ```
 
-&gt; **Hinweis:** `SavingsAccount` überschreibt nichts — es erbt die strengere Standardprüfung. Auch das ist eine bewusste Entwurfsaussage.
+&gt; **Hinweis:** `abstract` bedeutet: „nicht direkt erzeugbar&quot;. `new Account(...)` muss zu einem Compilerfehler führen.
 
-### Einheitlich über den Basistyp arbeiten
+### Unterklassen ableiten
 
-Lege beide Konten in eine `List&lt;Account&gt;` und versuche in einer Schleife, denselben Betrag abzuheben.
+Lege `CurrentAccount` und `SavingsAccount` an, die von `Account` erben und im Konstruktor `super(...)` aufrufen.
+
+&gt; **Hinweis:** Ergänze nur das, was die Kontoart wirklich unterscheidet (z. B. `limit` beim Girokonto, `creditInterestRate` beim Sparkonto).
+
+### Objekte erzeugen
+
+Erzeuge in `Main` je ein Giro- und ein Sparkonto und gib beide aus.
 
 ## Reflexionsfragen
 
-* Warum musst Du `withdraw` nicht ändern, obwohl sich das Verhalten je Kontoart unterscheidet?
-* Was müsstest Du für eine neue Kontoart (z. B. „Festgeld&quot;) tun — und was ausdrücklich nicht?
-* Wo liegt der Unterschied zwischen dem *deklarierten* Typ (`Account`) und dem *tatsächlichen* Typ (`CurrentAccount`) beim Methodenaufruf?</textarea>
+* Welches Verhalten gehört in `Account`, welches nur in eine bestimmte Kontoart?
+* Woran würdest Du merken, dass Vererbung hier *nicht* das richtige Mittel ist?
+* Was gewinnst Du dadurch, dass die gemeinsamen Felder nur einmal in der Basisklasse stehen?</textarea>
     </main>
     <aside class="avd-academy-guide-sidebar">
       <div class="avd-academy-guide-side avd-academy-guide-side--toc" data-avd-academy-toc-box hidden>

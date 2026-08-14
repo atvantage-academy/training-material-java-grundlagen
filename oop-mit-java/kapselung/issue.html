@@ -24,8 +24,10 @@
     duration:    8                  → Zahl in Minuten → Hero-Tag „ca. 8 Minuten“
                                        (ungefähre LESEDAUER; bei Guides/Übungen die
                                        Dauer der Übung). Aktiviert zugleich die
+                                       nummerierten Arbeitsschritte und die
                                        automatische Prev/Next-Navigation zwischen
-                                       gleichartigen Geschwister-Seiten.
+                                       gleichartigen Geschwister-Seiten. Alle drei
+                                       entfallen bei `layout: visualization`.
     topics:      ["Cloud & DevOps"] → weitere Hero-Tags
     resources:   [{titel, url, icon}, …] → Sidebar-Karte „Weiterführende Informationen“.
                                        titel und/oder icon (Bildpfad); icon erscheint
@@ -55,15 +57,15 @@
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java SE (ATVANTAGE Academy)</title>
-<meta name="description" content="Behandle unzureichendes Guthaben mit einer eigenen checked Exception."><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="description" content="Schütze den Zustand von Kunde und Konto durch Kapselung und Validierung."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786695007"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786695007">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786695007">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786695007">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786695007"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786695007">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786695007" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786695007" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786695007">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786695916">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786695916">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786695916">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786695916">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786695916" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786695916" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786695916">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -75,8 +77,8 @@
 </script>
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786695007">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786695007"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786695916">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786695916"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -95,144 +97,129 @@
             aria-label="Farbschema umschalten">◐</button>
   </nav>
 </header>
-<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Fehlerfälle mit Ausnahmen behandeln</span></nav><div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 75 Minuten</span><span class="avd-academy-tag">Exceptions</span><span class="avd-academy-tag">Banking</span>
+<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Kapselung und Validierung durchsetzen</span></nav><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 75 Minuten</span><span class="avd-academy-tag">Kapselung</span><span class="avd-academy-tag">Banking</span>
       </div>
       <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
               data-avd-academy-copy-md="#avd-academy-md-source"
               title="Markdown kopieren" aria-label="Markdown kopieren"></button>
-    </div><h1>Fehlerfälle mit Ausnahmen behandeln</h1>
+    </div><h1>Kapselung und Validierung durchsetzen</h1>
   </section>
 
   <div class="avd-academy-guide-layout">
     <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
-      <h1 id="fehlerfälle-mit-ausnahmen-behandeln">Fehlerfälle mit Ausnahmen behandeln</h1>
+      <h1 id="kapselung-und-validierung-durchsetzen">Kapselung und Validierung durchsetzen</h1>
 
-<p>Als Entwickler:in möchte ich, dass eine unmögliche Abhebung nicht stillschweigend passiert, sondern klar signalisiert wird, damit aufrufender Code den Fehler bewusst behandeln muss.</p>
+<p>Als Entwickler:in möchte ich, dass Kunde und Konto niemals in einen ungültigen Zustand geraten, damit ich mich im restlichen Programm auf gültige Objekte verlassen kann.</p>
 
 <h2 id="lernziele">Lernziele</h2>
 
 <p>Die Lernenden…</p>
 
 <ul>
-  <li>definieren eine eigene Exception-Klasse.</li>
-  <li>werfen eine Ausnahme an der passenden Stelle und behandeln sie mit <code>try</code>/<code>catch</code>.</li>
-  <li>begründen, ob eine Ausnahme checked oder unchecked sein sollte.</li>
+  <li>deklarieren Felder <code>private</code> und steuern den Zugriff über Getter/Setter.</li>
+  <li>validieren Eingaben in Konstruktor und Settern und lehnen ungültige Werte ab.</li>
+  <li>begründen, welche Prüfungen in die Klasse gehören.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt eine Exception <code>InsufficientFundsException</code> (checked).</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>withdraw</code> wirft diese Exception, wenn der Betrag nicht verfügbar ist.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der Aufrufer in <code>Main</code> fängt die Exception mit <code>try</code>/<code>catch</code> und gibt eine sinnvolle Meldung aus.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Ein Programmierfehler (z. B. <code>null</code>-Betrag) wird über eine <em>unchecked</em> Exception abgelehnt.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Alle Felder von <code>Customer</code> und <code>Account</code> sind <code>private</code>.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der Konstruktor lehnt <code>null</code>-Werte für Pflichtfelder ab.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>setName</code> (o. ä.) verhindert <code>null</code> bzw. leere Werte.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der Kontostand kann nicht direkt von außen gesetzt werden (kein öffentlicher Setter dafür).</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
 <h2 id="arbeitsschritte">Arbeitsschritte</h2>
 
-<h3 id="eine-fachliche-exception-definieren">Eine fachliche Exception definieren</h3>
+<h3 id="felder-privat-machen">Felder privat machen</h3>
 
-<p>Lege eine checked Exception an (erbt von <code>Exception</code>).</p>
+<p>Stelle sicher, dass alle Felder <code>private</code> sind. Biete nur dort Getter/Setter an, wo Zugriff wirklich nötig ist.</p>
 
-<pre><code class="language-java">public class InsufficientFundsException extends Exception {
-  public InsufficientFundsException(String message) {
-    super(message);
-  }
+<blockquote>
+  <p><strong>Hinweis:</strong> Nicht jedes Feld braucht einen Setter. Der Kontostand ändert sich nur über Ein-/Auszahlungen — nicht über einen freien Setter.</p>
+</blockquote>
+
+<h3 id="pflichtfelder-im-konstruktor-prüfen">Pflichtfelder im Konstruktor prüfen</h3>
+
+<p>Wirf eine Ausnahme, wenn ein Pflichtwert fehlt, sodass gar kein ungültiges Objekt entstehen kann.</p>
+
+<pre><code class="language-java">public Customer(String name, String city) {
+  this.name = Objects.requireNonNull(name, "name darf nicht null sein");
+  this.city = Objects.requireNonNull(city, "city darf nicht null sein");
+  this.id = UUID.randomUUID();
 }
 </code></pre>
 
-<blockquote>
-  <p><strong>Hinweis:</strong> „Checked” = erbt von <code>Exception</code> (nicht <code>RuntimeException</code>). Der Compiler erzwingt dann die Behandlung.</p>
-</blockquote>
+<h3 id="setter-validieren">Setter validieren</h3>
 
-<h3 id="die-ausnahme-werfen">Die Ausnahme werfen</h3>
-
-<p>Lass <code>withdraw</code> die Ausnahme werfen, wenn <code>isAmountAvailable</code> <code>false</code> liefert. Deklariere sie mit <code>throws</code>.</p>
+<p>Lass den Setter für den Namen <code>null</code> (und optional Leerstrings) ablehnen, bevor er den Wert übernimmt.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Prüfe zuerst die Vorbedingung; erst wenn sie erfüllt ist, verändere den Saldo — sonst bleibt das Konto im gültigen Zustand.</p>
+  <p><strong>Hinweis:</strong> Prüfe zuerst, übernimm dann. So bleibt bei ungültiger Eingabe der alte, gültige Wert erhalten.</p>
 </blockquote>
-
-<h3 id="den-fehler-behandeln">Den Fehler behandeln</h3>
-
-<p>Rufe <code>withdraw</code> in <code>Main</code> in einem <code>try</code>/<code>catch</code> auf und reagiere sinnvoll.</p>
-
-<pre><code class="language-java">try {
-  account.withdraw(Money.euro(100));
-} catch (InsufficientFundsException e) {
-  System.out.println("Abhebung nicht möglich: " + e.getMessage());
-}
-</code></pre>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Warum ist „unzureichendes Guthaben” eine checked, ein <code>null</code>-Argument aber eine unchecked Exception?</li>
-  <li>Was wäre der Nachteil, den Fehlerfall über einen <code>boolean</code>-Rückgabewert zu lösen?</li>
-  <li>Wozu dient <code>finally</code>, und was gehört dort typischerweise hinein?</li>
+  <li>Welche Zusicherung gibst Du dem Rest des Programms, wenn der Konstruktor keine ungültigen Objekte zulässt?</li>
+  <li>Warum ist ein fehlender Setter manchmal die bessere Entwurfsentscheidung als ein vorhandener?</li>
+  <li>Was spricht dafür, die Validierung in der Klasse statt in jedem Aufrufer zu wiederholen?</li>
 </ul>
 
-<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Fehlerfälle mit Ausnahmen behandeln
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Kapselung und Validierung durchsetzen
 
-Als Entwickler:in möchte ich, dass eine unmögliche Abhebung nicht stillschweigend passiert, sondern klar signalisiert wird, damit aufrufender Code den Fehler bewusst behandeln muss.
+Als Entwickler:in möchte ich, dass Kunde und Konto niemals in einen ungültigen Zustand geraten, damit ich mich im restlichen Programm auf gültige Objekte verlassen kann.
 
 ## Lernziele
 
 Die Lernenden…
 
-* definieren eine eigene Exception-Klasse.
-* werfen eine Ausnahme an der passenden Stelle und behandeln sie mit `try`/`catch`.
-* begründen, ob eine Ausnahme checked oder unchecked sein sollte.
+* deklarieren Felder `private` und steuern den Zugriff über Getter/Setter.
+* validieren Eingaben in Konstruktor und Settern und lehnen ungültige Werte ab.
+* begründen, welche Prüfungen in die Klasse gehören.
 
 ## Definition of Done
 
-* [ ] Es gibt eine Exception `InsufficientFundsException` (checked).
-* [ ] `withdraw` wirft diese Exception, wenn der Betrag nicht verfügbar ist.
-* [ ] Der Aufrufer in `Main` fängt die Exception mit `try`/`catch` und gibt eine sinnvolle Meldung aus.
-* [ ] Ein Programmierfehler (z. B. `null`-Betrag) wird über eine *unchecked* Exception abgelehnt.
+* [ ] Alle Felder von `Customer` und `Account` sind `private`.
+* [ ] Der Konstruktor lehnt `null`-Werte für Pflichtfelder ab.
+* [ ] `setName` (o. ä.) verhindert `null` bzw. leere Werte.
+* [ ] Der Kontostand kann nicht direkt von außen gesetzt werden (kein öffentlicher Setter dafür).
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
 ## Arbeitsschritte
 
-### Eine fachliche Exception definieren
+### Felder privat machen
 
-Lege eine checked Exception an (erbt von `Exception`).
+Stelle sicher, dass alle Felder `private` sind. Biete nur dort Getter/Setter an, wo Zugriff wirklich nötig ist.
+
+&gt; **Hinweis:** Nicht jedes Feld braucht einen Setter. Der Kontostand ändert sich nur über Ein-/Auszahlungen — nicht über einen freien Setter.
+
+### Pflichtfelder im Konstruktor prüfen
+
+Wirf eine Ausnahme, wenn ein Pflichtwert fehlt, sodass gar kein ungültiges Objekt entstehen kann.
 
 ```java
-public class InsufficientFundsException extends Exception {
-  public InsufficientFundsException(String message) {
-    super(message);
-  }
+public Customer(String name, String city) {
+  this.name = Objects.requireNonNull(name, &quot;name darf nicht null sein&quot;);
+  this.city = Objects.requireNonNull(city, &quot;city darf nicht null sein&quot;);
+  this.id = UUID.randomUUID();
 }
 ```
 
-&gt; **Hinweis:** „Checked&quot; = erbt von `Exception` (nicht `RuntimeException`). Der Compiler erzwingt dann die Behandlung.
+### Setter validieren
 
-### Die Ausnahme werfen
+Lass den Setter für den Namen `null` (und optional Leerstrings) ablehnen, bevor er den Wert übernimmt.
 
-Lass `withdraw` die Ausnahme werfen, wenn `isAmountAvailable` `false` liefert. Deklariere sie mit `throws`.
-
-&gt; **Hinweis:** Prüfe zuerst die Vorbedingung; erst wenn sie erfüllt ist, verändere den Saldo — sonst bleibt das Konto im gültigen Zustand.
-
-### Den Fehler behandeln
-
-Rufe `withdraw` in `Main` in einem `try`/`catch` auf und reagiere sinnvoll.
-
-```java
-try {
-  account.withdraw(Money.euro(100));
-} catch (InsufficientFundsException e) {
-  System.out.println(&quot;Abhebung nicht möglich: &quot; + e.getMessage());
-}
-```
+&gt; **Hinweis:** Prüfe zuerst, übernimm dann. So bleibt bei ungültiger Eingabe der alte, gültige Wert erhalten.
 
 ## Reflexionsfragen
 
-* Warum ist „unzureichendes Guthaben&quot; eine checked, ein `null`-Argument aber eine unchecked Exception?
-* Was wäre der Nachteil, den Fehlerfall über einen `boolean`-Rückgabewert zu lösen?
-* Wozu dient `finally`, und was gehört dort typischerweise hinein?</textarea>
+* Welche Zusicherung gibst Du dem Rest des Programms, wenn der Konstruktor keine ungültigen Objekte zulässt?
+* Warum ist ein fehlender Setter manchmal die bessere Entwurfsentscheidung als ein vorhandener?
+* Was spricht dafür, die Validierung in der Klasse statt in jedem Aufrufer zu wiederholen?</textarea>
     </main>
     <aside class="avd-academy-guide-sidebar">
       <div class="avd-academy-guide-side avd-academy-guide-side--toc" data-avd-academy-toc-box hidden>

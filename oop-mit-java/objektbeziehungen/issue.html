@@ -24,8 +24,10 @@
     duration:    8                  → Zahl in Minuten → Hero-Tag „ca. 8 Minuten“
                                        (ungefähre LESEDAUER; bei Guides/Übungen die
                                        Dauer der Übung). Aktiviert zugleich die
+                                       nummerierten Arbeitsschritte und die
                                        automatische Prev/Next-Navigation zwischen
-                                       gleichartigen Geschwister-Seiten.
+                                       gleichartigen Geschwister-Seiten. Alle drei
+                                       entfallen bei `layout: visualization`.
     topics:      ["Cloud & DevOps"] → weitere Hero-Tags
     resources:   [{titel, url, icon}, …] → Sidebar-Karte „Weiterführende Informationen“.
                                        titel und/oder icon (Bildpfad); icon erscheint
@@ -55,15 +57,15 @@
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java SE (ATVANTAGE Academy)</title>
-<meta name="description" content="Modelliere Kunde und Konto als eigene Klassen und erzeuge daraus Objekte."><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="description" content="Definiere Gleichheit (equals/hashCode), eine lesbare Darstellung und die Beziehung Konto–Inhaber."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786695007"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786695007">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786695007">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786695007">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786695007"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786695007">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786695007" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786695007" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786695007">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786695916">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786695916">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786695916">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786695916"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786695916">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786695916" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786695916" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786695916">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -75,8 +77,8 @@
 </script>
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/logo-orange.svg">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786695007">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786695007"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786695916">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786695916"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -95,131 +97,141 @@
             aria-label="Farbschema umschalten">◐</button>
   </nav>
 </header>
-<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Kunden und Konten als Klassen modellieren</span></nav><div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 75 Minuten</span><span class="avd-academy-tag">Klassen & Objekte</span><span class="avd-academy-tag">Banking</span>
+<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Gleichheit und Beziehungen modellieren</span></nav><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 75 Minuten</span><span class="avd-academy-tag">equals/hashCode/toString</span><span class="avd-academy-tag">Objektbeziehungen</span><span class="avd-academy-tag">Banking</span>
       </div>
       <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
               data-avd-academy-copy-md="#avd-academy-md-source"
               title="Markdown kopieren" aria-label="Markdown kopieren"></button>
-    </div><h1>Kunden und Konten als Klassen modellieren</h1>
+    </div><h1>Gleichheit und Beziehungen modellieren</h1>
   </section>
 
   <div class="avd-academy-guide-layout">
     <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
-      <h1 id="kunden-und-konten-als-klassen-modellieren">Kunden und Konten als Klassen modellieren</h1>
+      <h1 id="gleichheit-und-beziehungen-modellieren">Gleichheit und Beziehungen modellieren</h1>
 
-<p>Als Entwickler:in im Banking-Team möchte ich Kunden und Konten als eigene Klassen abbilden, damit zusammengehörige Daten und Verhalten an einem Ort liegen statt in verstreuten Variablen.</p>
+<p>Als Entwickler:in möchte ich, dass zwei Objekte mit derselben fachlichen Identität als gleich gelten und sich lesbar ausgeben lassen, damit Suchen, Vergleiche und Ausgaben verlässlich funktionieren.</p>
 
 <h2 id="lernziele">Lernziele</h2>
 
 <p>Die Lernenden…</p>
 
 <ul>
-  <li>legen eine Klasse mit privaten Feldern, einem Konstruktor und Methoden an.</li>
-  <li>erzeugen mit <code>new</code> Objekte und rufen ihre Methoden auf.</li>
-  <li>erklären, warum Bauplan (Klasse) und Instanz (Objekt) verschiedene Dinge sind.</li>
+  <li>überschreiben <code>toString</code> für eine lesbare Objektausgabe.</li>
+  <li>überschreiben <code>equals</code> und <code>hashCode</code> konsistent auf Basis der fachlichen Identität.</li>
+  <li>drücken die Beziehung zwischen zwei Objekten über eine Referenz aus.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt eine Klasse <code>Customer</code> mit den Feldern <code>name</code> und <code>city</code> sowie einer automatisch erzeugten <code>id</code>.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt eine Klasse <code>Account</code> mit <code>iban</code>, <code>balance</code> und einem <code>owner</code> (ein <code>Customer</code>).</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />In <code>Main</code> werden mindestens zwei Kunden und ein Konto erzeugt und ausgegeben.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Das Programm startet und läuft fehlerfrei.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>Customer</code> und <code>Account</code> besitzen ein aussagekräftiges <code>toString</code>.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>equals</code> und <code>hashCode</code> von <code>Customer</code> basieren auf der <code>id</code>.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Ein <code>Account</code> hält eine Referenz auf seinen <code>Customer</code>-Inhaber.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Ein <code>HashSet&lt;Customer&gt;</code> erkennt zwei Objekte mit gleicher <code>id</code> als dasselbe Element.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
 <h2 id="arbeitsschritte">Arbeitsschritte</h2>
 
-<h3 id="die-klasse-customer-anlegen">Die Klasse Customer anlegen</h3>
+<h3 id="tostring-überschreiben">toString überschreiben</h3>
 
-<p>Lege im Paket <code>domain</code> eine Klasse <code>Customer</code> mit den Feldern für Name und Stadt an. Erzeuge im Konstruktor eine eindeutige ID.</p>
-
-<blockquote>
-  <p><strong>Hinweis:</strong> Für eindeutige IDs eignet sich <code>java.util.UUID.randomUUID()</code>. Ein Feld, das sich nach der Erzeugung nicht mehr ändern soll, kannst Du <code>final</code> machen.</p>
-</blockquote>
-
-<h3 id="die-klasse-account-anlegen">Die Klasse Account anlegen</h3>
-
-<p>Lege eine Klasse <code>Account</code> an, die eine <code>iban</code>, einen Kontostand und den Inhaber (<code>Customer</code>) kennt. Ein Konto „hat einen” Kunden als Inhaber.</p>
+<p>Gib eine lesbare Darstellung zurück (z. B. <code>Customer[id=…, name=Alice, city=Hamburg]</code>).</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Überlege, welche Felder beim Erzeugen zwingend nötig sind — die gehören in den Konstruktor.</p>
+  <p><strong>Hinweis:</strong> Die meisten IDEs können <code>toString</code>, <code>equals</code> und <code>hashCode</code> generieren — nutze das, aber lies das Ergebnis bewusst.</p>
 </blockquote>
 
-<h3 id="objekte-erzeugen-und-benutzen">Objekte erzeugen und benutzen</h3>
+<h3 id="equals-und-hashcode-auf-der-id-aufbauen">equals und hashCode auf der id aufbauen</h3>
 
-<p>Erzeuge in <code>Main</code> zwei <code>Customer</code>-Objekte und daraus ein <code>Account</code>-Objekt. Gib sie mit <code>System.out.println</code> aus.</p>
+<p>Zwei Kunden sind gleich, wenn ihre <code>id</code> gleich ist — unabhängig von Name/Stadt.</p>
 
-<pre><code class="language-java">Customer alice = new Customer("Alice", "Hamburg");
-Account account = new Account("DE...", alice);
-System.out.println(account);
+<pre><code class="language-java">@Override
+public boolean equals(Object o) {
+  if (this == o) return true;
+  if (!(o instanceof Customer other)) return false;
+  return this.id.equals(other.id);
+}
+
+@Override
+public int hashCode() {
+  return Objects.hash(id);
+}
 </code></pre>
 
+<h3 id="gleichheit-im-hashset-prüfen">Gleichheit im HashSet prüfen</h3>
+
+<p>Lege zwei <code>Customer</code> mit derselben <code>id</code> in ein <code>HashSet</code> und prüfe die Größe.</p>
+
 <blockquote>
-  <p><strong>Hinweis:</strong> Wenn die Ausgabe kryptisch aussieht (<code>Account@1b6d3586</code>), ist das erwartbar — eine schöne Textform folgt im Modul <em>Objektbeziehungen &amp; equals/hashCode</em>.</p>
+  <p><strong>Hinweis:</strong> Ohne konsistente <code>equals</code>/<code>hashCode</code> enthält das Set zwei Einträge — mit korrekter Umsetzung nur einen.</p>
 </blockquote>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Welche Daten und welches Verhalten „gehören” zu einem Konto — und was gehört bewusst nicht hinein?</li>
-  <li>Was wäre der Nachteil, Kontostand und Inhaber in getrennten Arrays statt in einem <code>Account</code>-Objekt zu halten?</li>
-  <li>Warum ist es sinnvoll, dass ein Konto seine ID/IBAN nicht nachträglich ändern lässt?</li>
+  <li>Warum sollte die Gleichheit auf einer stabilen <code>id</code> beruhen und nicht auf veränderlichen Feldern wie dem Namen?</li>
+  <li>Was passiert in einer <code>HashMap</code>, wenn <code>hashCode</code> zweier gleicher Objekte unterschiedlich ist?</li>
+  <li>Ist die Beziehung Konto→Inhaber eine Assoziation oder eine Komposition? Begründe.</li>
 </ul>
 
-<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Kunden und Konten als Klassen modellieren
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Gleichheit und Beziehungen modellieren
 
-Als Entwickler:in im Banking-Team möchte ich Kunden und Konten als eigene Klassen abbilden, damit zusammengehörige Daten und Verhalten an einem Ort liegen statt in verstreuten Variablen.
+Als Entwickler:in möchte ich, dass zwei Objekte mit derselben fachlichen Identität als gleich gelten und sich lesbar ausgeben lassen, damit Suchen, Vergleiche und Ausgaben verlässlich funktionieren.
 
 ## Lernziele
 
 Die Lernenden…
 
-* legen eine Klasse mit privaten Feldern, einem Konstruktor und Methoden an.
-* erzeugen mit `new` Objekte und rufen ihre Methoden auf.
-* erklären, warum Bauplan (Klasse) und Instanz (Objekt) verschiedene Dinge sind.
+* überschreiben `toString` für eine lesbare Objektausgabe.
+* überschreiben `equals` und `hashCode` konsistent auf Basis der fachlichen Identität.
+* drücken die Beziehung zwischen zwei Objekten über eine Referenz aus.
 
 ## Definition of Done
 
-* [ ] Es gibt eine Klasse `Customer` mit den Feldern `name` und `city` sowie einer automatisch erzeugten `id`.
-* [ ] Es gibt eine Klasse `Account` mit `iban`, `balance` und einem `owner` (ein `Customer`).
-* [ ] In `Main` werden mindestens zwei Kunden und ein Konto erzeugt und ausgegeben.
-* [ ] Das Programm startet und läuft fehlerfrei.
+* [ ] `Customer` und `Account` besitzen ein aussagekräftiges `toString`.
+* [ ] `equals` und `hashCode` von `Customer` basieren auf der `id`.
+* [ ] Ein `Account` hält eine Referenz auf seinen `Customer`-Inhaber.
+* [ ] Ein `HashSet&lt;Customer&gt;` erkennt zwei Objekte mit gleicher `id` als dasselbe Element.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
 ## Arbeitsschritte
 
-### Die Klasse Customer anlegen
+### toString überschreiben
 
-Lege im Paket `domain` eine Klasse `Customer` mit den Feldern für Name und Stadt an. Erzeuge im Konstruktor eine eindeutige ID.
+Gib eine lesbare Darstellung zurück (z. B. `Customer[id=…, name=Alice, city=Hamburg]`).
 
-&gt; **Hinweis:** Für eindeutige IDs eignet sich `java.util.UUID.randomUUID()`. Ein Feld, das sich nach der Erzeugung nicht mehr ändern soll, kannst Du `final` machen.
+&gt; **Hinweis:** Die meisten IDEs können `toString`, `equals` und `hashCode` generieren — nutze das, aber lies das Ergebnis bewusst.
 
-### Die Klasse Account anlegen
+### equals und hashCode auf der id aufbauen
 
-Lege eine Klasse `Account` an, die eine `iban`, einen Kontostand und den Inhaber (`Customer`) kennt. Ein Konto „hat einen&quot; Kunden als Inhaber.
-
-&gt; **Hinweis:** Überlege, welche Felder beim Erzeugen zwingend nötig sind — die gehören in den Konstruktor.
-
-### Objekte erzeugen und benutzen
-
-Erzeuge in `Main` zwei `Customer`-Objekte und daraus ein `Account`-Objekt. Gib sie mit `System.out.println` aus.
+Zwei Kunden sind gleich, wenn ihre `id` gleich ist — unabhängig von Name/Stadt.
 
 ```java
-Customer alice = new Customer(&quot;Alice&quot;, &quot;Hamburg&quot;);
-Account account = new Account(&quot;DE...&quot;, alice);
-System.out.println(account);
+@Override
+public boolean equals(Object o) {
+  if (this == o) return true;
+  if (!(o instanceof Customer other)) return false;
+  return this.id.equals(other.id);
+}
+
+@Override
+public int hashCode() {
+  return Objects.hash(id);
+}
 ```
 
-&gt; **Hinweis:** Wenn die Ausgabe kryptisch aussieht (`Account@1b6d3586`), ist das erwartbar — eine schöne Textform folgt im Modul *Objektbeziehungen &amp; equals/hashCode*.
+### Gleichheit im HashSet prüfen
+
+Lege zwei `Customer` mit derselben `id` in ein `HashSet` und prüfe die Größe.
+
+&gt; **Hinweis:** Ohne konsistente `equals`/`hashCode` enthält das Set zwei Einträge — mit korrekter Umsetzung nur einen.
 
 ## Reflexionsfragen
 
-* Welche Daten und welches Verhalten „gehören&quot; zu einem Konto — und was gehört bewusst nicht hinein?
-* Was wäre der Nachteil, Kontostand und Inhaber in getrennten Arrays statt in einem `Account`-Objekt zu halten?
-* Warum ist es sinnvoll, dass ein Konto seine ID/IBAN nicht nachträglich ändern lässt?</textarea>
+* Warum sollte die Gleichheit auf einer stabilen `id` beruhen und nicht auf veränderlichen Feldern wie dem Namen?
+* Was passiert in einer `HashMap`, wenn `hashCode` zweier gleicher Objekte unterschiedlich ist?
+* Ist die Beziehung Konto→Inhaber eine Assoziation oder eine Komposition? Begründe.</textarea>
     </main>
     <aside class="avd-academy-guide-sidebar">
       <div class="avd-academy-guide-side avd-academy-guide-side--toc" data-avd-academy-toc-box hidden>
