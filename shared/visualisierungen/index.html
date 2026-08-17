@@ -52,14 +52,14 @@
   entfernen. Doku-Seiten haben kein `duration`; Visualisierungen sind
   ausgeschlossen, weil ihr Inhalt nicht sinnvoll als Markdown kopierbar ist.
 
-  DRUCKEN-KNOPF: nur bei `layout: visualization`. Diese Ansicht hat weder Kopfzeile
-  noch Sidebar, in der ein Weg zum Ausdruck stecken könnte – und der QR-Code steht
-  dort dann NEBEN dem Drucken-Knopf statt über einem Knopf im Inhalt. Auf
-  Doku-Seiten und Guides bleibt es beim Browser-Befehl (Strg/Cmd+P).
+  QR-CODE der Seitenadresse + DRUCKEN-KNOPF: In dieser Ansicht (`visualization`)
+  stehen beide rechts im Hero – QR links, Drucken rechts. Sie hat weder Kopfzeile
+  noch Sidebar, in der sie sonst Platz hätten.
 
-  QR-CODE der Seitenadresse: erscheint im Hero rechts (neben „Markdown kopieren“
-  bzw. dem Drucken-Knopf, wo es diese gibt) auf JEDER Seite – Tooltip „Diese Seite
-  auf Deinem Smartphone öffnen“. Er wird erst im Browser erzeugt (theme/academy/atvantage.js), weil die
+  Auf `default`/`guide` steht im Hero KEINES von beiden: Der QR-Code sitzt in der
+  Kopfzeile neben dem Farbschema-Umschalter (siehe `_includes/header.html`), und zum
+  Drucken bleibt es beim Browser-Befehl (Strg/Cmd+P). Tooltip des QR-Codes überall:
+  „Diese Seite auf Deinem Smartphone öffnen“. Er wird erst im Browser erzeugt (theme/academy/atvantage.js), weil die
   Adresse zur Build-Zeit nicht feststeht; ohne JavaScript erscheint er nicht.
   Kein Front-Matter-Schalter: Es gibt keine Seite, auf der der Weg aufs eigene
   Smartphone schaden würde.
@@ -69,13 +69,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Visualisierungen · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Interaktive Grafiken zur Veranschaulichung von Schulungsinhalten."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786964417"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786964417">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786964417">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786964417">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786964417"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786964417">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786964417" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786964417" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786964417">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786965323"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786965323">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786965323">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786965323">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786965323"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786965323">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786965323" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786965323" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786965323">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,8 +89,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786964417">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786964417"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786965323">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786965323"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -105,16 +105,20 @@
   <button class="avd-academy-btn avd-academy-btn--ghost avd-academy-header__burger" data-avd-academy-nav-toggle="#avd-academy-main-nav"
           aria-label="Navigation umschalten" aria-expanded="false">☰</button>
   <nav class="avd-academy-header__nav" id="avd-academy-main-nav"><a href="/training-material-java-se/">Start</a><a href="/training-material-java-se/oop-mit-java/">Objektorientierte Programmierung mit Java</a><a href="/training-material-java-se/shared/visualisierungen/" aria-current="page">Visualisierungen</a>
-    <button class="avd-academy-btn avd-academy-btn--ghost" data-avd-academy-theme-toggle
+  </nav><div class="avd-academy-header__tools">
+    <button type="button" class="avd-academy-qr" data-avd-academy-qr hidden
+            title="Diese Seite auf Deinem Smartphone öffnen"
+            aria-label="Diese Seite auf Deinem Smartphone öffnen"></button>
+    <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-theme-toggle"
+            data-avd-academy-theme-toggle
+            title="Farbschema umschalten (hell/dunkel)"
             aria-label="Farbschema umschalten">◐</button>
-  </nav>
+  </div>
 </header>
 <section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><span aria-current="page">Visualisierungen</span></nav><div class="avd-academy-guide-hero__meta">
       <div class="avd-academy-guide-hero__tags">
       </div>
-      <div class="avd-academy-guide-hero__actions"><button type="button" class="avd-academy-qr" data-avd-academy-qr hidden
-                title="Diese Seite auf Deinem Smartphone öffnen"
-                aria-label="Diese Seite auf Deinem Smartphone öffnen"></button>
+      <div class="avd-academy-guide-hero__actions">
       </div>
     </div><h1>Visualisierungen</h1>
   </section>

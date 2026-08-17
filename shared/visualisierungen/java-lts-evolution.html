@@ -52,14 +52,14 @@
   entfernen. Doku-Seiten haben kein `duration`; Visualisierungen sind
   ausgeschlossen, weil ihr Inhalt nicht sinnvoll als Markdown kopierbar ist.
 
-  DRUCKEN-KNOPF: nur bei `layout: visualization`. Diese Ansicht hat weder Kopfzeile
-  noch Sidebar, in der ein Weg zum Ausdruck stecken könnte – und der QR-Code steht
-  dort dann NEBEN dem Drucken-Knopf statt über einem Knopf im Inhalt. Auf
-  Doku-Seiten und Guides bleibt es beim Browser-Befehl (Strg/Cmd+P).
+  QR-CODE der Seitenadresse + DRUCKEN-KNOPF: In dieser Ansicht (`visualization`)
+  stehen beide rechts im Hero – QR links, Drucken rechts. Sie hat weder Kopfzeile
+  noch Sidebar, in der sie sonst Platz hätten.
 
-  QR-CODE der Seitenadresse: erscheint im Hero rechts (neben „Markdown kopieren“
-  bzw. dem Drucken-Knopf, wo es diese gibt) auf JEDER Seite – Tooltip „Diese Seite
-  auf Deinem Smartphone öffnen“. Er wird erst im Browser erzeugt (theme/academy/atvantage.js), weil die
+  Auf `default`/`guide` steht im Hero KEINES von beiden: Der QR-Code sitzt in der
+  Kopfzeile neben dem Farbschema-Umschalter (siehe `_includes/header.html`), und zum
+  Drucken bleibt es beim Browser-Befehl (Strg/Cmd+P). Tooltip des QR-Codes überall:
+  „Diese Seite auf Deinem Smartphone öffnen“. Er wird erst im Browser erzeugt (theme/academy/atvantage.js), weil die
   Adresse zur Build-Zeit nicht feststeht; ohne JavaScript erscheint er nicht.
   Kein Front-Matter-Schalter: Es gibt keine Seite, auf der der Weg aufs eigene
   Smartphone schaden würde.
@@ -69,13 +69,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Java-LTS-Evolution · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Interaktive Zeitleiste der Java-LTS-Versionen und ihrer wichtigsten Features."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786964417"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786964417">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786964417">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786964417">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786964417"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786964417">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786964417" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786964417" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786964417">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786965323"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786965323">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786965323">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786965323">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786965323"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786965323">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786965323" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786965323" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786965323">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,17 +89,18 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786964417">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786964417"></head><body class="avd-academy-guide avd-academy-guide--viz">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786965323">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786965323"></head><body class="avd-academy-guide avd-academy-guide--viz">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a><section class="avd-academy-guide-hero avd-academy-guide-hero--slim"><div class="avd-academy-guide-hero__meta">
       <div class="avd-academy-guide-hero__tags">
       </div>
       <div class="avd-academy-guide-hero__actions">
-        <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-print-btn"
-                data-avd-academy-print
-                title="Diese Seite drucken" aria-label="Diese Seite drucken"></button><button type="button" class="avd-academy-qr" data-avd-academy-qr hidden
+        <button type="button" class="avd-academy-qr" data-avd-academy-qr hidden
                 title="Diese Seite auf Deinem Smartphone öffnen"
                 aria-label="Diese Seite auf Deinem Smartphone öffnen"></button>
+        <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-print-btn"
+                data-avd-academy-print
+                title="Diese Seite drucken" aria-label="Diese Seite drucken"></button>
       </div>
     </div><h1>Java-LTS-Evolution</h1>
   </section>
@@ -113,10 +114,6 @@
    steuert über den Gutter auch den Hero – eine eigene, engere max-width würde den
    Inhalt gegenüber dem Hero-Titel einrücken. */
 .jev-lead{opacity:.85;margin:0 0 1.5rem;}
-h1.jev-has-print{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
-.jev-print-btn{flex:none;margin-left:auto;display:inline-flex;align-items:center;justify-content:center;width:2.5rem;height:2.5rem;padding:0;border:1px solid var(--avd-academy-color-border,#ccc);border-radius:var(--radius,5px);background:transparent;color:inherit;cursor:pointer;opacity:.75;transition:opacity .15s,border-color .15s,color .15s;}
-.jev-print-btn:hover{opacity:1;border-color:var(--color-orange,#FF5401);color:var(--color-orange,#FF5401);}
-.jev-print-btn svg{width:1.25rem;height:1.25rem;}
 .jev-timeline{position:relative;margin-top:2.5rem;padding-bottom:120px;}
 .jev-axis{position:absolute;left:50%;top:0;bottom:0;width:3px;border-radius:3px;transform:translateX(-50%);background:linear-gradient(to bottom,var(--color-orange,#FF5401),var(--avd-slate,#303E4F),var(--color-orange,#FF5401));}
 .jev-year{position:absolute;left:50%;transform:translate(-50%,-50%);background:var(--avd-academy-color-bg,var(--color-background,#fff));border:1px solid var(--avd-academy-color-border,#d9d9d9);border-radius:999px;padding:3px 12px;font-size:.72rem;font-weight:800;opacity:.75;white-space:nowrap;z-index:5;}
@@ -160,7 +157,7 @@ h1.jev-has-print{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
 body.jev-modal-open{overflow:hidden;}
 #jev-print-toc{display:none;}
 @media print{
-  .jev-print-btn,.jev-axis,.jev-connector,.jev-year,#jev-modal,.jev-lts-tag{display:none !important;}
+  .jev-axis,.jev-connector,.jev-year,#jev-modal,.jev-lts-tag{display:none !important;}
   .jev-timeline{position:static;padding:0;margin:0;height:auto !important;}
   .jev-node{position:static !important;left:0 !important;right:auto !important;width:100% !important;text-align:left !important;break-before:page;margin:0;}
   .jev-node:first-of-type{break-before:auto;}
@@ -351,24 +348,9 @@ body.jev-modal-open{overflow:hidden;}
         function jevMajor(ver){ var m = ver.match(/\((\d+)\)/); if (m) return +m[1]; var m2 = ver.match(/^1\.(\d+)/); return m2 ? +m2[1] : 0; }
         function jevIsLts(ver){ return JEV_LTS.indexOf(jevMajor(ver)) !== -1; }
 
-        function jevAddPrintButton(){
-            var h1 = document.querySelector('h1');
-            if (!h1 || h1.querySelector('.jev-print-btn')) return;
-            h1.classList.add('jev-has-print');
-            var b = document.createElement('button');
-            b.type = 'button';
-            b.className = 'jev-print-btn';
-            b.title = 'Drucken';
-            b.setAttribute('aria-label', 'Drucken');
-            b.onclick = function(){ window.print(); };
-            b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>';
-            h1.appendChild(b);
-        }
-
         function jevInit(){
             jevTimeline = document.getElementById('jev-timeline');
             jevModal = document.getElementById('jev-modal');
-            jevAddPrintButton();
             var toc = document.getElementById('jev-toc-list');
             for (var y = JEV_START; y <= JEV_END; y++){
                 var mk = document.createElement('div');

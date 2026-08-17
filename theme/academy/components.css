@@ -391,6 +391,29 @@ pre > .avd-academy-copy.is-copied { opacity: 1; }
 
 .avd-academy-header__burger { display: none; }
 
+/* --- Werkzeuge in der Kopfzeile ------------------------------------------
+   Kleine Gruppe am rechten Rand: QR-Code der Seitenadresse + Farbschema-
+   Umschalter, beide gleich groß.
+
+   Sie sitzt BEWUSST außerhalb von `__nav`: Das Nav klappt auf schmalen
+   Viewports in den Burger und ist im Ausdruck ausgeblendet. Beides soll für die
+   Werkzeuge nicht gelten – der Umschalter ist auf dem Handy so erreichbar wie
+   am Schreibtisch, und der QR-Code bleibt im Ausdruck stehen (print.css). */
+.avd-academy-header__tools {
+  display: flex; align-items: center; gap: var(--avd-academy-space-2);
+  flex: none;
+}
+
+/* Farbschema-Umschalter als kompakter Icon-Button – gleiche Kantenlänge wie der
+   QR-Code daneben. Ohne diese Regel gilt das Button-Grundmaß (11px/26px
+   Polster), und der Umschalter stünde als breiter Block neben einer 34-px-Kachel. */
+.avd-academy-theme-toggle {
+  width: 34px; height: 34px;
+  padding: 0;
+  justify-content: center;
+  font-size: 18px; line-height: 1;
+}
+
 @media (max-width: 900px) {
   .avd-academy-header__burger { display: inline-flex; margin-left: auto; }
   .avd-academy-header__nav {
@@ -406,6 +429,13 @@ pre > .avd-academy-copy.is-copied { opacity: 1; }
     z-index: 50;
   }
   .avd-academy-header__nav[data-open] { display: flex; }
+
+  /* Reihenfolge am rechten Rand: erst die Werkzeuge, dann der Burger. Im Markup
+     steht die Gruppe nach dem Nav; ohne `order` landete sie rechts vom Burger und
+     der Burger mitten in der Zeile. Der Rechtsschub wandert deshalb von ihm zu
+     den Werkzeugen – die Regel muss NACH der Burger-Regel oben stehen. */
+  .avd-academy-header__tools { order: 1; margin-left: auto; }
+  .avd-academy-header__burger { order: 2; margin-left: var(--avd-academy-space-3); }
 }
 
 /* --- Header-Untermenü: Dropdown (breit) / aufklappbar (schmal) ------------ */

@@ -4,19 +4,22 @@
    Sauberer Ausdruck von Doku-/Guide-Seiten:
    - IMMER Light (dunkle Schrift auf hellem Grund) – unabhängig vom Screen-Farbschema
      (Dark-Mode/System-Präferenz werden per !important-Token-Reset überstimmt).
-   - Screen-Chrome wird ausgeblendet: Meta-Nav, Kopf-Navigation (Burger/Links/
-     Theme-Umschalter), Brotkrumen, Hero-Tags, rechte Sidebar (Inhaltsverzeichnis/
-     Fortschritt/Ressourcen), Prev/Next, Footer, BEIDE Kopier-Buttons
-     („Markdown kopieren“ im Hero und der Button an Code-Blöcken) sowie der
-     Drucken-Knopf der Visualisierungs-Ansicht (auf Papier sinnlos).
+   - Screen-Chrome wird ausgeblendet: Meta-Nav, Kopf-Navigation (Burger/Links),
+     Farbschema-Umschalter, Brotkrumen, Hero-Tags, rechte Sidebar
+     (Inhaltsverzeichnis/Fortschritt/Ressourcen), Prev/Next, Footer, BEIDE
+     Kopier-Buttons („Markdown kopieren“ im Hero und der Button an Code-Blöcken)
+     sowie der Drucken-Knopf der Visualisierungs-Ansicht (auf Papier sinnlos).
    - ERHALTEN bleiben: ATVANTAGE-Logo (Briefkopf), Seitentitel, Inhalt, der
      QR-Code der Seitenadresse und eine Druck-Kontaktzeile (E-Mail +
      ATVANTAGE-Homepage), die den Footer ersetzt.
 
    Der QR-Code ist der EINZIGE Bedienbaustein, der im Ausdruck bleibt – auf Papier
    ist er kein Chrome, sondern der Rückweg zur Online-Fassung. Er steht dort fest
-   auf `--avd-academy-qr-print` (25 mm, Präsentation 20 mm) und nicht mehr auf der
-   Bildschirmgröße: 34 px wären gedruckt rund 9 mm und damit unlesbar.
+   auf `--avd-academy-qr-print` und nicht mehr auf der Bildschirmgröße (34 px wären
+   gedruckt rund 9 mm und damit unlesbar): 25 mm im Hero der Visualisierung, 20 mm
+   in der Kopfzeile und in der Kopfleiste der Präsentation. Wo er steht, hängt vom
+   Layout ab – bei `default`/`guide` in der Kopfzeile, bei `visualization` im Hero
+   (dort gibt es keine Kopfzeile).
 
    Die Druck-Kontaktzeile lebt im Layout als `.avd-academy-print-contact`
    (default.html) und ist auf dem Bildschirm ausgeblendet.
@@ -64,6 +67,7 @@
   .avd-academy-copy-md,
   .avd-academy-copy,
   .avd-academy-print-btn,
+  .avd-academy-theme-toggle,
   [data-avd-academy-toc-box],
   [data-avd-academy-progress] { display: none !important; }
 
@@ -77,10 +81,14 @@
   .avd-academy-guide-hero {
     background: #FFFFFF !important; padding: 0.5rem 0 !important; margin: 0 !important;
   }
-  /* Die Meta-Zeile bleibt (früher komplett ausgeblendet), weil sie den QR-Code
-     trägt. Ihre Tags sind oben ausgeblendet, „Markdown kopieren“ ebenfalls –
-     übrig bleibt der QR-Code, rechtsbündig neben dem Titel. */
-  .avd-academy-guide-hero__meta { justify-content: flex-end !important; }
+  /* Die Meta-Zeile trägt auf Doku-Seiten und Guides nur noch Chrome (Tags,
+     „Markdown kopieren“) – der QR-Code sitzt dort in der Kopfzeile. Sie entfällt
+     also wieder komplett. NUR in der Visualisierungs-Ansicht bleibt sie stehen:
+     Dort gibt es keine Kopfzeile, und der QR-Code steckt in ihr. */
+  .avd-academy-guide-hero__meta { display: none !important; }
+  .avd-academy-guide--viz .avd-academy-guide-hero__meta {
+    display: flex !important; justify-content: flex-end !important;
+  }
 
   /* QR-Code: aus dem Bildschirm-Zustand (kleine Schaltfläche, absolut liegende,
      bei Hover wachsende Fläche) wird ein fester Block im Textfluss. `static`
@@ -100,6 +108,10 @@
   }
   .avd-academy-qr__box svg rect { fill: #FFFFFF !important; }
   .avd-academy-qr__box svg path { fill: #1A2627 !important; }
+  /* In der Kopfzeile kleiner als im Hero: Sie ist der Briefkopf und soll die erste
+     Seite nicht aufblähen. 20 mm bleiben bei rund 33 Modulen zuverlässig scannbar.
+     Dieselbe Größe wie in der Kopfleiste der Präsentation. */
+  .avd-academy-header__tools .avd-academy-qr { --avd-academy-qr-print: 20mm; }
 
   /* Einspaltig, volle Breite. */
   .avd-academy-guide-layout { display: block !important; }

@@ -52,14 +52,14 @@
   entfernen. Doku-Seiten haben kein `duration`; Visualisierungen sind
   ausgeschlossen, weil ihr Inhalt nicht sinnvoll als Markdown kopierbar ist.
 
-  DRUCKEN-KNOPF: nur bei `layout: visualization`. Diese Ansicht hat weder Kopfzeile
-  noch Sidebar, in der ein Weg zum Ausdruck stecken könnte – und der QR-Code steht
-  dort dann NEBEN dem Drucken-Knopf statt über einem Knopf im Inhalt. Auf
-  Doku-Seiten und Guides bleibt es beim Browser-Befehl (Strg/Cmd+P).
+  QR-CODE der Seitenadresse + DRUCKEN-KNOPF: In dieser Ansicht (`visualization`)
+  stehen beide rechts im Hero – QR links, Drucken rechts. Sie hat weder Kopfzeile
+  noch Sidebar, in der sie sonst Platz hätten.
 
-  QR-CODE der Seitenadresse: erscheint im Hero rechts (neben „Markdown kopieren“
-  bzw. dem Drucken-Knopf, wo es diese gibt) auf JEDER Seite – Tooltip „Diese Seite
-  auf Deinem Smartphone öffnen“. Er wird erst im Browser erzeugt (theme/academy/atvantage.js), weil die
+  Auf `default`/`guide` steht im Hero KEINES von beiden: Der QR-Code sitzt in der
+  Kopfzeile neben dem Farbschema-Umschalter (siehe `_includes/header.html`), und zum
+  Drucken bleibt es beim Browser-Befehl (Strg/Cmd+P). Tooltip des QR-Codes überall:
+  „Diese Seite auf Deinem Smartphone öffnen“. Er wird erst im Browser erzeugt (theme/academy/atvantage.js), weil die
   Adresse zur Build-Zeit nicht feststeht; ohne JavaScript erscheint er nicht.
   Kein Front-Matter-Schalter: Es gibt keine Seite, auf der der Weg aufs eigene
   Smartphone schaden würde.
@@ -69,13 +69,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Java-Syntax auf einen Blick · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Kompakte Übersicht der Java-Grundsyntax: Einstieg über main, primitive Datentypen, Variablen, Strings und Arrays, Typumwandlung, Methoden und Kontrollstrukturen."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786964417"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786964417">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786964417">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786964417">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786964417"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786964417">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786964417" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786964417" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786964417">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786965323"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786965323">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786965323">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786965323">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786965323"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786965323">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786965323" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786965323" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786965323">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,17 +89,18 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786964417">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786964417"></head><body class="avd-academy-guide avd-academy-guide--viz">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786965323">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786965323"></head><body class="avd-academy-guide avd-academy-guide--viz">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a><section class="avd-academy-guide-hero avd-academy-guide-hero--slim"><div class="avd-academy-guide-hero__meta">
       <div class="avd-academy-guide-hero__tags">
       </div>
       <div class="avd-academy-guide-hero__actions">
-        <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-print-btn"
-                data-avd-academy-print
-                title="Diese Seite drucken" aria-label="Diese Seite drucken"></button><button type="button" class="avd-academy-qr" data-avd-academy-qr hidden
+        <button type="button" class="avd-academy-qr" data-avd-academy-qr hidden
                 title="Diese Seite auf Deinem Smartphone öffnen"
                 aria-label="Diese Seite auf Deinem Smartphone öffnen"></button>
+        <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-print-btn"
+                data-avd-academy-print
+                title="Diese Seite drucken" aria-label="Diese Seite drucken"></button>
       </div>
     </div><h1>Java-Syntax auf einen Blick</h1>
   </section>
@@ -113,10 +114,6 @@
    steuert über den Gutter auch den Hero – eine eigene, engere max-width würde den
    Inhalt gegenüber dem Hero-Titel einrücken. */
 .jsg-lead{opacity:.85;margin:0 0 2rem;}
-h1.jsg-has-print{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
-.jsg-print-btn{flex:none;margin-left:auto;display:inline-flex;align-items:center;justify-content:center;width:2.5rem;height:2.5rem;padding:0;border:1px solid var(--avd-academy-color-border,#ccc);border-radius:var(--radius,5px);background:transparent;color:inherit;cursor:pointer;opacity:.75;transition:opacity .15s,border-color .15s,color .15s;}
-.jsg-print-btn:hover{opacity:1;border-color:var(--color-orange,#FF5401);color:var(--color-orange,#FF5401);}
-.jsg-print-btn svg{width:1.25rem;height:1.25rem;}
 
 .jsg-sec{margin:0 0 2.75rem;}
 .jsg-sec > h2{display:flex;align-items:baseline;gap:.7rem;margin:0 0 1rem;font-size:1.45rem;line-height:1.2;border-bottom:1px solid var(--avd-academy-color-border,#e2e2e2);padding-bottom:.5rem;}
@@ -144,7 +141,6 @@ h1.jsg-has-print{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
 .jsg-root pre code.hljs{border-radius:var(--radius-dark,8px);font-size:.8rem;line-height:1.5;}
 
 @media print{
-  .jsg-print-btn{display:none !important;}
   .jsg-lead{font-size:10.5pt;opacity:1;}
   .jsg-sec{break-inside:auto;margin:0 0 14pt;}
   .jsg-sec > h2{font-size:14pt;margin:0 0 6pt;padding-bottom:3pt;border-bottom:2px solid var(--color-orange,#FF5401);break-after:avoid;}
@@ -525,25 +521,6 @@ for (int i = 0; i &lt; 3; i++) { }
 </div>
 
 
-<script>
-  (function () {
-    function addPrintButton() {
-      var h1 = document.querySelector('h1');
-      if (!h1 || h1.querySelector('.jsg-print-btn')) return;
-      h1.classList.add('jsg-has-print');
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'jsg-print-btn';
-      b.title = 'Drucken';
-      b.setAttribute('aria-label', 'Drucken');
-      b.onclick = function () { window.print(); };
-      b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>';
-      h1.appendChild(b);
-    }
-    if (document.readyState !== 'loading') addPrintButton();
-    else document.addEventListener('DOMContentLoaded', addPrintButton);
-  })();
-</script>
 
 
     </main>
