@@ -69,13 +69,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Das erste Projekt in der IDE anlegen und starten · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Lege ein eigenes Java-Projekt in der IDE an, bring den Code aus der ersten Übung hinein und starte ihn."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786959870"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786959870">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786959870">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786959870">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786959870"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786959870">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786959870" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786959870" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786959870">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786961017"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786961017">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786961017">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786961017">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786961017"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786961017">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786961017" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786961017" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786961017">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,8 +89,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786959870">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786959870"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786961017">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786961017"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -110,7 +110,7 @@
   </nav>
 </header>
 <section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Das erste Projekt in der IDE anlegen und starten</span></nav><div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 40 Minuten</span><span class="avd-academy-tag">Werkzeuge</span><span class="avd-academy-tag">IDE</span>
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 35 Minuten</span><span class="avd-academy-tag">Werkzeuge</span><span class="avd-academy-tag">IDE</span>
       </div>
       <div class="avd-academy-guide-hero__actions">
         <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
@@ -144,7 +144,6 @@ Bescheid, wenn etwas hakt.</p>
   <li>übernehmen vorhandenen Quellcode in das Projekt und benennen, was die IDE gegenüber dem einfachen Texteditor zusätzlich leistet.</li>
   <li>starten das Programm aus der IDE und finden die Ausgabe wieder.</li>
   <li>lesen eine Compiler-Fehlermeldung in der IDE und beheben den Fehler.</li>
-  <li>halten den Programmlauf an einem Breakpoint an und sehen sich den Zustand an.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
@@ -154,7 +153,6 @@ Bescheid, wenn etwas hakt.</p>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Die Klasse <code>HelloWorld</code> aus der ersten Übung liegt im Projekt.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Das Programm läuft aus der IDE und gibt „Hello, World!“ aus.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast bewusst einen kleinen Fehler (z. B. fehlendes Semikolon) erzeugt, die Meldung gelesen und ihn behoben.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast einen Breakpoint gesetzt, den Lauf angehalten und Dir den Zustand angesehen.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
@@ -197,15 +195,6 @@ aufgerufen – die IDE nimmt Dir genau diese Schritte ab.</p>
 nicht nur auf die erste rote Markierung.</p>
 </blockquote>
 
-<h3 id="einen-breakpoint-setzen">Einen Breakpoint setzen</h3>
-
-<p>Setze einen Breakpoint auf die Ausgabezeile und starte das Programm im Debug-Modus. Halte am Breakpoint an und sieh Dir an, was die IDE Dir über den angehaltenen Lauf zeigt.</p>
-
-<blockquote>
-  <p><strong>Hinweis:</strong> Ein erster Blick genügt – die Grundgriffe des Debuggers schaust Du Dir
-an Tag 5 systematisch an.</p>
-</blockquote>
-
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
@@ -230,7 +219,6 @@ Die Lernenden…
 * übernehmen vorhandenen Quellcode in das Projekt und benennen, was die IDE gegenüber dem einfachen Texteditor zusätzlich leistet.
 * starten das Programm aus der IDE und finden die Ausgabe wieder.
 * lesen eine Compiler-Fehlermeldung in der IDE und beheben den Fehler.
-* halten den Programmlauf an einem Breakpoint an und sehen sich den Zustand an.
 
 ## Definition of Done
 
@@ -238,7 +226,6 @@ Die Lernenden…
 * [ ] Die Klasse `HelloWorld` aus der ersten Übung liegt im Projekt.
 * [ ] Das Programm läuft aus der IDE und gibt „Hello, World!“ aus.
 * [ ] Du hast bewusst einen kleinen Fehler (z. B. fehlendes Semikolon) erzeugt, die Meldung gelesen und ihn behoben.
-* [ ] Du hast einen Breakpoint gesetzt, den Lauf angehalten und Dir den Zustand angesehen.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
 ## Arbeitsschritte
@@ -271,13 +258,6 @@ Entferne testweise ein Semikolon. Sieh nach, wann die IDE den Fehler anzeigt, li
 
 &gt; **Hinweis:** Achte auf Datei, Zeile und die eigentliche Ursache in der Meldung –
 &gt; nicht nur auf die erste rote Markierung.
-
-### Einen Breakpoint setzen
-
-Setze einen Breakpoint auf die Ausgabezeile und starte das Programm im Debug-Modus. Halte am Breakpoint an und sieh Dir an, was die IDE Dir über den angehaltenen Lauf zeigt.
-
-&gt; **Hinweis:** Ein erster Blick genügt – die Grundgriffe des Debuggers schaust Du Dir
-&gt; an Tag 5 systematisch an.
 
 ## Reflexionsfragen
 

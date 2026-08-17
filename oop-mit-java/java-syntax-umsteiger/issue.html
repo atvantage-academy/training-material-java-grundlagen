@@ -69,13 +69,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Prozedurale Logik nach Java übertragen · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Übertrage vertraute prozedurale Konstrukte in gültige Java-Syntax – in vier Schritten von der ersten Rechnung bis zur überladenen Methode."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786959870"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786959870">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786959870">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786959870">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786959870"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786959870">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786959870" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786959870" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786959870">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786961017"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786961017">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786961017">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786961017">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786961017"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786961017">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786961017" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786961017" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786961017">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,8 +89,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786959870">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786959870"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786961017">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786961017"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -388,15 +388,15 @@ kopieren.</p>
 </dialog>
 </div>
 
-<h3 id="für-schnelle-einmal-im-debugger-anhalten">Für Schnelle: einmal im Debugger anhalten</h3>
+<h3 id="für-schnelle-eine-dritte-variante">Für Schnelle: eine dritte Variante</h3>
 
-<p>Setze in Deiner Methode aus Teil 3 einen <strong>Breakpoint</strong> (Klick links neben die
-Zeilennummer), starte das Programm über <em>Debug</em> statt <em>Run</em> und geh mit <em>Step Over</em>
-Zeile für Zeile durch die Schleife. Beobachte, wie sich Summe und Zähler verändern.</p>
+<p>Schreibe die Schleife aus Teil 3 einmal anders – hast Du eine klassische
+<code>for</code>-Schleife genommen, probier <code>for-each</code>, und umgekehrt. Vergleiche, welche der
+beiden Varianten sich für Dich flüssiger liest.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Das ist hier nur ein erster Blick auf das Werkzeug – ausführlich
-kommt das Debugging später an der Reihe.</p>
+  <p><strong>Hinweis:</strong> Beide sind gleich richtig. Interessant ist, was Du beim Umbau über
+Index, Länge und Elementzugriff bemerkst.</p>
 </blockquote>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
@@ -707,14 +707,14 @@ mit gefüllter und mit leerer Messreihe – und gib die Ergebnisse aus.
 &lt;/dialog&gt;
 &lt;/div&gt;
 
-### Für Schnelle: einmal im Debugger anhalten
+### Für Schnelle: eine dritte Variante
 
-Setze in Deiner Methode aus Teil 3 einen **Breakpoint** (Klick links neben die
-Zeilennummer), starte das Programm über *Debug* statt *Run* und geh mit *Step Over*
-Zeile für Zeile durch die Schleife. Beobachte, wie sich Summe und Zähler verändern.
+Schreibe die Schleife aus Teil 3 einmal anders – hast Du eine klassische
+`for`-Schleife genommen, probier `for-each`, und umgekehrt. Vergleiche, welche der
+beiden Varianten sich für Dich flüssiger liest.
 
-&gt; **Hinweis:** Das ist hier nur ein erster Blick auf das Werkzeug – ausführlich
-&gt; kommt das Debugging später an der Reihe.
+&gt; **Hinweis:** Beide sind gleich richtig. Interessant ist, was Du beim Umbau über
+&gt; Index, Länge und Elementzugriff bemerkst.
 
 ## Reflexionsfragen
 
