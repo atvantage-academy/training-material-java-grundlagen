@@ -110,7 +110,16 @@
       root.removeAttribute("data-at-title");
     }
     var hash = "#/" + (index + 1);
-    if (location.hash !== hash) history.replaceState(null, "", hash);
+    if (location.hash !== hash) {
+      history.replaceState(null, "", hash);
+      /* `replaceState` löst KEIN `hashchange` aus – wer auf die Adresse angewiesen
+         ist, erfährt den Folienwechsel sonst nie. Das betrifft den QR-Code der
+         Seitenadresse (theme/academy/atvantage.js): Er soll auf die Folie zeigen,
+         die gerade an der Wand steht, nicht auf die, mit der begonnen wurde.
+         Bewusst ein EIGENES Ereignis und kein nachgebautes `hashchange`: Letzteres
+         liefe in den Zuhörer weiter unten und damit zurück in `render()`. */
+      window.dispatchEvent(new CustomEvent("avd-academy-urlchange"));
+    }
   }
 
   function go(to) {

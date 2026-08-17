@@ -50,6 +50,10 @@
   padding: var(--avd-academy-space-2) var(--avd-academy-space-6);
   background: var(--avd-academy-topbar-bg);
   border-bottom: 1px solid var(--avd-academy-border-soft);
+  /* Über der Bühne: Der vergrößerte QR-Code in den Werkzeugen ragt in die Folie
+     hinein. Ohne z-index läge er darunter – die Bühne steht später im Baum. */
+  position: relative;
+  z-index: 1;
 }
 .avd-academy-present__logo { height: 22px; width: auto; flex: 0 0 auto; }
 .avd-academy-present__title {
@@ -71,6 +75,8 @@
   color: var(--avd-academy-color-ink-muted);
 }
 .avd-academy-present__tools { display: flex; align-items: center; gap: var(--avd-academy-space-2); }
+/* Der QR-Code ist genauso groß wie die Werkzeug-Knöpfe daneben (2 rem, s. u.). */
+.avd-academy-present__tools .avd-academy-qr { --avd-academy-qr-size: 2rem; }
 .avd-academy-present__back {
   font-size: var(--avd-academy-fs-sm);
   color: var(--avd-academy-color-ink-muted);
@@ -254,15 +260,24 @@
 
 /* --- Drucklayout ------------------------------------------------------------
    Jede Folie auf einer eigenen Seite; die Bedienelemente entfallen. Die
-   Kopfleiste bleibt als Briefkopf auf der ersten Seite. */
+   Kopfleiste bleibt als Briefkopf auf der ersten Seite – mit dem QR-Code, der
+   vom Blatt zurück zur Online-Fassung führt. */
 @media print {
   .avd-academy-present,
   .avd-academy-present[data-ready] { display: block; height: auto; overflow: visible; }
   .avd-academy-present__bar { border-bottom: 1px solid #cfd4d6; padding: 0 0 0.4rem 0; }
   .avd-academy-present__counter,
-  .avd-academy-present__tools,
   .avd-academy-present__controls,
   .avd-academy-present__progress { display: none !important; }
+  /* Die Werkzeugleiste bleibt als TRÄGER des QR-Codes stehen; die Knöpfe darin
+     (Zurück, Farbschema, Drucken, Vollbild) entfallen einzeln. `margin-left`
+     übernimmt die Rechtsausrichtung vom ausgeblendeten Folienzähler. */
+  .avd-academy-present__tools { margin-left: auto; }
+  .avd-academy-present__back,
+  .avd-academy-present__tool { display: none !important; }
+  /* Kleiner als auf Doku-Seiten (25 mm): Die Kopfleiste ist schmal, und 20 mm
+     bleiben bei rund 33 Modulen zuverlässig scannbar. */
+  .avd-academy-present__tools .avd-academy-qr { --avd-academy-qr-print: 20mm; }
   .avd-academy-present[data-at-title] .avd-academy-present__title { visibility: visible; }
 
   .avd-academy-deck,

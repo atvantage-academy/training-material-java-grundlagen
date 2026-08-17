@@ -32,3 +32,109 @@
 
 /* Grüner Akzentstreifen unter der Kopfzeile – deutliches Erkennungsmerkmal. */
 .avd-academy-header { border-bottom: 3px solid var(--avd-schulung-accent); }
+
+/* =============================================================================
+   Regiebuch – Blockraster der Tagestabellen
+   -----------------------------------------------------------------------------
+   Die Tagestabellen der Konzept-Startseiten (Trainer-Zweig) zeigen den Tag als
+   vier 90-Minuten-Blöcke mit den Pausen dazwischen. Jeder Block trägt links
+   einen Farbstreifen, Pausen sind schraffiert, Zeit jenseits von Block 4 wird
+   als „Überhang“ rot markiert. Nur Layout – die Zeiten stehen im Markup.
+   ============================================================================= */
+
+:root {
+  --avd-regie-block-1: #0e7c66;   /* Grün    */
+  --avd-regie-block-2: #1d6fb8;   /* Blau    */
+  --avd-regie-block-3: #7b4bb7;   /* Violett */
+  --avd-regie-block-4: #c2610a;   /* Orange  */
+  --avd-regie-ueberhang: #c0392b; /* Rot     */
+}
+
+:root[data-avd-academy-theme="dark"] {
+  --avd-regie-block-1: #34d3ac;
+  --avd-regie-block-2: #5aa9e6;
+  --avd-regie-block-3: #b28ae8;
+  --avd-regie-block-4: #e8a04a;
+  --avd-regie-ueberhang: #ef8a80;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-avd-academy-theme="light"]) {
+    --avd-regie-block-1: #34d3ac;
+    --avd-regie-block-2: #5aa9e6;
+    --avd-regie-block-3: #b28ae8;
+    --avd-regie-block-4: #e8a04a;
+    --avd-regie-ueberhang: #ef8a80;
+  }
+}
+
+.avd-regie { width: 100%; border-collapse: collapse; }
+.avd-regie th,
+.avd-regie td {
+  padding: .45rem .7rem;
+  vertical-align: top;
+  border-bottom: 1px solid var(--avd-academy-color-border, #e2e2e2);
+}
+.avd-regie th { text-align: left; }
+.avd-regie .avd-regie-zeit { white-space: nowrap; text-align: right; }
+
+/* Blockzelle: Farbstreifen links, Uhrzeit klein darunter. */
+.avd-regie .avd-regie-block {
+  white-space: nowrap;
+  border-left: 6px solid var(--avd-regie-farbe, #999);
+}
+.avd-regie .avd-regie-block small { display: block; font-weight: 400; opacity: .75; }
+.avd-regie .avd-regie-block--1 { --avd-regie-farbe: var(--avd-regie-block-1); }
+.avd-regie .avd-regie-block--2 { --avd-regie-farbe: var(--avd-regie-block-2); }
+.avd-regie .avd-regie-block--3 { --avd-regie-farbe: var(--avd-regie-block-3); }
+.avd-regie .avd-regie-block--4 { --avd-regie-farbe: var(--avd-regie-block-4); }
+
+/* Pausenzeile: über die volle Breite, schraffiert, zurückhaltend. Dieselbe
+   Schraffur trägt frei verfügbare Zeit – innerhalb eines Blocks wie danach. */
+.avd-regie .avd-regie-pause td,
+.avd-regie .avd-regie-frei td {
+  opacity: .8;
+  background-image: repeating-linear-gradient(135deg,
+    transparent 0 6px, rgba(127, 127, 127, .16) 6px 12px);
+}
+.avd-regie .avd-regie-pause td {
+  padding: .3rem .7rem;
+  font-size: .85rem;
+  text-align: center;
+}
+.avd-regie .avd-regie-frei .avd-regie-block { background-image: none; opacity: 1; }
+
+/* Überhang: was nach Block 4 noch offen ist. */
+.avd-regie .avd-regie-ueberhang-kopf td {
+  padding: .3rem .7rem;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--avd-regie-ueberhang);
+  border-top: 2px solid var(--avd-regie-ueberhang);
+}
+.avd-regie .avd-regie-ueberhang-zeile .avd-regie-block {
+  --avd-regie-farbe: var(--avd-regie-ueberhang);
+  color: var(--avd-regie-ueberhang);
+}
+
+/* Legende über den Tagestabellen. */
+.avd-regie-legende {
+  display: flex; flex-wrap: wrap; gap: .35rem 1.1rem;
+  margin: .6rem 0 1.2rem; font-size: .85rem;
+}
+.avd-regie-legende span { display: inline-flex; align-items: center; gap: .4rem; }
+.avd-regie-legende span::before {
+  content: ""; width: .55rem; height: 1rem; border-radius: 2px;
+  background: var(--avd-regie-farbe, #999);
+}
+.avd-regie-legende .avd-regie-legende--1 { --avd-regie-farbe: var(--avd-regie-block-1); }
+.avd-regie-legende .avd-regie-legende--2 { --avd-regie-farbe: var(--avd-regie-block-2); }
+.avd-regie-legende .avd-regie-legende--3 { --avd-regie-farbe: var(--avd-regie-block-3); }
+.avd-regie-legende .avd-regie-legende--4 { --avd-regie-farbe: var(--avd-regie-block-4); }
+.avd-regie-legende .avd-regie-legende--pause::before {
+  background-image: repeating-linear-gradient(135deg,
+    transparent 0 3px, rgba(127, 127, 127, .5) 3px 6px);
+  background-color: transparent;
+  border: 1px solid var(--avd-academy-color-border, #ccc);
+}
+.avd-regie-legende .avd-regie-legende--ueberhang { --avd-regie-farbe: var(--avd-regie-ueberhang); }

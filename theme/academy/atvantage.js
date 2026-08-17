@@ -10,11 +10,20 @@
      - "Kopieren"-Buttons an Code-Blöcken (<pre>)
      - Mobiles Aufklappen der Header-Navigation ([data-avd-academy-nav-toggle])
      - "Markdown kopieren" auf Übungsseiten ([data-avd-academy-copy-md])
+     - QR-Code der Seiten-URL ([data-avd-academy-qr])
 
    Einbindung: <script src="<BASISPFAD>/atvantage.js" defer></script>
    ============================================================================= */
 (function () {
   "use strict";
+
+  /* Eigene Adresse merken, SOLANGE das Skript läuft: `document.currentScript` ist
+     nur während der Ausführung gesetzt (bei `defer` also genau hier, nicht mehr in
+     späteren Callbacks). Der QR-Code lädt seine Bibliothek relativ dazu nach – so
+     braucht das Skript weder den Jekyll-`baseurl` noch einen fest verdrahteten
+     Pfad. Inline eingebunden (kein `src`) bleibt der Wert leer; dann fällt der
+     Nachladepfad auf die Dokument-Basis zurück. */
+  var scriptUrl = (document.currentScript && document.currentScript.src) || "";
 
   /* --- Theme-Umschaltung -------------------------------------------------- */
   function initThemeToggle() {
@@ -257,12 +266,179 @@
     });
   }
 
+  /* --- Drucken-Button -----------------------------------------------------
+     Löst den Druckdialog aus. Genutzt im Hero der Visualisierungs-Ansicht: Sie
+     hat keine Kopfzeile und keine Sidebar, in der ein Weg zum Ausdruck stecken
+     könnte. Ohne JavaScript bleibt der Knopf wirkungslos – wie die
+     Kopier-Buttons, deren Funktion ebenfalls am Skript hängt. */
+  function initPrintButtons() {
+    document.querySelectorAll("[data-avd-academy-print]").forEach(function (btn) {
+      btn.addEventListener("click", function () { window.print(); });
+    });
+  }
+
+  /* --- QR-Code der Seiten-URL ---------------------------------------------
+     Neben dem Drucken- bzw. Kopieren-Button steht ein QR-Code auf die Adresse
+     der aktuellen Seite: „Diese Seite auf Deinem Smartphone öffnen“ – vom
+     Beamer oder vom gedruckten Blatt in die eigene Hand, ohne Abtippen.
+
+     Warum clientseitig: Die Adresse kennt erst der Browser. Zur Build-Zeit
+     fehlen Host und `baseurl` (dieselbe Unterlage läuft unter github.io, im
+     lokalen Jekyll-Server und in einem Fork), und das Fragment (#/3 der
+     Präsentation) ändert sich sogar ohne Seitenwechsel.
+
+     Das Layout stellt nur einen leeren, [hidden] gesetzten Platzhalter
+     `<button class="avd-academy-qr" data-avd-academy-qr>` bereit. Der Code
+     selbst wird hier gebaut und per DOM eingehängt, sobald die Bibliothek
+     geladen und die Matrix berechnet ist. Ohne JavaScript (oder wenn das
+     Nachladen scheitert) bleibt der Platzhalter verborgen – die Werkzeugzeile
+     sieht dann aus wie zuvor.
+
+     Die Matrix kommt aus der mitgelieferten Bibliothek `qrcode/` (MIT, siehe
+     dortige README); das SVG baut das Theme selbst. */
+  var QR_SVG_NS = "http://www.w3.org/2000/svg";
+  /* Ruhezone in Modulen. ISO/IEC 18004 fordert 4 – ohne sie finden Scanner die
+     Begrenzung des Codes nicht. */
+  var QR_QUIET = 4;
+
+  function buildQrSvg(factory, text) {
+    /* 0 = kleinste Version, die die Nutzlast trägt; „M“ = 15 % Redundanz (guter
+       Kompromiss: verzeiht Bildschirm-Spiegelungen und Druckraster, ohne die
+       Module unnötig klein werden zu lassen). */
+    var qr = factory(0, "M");
+    qr.addData(text);
+    qr.make();
+
+    var count = qr.getModuleCount();
+    var size = count + 2 * QR_QUIET;
+
+    /* EIN Pfad für alle dunklen Module, zeilenweise zu waagerechten Läufen
+       zusammengefasst. Ein Rechteck je Modul wäre ein Vielfaches an Knoten. */
+    var d = "";
+    for (var row = 0; row < count; row++) {
+      var col = 0;
+      while (col < count) {
+        if (!qr.isDark(row, col)) { col++; continue; }
+        var start = col;
+        while (col < count && qr.isDark(row, col)) col++;
+        var len = col - start;
+        d += "M" + (start + QR_QUIET) + " " + (row + QR_QUIET) +
+             "h" + len + "v1h-" + len + "z";
+      }
+    }
+
+    var svg = document.createElementNS(QR_SVG_NS, "svg");
+    svg.setAttribute("viewBox", "0 0 " + size + " " + size);
+    /* Modulkanten scharf halten – weichgezeichnete Ränder kosten Lesbarkeit. */
+    svg.setAttribute("shape-rendering", "crispEdges");
+    /* Für Screenreader wertlos; die Beschriftung trägt der Button. */
+    svg.setAttribute("aria-hidden", "true");
+    svg.setAttribute("focusable", "false");
+
+    /* Fläche und Module bleiben OHNE fill-Attribut: Die Farben setzt
+       components.css aus den ATVANTAGE-Tokens (--avd-white/--avd-ink). Sie
+       folgen bewusst NICHT dem Farbschema – ein invertierter QR-Code (hell auf
+       dunkel) wird von vielen Scannern nicht gelesen. Die Fläche deckt auch die
+       Ruhezone ab. */
+    var bg = document.createElementNS(QR_SVG_NS, "rect");
+    bg.setAttribute("width", String(size));
+    bg.setAttribute("height", String(size));
+    svg.appendChild(bg);
+
+    var path = document.createElementNS(QR_SVG_NS, "path");
+    path.setAttribute("d", d);
+    svg.appendChild(path);
+
+    return svg;
+  }
+
+  function closeQrZoom() {
+    document.querySelectorAll(".avd-academy-qr").forEach(function (host) {
+      host.classList.remove("is-zoom");
+      /* Auch den Fokus abgeben: Solange die Schaltfläche ihn hat, hält ihn
+         `:focus-visible` vergrößert – Zuklappen sähe wirkungslos aus. Betrifft
+         die Tastaturbedienung; wer klickt oder tippt, hat keinen sichtbaren
+         Fokus und merkt davon nichts. */
+      if (document.activeElement === host) host.blur();
+    });
+  }
+
+  function initPageQr() {
+    var hosts = document.querySelectorAll("[data-avd-academy-qr]");
+    if (!hosts.length) return;
+    /* Nur echte Web-Adressen. Ein QR-Code auf `file:///…` (lokal geöffnete
+       Datei) oder `about:` führt auf dem Smartphone ins Leere; dort bleibt der
+       Platzhalter besser verborgen als ein Code, der nicht funktioniert. */
+    if (location.protocol !== "http:" && location.protocol !== "https:") return;
+
+    var libUrl;
+    try {
+      libUrl = new URL("qrcode/qrcode.mjs", scriptUrl || document.baseURI).href;
+    } catch (e) { return; }
+
+    import(libUrl).then(function (mod) {
+      var factory = mod.default;
+      /* Zuletzt kodierte Adresse – schützt davor, bei jedem Ereignis dieselbe
+         Matrix neu zu rechnen. */
+      var shown = null;
+
+      function render() {
+        if (location.href === shown) return;
+        shown = location.href;
+        hosts.forEach(function (host) {
+          var box = document.createElement("span");
+          box.className = "avd-academy-qr__box";
+          box.appendChild(buildQrSvg(factory, shown));
+          host.replaceChildren(box);
+          host.hidden = false;
+        });
+      }
+
+      render();
+
+      /* Die Adresse kann sich ohne Seitenwechsel ändern: Die Präsentation führt
+         die aktuelle Folie im Fragment (#/3). Ohne Neuberechnung zeigte der Code
+         auf eine Folie, die längst weitergeblättert ist.
+
+         Zwei Ereignisse, weil eines nicht genügt: `hashchange` deckt Sprungmarken
+         und Vor/Zurück ab; die Präsentation setzt das Fragment aber per
+         `history.replaceState`, und das löst kein `hashchange` aus – dafür sendet
+         presentation.js `avd-academy-urlchange`. */
+      window.addEventListener("hashchange", render);
+      window.addEventListener("avd-academy-urlchange", render);
+
+      /* Vergrößern: Auf Zeigergeräten genügt CSS (:hover/:focus-visible). Touch
+         kennt kein Überfahren – dort öffnet ein Tipp den Code, ein Tipp daneben
+         oder Escape schließt ihn wieder. */
+      hosts.forEach(function (host) {
+        host.addEventListener("click", function () {
+          host.classList.toggle("is-zoom");
+        });
+      });
+      /* Klick daneben schließt. Bewusst OHNE `stopPropagation` am Knopf selbst:
+         Das Ereignis soll weiterlaufen, damit die übrigen Zuhörer am Dokument
+         (offenes Menü/Nav schließen) auch dann greifen, wenn der QR-Code
+         angetippt wird. */
+      document.addEventListener("click", function (e) {
+        if (e.target.closest(".avd-academy-qr")) return;
+        closeQrZoom();
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closeQrZoom();
+      });
+    }).catch(function () {
+      /* Bibliothek nicht ladbar → Platzhalter bleibt [hidden]. */
+    });
+  }
+
   function init() {
     initThemeToggle();
     initCopyButtons();
     initNavToggle();
     initNavDropdown();
     initCopyMarkdown();
+    initPrintButtons();
+    initPageQr();
     initGuideProgress();
     initGuideToc();
   }

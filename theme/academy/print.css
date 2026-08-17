@@ -5,11 +5,18 @@
    - IMMER Light (dunkle Schrift auf hellem Grund) – unabhängig vom Screen-Farbschema
      (Dark-Mode/System-Präferenz werden per !important-Token-Reset überstimmt).
    - Screen-Chrome wird ausgeblendet: Meta-Nav, Kopf-Navigation (Burger/Links/
-     Theme-Umschalter), Brotkrumen, rechte Sidebar (Inhaltsverzeichnis/Fortschritt/
-     Ressourcen), Prev/Next, Footer sowie BEIDE Kopier-Buttons („Markdown kopieren“
-     im Hero und der Button an Code-Blöcken).
-   - ERHALTEN bleiben: ATVANTAGE-Logo (Briefkopf), Seitentitel, Inhalt und eine
-     Druck-Kontaktzeile (E-Mail + ATVANTAGE-Homepage), die den Footer ersetzt.
+     Theme-Umschalter), Brotkrumen, Hero-Tags, rechte Sidebar (Inhaltsverzeichnis/
+     Fortschritt/Ressourcen), Prev/Next, Footer, BEIDE Kopier-Buttons
+     („Markdown kopieren“ im Hero und der Button an Code-Blöcken) sowie der
+     Drucken-Knopf der Visualisierungs-Ansicht (auf Papier sinnlos).
+   - ERHALTEN bleiben: ATVANTAGE-Logo (Briefkopf), Seitentitel, Inhalt, der
+     QR-Code der Seitenadresse und eine Druck-Kontaktzeile (E-Mail +
+     ATVANTAGE-Homepage), die den Footer ersetzt.
+
+   Der QR-Code ist der EINZIGE Bedienbaustein, der im Ausdruck bleibt – auf Papier
+   ist er kein Chrome, sondern der Rückweg zur Online-Fassung. Er steht dort fest
+   auf `--avd-academy-qr-print` (25 mm, Präsentation 20 mm) und nicht mehr auf der
+   Bildschirmgröße: 34 px wären gedruckt rund 9 mm und damit unlesbar.
 
    Die Druck-Kontaktzeile lebt im Layout als `.avd-academy-print-contact`
    (default.html) und ist auf dem Bildschirm ausgeblendet.
@@ -41,13 +48,14 @@
   .avd-academy-header__nav,
   .avd-academy-header__burger,
   .avd-academy-guide-hero__crumbs,
-  .avd-academy-guide-hero__meta,
+  .avd-academy-guide-hero__tags,
   .avd-academy-guide-sidebar,
   .avd-academy-guide-nav,
   .avd-academy-footer,
   .avd-academy-skip-link,
   .avd-academy-copy-md,
   .avd-academy-copy,
+  .avd-academy-print-btn,
   [data-avd-academy-toc-box],
   [data-avd-academy-progress] { display: none !important; }
 
@@ -61,6 +69,29 @@
   .avd-academy-guide-hero {
     background: #FFFFFF !important; padding: 0.5rem 0 !important; margin: 0 !important;
   }
+  /* Die Meta-Zeile bleibt (früher komplett ausgeblendet), weil sie den QR-Code
+     trägt. Ihre Tags sind oben ausgeblendet, „Markdown kopieren“ ebenfalls –
+     übrig bleibt der QR-Code, rechtsbündig neben dem Titel. */
+  .avd-academy-guide-hero__meta { justify-content: flex-end !important; }
+
+  /* QR-Code: aus dem Bildschirm-Zustand (kleine Schaltfläche, absolut liegende,
+     bei Hover wachsende Fläche) wird ein fester Block im Textfluss. `static`
+     ist nötig, damit er Platz beansprucht statt den Titel zu überlagern.
+     `:not([hidden])` bewahrt den leeren Platzhalter: Ohne JavaScript entsteht
+     kein Code, und dann darf auch im Ausdruck kein weißes Kästchen stehen. */
+  .avd-academy-qr:not([hidden]),
+  .avd-academy-qr__box {
+    display: block !important;
+    position: static !important;
+    width: var(--avd-academy-qr-print, 25mm) !important;
+    height: var(--avd-academy-qr-print, 25mm) !important;
+    padding: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    background: #FFFFFF !important;
+  }
+  .avd-academy-qr__box svg rect { fill: #FFFFFF !important; }
+  .avd-academy-qr__box svg path { fill: #1A2627 !important; }
 
   /* Einspaltig, volle Breite. */
   .avd-academy-guide-layout { display: block !important; }

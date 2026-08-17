@@ -42,6 +42,19 @@
           mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
 }
 
+/* Drucken-Button im Hero der Visualisierungs-Ansicht – gleiche Bauform wie die
+   Kopier-Buttons (kompakter Icon-Button, Icon als CSS-Maske in currentColor, KEIN
+   Emoji), damit er neben dem QR-Code eine Reihe bildet. Beschriftung nur als
+   Tooltip und aria-label. Verdrahtet von atvantage.js ([data-avd-academy-print]);
+   im Ausdruck ausgeblendet (print.css). */
+.avd-academy-print-btn { padding: 7px; gap: 0; line-height: 0; }
+.avd-academy-print-btn::before {
+  content: ""; display: block; width: 18px; height: 18px;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 6 2 18 2 18 9'/%3E%3Cpath d='M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2'/%3E%3Crect x='6' y='14' width='12' height='8'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 6 2 18 2 18 9'/%3E%3Cpath d='M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2'/%3E%3Crect x='6' y='14' width='12' height='8'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
 /* Der Kopier-Button IM Code-Block (`pre > button`, absolut oben rechts – gesetzt in
    atvantage.js) erscheint erst beim Überfahren des Blocks. Dauerhaft sichtbar
    verdeckt er das rechte Ende der ersten Code-Zeile.
@@ -66,6 +79,98 @@ pre > .avd-academy-copy.is-copied { opacity: 1; }
 @media (hover: none) {
   pre > .avd-academy-copy { opacity: 1; }
 }
+
+/* --- QR-Code der Seiten-URL (Academy-Ergänzung) ---------------------------
+   Steht neben dem Drucken- bzw. Kopieren-Button und ist genauso groß wie dieser
+   (`--avd-academy-qr-size`, vom Kontext gesetzt: 34 px in der Hero-Meta-Zeile,
+   2 rem in der Präsentations-Kopfleiste).
+
+   In Button-Größe ist ein QR-Code mit rund 33 Modulen NICHT scannbar – ein
+   Modul wäre etwa ein Pixel breit. Deshalb wächst er bei Hover, Tastaturfokus
+   und (per `.is-zoom`, gesetzt von atvantage.js) bei Berührung auf
+   `--avd-academy-qr-zoom`.
+
+   Er wächst aus seiner rechten oberen Ecke nach links unten – absolut
+   positioniert, damit die Werkzeugzeile beim Vergrößern nicht umbricht. Dabei
+   legt er sich über die Nachbarn (links) und den Inhalt (unten); beides ist
+   gewollt, denn wer ihn gerade vergrößert, will genau ihn.
+
+   Die Fläche wächst über `width`/`height` statt per `transform: scale()`:
+   Skaliert würden Rahmen und Schatten mitskalieren (aus der Haarlinie würde ein
+   Balken). Das SVG folgt der Fläche ohne Qualitätsverlust.
+
+   Aufbau (`atvantage.js` hängt die Fläche und das SVG ein):
+     button.avd-academy-qr            Schaltfläche in Button-Größe, [hidden] bis fertig
+       span.avd-academy-qr__box       weiße Fläche, wächst beim Vergrößern
+         svg                          Ruhezone + Module                             */
+.avd-academy-qr {
+  --avd-academy-qr-size: 34px;   /* Kantenlänge im Ruhezustand (= Icon-Button) */
+  --avd-academy-qr-zoom: 168px;  /* vergrößert – ab hier zuverlässig scannbar */
+  /* Der jeweils GELTENDE Zustand. Die drei Auslöser unten schalten nur diese
+     drei Variablen um – so steht jeder Zustand einmal, und die Werte können
+     nicht auseinanderlaufen. Die Übergänge greifen trotzdem: Nicht die Variable
+     wird animiert, sondern die daraus berechnete Breite/Höhe. */
+  --avd-academy-qr-now: var(--avd-academy-qr-size);
+  --avd-academy-qr-pad: 2px;
+  --avd-academy-qr-shadow: none;
+  position: relative;
+  flex: none;
+  width: var(--avd-academy-qr-size);
+  height: var(--avd-academy-qr-size);
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+  /* Positioniert + z-index: Die vergrößerte Fläche ragt über den Inhalt darunter
+     hinaus und muss darüber liegen, nicht darunter. */
+  z-index: 1;
+}
+/* Das Layout liefert den Platzhalter als [hidden]; ohne diese Regel gewönne die
+   `width`/`height`-Regel oben über dem `display: none` des Browser-Stylesheets. */
+.avd-academy-qr[hidden] { display: none; }
+
+.avd-academy-qr__box {
+  position: absolute;
+  top: 0;
+  right: 0;
+  box-sizing: border-box;
+  width: var(--avd-academy-qr-now);
+  height: var(--avd-academy-qr-now);
+  padding: var(--avd-academy-qr-pad);
+  box-shadow: var(--avd-academy-qr-shadow);
+  background: var(--avd-white, #fff);
+  border: 1px solid var(--avd-academy-color-border);
+  border-radius: var(--avd-academy-radius);
+  transition: width var(--avd-academy-transition),
+              height var(--avd-academy-transition),
+              padding var(--avd-academy-transition),
+              box-shadow var(--avd-academy-transition);
+}
+/* Vergrößert – zwei Auslöser, die überall gelten: Tastaturfokus und `.is-zoom`
+   (setzt atvantage.js beim Antippen). */
+.avd-academy-qr:focus-visible,
+.avd-academy-qr.is-zoom {
+  --avd-academy-qr-now: var(--avd-academy-qr-zoom);
+  --avd-academy-qr-pad: 6px;
+  --avd-academy-qr-shadow: var(--avd-academy-shadow-2);
+}
+/* Überfahren nur dort, wo es ein Überfahren GIBT. Auf Touch-Geräten bleibt
+   `:hover` nach dem Antippen am Element kleben, bis woanders getippt wird – der
+   Code ließe sich dann weder per Escape noch durch nochmaliges Tippen zuklappen.
+   Dort bleibt allein der Umschalter aus atvantage.js zuständig. */
+@media (hover: hover) {
+  .avd-academy-qr:hover {
+    --avd-academy-qr-now: var(--avd-academy-qr-zoom);
+    --avd-academy-qr-pad: 6px;
+    --avd-academy-qr-shadow: var(--avd-academy-shadow-2);
+  }
+}
+.avd-academy-qr__box svg { display: block; width: 100%; height: 100%; }
+/* Immer dunkel auf hell – unabhängig vom Farbschema. Ein invertierter QR-Code
+   (hell auf dunkel) wird von vielen Scannern nicht gelesen. Die Werte sind
+   Fundament-Tokens ohne Dark-Variante, kein Dark-Mode-Sonderfall nötig. */
+.avd-academy-qr__box svg rect { fill: var(--avd-white, #fff); }
+.avd-academy-qr__box svg path { fill: var(--avd-ink, #1a2627); }
 
 /* --- Callouts / Hinweisboxen (Academy-Ergänzung; atvantage kennt keine) ---- */
 .avd-academy-callout {
