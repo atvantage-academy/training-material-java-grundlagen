@@ -55,15 +55,15 @@
 <head>
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Prozedurale Logik nach Java übertragen · Java SE (ATVANTAGE Academy)</title>
-<meta name="description" content="Übertrage vertraute prozedurale Konstrukte in gültige Java-Syntax – an einer Methode, die den Durchschnitt berechnet."><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="description" content="Übertrage vertraute prozedurale Konstrukte in gültige Java-Syntax – in vier Schritten von der ersten Rechnung bis zur überladenen Methode."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786952371"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786952371">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786952371">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786952371">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786952371"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786952371">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786952371" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786952371" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786952371">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786956474"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786956474">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786956474">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786956474">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786956474"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786956474">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786956474" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786956474" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786956474">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -77,8 +77,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786952371">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786952371"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786956474">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786956474"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -98,7 +98,7 @@
   </nav>
 </header>
 <section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Prozedurale Logik nach Java übertragen</span></nav><div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 50 Minuten</span><span class="avd-academy-tag">Java-Syntax</span><span class="avd-academy-tag">Methoden</span>
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 45 Minuten</span><span class="avd-academy-tag">Java-Syntax</span><span class="avd-academy-tag">Methoden</span>
       </div>
       <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
               data-avd-academy-copy-md="#avd-academy-md-source"
@@ -115,88 +115,268 @@
 <blockquote>
   <p><strong>Hinweis:</strong> Die Visualisierung <em>Java-Syntax auf einen Blick</em> (rechts unter
 „Weiterführende Informationen“) fasst Datentypen, Schreibweisen, Typumwandlung,
-Methoden und Kontrollstrukturen zum Nachschlagen zusammen. Hier steht bewusst
-<strong>keine</strong> fertige Lösung – schreib den Code selbst und schlag nach, wenn Du
-hängst.</p>
+Methoden und Kontrollstrukturen zum Nachschlagen zusammen. Schreib den Code
+selbst und schlag dort nach, wenn Du hängst.</p>
 </blockquote>
+
+<p>Die Übung wächst in <strong>vier Teilen</strong>: Jeder Teil baut auf dem vorigen auf, und nach
+jedem Teil läuft Dein Programm. Diesmal arbeitest Du <strong>allein in der IDE</strong> – das
+gemeinsame Vormachen aus dem letzten Modul entfällt.</p>
+
+<p>Am Ende jedes Teils kannst Du über <strong>„Vergleiche mit der Musterlösung“</strong> eine
+mögliche Lösung einblenden. Öffne sie erst, wenn Dein eigener Code läuft – oder wenn
+Du wirklich feststeckst. Es ist <em>eine</em> Lösung, nicht <em>die</em> Lösung: Deine darf anders
+aussehen und trotzdem richtig sein. (Im Ausdruck der Seite sind die Musterlösungen
+bewusst nicht enthalten.)</p>
 
 <h2 id="lernziele">Lernziele</h2>
 
 <p>Die Lernenden…</p>
 
 <ul>
-  <li>schreiben eine Methode mit Parametern und Rückgabewert und rufen sie auf.</li>
+  <li>arbeiten eigenständig in der IDE: legen eine Klasse an, schreiben Code, starten das Programm und lesen Fehlermeldungen selbst.</li>
+  <li>deklarieren Variablen mit passendem Typ und geben Ergebnisse mit <code>System.out.println(…)</code> aus.</li>
+  <li>lagern eine Berechnung in eine Methode mit Parametern und Rückgabewert aus und rufen sie auf.</li>
   <li>nutzen eine Schleife und eine Bedingung, um über ein Array zu laufen.</li>
   <li>benennen die Signatur einer Methode und überladen sie.</li>
-  <li>erklären, warum die Division zweier <code>int</code>-Werte nicht den erwarteten Durchschnitt liefert, und setzen den Cast an der richtigen Stelle.</li>
-  <li>geben Ergebnisse mit <code>System.out.println(…)</code> aus.</li>
+  <li>erklären, warum die Division zweier <code>int</code>-Werte nicht den erwarteten Mittelwert liefert, und setzen den Cast an der richtigen Stelle.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt eine Methode, die ein <code>int[]</code> entgegennimmt und den Durchschnitt seiner Werte als <code>double</code> zurückgibt.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt eine zweite, <strong>überladene</strong> Methode gleichen Namens mit einem zusätzlichen Parameter: Sie liefert diesen Wert zurück, wenn das Array leer ist.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Eine Schleife und eine Bedingung kommen sinnvoll zum Einsatz.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>main</code> ruft beide Varianten auf – auch einmal mit einem leeren Array – und gibt die Ergebnisse aus.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Teil 1:</strong> Im Projekt liegt eine Klasse <code>Wetterstation</code>; <code>main</code> deklariert zwei Messwerte, berechnet ihren Mittelwert und gibt ihn aus.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Teil 2:</strong> Die Berechnung steckt in einer Methode <code>mittelwert</code>, die zwei <code>int</code>-Werte entgegennimmt und einen <code>double</code> zurückgibt; <code>main</code> ruft sie mit mehreren Wertepaaren auf, und das Ergebnis stimmt jetzt.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Teil 3:</strong> Eine Methode <code>durchschnitt</code> läuft mit einer Schleife über ein <code>int[]</code> und liefert den Mittelwert; der Fall „leere Messreihe“ ist mit einer Bedingung abgefangen.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Teil 4:</strong> Es gibt eine zweite, <strong>überladene</strong> Methode <code>durchschnitt</code> mit zusätzlichem Standardwert; sie ruft die Variante aus Teil 3 auf, statt die Berechnung zu kopieren.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>main</code> ruft am Ende alle Varianten auf – auch einmal mit einer leeren Messreihe – und gibt die Ergebnisse aus.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
 <h2 id="arbeitsschritte">Arbeitsschritte</h2>
 
-<h3 id="den-durchschnitt-berechnen">Den Durchschnitt berechnen</h3>
+<h3 id="teil-1-zwei-messwerte-ein-mittelwert">Teil 1: Zwei Messwerte, ein Mittelwert</h3>
 
-<p>Schreibe eine statische Methode, die ein <code>int[]</code> entgegennimmt und den Durchschnitt
-seiner Werte zurückgibt. Überleg Dir zuerst, welchen <strong>Rückgabetyp</strong> das Ergebnis
-braucht – der Durchschnitt ganzer Zahlen ist selten wieder eine ganze Zahl.</p>
+<p>Deine Wetterstation misst die Temperatur in ganzen Grad. Lege im Projekt aus dem
+letzten Modul eine neue Klasse <code>Wetterstation</code> an, deklariere in <code>main</code> zwei
+Messwerte (z. B. <code>17</code> morgens und <code>24</code> mittags), berechne ihren Mittelwert und gib
+ihn mit <code>System.out.println(…)</code> aus.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Die Anzahl der Elemente liefert <code>values.length</code> – beim Array ohne
-Klammern, anders als <code>length()</code> beim <code>String</code>. Über die Elemente kommst Du mit
-einer klassischen <code>for</code>-Schleife oder mit <code>for-each</code>.</p>
+  <p><strong>Hinweis:</strong> Das Gerüst <code>public static void main(String[] args)</code> findest Du in der
+Visualisierung im Abschnitt <em>Einstieg über <code>main</code></em> – tipp es zunächst einfach ab.
+Was die einzelnen Schlüsselwörter davor bedeuten, klären wir später in der Woche.</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Mit <code>+</code> hängst Du Text und Werte aneinander:
+<code>System.out.println("Mittelwert: " + mittelwert);</code></p>
+</blockquote>
+
+<p>Sieh Dir das Ergebnis genau an: Für <code>17</code> und <code>24</code> erwartest Du <code>20.5</code> – was gibt
+Dein Programm aus? Lass den Befund erst einmal so stehen, Du reparierst ihn in
+Teil 2.</p>
+
+<div class="loesung">
+<a class="loesung-toggle" href="#loesung-teil-1" data-loesung="loesung-teil-1">Vergleiche mit der Musterlösung</a>
+<dialog id="loesung-teil-1" class="loesung-dialog" aria-label="Musterlösung Teil 1">
+<form method="dialog" class="loesung-dialog-head"><h3>Musterlösung – Teil 1: Zwei Messwerte, ein Mittelwert</h3><button aria-label="Musterlösung schließen">&times;</button></form>
+<div class="loesung-dialog-body">
+<pre><code class="language-java">public class Wetterstation {
+
+    public static void main(String[] args) {
+        int morgens = 17;
+        int mittags = 24;
+
+        double mittelwert = (morgens + mittags) / 2;
+
+        System.out.println("Mittelwert: " + mittelwert);
+    }
+}
+
+// Ausgabe: Mittelwert: 20.0
+// Erwartet hättest Du 20.5 – warum das so ist, klärt Teil 2.</code></pre>
+</div>
+</dialog>
+</div>
+
+<h3 id="teil-2-die-berechnung-in-eine-methode-auslagern">Teil 2: Die Berechnung in eine Methode auslagern</h3>
+
+<p>Verschiebe die Rechnung aus <code>main</code> in eine eigene Methode <code>mittelwert</code>, die zwei
+<code>int</code>-Werte entgegennimmt und das Ergebnis zurückgibt. Überleg Dir dabei, welchen
+<strong>Rückgabetyp</strong> das Ergebnis braucht – der Mittelwert ganzer Zahlen ist selten
+wieder eine ganze Zahl. Ruf die Methode aus <code>main</code> mit mehreren Wertepaaren auf.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Den Aufbau einer Methode zeigt die Visualisierung im Abschnitt
+<em>Methoden</em>. Das Wort <code>static</code> vor dem Rückgabetyp übernimmst Du dort einfach mit –
+warum es nötig ist, klärt sich am zweiten Tag.</p>
 </blockquote>
 
 <blockquote>
   <p><strong>Achtung, Stolperstein:</strong> Teilst Du zwei <code>int</code>-Werte, rechnet Java <strong>ganzzahlig</strong>
-und schneidet den Rest ab – <code>7 / 2</code> ergibt <code>3</code>, nicht <code>3.5</code>. Probiere es zuerst
-falsch aus, sieh Dir das Ergebnis an und setze dann den Cast an der Stelle, an der
-er wirkt.</p>
+und schneidet den Rest ab – <code>41 / 2</code> ergibt <code>20</code>, nicht <code>20.5</code>. Ein Rückgabetyp
+<code>double</code> allein repariert das <strong>nicht</strong>: Da ist der Rest schon weg. Setze den Cast
+an der Stelle, an der er wirkt, und probier beide Varianten aus.</p>
 </blockquote>
 
-<h3 id="den-leeren-sonderfall-behandeln">Den leeren Sonderfall behandeln</h3>
+<div class="loesung">
+<a class="loesung-toggle" href="#loesung-teil-2" data-loesung="loesung-teil-2">Vergleiche mit der Musterlösung</a>
+<dialog id="loesung-teil-2" class="loesung-dialog" aria-label="Musterlösung Teil 2">
+<form method="dialog" class="loesung-dialog-head"><h3>Musterlösung – Teil 2: Die Berechnung in eine Methode auslagern</h3><button aria-label="Musterlösung schließen">&times;</button></form>
+<div class="loesung-dialog-body">
+<pre><code class="language-java">public class Wetterstation {
 
-<p>Was passiert, wenn das Array leer ist? Probiere es aus und sieh Dir an, was Dein
-Programm tut. Fange den Fall dann mit einer Bedingung ab.</p>
+    public static void main(String[] args) {
+        System.out.println("Mittelwert: " + mittelwert(17, 24));
+        System.out.println("Mittelwert: " + mittelwert(19, 22));
+    }
 
-<h3 id="die-methode-überladen">Die Methode überladen</h3>
+    // Der Cast steht vor der Division: Sobald einer der Operanden ein
+    // Gleitkommatyp ist, rechnet Java nicht mehr ganzzahlig.
+    static double mittelwert(int a, int b) {
+        return (double) (a + b) / 2;
+    }
+}
 
-<p>Schreibe eine <strong>zweite Methode mit demselben Namen</strong>, die zusätzlich einen
-Standardwert entgegennimmt. Ist das Array leer, gibt sie diesen Wert zurück,
-sonst den berechneten Durchschnitt.</p>
+// Ausgabe: Mittelwert: 20.5
+//          Mittelwert: 20.5</code></pre>
+</div>
+</dialog>
+</div>
+
+<h3 id="teil-3-eine-ganze-messreihe">Teil 3: Eine ganze Messreihe</h3>
+
+<p>Eine Woche hat mehr als zwei Messwerte. Lege in <code>main</code> ein <code>int[]</code> mit den
+Temperaturen einer Woche an (z. B. <code>{17, 24, 19, 22, 25, 18, 21}</code>) und schreibe eine
+Methode <code>durchschnitt</code>, die ein solches Array entgegennimmt und den Mittelwert aller
+Werte zurückgibt.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Die Anzahl der Elemente liefert <code>messwerte.length</code> – beim Array ohne
+Klammern, anders als <code>length()</code> beim <code>String</code>. Über die Elemente kommst Du mit
+einer klassischen <code>for</code>-Schleife oder mit <code>for-each</code>.</p>
+</blockquote>
+
+<p>Probier danach aus, was bei einer <strong>leeren Messreihe</strong> (<code>{}</code>) passiert – die Station
+war einfach eine Woche lang aus. Sieh Dir an, was Dein Programm tut, und fang den
+Fall mit einer Bedingung ab.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Was Du im leeren Fall zurückgeben sollst, ist gar nicht so klar –
+<code>0</code> behauptet 0 °C, obwohl gar nichts gemessen wurde. Halt diesen Zwiespalt
+kurz fest, Teil 4 greift ihn auf.</p>
+</blockquote>
+
+<div class="loesung">
+<a class="loesung-toggle" href="#loesung-teil-3" data-loesung="loesung-teil-3">Vergleiche mit der Musterlösung</a>
+<dialog id="loesung-teil-3" class="loesung-dialog" aria-label="Musterlösung Teil 3">
+<form method="dialog" class="loesung-dialog-head"><h3>Musterlösung – Teil 3: Eine ganze Messreihe</h3><button aria-label="Musterlösung schließen">&times;</button></form>
+<div class="loesung-dialog-body">
+<pre><code class="language-java">public class Wetterstation {
+
+    public static void main(String[] args) {
+        int[] woche = {17, 24, 19, 22, 25, 18, 21};
+        int[] keineMessung = {};
+
+        System.out.println("Durchschnitt: " + durchschnitt(woche));
+        System.out.println("Durchschnitt: " + durchschnitt(keineMessung));
+    }
+
+    static double durchschnitt(int[] messwerte) {
+        if (messwerte.length == 0) {
+            // Notbehelf: 0 behauptet 0 Grad, obwohl nichts gemessen wurde.
+            // Teil 4 macht daraus etwas Ehrlicheres.
+            return 0;
+        }
+
+        int summe = 0;
+        for (int wert : messwerte) {
+            summe += wert;
+        }
+
+        return (double) summe / messwerte.length;
+    }
+}
+
+// Ausgabe: Durchschnitt: 20.857142857142858
+//          Durchschnitt: 0.0</code></pre>
+</div>
+</dialog>
+</div>
+
+<h3 id="teil-4-denselben-namen-zweimal--überladen">Teil 4: Denselben Namen zweimal – Überladen</h3>
+
+<p>Schreibe eine <strong>zweite Methode mit demselben Namen</strong> <code>durchschnitt</code>, die zusätzlich
+einen Standardwert entgegennimmt: Ist die Messreihe leer, gibt sie diesen Wert
+zurück, sonst den berechneten Mittelwert. Ruf am Ende in <code>main</code> beide Varianten auf –
+mit gefüllter und mit leerer Messreihe – und gib die Ergebnisse aus.</p>
 
 <blockquote>
   <p><strong>Hinweis:</strong> Beide Methoden heißen gleich und unterscheiden sich nur in der
-Parameterliste – genau das ist Überladen. Ein anderer Rückgabetyp allein würde
-dafür nicht genügen. Ruf am Ende die eine Variante aus der anderen auf, statt die
-Berechnung zu kopieren.</p>
+Parameterliste – genau das ist <strong>Überladen</strong>. Ein anderer Rückgabetyp allein würde
+dafür nicht genügen. Ruf die Variante aus Teil 3 auf, statt die Berechnung zu
+kopieren.</p>
 </blockquote>
 
-<h3 id="die-ergebnisse-ausgeben">Die Ergebnisse ausgeben</h3>
+<div class="loesung">
+<a class="loesung-toggle" href="#loesung-teil-4" data-loesung="loesung-teil-4">Vergleiche mit der Musterlösung</a>
+<dialog id="loesung-teil-4" class="loesung-dialog" aria-label="Musterlösung Teil 4">
+<form method="dialog" class="loesung-dialog-head"><h3>Musterlösung – Teil 4: Denselben Namen zweimal – Überladen</h3><button aria-label="Musterlösung schließen">&times;</button></form>
+<div class="loesung-dialog-body">
+<pre><code class="language-java">public class Wetterstation {
 
-<p>Ruf beide Varianten in <code>main</code> auf – mit einem gefüllten und mit einem leeren Array –
-und gib die Ergebnisse aus.</p>
+    public static void main(String[] args) {
+        int[] woche = {17, 24, 19, 22, 25, 18, 21};
+        int[] keineMessung = {};
 
-<blockquote>
-  <p><strong>Hinweis:</strong> Ausgaben schreibst Du mit <code>System.out.println(…)</code>; die Variante
-<code>System.out.print(…)</code> verzichtet auf den Zeilenumbruch. Mit <code>+</code> hängst Du Text und
-Werte aneinander: <code>System.out.println("Durchschnitt: " + schnitt);</code></p>
-</blockquote>
+        System.out.println("Mittelwert:   " + mittelwert(17, 24));
+        System.out.println("Durchschnitt: " + durchschnitt(woche));
+        System.out.println("Durchschnitt: " + durchschnitt(keineMessung));
+        System.out.println("Durchschnitt: " + durchschnitt(keineMessung, -99.0));
+    }
+
+    static double mittelwert(int a, int b) {
+        return (double) (a + b) / 2;
+    }
+
+    static double durchschnitt(int[] messwerte) {
+        if (messwerte.length == 0) {
+            return 0;
+        }
+
+        int summe = 0;
+        for (int wert : messwerte) {
+            summe += wert;
+        }
+
+        return (double) summe / messwerte.length;
+    }
+
+    // Gleicher Name, andere Parameterliste – das ist Überladen.
+    // Die Berechnung wird nicht kopiert, sondern aufgerufen.
+    static double durchschnitt(int[] messwerte, double standardwert) {
+        if (messwerte.length == 0) {
+            return standardwert;
+        }
+
+        return durchschnitt(messwerte);
+    }
+}
+
+// Ausgabe: Mittelwert:   20.5
+//          Durchschnitt: 20.857142857142858
+//          Durchschnitt: 0.0
+//          Durchschnitt: -99.0</code></pre>
+</div>
+</dialog>
+</div>
 
 <h3 id="für-schnelle-einmal-im-debugger-anhalten">Für Schnelle: einmal im Debugger anhalten</h3>
 
-<p>Setze in Deiner Methode einen <strong>Breakpoint</strong> (Klick links neben die Zeilennummer),
-starte das Programm über <em>Debug</em> statt <em>Run</em> und geh mit <em>Step Over</em> Zeile für Zeile
-durch die Schleife. Beobachte, wie sich Summe und Zähler verändern.</p>
+<p>Setze in Deiner Methode aus Teil 3 einen <strong>Breakpoint</strong> (Klick links neben die
+Zeilennummer), starte das Programm über <em>Debug</em> statt <em>Run</em> und geh mit <em>Step Over</em>
+Zeile für Zeile durch die Schleife. Beobachte, wie sich Summe und Zähler verändern.</p>
 
 <blockquote>
   <p><strong>Hinweis:</strong> Das ist hier nur ein erster Blick auf das Werkzeug – ausführlich
@@ -207,8 +387,65 @@ kommt das Debugging später an der Reihe.</p>
 
 <ul>
   <li>Was gehört zur Signatur einer Methode – und wodurch unterscheiden sich zwei überladene Methoden?</li>
-  <li>Warum liefert die Division zweier <code>int</code>-Werte nicht den erwarteten Durchschnitt – und wo genau muss der Cast stehen, damit er hilft?</li>
+  <li>Warum liefert die Division zweier <code>int</code>-Werte nicht den erwarteten Mittelwert – und wo genau muss der Cast stehen, damit er hilft?</li>
 </ul>
+
+<style>
+.loesung { margin: 1.1rem 0 0; }
+.loesung-toggle {
+  display: inline-flex; align-items: center; gap: .45rem;
+  font-size: .95rem; font-weight: 600; cursor: pointer;
+  text-decoration: none; border-bottom: 1px dashed currentColor;
+}
+.loesung-toggle::before { content: "🔍"; }
+.loesung-dialog {
+  position: fixed; inset: 0; margin: auto;
+  width: min(92vw, 780px); max-height: 85vh; padding: 0; overflow: hidden;
+  border: 1px solid var(--avd-academy-color-border, #e2e2e2);
+  border-radius: var(--radius-dark, 8px);
+  background: var(--avd-academy-color-bg, var(--color-background, #fff));
+  color: var(--avd-academy-color-text, inherit);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .35);
+}
+.loesung-dialog[open] { display: flex; flex-direction: column; }
+.loesung-dialog::backdrop { background: rgba(2, 6, 23, .6); }
+.loesung-dialog-head {
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  flex: 0 0 auto; margin: 0; padding: .85rem 1.2rem;
+  border-bottom: 1px solid var(--avd-academy-color-border, #e2e2e2);
+}
+.loesung-dialog-head h3 { margin: 0; font-size: 1.1rem; line-height: 1.3; }
+.loesung-dialog-head button {
+  border: 0; background: transparent; color: inherit;
+  font-size: 1.6rem; line-height: 1; cursor: pointer; padding: 0 .2rem;
+}
+.loesung-dialog-body { flex: 1 1 auto; padding: 1rem 1.2rem; overflow: auto; }
+.loesung-dialog-body pre { margin: 0; overflow-x: auto; }
+@media print { .loesung, .loesung-dialog { display: none !important; } }
+</style>
+
+<script>
+document.querySelectorAll("a[data-loesung]").forEach(function (link) {
+  link.addEventListener("click", function (event) {
+    event.preventDefault();
+    var dialog = document.getElementById(link.dataset.loesung);
+    if (!dialog) { return; }
+    if (typeof dialog.showModal === "function") { dialog.showModal(); }
+    else { dialog.setAttribute("open", ""); }
+  });
+});
+
+// Klick neben das Popup (auf den abgedunkelten Hintergrund) schließt es.
+document.querySelectorAll("dialog.loesung-dialog").forEach(function (dialog) {
+  dialog.addEventListener("click", function (event) {
+    var box = dialog.getBoundingClientRect();
+    var imPopup = event.clientX >= box.left && event.clientX <= box.right
+      && event.clientY >= box.top && event.clientY <= box.bottom;
+    if (!imPopup) { dialog.close(); }
+  });
+});
+</script>
+
 
 <textarea id="avd-academy-md-source" hidden aria-hidden="true"># Prozedurale Logik nach Java übertragen
 
@@ -216,75 +453,249 @@ Als Umsteiger:in möchte ich vertraute Konstrukte wie Variablen, Schleifen und M
 
 &gt; **Hinweis:** Die Visualisierung *Java-Syntax auf einen Blick* (rechts unter
 &gt; „Weiterführende Informationen“) fasst Datentypen, Schreibweisen, Typumwandlung,
-&gt; Methoden und Kontrollstrukturen zum Nachschlagen zusammen. Hier steht bewusst
-&gt; **keine** fertige Lösung – schreib den Code selbst und schlag nach, wenn Du
-&gt; hängst.
+&gt; Methoden und Kontrollstrukturen zum Nachschlagen zusammen. Schreib den Code
+&gt; selbst und schlag dort nach, wenn Du hängst.
+
+Die Übung wächst in **vier Teilen**: Jeder Teil baut auf dem vorigen auf, und nach
+jedem Teil läuft Dein Programm. Diesmal arbeitest Du **allein in der IDE** – das
+gemeinsame Vormachen aus dem letzten Modul entfällt.
+
+Am Ende jedes Teils kannst Du über **„Vergleiche mit der Musterlösung“** eine
+mögliche Lösung einblenden. Öffne sie erst, wenn Dein eigener Code läuft – oder wenn
+Du wirklich feststeckst. Es ist *eine* Lösung, nicht *die* Lösung: Deine darf anders
+aussehen und trotzdem richtig sein. (Im Ausdruck der Seite sind die Musterlösungen
+bewusst nicht enthalten.)
 
 ## Lernziele
 
 Die Lernenden…
 
-* schreiben eine Methode mit Parametern und Rückgabewert und rufen sie auf.
+* arbeiten eigenständig in der IDE: legen eine Klasse an, schreiben Code, starten das Programm und lesen Fehlermeldungen selbst.
+* deklarieren Variablen mit passendem Typ und geben Ergebnisse mit `System.out.println(…)` aus.
+* lagern eine Berechnung in eine Methode mit Parametern und Rückgabewert aus und rufen sie auf.
 * nutzen eine Schleife und eine Bedingung, um über ein Array zu laufen.
 * benennen die Signatur einer Methode und überladen sie.
-* erklären, warum die Division zweier `int`-Werte nicht den erwarteten Durchschnitt liefert, und setzen den Cast an der richtigen Stelle.
-* geben Ergebnisse mit `System.out.println(…)` aus.
+* erklären, warum die Division zweier `int`-Werte nicht den erwarteten Mittelwert liefert, und setzen den Cast an der richtigen Stelle.
 
 ## Definition of Done
 
-* [ ] Es gibt eine Methode, die ein `int[]` entgegennimmt und den Durchschnitt seiner Werte als `double` zurückgibt.
-* [ ] Es gibt eine zweite, **überladene** Methode gleichen Namens mit einem zusätzlichen Parameter: Sie liefert diesen Wert zurück, wenn das Array leer ist.
-* [ ] Eine Schleife und eine Bedingung kommen sinnvoll zum Einsatz.
-* [ ] `main` ruft beide Varianten auf – auch einmal mit einem leeren Array – und gibt die Ergebnisse aus.
+* [ ] **Teil 1:** Im Projekt liegt eine Klasse `Wetterstation`; `main` deklariert zwei Messwerte, berechnet ihren Mittelwert und gibt ihn aus.
+* [ ] **Teil 2:** Die Berechnung steckt in einer Methode `mittelwert`, die zwei `int`-Werte entgegennimmt und einen `double` zurückgibt; `main` ruft sie mit mehreren Wertepaaren auf, und das Ergebnis stimmt jetzt.
+* [ ] **Teil 3:** Eine Methode `durchschnitt` läuft mit einer Schleife über ein `int[]` und liefert den Mittelwert; der Fall „leere Messreihe“ ist mit einer Bedingung abgefangen.
+* [ ] **Teil 4:** Es gibt eine zweite, **überladene** Methode `durchschnitt` mit zusätzlichem Standardwert; sie ruft die Variante aus Teil 3 auf, statt die Berechnung zu kopieren.
+* [ ] `main` ruft am Ende alle Varianten auf – auch einmal mit einer leeren Messreihe – und gibt die Ergebnisse aus.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
 ## Arbeitsschritte
 
-### Den Durchschnitt berechnen
+### Teil 1: Zwei Messwerte, ein Mittelwert
 
-Schreibe eine statische Methode, die ein `int[]` entgegennimmt und den Durchschnitt
-seiner Werte zurückgibt. Überleg Dir zuerst, welchen **Rückgabetyp** das Ergebnis
-braucht – der Durchschnitt ganzer Zahlen ist selten wieder eine ganze Zahl.
+Deine Wetterstation misst die Temperatur in ganzen Grad. Lege im Projekt aus dem
+letzten Modul eine neue Klasse `Wetterstation` an, deklariere in `main` zwei
+Messwerte (z. B. `17` morgens und `24` mittags), berechne ihren Mittelwert und gib
+ihn mit `System.out.println(…)` aus.
 
-&gt; **Hinweis:** Die Anzahl der Elemente liefert `values.length` – beim Array ohne
+&gt; **Hinweis:** Das Gerüst `public static void main(String[] args)` findest Du in der
+&gt; Visualisierung im Abschnitt *Einstieg über `main`* – tipp es zunächst einfach ab.
+&gt; Was die einzelnen Schlüsselwörter davor bedeuten, klären wir später in der Woche.
+
+&gt; **Hinweis:** Mit `+` hängst Du Text und Werte aneinander:
+&gt; `System.out.println(&quot;Mittelwert: &quot; + mittelwert);`
+
+Sieh Dir das Ergebnis genau an: Für `17` und `24` erwartest Du `20.5` – was gibt
+Dein Programm aus? Lass den Befund erst einmal so stehen, Du reparierst ihn in
+Teil 2.
+
+&lt;div class=&quot;loesung&quot;&gt;
+&lt;a class=&quot;loesung-toggle&quot; href=&quot;#loesung-teil-1&quot; data-loesung=&quot;loesung-teil-1&quot;&gt;Vergleiche mit der Musterlösung&lt;/a&gt;
+&lt;dialog id=&quot;loesung-teil-1&quot; class=&quot;loesung-dialog&quot; aria-label=&quot;Musterlösung Teil 1&quot;&gt;
+&lt;form method=&quot;dialog&quot; class=&quot;loesung-dialog-head&quot;&gt;&lt;h3&gt;Musterlösung – Teil 1: Zwei Messwerte, ein Mittelwert&lt;/h3&gt;&lt;button aria-label=&quot;Musterlösung schließen&quot;&gt;&amp;times;&lt;/button&gt;&lt;/form&gt;
+&lt;div class=&quot;loesung-dialog-body&quot;&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;public class Wetterstation {
+
+    public static void main(String[] args) {
+        int morgens = 17;
+        int mittags = 24;
+
+        double mittelwert = (morgens + mittags) / 2;
+
+        System.out.println(&quot;Mittelwert: &quot; + mittelwert);
+    }
+}
+
+// Ausgabe: Mittelwert: 20.0
+// Erwartet hättest Du 20.5 – warum das so ist, klärt Teil 2.&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/dialog&gt;
+&lt;/div&gt;
+
+### Teil 2: Die Berechnung in eine Methode auslagern
+
+Verschiebe die Rechnung aus `main` in eine eigene Methode `mittelwert`, die zwei
+`int`-Werte entgegennimmt und das Ergebnis zurückgibt. Überleg Dir dabei, welchen
+**Rückgabetyp** das Ergebnis braucht – der Mittelwert ganzer Zahlen ist selten
+wieder eine ganze Zahl. Ruf die Methode aus `main` mit mehreren Wertepaaren auf.
+
+&gt; **Hinweis:** Den Aufbau einer Methode zeigt die Visualisierung im Abschnitt
+&gt; *Methoden*. Das Wort `static` vor dem Rückgabetyp übernimmst Du dort einfach mit –
+&gt; warum es nötig ist, klärt sich am zweiten Tag.
+
+&gt; **Achtung, Stolperstein:** Teilst Du zwei `int`-Werte, rechnet Java **ganzzahlig**
+&gt; und schneidet den Rest ab – `41 / 2` ergibt `20`, nicht `20.5`. Ein Rückgabetyp
+&gt; `double` allein repariert das **nicht**: Da ist der Rest schon weg. Setze den Cast
+&gt; an der Stelle, an der er wirkt, und probier beide Varianten aus.
+
+&lt;div class=&quot;loesung&quot;&gt;
+&lt;a class=&quot;loesung-toggle&quot; href=&quot;#loesung-teil-2&quot; data-loesung=&quot;loesung-teil-2&quot;&gt;Vergleiche mit der Musterlösung&lt;/a&gt;
+&lt;dialog id=&quot;loesung-teil-2&quot; class=&quot;loesung-dialog&quot; aria-label=&quot;Musterlösung Teil 2&quot;&gt;
+&lt;form method=&quot;dialog&quot; class=&quot;loesung-dialog-head&quot;&gt;&lt;h3&gt;Musterlösung – Teil 2: Die Berechnung in eine Methode auslagern&lt;/h3&gt;&lt;button aria-label=&quot;Musterlösung schließen&quot;&gt;&amp;times;&lt;/button&gt;&lt;/form&gt;
+&lt;div class=&quot;loesung-dialog-body&quot;&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;public class Wetterstation {
+
+    public static void main(String[] args) {
+        System.out.println(&quot;Mittelwert: &quot; + mittelwert(17, 24));
+        System.out.println(&quot;Mittelwert: &quot; + mittelwert(19, 22));
+    }
+
+    // Der Cast steht vor der Division: Sobald einer der Operanden ein
+    // Gleitkommatyp ist, rechnet Java nicht mehr ganzzahlig.
+    static double mittelwert(int a, int b) {
+        return (double) (a + b) / 2;
+    }
+}
+
+// Ausgabe: Mittelwert: 20.5
+//          Mittelwert: 20.5&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/dialog&gt;
+&lt;/div&gt;
+
+### Teil 3: Eine ganze Messreihe
+
+Eine Woche hat mehr als zwei Messwerte. Lege in `main` ein `int[]` mit den
+Temperaturen einer Woche an (z. B. `{17, 24, 19, 22, 25, 18, 21}`) und schreibe eine
+Methode `durchschnitt`, die ein solches Array entgegennimmt und den Mittelwert aller
+Werte zurückgibt.
+
+&gt; **Hinweis:** Die Anzahl der Elemente liefert `messwerte.length` – beim Array ohne
 &gt; Klammern, anders als `length()` beim `String`. Über die Elemente kommst Du mit
 &gt; einer klassischen `for`-Schleife oder mit `for-each`.
 
-&gt; **Achtung, Stolperstein:** Teilst Du zwei `int`-Werte, rechnet Java **ganzzahlig**
-&gt; und schneidet den Rest ab – `7 / 2` ergibt `3`, nicht `3.5`. Probiere es zuerst
-&gt; falsch aus, sieh Dir das Ergebnis an und setze dann den Cast an der Stelle, an der
-&gt; er wirkt.
+Probier danach aus, was bei einer **leeren Messreihe** (`{}`) passiert – die Station
+war einfach eine Woche lang aus. Sieh Dir an, was Dein Programm tut, und fang den
+Fall mit einer Bedingung ab.
 
-### Den leeren Sonderfall behandeln
+&gt; **Hinweis:** Was Du im leeren Fall zurückgeben sollst, ist gar nicht so klar –
+&gt; `0` behauptet 0 °C, obwohl gar nichts gemessen wurde. Halt diesen Zwiespalt
+&gt; kurz fest, Teil 4 greift ihn auf.
 
-Was passiert, wenn das Array leer ist? Probiere es aus und sieh Dir an, was Dein
-Programm tut. Fange den Fall dann mit einer Bedingung ab.
+&lt;div class=&quot;loesung&quot;&gt;
+&lt;a class=&quot;loesung-toggle&quot; href=&quot;#loesung-teil-3&quot; data-loesung=&quot;loesung-teil-3&quot;&gt;Vergleiche mit der Musterlösung&lt;/a&gt;
+&lt;dialog id=&quot;loesung-teil-3&quot; class=&quot;loesung-dialog&quot; aria-label=&quot;Musterlösung Teil 3&quot;&gt;
+&lt;form method=&quot;dialog&quot; class=&quot;loesung-dialog-head&quot;&gt;&lt;h3&gt;Musterlösung – Teil 3: Eine ganze Messreihe&lt;/h3&gt;&lt;button aria-label=&quot;Musterlösung schließen&quot;&gt;&amp;times;&lt;/button&gt;&lt;/form&gt;
+&lt;div class=&quot;loesung-dialog-body&quot;&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;public class Wetterstation {
 
-### Die Methode überladen
+    public static void main(String[] args) {
+        int[] woche = {17, 24, 19, 22, 25, 18, 21};
+        int[] keineMessung = {};
 
-Schreibe eine **zweite Methode mit demselben Namen**, die zusätzlich einen
-Standardwert entgegennimmt. Ist das Array leer, gibt sie diesen Wert zurück,
-sonst den berechneten Durchschnitt.
+        System.out.println(&quot;Durchschnitt: &quot; + durchschnitt(woche));
+        System.out.println(&quot;Durchschnitt: &quot; + durchschnitt(keineMessung));
+    }
+
+    static double durchschnitt(int[] messwerte) {
+        if (messwerte.length == 0) {
+            // Notbehelf: 0 behauptet 0 Grad, obwohl nichts gemessen wurde.
+            // Teil 4 macht daraus etwas Ehrlicheres.
+            return 0;
+        }
+
+        int summe = 0;
+        for (int wert : messwerte) {
+            summe += wert;
+        }
+
+        return (double) summe / messwerte.length;
+    }
+}
+
+// Ausgabe: Durchschnitt: 20.857142857142858
+//          Durchschnitt: 0.0&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/dialog&gt;
+&lt;/div&gt;
+
+### Teil 4: Denselben Namen zweimal – Überladen
+
+Schreibe eine **zweite Methode mit demselben Namen** `durchschnitt`, die zusätzlich
+einen Standardwert entgegennimmt: Ist die Messreihe leer, gibt sie diesen Wert
+zurück, sonst den berechneten Mittelwert. Ruf am Ende in `main` beide Varianten auf –
+mit gefüllter und mit leerer Messreihe – und gib die Ergebnisse aus.
 
 &gt; **Hinweis:** Beide Methoden heißen gleich und unterscheiden sich nur in der
-&gt; Parameterliste – genau das ist Überladen. Ein anderer Rückgabetyp allein würde
-&gt; dafür nicht genügen. Ruf am Ende die eine Variante aus der anderen auf, statt die
-&gt; Berechnung zu kopieren.
+&gt; Parameterliste – genau das ist **Überladen**. Ein anderer Rückgabetyp allein würde
+&gt; dafür nicht genügen. Ruf die Variante aus Teil 3 auf, statt die Berechnung zu
+&gt; kopieren.
 
-### Die Ergebnisse ausgeben
+&lt;div class=&quot;loesung&quot;&gt;
+&lt;a class=&quot;loesung-toggle&quot; href=&quot;#loesung-teil-4&quot; data-loesung=&quot;loesung-teil-4&quot;&gt;Vergleiche mit der Musterlösung&lt;/a&gt;
+&lt;dialog id=&quot;loesung-teil-4&quot; class=&quot;loesung-dialog&quot; aria-label=&quot;Musterlösung Teil 4&quot;&gt;
+&lt;form method=&quot;dialog&quot; class=&quot;loesung-dialog-head&quot;&gt;&lt;h3&gt;Musterlösung – Teil 4: Denselben Namen zweimal – Überladen&lt;/h3&gt;&lt;button aria-label=&quot;Musterlösung schließen&quot;&gt;&amp;times;&lt;/button&gt;&lt;/form&gt;
+&lt;div class=&quot;loesung-dialog-body&quot;&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;public class Wetterstation {
 
-Ruf beide Varianten in `main` auf – mit einem gefüllten und mit einem leeren Array –
-und gib die Ergebnisse aus.
+    public static void main(String[] args) {
+        int[] woche = {17, 24, 19, 22, 25, 18, 21};
+        int[] keineMessung = {};
 
-&gt; **Hinweis:** Ausgaben schreibst Du mit `System.out.println(…)`; die Variante
-&gt; `System.out.print(…)` verzichtet auf den Zeilenumbruch. Mit `+` hängst Du Text und
-&gt; Werte aneinander: `System.out.println(&quot;Durchschnitt: &quot; + schnitt);`
+        System.out.println(&quot;Mittelwert:   &quot; + mittelwert(17, 24));
+        System.out.println(&quot;Durchschnitt: &quot; + durchschnitt(woche));
+        System.out.println(&quot;Durchschnitt: &quot; + durchschnitt(keineMessung));
+        System.out.println(&quot;Durchschnitt: &quot; + durchschnitt(keineMessung, -99.0));
+    }
+
+    static double mittelwert(int a, int b) {
+        return (double) (a + b) / 2;
+    }
+
+    static double durchschnitt(int[] messwerte) {
+        if (messwerte.length == 0) {
+            return 0;
+        }
+
+        int summe = 0;
+        for (int wert : messwerte) {
+            summe += wert;
+        }
+
+        return (double) summe / messwerte.length;
+    }
+
+    // Gleicher Name, andere Parameterliste – das ist Überladen.
+    // Die Berechnung wird nicht kopiert, sondern aufgerufen.
+    static double durchschnitt(int[] messwerte, double standardwert) {
+        if (messwerte.length == 0) {
+            return standardwert;
+        }
+
+        return durchschnitt(messwerte);
+    }
+}
+
+// Ausgabe: Mittelwert:   20.5
+//          Durchschnitt: 20.857142857142858
+//          Durchschnitt: 0.0
+//          Durchschnitt: -99.0&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/dialog&gt;
+&lt;/div&gt;
 
 ### Für Schnelle: einmal im Debugger anhalten
 
-Setze in Deiner Methode einen **Breakpoint** (Klick links neben die Zeilennummer),
-starte das Programm über *Debug* statt *Run* und geh mit *Step Over* Zeile für Zeile
-durch die Schleife. Beobachte, wie sich Summe und Zähler verändern.
+Setze in Deiner Methode aus Teil 3 einen **Breakpoint** (Klick links neben die
+Zeilennummer), starte das Programm über *Debug* statt *Run* und geh mit *Step Over*
+Zeile für Zeile durch die Schleife. Beobachte, wie sich Summe und Zähler verändern.
 
 &gt; **Hinweis:** Das ist hier nur ein erster Blick auf das Werkzeug – ausführlich
 &gt; kommt das Debugging später an der Reihe.
@@ -292,7 +703,63 @@ durch die Schleife. Beobachte, wie sich Summe und Zähler verändern.
 ## Reflexionsfragen
 
 * Was gehört zur Signatur einer Methode – und wodurch unterscheiden sich zwei überladene Methoden?
-* Warum liefert die Division zweier `int`-Werte nicht den erwarteten Durchschnitt – und wo genau muss der Cast stehen, damit er hilft?
+* Warum liefert die Division zweier `int`-Werte nicht den erwarteten Mittelwert – und wo genau muss der Cast stehen, damit er hilft?
+
+&lt;style&gt;
+.loesung { margin: 1.1rem 0 0; }
+.loesung-toggle {
+  display: inline-flex; align-items: center; gap: .45rem;
+  font-size: .95rem; font-weight: 600; cursor: pointer;
+  text-decoration: none; border-bottom: 1px dashed currentColor;
+}
+.loesung-toggle::before { content: &quot;🔍&quot;; }
+.loesung-dialog {
+  position: fixed; inset: 0; margin: auto;
+  width: min(92vw, 780px); max-height: 85vh; padding: 0; overflow: hidden;
+  border: 1px solid var(--avd-academy-color-border, #e2e2e2);
+  border-radius: var(--radius-dark, 8px);
+  background: var(--avd-academy-color-bg, var(--color-background, #fff));
+  color: var(--avd-academy-color-text, inherit);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .35);
+}
+.loesung-dialog[open] { display: flex; flex-direction: column; }
+.loesung-dialog::backdrop { background: rgba(2, 6, 23, .6); }
+.loesung-dialog-head {
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  flex: 0 0 auto; margin: 0; padding: .85rem 1.2rem;
+  border-bottom: 1px solid var(--avd-academy-color-border, #e2e2e2);
+}
+.loesung-dialog-head h3 { margin: 0; font-size: 1.1rem; line-height: 1.3; }
+.loesung-dialog-head button {
+  border: 0; background: transparent; color: inherit;
+  font-size: 1.6rem; line-height: 1; cursor: pointer; padding: 0 .2rem;
+}
+.loesung-dialog-body { flex: 1 1 auto; padding: 1rem 1.2rem; overflow: auto; }
+.loesung-dialog-body pre { margin: 0; overflow-x: auto; }
+@media print { .loesung, .loesung-dialog { display: none !important; } }
+&lt;/style&gt;
+
+&lt;script&gt;
+document.querySelectorAll(&quot;a[data-loesung]&quot;).forEach(function (link) {
+  link.addEventListener(&quot;click&quot;, function (event) {
+    event.preventDefault();
+    var dialog = document.getElementById(link.dataset.loesung);
+    if (!dialog) { return; }
+    if (typeof dialog.showModal === &quot;function&quot;) { dialog.showModal(); }
+    else { dialog.setAttribute(&quot;open&quot;, &quot;&quot;); }
+  });
+});
+
+// Klick neben das Popup (auf den abgedunkelten Hintergrund) schließt es.
+document.querySelectorAll(&quot;dialog.loesung-dialog&quot;).forEach(function (dialog) {
+  dialog.addEventListener(&quot;click&quot;, function (event) {
+    var box = dialog.getBoundingClientRect();
+    var imPopup = event.clientX &gt;= box.left &amp;&amp; event.clientX &lt;= box.right
+      &amp;&amp; event.clientY &gt;= box.top &amp;&amp; event.clientY &lt;= box.bottom;
+    if (!imPopup) { dialog.close(); }
+  });
+});
+&lt;/script&gt;
 
 ## Weiterführende Informationen
 
