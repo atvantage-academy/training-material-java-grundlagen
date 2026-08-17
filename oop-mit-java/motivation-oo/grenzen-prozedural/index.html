@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<!--
+  ATVANTAGE-Academy – Layout „presentation“ (Jekyll)
+  --------------------------------------------------
+  Folienbasierter Vortrag aus GEWÖHNLICHEM MARKDOWN. Die Seite läuft im Vollbild,
+  das Academy-Theme tritt zurück: keine Meta-Leiste, keine TopNav, keine
+  Brotkrumen, kein Footer, keine Sidebar – nur eine schmale Kopfleiste mit dem
+  Präsentationstitel und die Folienfläche darunter.
+
+  Übersetzung Markdown → Folien (macht presentation.js zur Laufzeit):
+    #  (bzw. Front-Matter `title`)  → Titel der Präsentation: klein in der
+                                      Kopfleiste UND groß auf der Titelfolie
+    ## (h2)                         → Titel einer Folie; JEDES h2 beginnt eine
+                                      neue Folie
+    alles vor dem ersten h2         → Titelfolie (Untertitel, Trainer:in, Datum)
+
+  Bedienung: ← → (auch Leertaste, Bild ↑/↓, Pos1/Ende), die Schaltflächen unten
+  rechts oder Wischen auf dem Touchscreen. Beim Wechsel schiebt sich die Folie
+  nach links aus dem Bild. Die aktuelle Folie steht im URL-Hash (#/3) und ist
+  damit verlinkbar und reload-fest.
+
+  Drucken: Jede Präsentation hat ein Drucklayout – im Ausdruck steht jede Folie
+  auf einer eigenen Seite (Schaltflächen und Fortschritt entfallen). Der Knopf in
+  der Kopfleiste löst es aus. Der QR-Code neben dem Knopf bleibt im Ausdruck
+  stehen und führt vom Blatt zurück zur Online-Fassung.
+
+  QR-Code: links vom Farbschema-Umschalter (dieselbe Reihenfolge wie in der
+  Kopfzeile der übrigen Seiten), gleich groß, Tooltip „Diese Seite auf Deinem
+  Smartphone öffnen“; vergrößert sich bei Hover/Tippen auf Scan-Größe. Er zeigt
+  auf die AKTUELLE Folie (Fragment #/3) und wird beim Blättern neu berechnet.
+
+  Front Matter (alles optional):
+    title:       "…"              → sonst die erste #-Überschrift
+    description: "…"              → Meta-Description
+    zurueck:  {title, url}        → „Zurück“-Link in der Kopfleiste, z. B. auf das
+                                    Modul, zu dem die Präsentation gehört
+
+  OHNE JavaScript bleibt die Seite lesbar: Sie rendert dann als eine lange,
+  scrollbare Markdown-Seite (die Folien-Aufteilung ist eine Zutat, keine
+  Voraussetzung).
+
+  Das eigenständige Deck (templates/presentations/, reines HTML mit Fragmenten
+  und Speaker-Notes) bleibt daneben bestehen – siehe docs/theme/academy.md.
+--><html lang="de">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Grenzen prozeduraler Strukturierung · Java SE (ATVANTAGE Academy)</title>
+<meta name="description" content="Foliendeck zum Einstieg in die Objektorientierung: ein prozeduraler Banking-Ausschnitt, die Leitfrage und die Argumente, woran prozedurale Strukturierung hier scheitert."><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786967027"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786967027">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786967027">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786967027">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786967027"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786967027">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786967027" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786967027" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786967027">
+<script type="module">
+  const _hlbase = "/training-material-java-se/theme/academy/hljs/";
+  Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
+    .then(([core, java]) => {
+      const hljs = core.default;
+      hljs.registerLanguage("java", java.default);
+      document.querySelectorAll("pre code.language-java").forEach((el) => hljs.highlightElement(el));
+    });
+</script>
+<link rel="apple-touch-icon" sizes="180x180" href="/training-material-java-se/theme/atvantage/assets/icon-180.png">
+<link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
+<link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/presentation.css?v=1786967027">
+  <script src="/training-material-java-se/theme/jekyll/presentation.js?v=1786967027" defer></script>
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786967027"></head>
+<body class="avd-academy-present" data-avd-academy-present data-avd-academy-present-title="Grenzen prozeduraler Strukturierung">
+  <a class="avd-academy-skip-link" href="#avd-academy-deck">Zum Inhalt springen</a>
+
+  <header class="avd-academy-present__bar">
+    <img class="avd-academy-present__logo" src="/training-material-java-se/assets/logo-schulung.svg" alt="ATVANTAGE Academy"><span class="avd-academy-present__title">Grenzen prozeduraler Strukturierung</span>
+    <span class="avd-academy-present__counter" data-avd-academy-present-counter aria-live="off"></span>
+    <div class="avd-academy-present__tools"><a class="avd-academy-present__back" href="../../">← OOP mit Java</a><button type="button" class="avd-academy-qr" data-avd-academy-qr hidden
+              title="Diese Seite auf Deinem Smartphone öffnen"
+              aria-label="Diese Seite auf Deinem Smartphone öffnen"></button>
+      <button type="button" class="avd-academy-present__tool" data-avd-academy-theme-toggle
+              title="Farbschema umschalten (hell/dunkel)" aria-label="Farbschema umschalten">◐</button>
+      <button type="button" class="avd-academy-present__tool" data-avd-academy-present-print
+              title="Drucken (alle Folien)" aria-label="Drucken (alle Folien)">⎙</button>
+      <button type="button" class="avd-academy-present__tool" data-avd-academy-present-full
+              title="Vollbild (Taste F)" aria-label="Vollbild">⛶</button>
+    </div>
+  </header><main class="avd-academy-deck" id="avd-academy-deck" data-avd-academy-deck>
+    <style>
+/* Eigene Bausteine dieser Präsentation. Farben ausschließlich aus den
+   Theme-Tokens; Flächen entstehen per color-mix GEGEN die Seitenfläche
+   (--avd-academy-color-bg) und stimmen damit in Light UND Dark. */
+
+.avd-academy-slide { justify-content: center; justify-content: safe center; }
+.avd-academy-slide h2 { margin-bottom: var(--avd-academy-space-6); }
+.avd-academy-slide li { margin-bottom: var(--avd-academy-space-3); }
+
+/* --- Sparschwein: Bildmarke der Titelfolie -------------------------------- */
+.sparschwein { width: clamp(90px, 12vw, 150px); height: auto; display: block; margin: 0 auto; }
+.sparschwein__koerper { stroke: var(--avd-academy-color-ink); }
+.sparschwein__muenze  { stroke: var(--avd-academy-color-accent); }
+
+/* --- Karten: gleichrangige Punkte nebeneinander --------------------------- */
+.karten { list-style: none; display: grid; gap: var(--avd-academy-space-4); padding: 0; margin: 0;
+          grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); font-size: .9em; }
+.karte  { display: flex; flex-direction: column; gap: .35rem; padding: var(--avd-academy-space-4);
+          border: 1.5px solid var(--avd-academy-color-border); border-radius: var(--avd-academy-radius-md, 8px);
+          background: color-mix(in srgb, var(--avd-academy-color-accent) 7%, var(--avd-academy-color-bg)); }
+.karte b    { color: var(--avd-academy-color-ink); }
+.karte span { color: var(--avd-academy-color-ink-muted); font-size: .92em; }
+
+/* --- Leitfrage: eine Folie, eine Frage ------------------------------------ */
+.leitfrage { text-align: center; font-size: clamp(1.6rem, 1rem + 2.6vw, 3rem); font-weight: 600;
+             line-height: 1.25; color: var(--avd-academy-color-ink);
+             border-left: 6px solid var(--avd-academy-color-accent); padding: var(--avd-academy-space-6);
+             background: color-mix(in srgb, var(--avd-academy-color-accent) 8%, var(--avd-academy-color-bg));
+             border-radius: var(--avd-academy-radius-md, 8px); }
+.leitfrage--klein { font-size: clamp(1.05rem, .8rem + 1vw, 1.5rem); padding: var(--avd-academy-space-4);
+                    margin-top: var(--avd-academy-space-4); text-align: left; }
+.leitfrage + p { text-align: center; color: var(--avd-academy-color-ink-muted); font-size: .85em;
+                 margin-top: var(--avd-academy-space-4); }
+
+/* --- Schmerzpunkte: Symptom + Ursache in einer Zeile ---------------------- */
+.schmerz { list-style: none; padding: 0; margin: 0; font-size: .88em; }
+.schmerz li { display: grid; grid-template-columns: minmax(9rem, 14rem) 1fr; gap: .2rem 1.2rem;
+              padding: .55rem 0; border-bottom: 1px solid var(--avd-academy-color-border); }
+.schmerz li:last-child { border-bottom: 0; }
+.schmerz b    { color: var(--avd-academy-color-ink); }
+.schmerz span { color: var(--avd-academy-color-ink-muted); }
+
+/* --- Kontoarten: gemeinsam vs. unterschiedlich ---------------------------- */
+.arten { width: 100%; border-collapse: collapse; font-size: .8em; }
+.arten th, .arten td { padding: .45rem .7rem; text-align: left; vertical-align: top;
+                       border-bottom: 1px solid var(--avd-academy-color-border); }
+.arten thead th { color: var(--avd-academy-color-ink-muted); font-weight: 500; }
+.arten tbody th { font-weight: 600; white-space: nowrap; }
+.arten .gemeinsam td, .arten .gemeinsam th {
+  background: color-mix(in srgb, var(--avd-academy-color-accent) 10%, var(--avd-academy-color-bg)); }
+
+/* Codeblöcke auf Folien etwas kompakter, damit sie ohne Scrollen passen. */
+.avd-academy-slide pre { font-size: .72em; line-height: 1.45; }
+</style>
+
+<h1 id="grenzen-prozeduraler-strukturierung">Grenzen prozeduraler Strukturierung</h1>
+
+<svg class="sparschwein" viewBox="0 0 120 120" role="img" aria-label="Sparschwein, in das eine Münze fällt">
+  <g class="sparschwein__koerper" fill="none" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+    <ellipse cx="56" cy="70" rx="34" ry="24" />
+    <path d="M88 64 h8 a7 7 0 0 1 0 13 h-7" />
+    <path d="M36 92 v11 M50 94 v9 M66 94 v9 M80 90 v13" />
+    <path d="M68 48 l7 -13 l9 12" />
+    <path d="M40 50 h20" />
+    <circle cx="80" cy="62" r="2.5" fill="currentColor" stroke="none" />
+  </g>
+  <g class="sparschwein__muenze" fill="none" stroke-width="4" stroke-linecap="round">
+    <circle cx="50" cy="24" r="10" />
+    <path d="M46 24 h8" />
+  </g>
+</svg>
+
+<p>Ein Stück Bank – prozedural gedacht</p>
+
+<h2 id="unser-beispiel-für-die-woche-eine-kleine-bank">Unser Beispiel für die Woche: eine kleine Bank</h2>
+
+<ul class="karten">
+  <li class="karte"><b>Worum es geht</b>
+      <span>Konten mit Inhaber und Kontostand, dazu Buchungen: einzahlen,
+      abheben, überweisen</span></li>
+  <li class="karte"><b>Regeln, die gelten müssen</b>
+      <span>ein Girokonto darf höchstens bis zum Dispo ins Minus, ein Sparkonto
+      gar nicht; jede Buchung muss nachvollziehbar bleiben</span></li>
+  <li class="karte"><b>Verschiedene Kontoarten</b>
+      <span>Giro, Spar, Kredit – vieles gleich, manches anders</span></li>
+</ul>
+
+<p>Diese Fachlichkeit trägt die Übungen dieses Kurses. Sehen wir sie uns zunächst
+<strong>prozedural</strong> an.</p>
+
+<h2 id="so-sähe-das-prozedural-aus">So sähe das prozedural aus</h2>
+
+<pre><code class="language-java">// Alle Konten der Bank – parallele Arrays, zusammengehalten über den Index
+static String[] inhaber     = new String[1000];
+static long[]   standInCent = new long[1000];
+static char[]   art         = new char[1000];   // 'G'iro, 'S'par, 'K'redit
+static int      anzahl      = 0;
+
+static void abheben(int konto, long betragInCent) {
+    standInCent[konto] -= betragInCent;
+}
+
+static void zinsenGutschreiben(int konto) {
+    if (art[konto] == 'S') {
+        standInCent[konto] += standInCent[konto] * 15 / 1000;
+    } else if (art[konto] == 'K') {
+        // Kredit: ganz andere Rechnung, andere Vorzeichen …
+    }
+}
+</code></pre>
+
+<p class="leitfrage leitfrage--klein">Was wird hier mühsam –
+und wo entstehen die Fehler?</p>
+
+<h2 id="was-daran-mühsam-wird">Was daran mühsam wird</h2>
+
+<ul class="schmerz">
+  <li><b>Daten und Regeln liegen getrennt</b>
+      <span>Der Kontostand steht im Array, die Regel „nicht ins Minus“ irgendwo
+      in einer Funktion – oder eben nicht. Jede Stelle im Programm darf
+      <code>standInCent[i]</code> direkt ändern.</span></li>
+  <li><b>Zusammengehöriges hält nur der Index zusammen</b>
+      <span>Inhaber, Stand und Art gehören zu <em>einem</em> Konto – dass das so
+      bleibt, garantiert niemand. Ein falscher Index bucht auf dem falschen
+      Konto.</span></li>
+  <li><b>Jede Erweiterung strahlt aus</b>
+      <span>Ein neues Feld (IBAN, Eröffnungsdatum) heißt: neues Array, und jede
+      Funktion, die Konten anfasst, muss nachgezogen werden.</span></li>
+  <li><b>Nichts schützt den Zustand</b>
+      <span>Es gibt keine Stelle, an der man die Regeln <em>einmal</em> hinschreiben
+      und erzwingen könnte – nur Disziplin.</span></li>
+</ul>
+
+<h2 id="und-dann-kommt-die-komplexität-dazu">Und dann kommt die Komplexität dazu</h2>
+
+<p>Drei Kontoarten – vieles gemeinsam, einiges verschieden:</p>
+
+<table class="arten">
+<thead>
+<tr><th>&nbsp;</th><th>Girokonto</th><th>Sparkonto</th><th>Kreditkonto</th></tr>
+</thead>
+<tbody>
+<tr class="gemeinsam"><th>Nummer, Inhaber, Stand</th><td>ja</td><td>ja</td><td>ja</td></tr>
+<tr class="gemeinsam"><th>einzahlen</th><td>gleich</td><td>gleich</td><td>gleich</td></tr>
+<tr><th>abheben</th><td>bis zum Dispo</td><td>nur bis 0</td><td>gar nicht</td></tr>
+<tr><th>Zinsen</th><td>selten</td><td>Habenzinsen</td><td>Sollzinsen</td></tr>
+<tr><th>zusätzlich</th><td>Dispolimit</td><td>Kündigungsfrist</td><td>Tilgungsplan</td></tr>
+</tbody>
+</table>
+
+<p>Prozedural landet dieser Unterschied in <strong>Fallunterscheidungen</strong>: <code>if (art[konto] == 'S') …</code>
+– in jeder Funktion erneut, und bei jeder neuen Kontoart überall nachzutragen.</p>
+
+<h2 id="das-eigentliche-problem">Das eigentliche Problem</h2>
+
+<ul class="karten">
+  <li class="karte"><b>Das Programm kennt keine „Konten“</b>
+      <span>Es kennt Arrays, Indizes und Funktionen. Das Ding, um das sich alles
+      dreht, kommt im Code gar nicht vor.</span></li>
+  <li class="karte"><b>Gemeinsamkeiten lassen sich nicht ausdrücken</b>
+      <span>„Ein Sparkonto ist ein Konto, das anders abhebt“ – dafür gibt es
+      prozedural keine Form, nur Kopien und <code>if</code>.</span></li>
+  <li class="karte"><b>Wissen liegt verstreut</b>
+      <span>Wer die Regeln eines Kontos verstehen will, muss das ganze Programm
+      lesen.</span></li>
+</ul>
+
+<h2 id="wo-wir-hinwollen">Wo wir hinwollen</h2>
+
+<ul class="karten">
+  <li class="karte"><b>Kapselung</b>
+      <span>Was zusammengehört, liegt an einer Stelle – die Daten eines Kontos und
+      die Regeln, die für sie gelten. Was nichts miteinander zu tun hat, bleibt
+      getrennt.</span></li>
+  <li class="karte"><b>Erweiterbarkeit</b>
+      <span>Eine neue Anforderung – etwa eine weitere Kontoart – soll möglichst
+      <em>neuen</em> Code bedeuten und nicht das Ändern von bestehendem, der heute
+      funktioniert.</span></li>
+  <li class="karte"><b>Keine Wiederholung (DRY)</b>
+      <span>Was für alle Konten gleich ist, wird einmal beschrieben – statt in
+      jeder Funktion erneut nach der Kontoart zu fragen.</span></li>
+</ul>
+
+<h2 id="woran-wir-uns-orientieren-könnten">Woran wir uns orientieren könnten</h2>
+
+<p class="leitfrage">Die Welt besteht nicht aus Arrays,<br />sondern aus Dingen.</p>
+
+  </main>
+
+  <nav class="avd-academy-present__controls" aria-label="Foliennavigation" hidden data-avd-academy-present-controls>
+    <button type="button" class="avd-academy-present__nav" data-avd-academy-present-prev
+            title="Vorherige Folie (←)" aria-label="Vorherige Folie">‹</button>
+    <button type="button" class="avd-academy-present__nav" data-avd-academy-present-next
+            title="Nächste Folie (→)" aria-label="Nächste Folie">›</button>
+  </nav>
+
+  <div class="avd-academy-present__progress" aria-hidden="true">
+    <div class="avd-academy-present__progress-fill" data-avd-academy-present-progress></div>
+  </div><div class="avd-academy-print-contact" aria-hidden="true">
+    <span>Kontakt: <a href="mailto:academy@atvantage.com">academy@atvantage.com</a></span>
+    <span><a href="https://www.atvantage.com">ATVANTAGE Academy</a></span>
+  </div>
+</body>
+</html>

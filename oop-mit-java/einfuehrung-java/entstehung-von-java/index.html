@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<!--
+  ATVANTAGE-Academy – Layout „presentation“ (Jekyll)
+  --------------------------------------------------
+  Folienbasierter Vortrag aus GEWÖHNLICHEM MARKDOWN. Die Seite läuft im Vollbild,
+  das Academy-Theme tritt zurück: keine Meta-Leiste, keine TopNav, keine
+  Brotkrumen, kein Footer, keine Sidebar – nur eine schmale Kopfleiste mit dem
+  Präsentationstitel und die Folienfläche darunter.
+
+  Übersetzung Markdown → Folien (macht presentation.js zur Laufzeit):
+    #  (bzw. Front-Matter `title`)  → Titel der Präsentation: klein in der
+                                      Kopfleiste UND groß auf der Titelfolie
+    ## (h2)                         → Titel einer Folie; JEDES h2 beginnt eine
+                                      neue Folie
+    alles vor dem ersten h2         → Titelfolie (Untertitel, Trainer:in, Datum)
+
+  Bedienung: ← → (auch Leertaste, Bild ↑/↓, Pos1/Ende), die Schaltflächen unten
+  rechts oder Wischen auf dem Touchscreen. Beim Wechsel schiebt sich die Folie
+  nach links aus dem Bild. Die aktuelle Folie steht im URL-Hash (#/3) und ist
+  damit verlinkbar und reload-fest.
+
+  Drucken: Jede Präsentation hat ein Drucklayout – im Ausdruck steht jede Folie
+  auf einer eigenen Seite (Schaltflächen und Fortschritt entfallen). Der Knopf in
+  der Kopfleiste löst es aus. Der QR-Code neben dem Knopf bleibt im Ausdruck
+  stehen und führt vom Blatt zurück zur Online-Fassung.
+
+  QR-Code: links vom Farbschema-Umschalter (dieselbe Reihenfolge wie in der
+  Kopfzeile der übrigen Seiten), gleich groß, Tooltip „Diese Seite auf Deinem
+  Smartphone öffnen“; vergrößert sich bei Hover/Tippen auf Scan-Größe. Er zeigt
+  auf die AKTUELLE Folie (Fragment #/3) und wird beim Blättern neu berechnet.
+
+  Front Matter (alles optional):
+    title:       "…"              → sonst die erste #-Überschrift
+    description: "…"              → Meta-Description
+    zurueck:  {title, url}        → „Zurück“-Link in der Kopfleiste, z. B. auf das
+                                    Modul, zu dem die Präsentation gehört
+
+  OHNE JavaScript bleibt die Seite lesbar: Sie rendert dann als eine lange,
+  scrollbare Markdown-Seite (die Folien-Aufteilung ist eine Zutat, keine
+  Voraussetzung).
+
+  Das eigenständige Deck (templates/presentations/, reines HTML mit Fragmenten
+  und Speaker-Notes) bleibt daneben bestehen – siehe docs/theme/academy.md.
+--><html lang="de">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Entstehung von Java · Java SE (ATVANTAGE Academy)</title>
+<meta name="description" content="Foliendeck zum Auftakt der Java-Einführung: Wie Java entstanden ist, woher sein Name kommt und aus welchen Sprachen es seine Ideen hat."><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786967027"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786967027">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786967027">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786967027">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786967027"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786967027">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786967027" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786967027" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786967027">
+<script type="module">
+  const _hlbase = "/training-material-java-se/theme/academy/hljs/";
+  Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
+    .then(([core, java]) => {
+      const hljs = core.default;
+      hljs.registerLanguage("java", java.default);
+      document.querySelectorAll("pre code.language-java").forEach((el) => hljs.highlightElement(el));
+    });
+</script>
+<link rel="apple-touch-icon" sizes="180x180" href="/training-material-java-se/theme/atvantage/assets/icon-180.png">
+<link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
+<link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/presentation.css?v=1786967027">
+  <script src="/training-material-java-se/theme/jekyll/presentation.js?v=1786967027" defer></script>
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786967027"></head>
+<body class="avd-academy-present" data-avd-academy-present data-avd-academy-present-title="Entstehung von Java">
+  <a class="avd-academy-skip-link" href="#avd-academy-deck">Zum Inhalt springen</a>
+
+  <header class="avd-academy-present__bar">
+    <img class="avd-academy-present__logo" src="/training-material-java-se/assets/logo-schulung.svg" alt="ATVANTAGE Academy"><span class="avd-academy-present__title">Entstehung von Java</span>
+    <span class="avd-academy-present__counter" data-avd-academy-present-counter aria-live="off"></span>
+    <div class="avd-academy-present__tools"><a class="avd-academy-present__back" href="../../">← OOP mit Java</a><button type="button" class="avd-academy-qr" data-avd-academy-qr hidden
+              title="Diese Seite auf Deinem Smartphone öffnen"
+              aria-label="Diese Seite auf Deinem Smartphone öffnen"></button>
+      <button type="button" class="avd-academy-present__tool" data-avd-academy-theme-toggle
+              title="Farbschema umschalten (hell/dunkel)" aria-label="Farbschema umschalten">◐</button>
+      <button type="button" class="avd-academy-present__tool" data-avd-academy-present-print
+              title="Drucken (alle Folien)" aria-label="Drucken (alle Folien)">⎙</button>
+      <button type="button" class="avd-academy-present__tool" data-avd-academy-present-full
+              title="Vollbild (Taste F)" aria-label="Vollbild">⛶</button>
+    </div>
+  </header><main class="avd-academy-deck" id="avd-academy-deck" data-avd-academy-deck>
+    <style>
+/* Eigene Bausteine dieser Präsentation. Farben aus den Theme-Tokens; Flächen
+   entstehen per color-mix GEGEN die Seitenfläche (--avd-academy-color-bg) und
+   stimmen damit in Light UND Dark ohne zweiten Regelsatz. Grafiken sind selbst
+   gezeichnet; das einzige Foto ist unten auf der Zeitstrahl-Folie ausgewiesen. */
+
+/* Folien vertikal mittig und luftiger als die Theme-Vorgabe (dort oben bündig).
+   `safe` verhindert, dass langer Inhalt oben abgeschnitten wird. */
+.avd-academy-slide { justify-content: center; justify-content: safe center; }
+.avd-academy-slide h2 { margin-bottom: var(--avd-academy-space-8); }
+/* Die Diagramm-Folie braucht jede Zeile Höhe – dort Polsterung und Überschrift
+   knapper halten, damit der Stammbaum ohne Scrollen auf die Folie passt. */
+.avd-academy-slide:has(.stammbaum) { padding-top: clamp(1rem, .5rem + 1.5vw, 2.25rem); padding-bottom: clamp(.75rem, .5rem + 1vw, 1.5rem); }
+.avd-academy-slide:has(.stammbaum) h2 { font-size: var(--avd-academy-fs-lg); margin-bottom: var(--avd-academy-space-4); }
+.avd-academy-slide li { margin-bottom: var(--avd-academy-space-3); }
+
+/* --- Kaffeetasse: Bildmarke der Titelfolie und Motiv zur Namensherkunft ---- */
+.tasse { width: clamp(90px, 12vw, 150px); height: auto; display: block; margin: 0 auto; }
+.tasse--gross { width: clamp(130px, 20vw, 230px); }
+.tasse__koerper { stroke: var(--avd-academy-color-ink); }
+.tasse__dampf   { stroke: var(--avd-academy-color-accent); opacity: .85; }
+
+/* --- Zeitstrahl: Jahr als Pille, verbunden durch eine senkrechte Linie ------
+   Die Pille ist IMMER eine Zeile hoch und gleich breit (align-self: start);
+   längerer Text daneben verlängert nur die Linie. */
+.zeitstrahl { list-style: none; margin: 0; padding: 0; font-size: .82em; }
+.zeitstrahl li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 1rem;
+  padding-bottom: 1rem;
+}
+.zeitstrahl li::before {          /* Verbindungslinie zwischen den Jahres-Pillen */
+  content: "";
+  position: absolute;
+  left: 3.25rem;
+  top: 1.9rem;
+  bottom: 0;
+  width: 2px;
+  background: var(--avd-academy-color-border);
+}
+.zeitstrahl li:last-child::before { display: none; }
+.zeitstrahl__jahr {
+  position: relative;
+  z-index: 1;
+  align-self: start;              /* eine Zeilenhöhe, egal wie lang der Text ist */
+  text-align: center;
+  padding: .15rem .4rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: .9em;
+  line-height: 1.35;
+  color: var(--avd-academy-color-headline);
+  background: color-mix(in srgb, var(--avd-academy-color-accent) 16%, var(--avd-academy-color-bg));
+  border: 1px solid color-mix(in srgb, var(--avd-academy-color-accent) 45%, var(--avd-academy-color-bg));
+}
+
+/* --- Bild mit Nachweis ----------------------------------------------------- */
+.bildnis { margin: 0; align-self: center; max-width: 260px; }
+.bildnis img {
+  width: 100%;
+  border-radius: var(--avd-academy-radius-lg);
+  display: block;
+}
+/* Duke ist für helle Flächen gezeichnet – im Dark Mode ginge sein schwarzer
+   Körper sonst im Hintergrund unter. Deshalb steht er auf hellem Karton. */
+.bildnis--hell img {
+  background: #fff;
+  padding: 1.2rem 2rem;
+  max-height: 42vh;
+  width: auto;
+  margin: 0 auto;
+}
+.bildnis figcaption {
+  margin-top: .5rem;
+  font-size: .6em;
+  line-height: 1.4;
+  color: var(--avd-academy-color-ink-muted);
+}
+
+/* --- Karten: Aufzählungen, die als Fläche statt als Liste wirken ----------- */
+.karten {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1.4rem;
+  margin: 0;
+  padding: 0;
+}
+.karte {
+  margin: 0;
+  padding: 1.1rem 1.2rem;
+  font-size: .92em;
+  line-height: 1.55;
+  border: 1px solid var(--avd-academy-color-border);
+  border-left: 4px solid var(--avd-academy-color-accent);
+  border-radius: var(--avd-academy-radius);
+  background: color-mix(in srgb, var(--avd-academy-color-bg-subtle) 65%, var(--avd-academy-color-bg));
+}
+.karte > b:first-child { display: block; margin-bottom: .35rem; color: var(--avd-academy-color-headline); }
+.karte span { color: var(--avd-academy-color-ink-muted); }
+
+/* --- Zwei Spalten: Text und Motiv nebeneinander ---------------------------- */
+.zweispalt { display: grid; grid-template-columns: 1.5fr .5fr; gap: 2.5rem; align-items: center; }
+@media (max-width: 800px) { .zweispalt { grid-template-columns: 1fr; } }
+
+/* --- Weggelassen-Liste ----------------------------------------------------- */
+.ohne { list-style: none; margin: 0 0 1rem; padding: 0; }
+.ohne li { display: flex; gap: .7rem; align-items: baseline; margin-bottom: .9rem; }
+.ohne li::before { content: "✗"; color: var(--avd-academy-color-danger); font-weight: 700; }
+
+/* --- Stammbaum (Diagramm-Folie) --------------------------------------------
+   Das Diagramm darf aus der Textspalte ausbrechen und die volle Folienbreite
+   nutzen – nur so werden die Sprachnamen groß genug für die Projektion. */
+.stammbaum {
+  --pg-proz: var(--avd-academy-fill-1);
+  --pg-oo:   var(--avd-academy-fill-2);
+  --pg-fun:  var(--avd-academy-fill-3);
+  --pg-log:  var(--avd-academy-fill-4);
+  /* Fünfte kategoriale Farbe im Stil von fill-3/fill-4 (das Theme kennt nur vier);
+     bewusst ein eigener Farbton, damit „multiparadigmatisch“ nicht mit dem Grün
+     der objektorientierten Sprachen verschwimmt. */
+  --pg-multi: #b5566f;
+  /* Das Diagramm bleibt links an der Textspalte (bündig mit Überschrift und
+     Legende) und dehnt sich nur nach rechts über die Spalte hinaus – nur so
+     werden die Sprachnamen groß genug für die Projektion. */
+  margin: 0 calc(50% - 50vw + 3rem) 0 0;
+  max-width: 1600px;
+}
+.stammbaum__bild {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 62vh;
+  color: var(--avd-academy-color-ink-muted); /* Pfeilfarbe (currentColor) */
+}
+.stammbaum__band      { fill: var(--avd-academy-color-bg-subtle); }
+.stammbaum__achse     { stroke: var(--avd-academy-color-border); stroke-width: 1.5; fill: none; }
+.stammbaum__dekade    { fill: var(--avd-academy-color-ink-muted); font-size: 19px; font-weight: 500; }
+.stammbaum__pfeil     { stroke: currentColor; stroke-width: 1.8; fill: none; opacity: .85; }
+.stammbaum__name      { fill: var(--avd-academy-color-ink); font-size: 21px; font-weight: 500; }
+.stammbaum__jahr      { fill: var(--avd-academy-color-ink-muted); font-size: 16px; font-weight: 400; }
+.stammbaum g rect     { stroke-width: 1.5; }
+.stammbaum .pg--proz  rect { fill: color-mix(in srgb, var(--pg-proz)  30%, var(--avd-academy-color-bg)); stroke: color-mix(in srgb, var(--pg-proz)  70%, var(--avd-academy-color-bg)); }
+.stammbaum .pg--oo    rect { fill: color-mix(in srgb, var(--pg-oo)    22%, var(--avd-academy-color-bg)); stroke: color-mix(in srgb, var(--pg-oo)    65%, var(--avd-academy-color-bg)); }
+.stammbaum .pg--fun   rect { fill: color-mix(in srgb, var(--pg-fun)   22%, var(--avd-academy-color-bg)); stroke: color-mix(in srgb, var(--pg-fun)   65%, var(--avd-academy-color-bg)); }
+.stammbaum .pg--log   rect { fill: color-mix(in srgb, var(--pg-log)   22%, var(--avd-academy-color-bg)); stroke: color-mix(in srgb, var(--pg-log)   65%, var(--avd-academy-color-bg)); }
+.stammbaum .pg--multi rect { fill: color-mix(in srgb, var(--pg-multi) 26%, var(--avd-academy-color-bg)); stroke: color-mix(in srgb, var(--pg-multi) 70%, var(--avd-academy-color-bg)); }
+.stammbaum .ist-java  rect { fill: color-mix(in srgb, var(--pg-oo) 34%, var(--avd-academy-color-bg)); stroke: var(--avd-academy-color-accent); stroke-width: 3.5; }
+.stammbaum .ist-java .stammbaum__name { font-weight: 600; }
+.stammbaum__plattform      { fill: none; stroke: var(--avd-academy-color-ink-muted); stroke-width: 1.5; stroke-dasharray: 7 5; opacity: .75; }
+.stammbaum__plattform-text { fill: var(--avd-academy-color-ink-muted); font-size: 19px; font-weight: 500; }
+
+.stammbaum__legende {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem 1.3rem;
+  margin: .5rem 0 0 0;
+  padding: 0;
+  font-size: .66em;
+  color: var(--avd-academy-color-ink-muted);
+}
+.stammbaum__legende li { display: flex; align-items: center; gap: .45rem; margin: 0; }
+.stammbaum__punkt {
+  width: 1rem; height: 1rem; border-radius: 3px; display: inline-block;
+  border: 1.5px solid currentColor;
+}
+.stammbaum__punkt--proz  { background: color-mix(in srgb, var(--pg-proz)  30%, var(--avd-academy-color-bg)); color: color-mix(in srgb, var(--pg-proz)  70%, var(--avd-academy-color-bg)); }
+.stammbaum__punkt--oo    { background: color-mix(in srgb, var(--pg-oo)    22%, var(--avd-academy-color-bg)); color: color-mix(in srgb, var(--pg-oo)    65%, var(--avd-academy-color-bg)); }
+.stammbaum__punkt--fun   { background: color-mix(in srgb, var(--pg-fun)   22%, var(--avd-academy-color-bg)); color: color-mix(in srgb, var(--pg-fun)   65%, var(--avd-academy-color-bg)); }
+.stammbaum__punkt--log   { background: color-mix(in srgb, var(--pg-log)   22%, var(--avd-academy-color-bg)); color: color-mix(in srgb, var(--pg-log)   65%, var(--avd-academy-color-bg)); }
+.stammbaum__punkt--multi { background: color-mix(in srgb, var(--pg-multi) 26%, var(--avd-academy-color-bg)); color: color-mix(in srgb, var(--pg-multi) 70%, var(--avd-academy-color-bg)); }
+.stammbaum__punkt--plattform { background: none; border-style: dashed; color: var(--avd-academy-color-ink-muted); }
+</style>
+
+<h1 id="entstehung-von-java">Entstehung von Java</h1>
+
+<svg class="tasse" viewBox="0 0 120 120" role="img" aria-label="Dampfende Kaffeetasse">
+  <g class="tasse__dampf" fill="none" stroke-width="4" stroke-linecap="round">
+    <path d="M45 34 c7 -7 -7 -13 0 -22" />
+    <path d="M60 30 c7 -8 -7 -14 0 -23" />
+    <path d="M75 34 c7 -7 -7 -13 0 -22" />
+  </g>
+  <g class="tasse__koerper" fill="none" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M26 48 h60 l-7 32 a14 14 0 0 1 -14 11 h-18 a14 14 0 0 1 -14 -11 z" />
+    <path d="M86 54 a13 13 0 1 1 -3 25" />
+    <path d="M20 100 q40 9 80 0" />
+  </g>
+</svg>
+
+<p>Woher die Sprache kommt – und woher ihre Ideen kommen</p>
+
+<h2 id="von-oak-zu-java">Von „Oak“ zu Java</h2>
+
+<div class="zweispalt">
+<ol class="zeitstrahl">
+  <li><span class="zeitstrahl__jahr">1991</span>
+      <div><b>Green Project</b> bei Sun Microsystems: James Gosling und sein Team
+      entwerfen eine Sprache für <b>vernetzte Geräte</b> – Arbeitstitel <b>„Oak“</b>,
+      für <i>Object Application Kernel</i> und nach der Eiche vor Goslings Büro</div></li>
+  <li><span class="zeitstrahl__jahr">1992</span>
+      <div>Prototyp <b>„*7“</b>: ein Handheld mit Touchscreen für interaktives
+      Fernsehen</div></li>
+  <li><span class="zeitstrahl__jahr">1994</span>
+      <div>Der erhoffte Markt bleibt aus – <b>das WWW wächst</b>. Kurswechsel:
+      dieselbe Sprache, neues Ziel</div></li>
+  <li><span class="zeitstrahl__jahr">1995</span>
+      <div>Umbenennung in <b>Java</b> (der Name „Oak“ war vergeben); Netscape nimmt
+      Java in den Browser auf</div></li>
+  <li><span class="zeitstrahl__jahr">1996</span>
+      <div><b>JDK 1.0</b> – aus einer Sprache für Set-Top-Boxen wird die Sprache
+      des Netzes</div></li>
+</ol>
+<figure class="bildnis">
+  <img src="james-gosling.jpg" alt="Porträt von James Gosling" />
+  <figcaption>James Gosling, 2008 · Foto: <a href="https://commons.wikimedia.org/wiki/File:James_Gosling_2008.jpg">Peter Campbell</a>,
+  <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>, via Wikimedia Commons</figcaption>
+</figure>
+</div>
+
+<h2 id="von-sun-zum-openjdk">Von Sun zum OpenJDK</h2>
+
+<div class="zweispalt">
+<ol class="zeitstrahl">
+  <li><span class="zeitstrahl__jahr">1999</span>
+      <div><b>Java 2 Platform, Enterprise Edition (J2EE)</b> – Java erobert Server
+      und Unternehmensanwendungen</div></li>
+  <li><span class="zeitstrahl__jahr">2006/07</span>
+      <div>Sun stellt Java unter die <b>GPL</b> → das <b>OpenJDK</b> entsteht.
+      Im selben Zug wird auch <b>Duke</b> freigegeben</div></li>
+  <li><span class="zeitstrahl__jahr">2010</span>
+      <div><b>Oracle</b> übernimmt Sun</div></li>
+  <li><span class="zeitstrahl__jahr">heute</span>
+      <div>Das <b>OpenJDK</b> ist die quelloffene Referenzimplementierung – Java
+      hängt nicht mehr an einem einzelnen Hersteller</div></li>
+</ol>
+<figure class="bildnis bildnis--hell">
+  <img src="duke.svg" alt="Duke, das winkende Java-Maskottchen" />
+  <figcaption>Duke, das Java-Maskottchen · Grafik: sbmehta nach Sun Microsystems,
+  <a href="https://commons.wikimedia.org/wiki/File:Duke_(Java_mascot)_waving.svg">BSD-Lizenz</a>,
+  via Wikimedia Commons</figcaption>
+</figure>
+</div>
+
+<h2 id="warum-java">Warum „Java“?</h2>
+
+<div class="zweispalt">
+<div>
+
+    <ul>
+      <li><strong>„Oak“</strong> war markenrechtlich schon vergeben – ein neuer Name musste her</li>
+      <li><strong>Java</strong> ist eine Kaffeesorte (nach der Insel) – Kaffee war im Team reichlich
+im Spiel</li>
+      <li>Sichtbar geblieben: die <strong>dampfende Tasse</strong> im Logo, Komponenten heißen <strong>„Beans“</strong></li>
+      <li>Der Name ist Zufall – die Technik dahinter war es nie</li>
+    </ul>
+
+  </div>
+<svg class="tasse tasse--gross" viewBox="0 0 120 120" role="img" aria-label="Dampfende Kaffeetasse">
+  <g class="tasse__dampf" fill="none" stroke-width="4" stroke-linecap="round">
+    <path d="M45 34 c7 -7 -7 -13 0 -22" />
+    <path d="M60 30 c7 -8 -7 -14 0 -23" />
+    <path d="M75 34 c7 -7 -7 -13 0 -22" />
+  </g>
+  <g class="tasse__koerper" fill="none" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M26 48 h60 l-7 32 a14 14 0 0 1 -14 11 h-18 a14 14 0 0 1 -14 -11 z" />
+    <path d="M86 54 a13 13 0 1 1 -3 25" />
+    <path d="M20 100 q40 9 80 0" />
+  </g>
+</svg>
+</div>
+
+<h2 id="woher-die-ideen-kommen">Woher die Ideen kommen</h2>
+
+<figure class="stammbaum">
+<svg class="stammbaum__bild" viewBox="30 0 1535 648" preserveAspectRatio="xMinYMid meet" role="img" aria-labelledby="stammbaum-titel stammbaum-beschreibung">
+  <title id="stammbaum-titel">Stammbaum wichtiger Programmiersprachen von den 1950ern bis in die 2010er</title>
+  <desc id="stammbaum-beschreibung">Senkrechte Zeitachse mit Jahrzehnten. Aus ALGOL 60 gehen Pascal, C und Simula 67 hervor; aus Pascal Ada und Delphi, aus C das C++ von 1985 und Objective-C, aus Simula 67 und LISP das Smalltalk der 1980er. Java 1995 entsteht aus C++, Objective-C und Smalltalk, aus Java wiederum C#; C# und VB.NET teilen sich die .NET-Plattform. BASIC führt über VBA zu VB.NET, JavaScript zu TypeScript. FORTRAN und COBOL münden in PL/I; Prolog und Python stehen ohne gezeigte Vorläufer daneben.</desc>
+
+  <defs>
+    <marker id="stammbaum-spitze" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
+    </marker>
+  </defs>
+
+  <!-- Jahrzehnt-Bänder (jedes zweite hinterlegt) + Beschriftung -->
+  <rect class="stammbaum__band" x="110" y="18" width="1440" height="88" opacity=".55" />
+  <rect class="stammbaum__band" x="110" y="194" width="1440" height="88" opacity=".55" />
+  <rect class="stammbaum__band" x="110" y="370" width="1440" height="88" opacity=".55" />
+  <rect class="stammbaum__band" x="110" y="546" width="1440" height="88" opacity=".55" />
+  <text class="stammbaum__dekade" x="95" y="50" text-anchor="end">1950er</text>
+  <text class="stammbaum__dekade" x="95" y="138" text-anchor="end">1960er</text>
+  <text class="stammbaum__dekade" x="95" y="226" text-anchor="end">1970er</text>
+  <text class="stammbaum__dekade" x="95" y="314" text-anchor="end">1980er</text>
+  <text class="stammbaum__dekade" x="95" y="402" text-anchor="end">1990er</text>
+  <text class="stammbaum__dekade" x="95" y="490" text-anchor="end">2000er</text>
+  <text class="stammbaum__dekade" x="95" y="578" text-anchor="end">2010er</text>
+
+  <!-- Zeitachse -->
+  <path class="stammbaum__achse" d="M 110 18 L 110 632" marker-end="url(#stammbaum-spitze)" />
+
+  <!-- Abstammungslinien -->
+  <g class="stammbaum__pfeile">
+    <path class="stammbaum__pfeil" d="M 410 62 L 410 112" marker-end="url(#stammbaum-spitze)" /><!-- FORTRAN → ALGOL 60 -->
+    <path class="stammbaum__pfeil" d="M 450 62 V 78 Q 450 88 460 88 H 1425 Q 1435 88 1435 112" marker-end="url(#stammbaum-spitze)" /><!-- FORTRAN → PL/I -->
+    <path class="stammbaum__pfeil" d="M 1460 62 L 1460 112" marker-end="url(#stammbaum-spitze)" /><!-- COBOL → PL/I -->
+    <path class="stammbaum__pfeil" d="M 390 150 L 260 199" marker-end="url(#stammbaum-spitze)" /><!-- ALGOL 60 → Pascal -->
+    <path class="stammbaum__pfeil" d="M 430 150 L 430 200" marker-end="url(#stammbaum-spitze)" /><!-- ALGOL 60 → C -->
+    <path class="stammbaum__pfeil" d="M 510 145 Q 625 172 736 168" marker-end="url(#stammbaum-spitze)" /><!-- ALGOL 60 → Simula 67 -->
+    <path class="stammbaum__pfeil" d="M 225 238 L 225 288" marker-end="url(#stammbaum-spitze)" /><!-- Pascal → Ada -->
+    <path class="stammbaum__pfeil" d="M 270 238 Q 360 308 278 375" marker-end="url(#stammbaum-spitze)" /><!-- Pascal → Delphi -->
+    <path class="stammbaum__pfeil" d="M 400 238 L 400 326" marker-end="url(#stammbaum-spitze)" /><!-- C → C++ -->
+    <path class="stammbaum__pfeil" d="M 510 236 L 745 324" marker-end="url(#stammbaum-spitze)" /><!-- C → Objective-C -->
+    <path class="stammbaum__pfeil" d="M 900 188 L 984 287" marker-end="url(#stammbaum-spitze)" /><!-- Simula 67 → Smalltalk -->
+    <path class="stammbaum__pfeil" d="M 750 186 L 509 326" marker-end="url(#stammbaum-spitze)" /><!-- Simula 67 → C++ -->
+    <path class="stammbaum__pfeil" d="M 1180 62 L 1089 287" marker-end="url(#stammbaum-spitze)" /><!-- LISP → Smalltalk -->
+    <path class="stammbaum__pfeil" d="M 945 321 L 922 339" marker-end="url(#stammbaum-spitze)" /><!-- Smalltalk → Objective-C -->
+    <path class="stammbaum__pfeil" d="M 985 326 L 879 413" marker-end="url(#stammbaum-spitze)" /><!-- Smalltalk → Java -->
+    <path class="stammbaum__pfeil" d="M 830 364 L 830 414" marker-end="url(#stammbaum-spitze)" /><!-- Objective-C → Java -->
+    <path class="stammbaum__pfeil" d="M 505 356 Q 625 462 736 434" marker-end="url(#stammbaum-spitze)" /><!-- C++ → Java -->
+    <path class="stammbaum__pfeil" d="M 350 364 L 350 464" marker-end="url(#stammbaum-spitze)" /><!-- C++ → C# -->
+    <path class="stammbaum__pfeil" d="M 745 442 Q 625 447 516 474" marker-end="url(#stammbaum-spitze)" /><!-- Java → C# -->
+    <path class="stammbaum__pfeil" d="M 615 150 L 615 376" marker-end="url(#stammbaum-spitze)" /><!-- BASIC → VBA -->
+    <path class="stammbaum__pfeil" d="M 635 414 L 635 464" marker-end="url(#stammbaum-spitze)" /><!-- VBA → VB.NET -->
+    <path class="stammbaum__pfeil" d="M 1232 452 L 1232 552" marker-end="url(#stammbaum-spitze)" /><!-- JavaScript → TypeScript -->
+  </g>
+
+  <!-- .NET: gemeinsame Plattform von C# und VB.NET, keine Abstammung -->
+  <rect class="stammbaum__plattform" x="318" y="458" width="410" height="52" rx="12" />
+  <text class="stammbaum__plattform-text" x="322" y="532">.NET-Plattform</text>
+
+  <!-- 1950er -->
+  <g class="pg--proz">
+    <rect x="330" y="26" width="180" height="36" rx="7" />
+    <text class="stammbaum__name" x="420" y="51" text-anchor="middle">FORTRAN <tspan class="stammbaum__jahr">1957</tspan></text>
+  </g>
+  <g class="pg--fun">
+    <rect x="1150" y="26" width="180" height="36" rx="7" />
+    <text class="stammbaum__name" x="1240" y="51" text-anchor="middle">LISP <tspan class="stammbaum__jahr">1958</tspan></text>
+  </g>
+  <g class="pg--proz">
+    <rect x="1355" y="26" width="180" height="36" rx="7" />
+    <text class="stammbaum__name" x="1445" y="51" text-anchor="middle">COBOL <tspan class="stammbaum__jahr">1959</tspan></text>
+  </g>
+  <!-- 1960er -->
+  <g class="pg--proz">
+    <rect x="330" y="114" width="180" height="36" rx="7" />
+    <text class="stammbaum__name" x="420" y="139" text-anchor="middle">ALGOL 60 <tspan class="stammbaum__jahr">1960</tspan></text>
+  </g>
+  <g class="pg--proz">
+    <rect x="535" y="114" width="180" height="36" rx="7" />
+    <text class="stammbaum__name" x="625" y="139" text-anchor="middle">BASIC <tspan class="stammbaum__jahr">1964</tspan></text>
+  </g>
+  <g class="pg--proz">
+    <rect x="1355" y="114" width="180" height="36" rx="7" />
+    <text class="stammbaum__name" x="1445" y="139" text-anchor="middle">PL/I <tspan class="stammbaum__jahr">1964</tspan></text>
+  </g>
+  <g class="pg--oo">
+    <rect x="740" y="152" width="180" height="36" rx="7" />
+    <text class="stammbaum__name" x="830" y="177" text-anchor="middle">Simula 67 <tspan class="stammbaum__jahr">1967</tspan></text>
+  </g>
+  <!-- 1970er -->
+  <g class="pg--proz">
+    <rect x="125" y="202" width="180" height="36" rx="7" />
+    <text class="stammbaum__name" x="215" y="227" text-anchor="middle">Pascal <tspan class="stammbaum__jahr">1970</tspan></text>
+  </g>
+  <g class="pg--proz">
+    <rect x="330" y="202" width="180" height="36" rx="7" />
+    <text class="stammbaum__name" x="420" y="227" text-anchor="middle">C <tspan class="stammbaum__jahr">1972</tspan></text>
+  </g>
+  <g class="pg--log">
+    <rect x="1150" y="202" width="180" height="36" rx="7" />
+    <text class="stammbaum__name" x="1240" y="227" text-anchor="middle">Prolog <tspan class="stammbaum__jahr">1972</tspan></text>
+  </g>
+  <!-- 1980er -->
+  <g class="pg--proz">
+    <rect x="125" y="290" width="180" height="36" rx="7" />
+    <text class="stammbaum__name" x="215" y="315" text-anchor="middle">Ada <tspan class="stammbaum__jahr">1980</tspan></text>
+  </g>
+  <g class="pg--oo">
+    <rect x="945" y="290" width="180" height="36" rx="7" />
+    <text class="stammbaum__name" x="1035" y="315" text-anchor="middle">Smalltalk <tspan class="stammbaum__jahr">1980</tspan></text>
+  </g>
+  <g class="pg--oo">
+    <rect x="330" y="328" width="180" height="36" rx="7" />
+    <text class="stammbaum__name" x="420" y="353" text-anchor="middle">C++ <tspan class="stammbaum__jahr">1985</tspan></text>
+  </g>
+  <g class="pg--oo">
+    <rect x="740" y="328" width="180" height="36" rx="7" />
+    <text class="stammbaum__name" x="830" y="353" text-anchor="middle">Objective-C <tspan class="stammbaum__jahr">1984</tspan></text>
+  </g>
+  <!-- 1990er -->
+  <g class="pg--oo">
+    <rect x="125" y="378" width="180" height="36" rx="7" />
+    <text class="stammbaum__name" x="215" y="403" text-anchor="middle">Delphi <tspan class="stammbaum__jahr">1995</tspan></text>
+  </g>
+  <g class="pg--proz">
+    <rect x="535" y="378" width="180" height="36" rx="7" />
+    <text class="stammbaum__name" x="625" y="403" text-anchor="middle">VBA <tspan class="stammbaum__jahr">1993</tspan></text>
+  </g>
+  <g class="pg--multi">
+    <rect x="1150" y="378" width="180" height="36" rx="7" />
+    <text class="stammbaum__name" x="1240" y="403" text-anchor="middle">Python <tspan class="stammbaum__jahr">1991</tspan></text>
+  </g>
+  <g class="pg--oo ist-java">
+    <rect x="740" y="416" width="180" height="36" rx="7" />
+    <text class="stammbaum__name" x="830" y="441" text-anchor="middle">Java <tspan class="stammbaum__jahr">1995</tspan></text>
+  </g>
+  <g class="pg--multi">
+    <rect x="1150" y="416" width="180" height="36" rx="7" />
+    <text class="stammbaum__name" x="1240" y="441" text-anchor="middle">JavaScript <tspan class="stammbaum__jahr">1995</tspan></text>
+  </g>
+  <!-- 2000er -->
+  <g class="pg--oo">
+    <rect x="330" y="466" width="180" height="36" rx="7" />
+    <text class="stammbaum__name" x="420" y="491" text-anchor="middle">C# <tspan class="stammbaum__jahr">2000</tspan></text>
+  </g>
+  <g class="pg--oo">
+    <rect x="535" y="466" width="180" height="36" rx="7" />
+    <text class="stammbaum__name" x="625" y="491" text-anchor="middle">VB.NET <tspan class="stammbaum__jahr">2002</tspan></text>
+  </g>
+  <!-- 2010er -->
+  <g class="pg--multi">
+    <rect x="1150" y="554" width="180" height="36" rx="7" />
+    <text class="stammbaum__name" x="1240" y="579" text-anchor="middle">TypeScript <tspan class="stammbaum__jahr">2012</tspan></text>
+  </g>
+</svg>
+
+<ul class="stammbaum__legende">
+  <li><span class="stammbaum__punkt stammbaum__punkt--proz"></span>prozedural</li>
+  <li><span class="stammbaum__punkt stammbaum__punkt--oo"></span>objektorientiert</li>
+  <li><span class="stammbaum__punkt stammbaum__punkt--fun"></span>funktional</li>
+  <li><span class="stammbaum__punkt stammbaum__punkt--log"></span>logisch</li>
+  <li><span class="stammbaum__punkt stammbaum__punkt--multi"></span>multiparadigmatisch</li>
+  <li><span class="stammbaum__punkt stammbaum__punkt--plattform"></span>gemeinsame Plattform</li>
+  <li>Pfeil = „ist hervorgegangen aus“ · JavaScript ist seit 1997 als ECMAScript standardisiert · Ausschnitt, keine vollständige Ahnentafel</li>
+</ul>
+</figure>
+
+<h2 id="javas-drei-wurzeln">Javas drei Wurzeln</h2>
+
+<ul class="karten">
+  <li class="karte"><b>C / C++ → die Syntax</b>
+      <span>geschweifte Klammern, Typ vor dem Namen, <code>if</code>, <code>for</code></span></li>
+  <li class="karte"><b>Smalltalk → die Laufzeit-Idee</b>
+      <span>alles ist ein Objekt, Bytecode auf einer virtuellen Maschine,
+      automatische Speicherverwaltung</span></li>
+  <li class="karte"><b>Objective-C → die Protokolle</b>
+      <span>der Vorläufer dessen, was in Java <b>Interface</b> heißt</span></li>
+</ul>
+
+<p>Java ist damit kein Bruch mit dem Bekannten, sondern eine <strong>Auswahl</strong>: vertraute
+Syntax, dahinter eine konsequent objektorientierte Plattform.</p>
+
+<h2 id="was-java-bewusst-weglässt">Was Java bewusst weglässt</h2>
+
+<p>Übernommen wurde die Syntax von C++ – nicht deren Freiheiten:</p>
+
+<ul class="ohne">
+  <li><span><b>Zeigerarithmetik</b> und <code>delete</code> – den Speicher räumt
+      der Garbage Collector</span></li>
+  <li><span><b>Mehrfachvererbung</b> von Klassen – stattdessen Interfaces</span></li>
+  <li><span><b>Operator-Überladung</b> und <b>Präprozessor</b></span></li>
+</ul>
+
+<blockquote>
+  <p>„Java ist C++ ohne Waffen, Messer und Keulen.“ – James Gosling zugeschrieben</p>
+</blockquote>
+
+  </main>
+
+  <nav class="avd-academy-present__controls" aria-label="Foliennavigation" hidden data-avd-academy-present-controls>
+    <button type="button" class="avd-academy-present__nav" data-avd-academy-present-prev
+            title="Vorherige Folie (←)" aria-label="Vorherige Folie">‹</button>
+    <button type="button" class="avd-academy-present__nav" data-avd-academy-present-next
+            title="Nächste Folie (→)" aria-label="Nächste Folie">›</button>
+  </nav>
+
+  <div class="avd-academy-present__progress" aria-hidden="true">
+    <div class="avd-academy-present__progress-fill" data-avd-academy-present-progress></div>
+  </div><div class="avd-academy-print-contact" aria-hidden="true">
+    <span>Kontakt: <a href="mailto:academy@atvantage.com">academy@atvantage.com</a></span>
+    <span><a href="https://www.atvantage.com">ATVANTAGE Academy</a></span>
+  </div>
+</body>
+</html>
