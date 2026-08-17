@@ -172,6 +172,124 @@ pre > .avd-academy-copy.is-copied { opacity: 1; }
 .avd-academy-qr__box svg rect { fill: var(--avd-white, #fff); }
 .avd-academy-qr__box svg path { fill: var(--avd-ink, #1a2627); }
 
+/* --- Gruppierte Tabelle (Academy-Ergänzung) --------------------------------
+   Eine Tabelle, deren Zeilen zu GRUPPEN zusammengefasst sind, mit ZWISCHENRÄUMEN
+   zwischen den Gruppen. Jede Gruppe trägt links einen farbigen Streifen, die
+   Zwischenräume sind schraffiert. Damit ist auf einen Blick zu sehen, wie voll
+   eine Gruppe ist, wo Raum frei bleibt und wo etwas über die letzte Gruppe
+   hinausläuft.
+
+   Bewusst NEUTRAL gehalten – die Komponente weiß nichts über den Inhalt. Sie
+   trägt keine Zeiten, keine Summen und keine Reihenfolge; alles, was dasteht,
+   steht im Markup. Wofür die Gruppen stehen, entscheidet die Seite.
+
+   Aufbau (Markdown kann kein `rowspan`, deshalb echtes HTML – siehe
+   docs/theme/academy.md, Abschnitt „Gruppierte Tabelle“):
+
+     table.avd-academy-grouptable
+       tr
+         td.avd-academy-grouptable__group.…--tone-1   [rowspan]  Gruppenkopf
+         td.avd-academy-grouptable__num                          Zahlenspalte
+         td                                                      Inhalt
+       tr.avd-academy-grouptable__free    Zeile mit freiem Raum INNERHALB der Gruppe
+       tr.avd-academy-grouptable__gap     Zwischenraum ZWISCHEN zwei Gruppen (volle Breite)
+       tr.avd-academy-grouptable__alert   Ankündigung, dass das Raster verlassen wird
+
+   Grundgerüst (Rahmen, Polster, Ausrichtung) kommt aus base.css; hier stehen nur
+   die Abweichungen. */
+.avd-academy-grouptable th,
+.avd-academy-grouptable td { vertical-align: top; }
+
+/* Gruppenkopf: farbiger Streifen links, zweite Zeile (z. B. eine Spanne) klein
+   darunter. `white-space: nowrap` hält die Spalte schmal. */
+.avd-academy-grouptable__group {
+  white-space: nowrap;
+  border-left: 6px solid var(--avd-academy-grouptable-tone, var(--avd-academy-color-border));
+}
+.avd-academy-grouptable__group small { display: block; font-weight: 400; opacity: .75; }
+.avd-academy-grouptable__group--tone-1 { --avd-academy-grouptable-tone: var(--avd-academy-tone-1); }
+.avd-academy-grouptable__group--tone-2 { --avd-academy-grouptable-tone: var(--avd-academy-tone-2); }
+.avd-academy-grouptable__group--tone-3 { --avd-academy-grouptable-tone: var(--avd-academy-tone-3); }
+.avd-academy-grouptable__group--tone-4 { --avd-academy-grouptable-tone: var(--avd-academy-tone-4); }
+/* Signalton: für Gruppen, die außerhalb des regulären Rasters liegen. Hier färbt
+   er auch die Schrift – die Zeile soll auffallen, nicht bloß markiert sein. */
+.avd-academy-grouptable__group--tone-alert {
+  --avd-academy-grouptable-tone: var(--avd-academy-tone-alert);
+  color: var(--avd-academy-tone-alert);
+}
+
+/* Schmale Zahlenspalte: rechtsbündig, nie umbrechend – so stehen die Werte
+   untereinander und die Spalte bleibt so breit wie ihr längster Wert. */
+.avd-academy-grouptable__num { white-space: nowrap; text-align: right; }
+
+/* Rechtsbündige Schlusszeile einer Inhaltszelle – etwa für einen Verweis, der
+   nicht mitten im Text hängen soll. */
+.avd-academy-grouptable__link { display: block; text-align: right; }
+
+/* Zwischenraum und freier Raum tragen DIESELBE Schraffur: beides ist Zeit bzw.
+   Platz, der nicht mit Inhalt belegt ist – einmal zwischen den Gruppen, einmal
+   innerhalb einer. Die Schraffur kommt aus dem Textton und funktioniert damit in
+   Light wie Dark, ohne eigenen Farbwert. */
+.avd-academy-grouptable__gap td,
+.avd-academy-grouptable__free td {
+  opacity: .8;
+  background-image: repeating-linear-gradient(135deg,
+    transparent 0 6px,
+    color-mix(in srgb, var(--avd-academy-color-ink) 14%, transparent) 6px 12px);
+}
+/* Der Zwischenraum läuft über die volle Breite (ein `td` mit `colspan`) und ist
+   zurückhaltender gesetzt als eine Inhaltszeile. */
+.avd-academy-grouptable__gap td {
+  padding: var(--avd-academy-space-1) var(--avd-academy-space-3);
+  font-size: var(--avd-academy-fs-sm);
+  text-align: center;
+}
+/* Freier Raum steht INNERHALB einer Gruppe: Der Gruppenkopf daneben gehört noch
+   zur Gruppe und bleibt deshalb unschraffiert. */
+.avd-academy-grouptable__free .avd-academy-grouptable__group {
+  background-image: none;
+  opacity: 1;
+}
+
+/* Ankündigung, dass das Raster verlassen wird: volle Breite, Signalfarbe, oben
+   abgesetzt – die Grenze soll sichtbar überschritten werden. */
+.avd-academy-grouptable__alert td {
+  padding: var(--avd-academy-space-1) var(--avd-academy-space-3);
+  font-size: var(--avd-academy-fs-sm);
+  font-weight: 600;
+  color: var(--avd-academy-tone-alert);
+  border-top: 2px solid var(--avd-academy-tone-alert);
+}
+
+/* Legende zur Tabelle – erklärt die Töne und die Schraffur. Eigenständig
+   verwendbar, auch mehrfach über mehreren Tabellen. */
+.avd-academy-grouptable-legend {
+  display: flex; flex-wrap: wrap;
+  gap: var(--avd-academy-space-1) var(--avd-academy-space-4);
+  margin: var(--avd-academy-space-2) 0 var(--avd-academy-space-4);
+  font-size: var(--avd-academy-fs-sm);
+}
+.avd-academy-grouptable-legend__key { display: inline-flex; align-items: center; gap: var(--avd-academy-space-1); }
+.avd-academy-grouptable-legend__key::before {
+  content: ""; width: .55rem; height: 1rem;
+  border-radius: var(--avd-academy-radius-sm);
+  background: var(--avd-academy-grouptable-tone, var(--avd-academy-color-border));
+}
+.avd-academy-grouptable-legend__key--tone-1 { --avd-academy-grouptable-tone: var(--avd-academy-tone-1); }
+.avd-academy-grouptable-legend__key--tone-2 { --avd-academy-grouptable-tone: var(--avd-academy-tone-2); }
+.avd-academy-grouptable-legend__key--tone-3 { --avd-academy-grouptable-tone: var(--avd-academy-tone-3); }
+.avd-academy-grouptable-legend__key--tone-4 { --avd-academy-grouptable-tone: var(--avd-academy-tone-4); }
+.avd-academy-grouptable-legend__key--tone-alert { --avd-academy-grouptable-tone: var(--avd-academy-tone-alert); }
+/* Schlüssel für Zwischenraum/freien Raum: dieselbe Schraffur wie in der Tabelle,
+   nur feiner, damit sie im kleinen Feld erkennbar bleibt. */
+.avd-academy-grouptable-legend__key--gap::before {
+  background: transparent;
+  background-image: repeating-linear-gradient(135deg,
+    transparent 0 3px,
+    color-mix(in srgb, var(--avd-academy-color-ink) 45%, transparent) 3px 6px);
+  border: 1px solid var(--avd-academy-color-border);
+}
+
 /* --- Callouts / Hinweisboxen (Academy-Ergänzung; atvantage kennt keine) ---- */
 .avd-academy-callout {
   border-left: 4px solid var(--avd-academy-color-info);

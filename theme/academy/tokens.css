@@ -59,6 +59,19 @@
   --avd-academy-fill-3: #c9a227;           --avd-academy-fill-3-bg: #f6ecc4;
   --avd-academy-fill-4: #7a6fb3;           --avd-academy-fill-4-bg: #e5e1f4;
 
+  /* --- Töne zum Unterscheiden von Gruppen (gruppierte Tabellen) -----------
+     Vier gegeneinander unterscheidbare Töne plus ein Signalton. Sie leiten sich
+     aus der kategorialen Füllpalette oben ab und tragen deshalb keine eigenen
+     Farbwerte; genutzt werden sie von `.avd-academy-grouptable` (components.css)
+     als schmaler Streifen, nicht als Fläche. Im Dark-Theme werden sie
+     aufgehellt (siehe Dark-Block unten) – die Füllpalette selbst ist auf helle
+     Flächen gerechnet und würde auf dunklem Grund verschwinden. */
+  --avd-academy-tone-1: var(--avd-academy-fill-1);
+  --avd-academy-tone-2: var(--avd-academy-fill-2);
+  --avd-academy-tone-3: var(--avd-academy-fill-3);
+  --avd-academy-tone-4: var(--avd-academy-fill-4);
+  --avd-academy-tone-alert: var(--avd-academy-color-danger);
+
   /* --- Typografie: Familie aus atvantage; modulare Skala academy-spezifisch. */
   --avd-academy-font-sans:  var(--font-family, "Outfit", system-ui, sans-serif);
   --avd-academy-font-head:  var(--avd-academy-font-sans);
@@ -119,6 +132,14 @@
     --avd-academy-metanav-bg:      #101a18;
     --avd-academy-metanav-text:    #93a5a2;
     --avd-academy-code-bg:         #24332f;
+    /* Gruppen-Töne aufhellen: Die Füllpalette ist auf helle Flächen gerechnet;
+       auf dunklem Grund wäre besonders Ton 1 (Slate) nicht mehr zu sehen. Kein
+       eigener Farbwert – dieselben Töne, nur zu Weiß hin gemischt. */
+    --avd-academy-tone-1: color-mix(in srgb, var(--avd-academy-fill-1) 45%, #fff);
+    --avd-academy-tone-2: color-mix(in srgb, var(--avd-academy-fill-2) 60%, #fff);
+    --avd-academy-tone-3: color-mix(in srgb, var(--avd-academy-fill-3) 60%, #fff);
+    --avd-academy-tone-4: color-mix(in srgb, var(--avd-academy-fill-4) 55%, #fff);
+    --avd-academy-tone-alert: color-mix(in srgb, var(--avd-academy-color-danger) 55%, #fff);
   }
 }
 :root[data-avd-academy-theme="dark"] {
@@ -134,4 +155,10 @@
   --avd-academy-metanav-bg:      #101a18;
   --avd-academy-metanav-text:    #93a5a2;
   --avd-academy-code-bg:         #24332f;
+  /* Gruppen-Töne aufhellen – Begründung siehe System-Dark-Block oben. */
+  --avd-academy-tone-1: color-mix(in srgb, var(--avd-academy-fill-1) 45%, #fff);
+  --avd-academy-tone-2: color-mix(in srgb, var(--avd-academy-fill-2) 60%, #fff);
+  --avd-academy-tone-3: color-mix(in srgb, var(--avd-academy-fill-3) 60%, #fff);
+  --avd-academy-tone-4: color-mix(in srgb, var(--avd-academy-fill-4) 55%, #fff);
+  --avd-academy-tone-alert: color-mix(in srgb, var(--avd-academy-color-danger) 55%, #fff);
 }

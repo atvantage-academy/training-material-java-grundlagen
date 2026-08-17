@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<!--
+  ATVANTAGE-Academy – EINZIGES Seitenlayout (Jekyll)
+  --------------------------------------------------
+  Ein Layout für alles: allgemeine Doku-Seiten UND Guides (Übungen/Anleitungen).
+  Optik nach der ATVANTAGE-Website: Meta-Nav, weiße sticky Kopfzeile, Hero-Band,
+  zweispaltig mit rechter Sidebar (automatisches Inhaltsverzeichnis, Fortschritt
+  aus Task-Listen, weiterführende Ressourcen). Überschriften ohne Emoji-Icons.
+
+  Verwendung im Front Matter:  layout: default   (oder `layout: guide` – Alias,
+  siehe guide.html; beides rendert dieselbe Guide-Ansicht)
+
+  `layout: visualization` (siehe visualization.html) rendert dieselbe Seite OHNE
+  obere Navigation (Meta-Leiste + Kopfzeile/TopNav), OHNE Brotkrumen und OHNE den
+  rechten Bereich (Inhaltsverzeichnis, Fortschritt, Ressourcen – auch bei gesetztem
+  `resources`), mit schmalerem Hero-Balken und breiterem, zentriertem Inhalt – für
+  eigenständige Visualisierungen/Simulationen.
+
+  Alle Front-Matter-Felder sind OPTIONAL (Convention over Configuration). Nur der
+  Titel ist faktisch erforderlich – als `title:` ODER als erste `#`-Überschrift:
+
+    title:       "…"                → sonst erste #-Überschrift (eins von beiden nötig)
+    description: "…"                → Meta-Description
+    duration:    8                  → Zahl in Minuten → Hero-Tag „ca. 8 Minuten“
+                                       (ungefähre LESEDAUER; bei Guides/Übungen die
+                                       Dauer der Übung). Aktiviert zugleich die
+                                       nummerierten Arbeitsschritte und die
+                                       automatische Prev/Next-Navigation zwischen
+                                       gleichartigen Geschwister-Seiten. Alle drei
+                                       entfallen bei `layout: visualization`.
+    topics:      ["Cloud & DevOps"] → weitere Hero-Tags
+    resources:   [{titel, url, icon}, …] → Sidebar-Karte „Weiterführende Informationen“.
+                                       titel und/oder icon (Bildpfad); icon erscheint
+                                       rechts und wird kreisrund dargestellt.
+    breadcrumb:                     → Brotkrumen anpassen (beides optional):
+      label: "…"                    → überschreibt den Ordnernamen dieser Ebene;
+                                       in der Ordner-`index.md` gesetzt gilt es für
+                                       ALLE Seiten im Ordner und in Unterordnern.
+      path: [{title, url}, …]       → explizite Vorfahren-Kette OHNE die aktuelle
+                                       Seite (diese wird automatisch angehängt); in
+                                       der `index.md` gesetzt wird sie vererbt.
+    zurueck / weiter: {title, url}  → explizite Prev/Next-Links (sonst automatisch)
+
+  „Markdown kopieren“ (Button im Hero) erscheint NUR auf Guides (Übungen,
+  Anleitungen) – dort ist das Übernehmen des Quelltexts der Zweck. Bedingungen:
+  Markdown-Seite (`.md`, nicht reines HTML) UND als Guide erkennbar UND keine
+  Visualisierung. Guide ist eine Seite mit `layout: guide` ODER gesetztem
+  `duration` – letzteres ist der etablierte Marker (er schaltet auch die
+  nummerierten Arbeitsschritte und Prev/Next frei), und die Guide-Vorlage des
+  Themes wie auch die von didaktikon erzeugten Übungen nutzen `layout: default`
+  plus `duration`. Nur auf `layout: guide` zu prüfen würde den Button dort
+  entfernen. Doku-Seiten haben kein `duration`; Visualisierungen sind
+  ausgeschlossen, weil ihr Inhalt nicht sinnvoll als Markdown kopierbar ist.
+
+  DRUCKEN-KNOPF: nur bei `layout: visualization`. Diese Ansicht hat weder Kopfzeile
+  noch Sidebar, in der ein Weg zum Ausdruck stecken könnte – und der QR-Code steht
+  dort dann NEBEN dem Drucken-Knopf statt über einem Knopf im Inhalt. Auf
+  Doku-Seiten und Guides bleibt es beim Browser-Befehl (Strg/Cmd+P).
+
+  QR-CODE der Seitenadresse: erscheint im Hero rechts (neben „Markdown kopieren“
+  bzw. dem Drucken-Knopf, wo es diese gibt) auf JEDER Seite – Tooltip „Diese Seite
+  auf Deinem Smartphone öffnen“. Er wird erst im Browser erzeugt (theme/academy/atvantage.js), weil die
+  Adresse zur Build-Zeit nicht feststeht; ohne JavaScript erscheint er nicht.
+  Kein Front-Matter-Schalter: Es gibt keine Seite, auf der der Weg aufs eigene
+  Smartphone schaden würde.
+--><html lang="de">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Ein Klassendiagramm zur Bank · Java SE (ATVANTAGE Academy)</title>
+<meta name="description" content="Lies einen Anforderungstext zur Bank und zeichne daraus ein einfaches UML-Klassendiagramm – Klassen, Eigenschaften, Fähigkeiten, Beziehungen mit Multiplizitäten."><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786964417"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786964417">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786964417">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786964417">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786964417"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786964417">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786964417" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1786964417" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786964417">
+<script type="module">
+  const _hlbase = "/training-material-java-se/theme/academy/hljs/";
+  Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
+    .then(([core, java]) => {
+      const hljs = core.default;
+      hljs.registerLanguage("java", java.default);
+      document.querySelectorAll("pre code.language-java").forEach((el) => hljs.highlightElement(el));
+    });
+</script>
+<link rel="apple-touch-icon" sizes="180x180" href="/training-material-java-se/theme/atvantage/assets/icon-180.png">
+<link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
+<link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
+
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786964417">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786964417"></head><body class="avd-academy-guide">
+  <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
+  <div class="avd-academy-metanav">
+    <span>ATVANTAGE Academy</span>
+  </div>
+
+  <header class="avd-academy-header">
+  <a class="avd-academy-header__brand" href="/training-material-java-se/" aria-label="Startseite">
+    <img class="avd-academy-header__logo"
+         src="/training-material-java-se/assets/logo-schulung.svg"
+         alt="ATVANTAGE Academy">
+  </a>
+  <button class="avd-academy-btn avd-academy-btn--ghost avd-academy-header__burger" data-avd-academy-nav-toggle="#avd-academy-main-nav"
+          aria-label="Navigation umschalten" aria-expanded="false">☰</button>
+  <nav class="avd-academy-header__nav" id="avd-academy-main-nav"><a href="/training-material-java-se/">Start</a><a href="/training-material-java-se/oop-mit-java/">Objektorientierte Programmierung mit Java</a><a href="/training-material-java-se/shared/visualisierungen/">Visualisierungen</a>
+    <button class="avd-academy-btn avd-academy-btn--ghost" data-avd-academy-theme-toggle
+            aria-label="Farbschema umschalten">◐</button>
+  </nav>
+</header>
+<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Ein Klassendiagramm zur Bank</span></nav><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 25 Minuten</span><span class="avd-academy-tag">Objektorientierung</span><span class="avd-academy-tag">UML</span><span class="avd-academy-tag">Modellierung</span><span class="avd-academy-tag">Banking</span>
+      </div>
+      <div class="avd-academy-guide-hero__actions">
+        <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
+                data-avd-academy-copy-md="#avd-academy-md-source"
+                title="Markdown kopieren" aria-label="Markdown kopieren"></button><button type="button" class="avd-academy-qr" data-avd-academy-qr hidden
+                title="Diese Seite auf Deinem Smartphone öffnen"
+                aria-label="Diese Seite auf Deinem Smartphone öffnen"></button>
+      </div>
+    </div><h1>Ein Klassendiagramm zur Bank</h1>
+  </section>
+
+  <div class="avd-academy-guide-layout">
+    <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
+      <h1 id="ein-klassendiagramm-zur-bank">Ein Klassendiagramm zur Bank</h1>
+
+<p>Als Umsteiger:in möchte ich aus einer Anforderung in Prosa die beteiligten Dinge herauslesen und als Klassendiagramm aufzeichnen, damit ich weiß, woher die Klassen in meinem Java-Code eigentlich kommen.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Hier wird <strong>gezeichnet, nicht programmiert</strong> – Papier und Stift
+genügen, ein UML-Werkzeug brauchst Du ausdrücklich nicht. Es gibt zu dieser
+Übung bewusst keine Musterlösung: Die Diagramme werden anschließend
+miteinander verglichen, und es gibt mehr als eine tragfähige Lösung.</p>
+</blockquote>
+
+<h2 id="lernziele">Lernziele</h2>
+
+<p>Die Lernenden…</p>
+
+<ul>
+  <li>lesen aus einem Anforderungstext Kandidaten für Klassen, Eigenschaften und Fähigkeiten heraus.</li>
+  <li>entscheiden begründet, ob ein Begriff eine eigene Klasse oder nur eine Eigenschaft wird.</li>
+  <li>zeichnen ein einfaches UML-Klassendiagramm mit Klassen, Eigenschaften, Fähigkeiten und Beziehungen.</li>
+  <li>geben an den Beziehungen an, wie viele Objekte beteiligt sind (1:1, 1:n, n:m).</li>
+  <li>unterscheiden fachliche Aussagen von Umsetzungsentscheidungen.</li>
+  <li>benennen, was sie bewusst weggelassen haben.</li>
+</ul>
+
+<h2 id="definition-of-done">Definition of Done</h2>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast den Text gelesen und die Begriffe markiert, die Dir wichtig erscheinen.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Dein Diagramm enthält <strong>Klassen</strong> mit <strong>Eigenschaften</strong> und mindestens je einer <strong>Fähigkeit</strong>.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><strong>Beziehungen</strong> zwischen den Klassen sind als Linie eingezeichnet, mit <strong>Multiplizitäten</strong> an beiden Enden (<code>1</code>, <code>*</code>, <code>0..1</code>).</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du kannst zu jeder Klasse sagen, <strong>warum</strong> sie eine eigene Klasse ist.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
+</ul>
+
+<h2 id="der-anforderungstext">Der Anforderungstext</h2>
+
+<blockquote>
+  <p>Eine Bank möchte ihre Konten verwalten.</p>
+
+  <p>Zu jeder <strong>Kundin und jedem Kunden</strong> sind Name und Wohnort bekannt. Beim
+Anlegen vergibt die Bank eine eindeutige Kundennummer; zieht jemand um, wird
+der Wohnort geändert.</p>
+
+  <p>Ein <strong>Konto</strong> hat eine IBAN und einen Kontostand und gehört genau einer Kundin
+oder einem Kunden – wer mehrere Konten braucht, bekommt mehrere. Auf ein Konto
+kann <strong>eingezahlt</strong> werden, und es kann <strong>abgehoben</strong> werden, allerdings nur,
+solange genug Guthaben vorhanden ist. Der aktuelle Kontostand lässt sich
+abfragen.</p>
+
+  <p>Jede Ein- und Auszahlung wird als <strong>Buchung</strong> festgehalten, mit Betrag,
+Zeitpunkt und Verwendungszweck. Zu einem Konto lässt sich der gesamte
+Buchungsverlauf ausgeben.</p>
+
+  <p>Bei einer <strong>Überweisung</strong> wird der Betrag von einem Konto abgebucht und einem
+anderen gutgeschrieben.</p>
+
+  <p>Die <strong>Bank</strong> selbst kennt ihre Kundschaft und deren Konten und kann ein Konto
+anhand der IBAN heraussuchen.</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Alle Konten sind hier gleichartig – verschiedene Kontoarten (Giro,
+Spar, Kredit) lassen wir in diesem Modell bewusst weg. Wie man Gemeinsames und
+Unterschiedliches sauber trennt, kommt später im Kurs.</p>
+</blockquote>
+
+<h2 id="arbeitsschritte">Arbeitsschritte</h2>
+
+<h3 id="den-text-lesen-und-markieren">Den Text lesen und markieren</h3>
+
+<p>Lies den Text einmal ganz und markiere dann:</p>
+
+<ul>
+  <li><strong>Substantive</strong> – das sind Kandidaten für Klassen oder Eigenschaften.</li>
+  <li><strong>Verben</strong> – das sind Kandidaten für Fähigkeiten.</li>
+  <li><strong>Sätze, die zwei Dinge verbinden</strong> – daraus werden Beziehungen.</li>
+</ul>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Kandidat heißt Kandidat. Nicht jedes Substantiv wird eine Klasse –
+manches ist nur ein Wert an einer anderen Klasse.</p>
+</blockquote>
+
+<h3 id="entscheiden-was-eine-eigene-klasse-wird">Entscheiden, was eine eigene Klasse wird</h3>
+
+<p>Geh Deine Kandidaten durch und entscheide für jeden: <strong>eigene Klasse oder
+Eigenschaft?</strong> Frag Dich dabei:</p>
+
+<ul>
+  <li>Hat das Ding eigene Daten <em>und</em> eigenes Verhalten?</li>
+  <li>Kommt es mehrfach und unabhängig vor?</li>
+</ul>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Denk bei der Überweisung kurz nach: Ist sie ein eigenes Ding – oder
+beschreibt der Satz etwas, das zwei Konten miteinander tun?</p>
+</blockquote>
+
+<h3 id="das-diagramm-zeichnen">Das Diagramm zeichnen</h3>
+
+<p>Zeichne für jede Klasse ein <strong>Kästchen</strong> mit drei Bereichen:</p>
+
+<pre><code>┌───────────────────────────┐
+│ Konto                     │   ← Name
+├───────────────────────────┤
+│ iban                      │   ← Eigenschaften
+│ kontostand                │
+├───────────────────────────┤
+│ einzahlen()               │   ← Fähigkeiten
+│ abheben()                 │
+└───────────────────────────┘
+</code></pre>
+
+<p>Verbinde Klassen, die etwas miteinander zu tun haben, mit einer <strong>einfachen
+Linie</strong>. Wenn Du möchtest, schreib an die Linie, worin die Beziehung besteht
+(z. B. „gehört zu“).</p>
+
+<p><strong>Schreib an beide Enden der Linie, wie viele es sein können</strong> – daran erkennt man
+später den Unterschied zwischen 1:1, 1:n und n:m:</p>
+
+<pre><code>Kunde  1 ────────── *  Konto        ein Kunde hat beliebig viele Konten,
+                                    ein Konto gehört genau einem Kunden
+
+Kurs   * ────────── *  Mitglied     jeder Kurs hat viele Mitglieder,
+                                    jedes Mitglied besucht viele Kurse
+</code></pre>
+
+<p>Üblich sind <code>1</code> (genau eins), <code>*</code> (beliebig viele, auch keines) und <code>0..1</code>
+(höchstens eins).</p>
+
+<blockquote>
+  <p><strong>Achtung:</strong> Alles, was schon eine Aussage über die spätere Umsetzung wäre,
+lassen wir weg – <strong>keine Pfeilspitzen</strong>, keine Rauten, keine Vererbung. Ob eine
+Klasse die andere „kennt“ (und nicht umgekehrt), ist ein Implementierungsdetail
+und noch keine fachliche Aussage.</p>
+</blockquote>
+
+<h3 id="prüfen-ob-dein-modell-den-text-trägt">Prüfen, ob Dein Modell den Text trägt</h3>
+
+<p>Geh den Text noch einmal durch und prüfe an ein, zwei Aussagen, ob Dein Diagramm
+sie hergibt – zum Beispiel: <em>„Abheben ist nur möglich, solange genug Guthaben
+vorhanden ist.“</em> An welcher Stelle Deines Modells könnte diese Regel geprüft
+werden? Und: <em>„Zu einem Konto lässt sich der gesamte Buchungsverlauf ausgeben.“</em>
+Wo steht dieser Verlauf?</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Wenn Dir dabei etwas fehlt, ergänze es. Wenn Du etwas eingezeichnet
+hast, das der Text gar nicht erwähnt, streich es wieder – Modellieren heißt
+auch weglassen.</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Nicht jede Frage musst Du hier beantworten. Ob der Kontostand als
+eigener Wert geführt oder jedes Mal aus den Buchungen aufsummiert wird, ist eine
+Frage der Umsetzung – fachlich hat ein Konto einfach einen Kontostand. Solche
+Entscheidungen fallen später im Code.</p>
+</blockquote>
+
+<h3 id="für-schnelle-noch-ein-text">Für Schnelle: noch ein Text</h3>
+
+<p>Das Vorgehen ist immer dasselbe – und genau das ist die gute Nachricht: Ab dem
+zweiten oder dritten Text läuft es fast von allein. Such Dir einen der folgenden
+Texte aus und zeichne auch dazu ein Diagramm.</p>
+
+<p><strong>Stadtbibliothek</strong></p>
+
+<blockquote>
+  <p>Die Bibliothek besitzt Bücher mit Titel, Autor und ISBN. Von einem beliebten
+Buch stehen mehrere Exemplare im Regal, jedes mit eigener Inventarnummer und
+Standort; ein Exemplar kann ausgeliehen und zurückgegeben werden. Leserinnen
+und Leser melden sich mit Name und Adresse an und erhalten eine Ausweisnummer.
+Bei jeder Ausleihe wird festgehalten, wer welches Exemplar wann mitgenommen hat
+und bis wann es zurückzugeben ist; eine Ausleihe kann verlängert werden.</p>
+</blockquote>
+
+<p><strong>Kino</strong></p>
+
+<blockquote>
+  <p>Ein Kino zeigt Filme mit Titel, Länge und Altersfreigabe. Eine Vorstellung
+findet in einem bestimmten Saal zu einer bestimmten Uhrzeit statt und zeigt
+genau einen Film. Ein Saal hat eine Bezeichnung und nummerierte Sitzplätze. Für
+eine Vorstellung lassen sich Plätze reservieren; eine Reservierung gehört zu
+einer Person mit Name und Telefonnummer und kann storniert werden.</p>
+</blockquote>
+
+<p><strong>Fitnessstudio</strong></p>
+
+<blockquote>
+  <p>Mitglieder melden sich mit Name, Geburtsdatum und Mitgliedsnummer an. Das Studio
+bietet Kurse an, jeweils mit Titel, Wochentag, Uhrzeit und einer maximalen
+Teilnehmerzahl. Ein Mitglied kann sich für einen Kurs anmelden und wieder
+abmelden; ist der Kurs voll, ist keine Anmeldung mehr möglich. Jeder Kurs wird
+von einer Trainerin oder einem Trainer geleitet.</p>
+</blockquote>
+
+<h2 id="reflexionsfragen">Reflexionsfragen</h2>
+
+<ul>
+  <li>Welche Substantive aus dem Text sind bei Dir <strong>keine</strong> Klasse geworden – und warum nicht?</li>
+  <li>Wo hast Du Verhalten eingezeichnet, und woran hast Du entschieden, an welche Klasse es gehört?</li>
+  <li>Was hast Du bewusst weggelassen?</li>
+</ul>
+
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Ein Klassendiagramm zur Bank
+
+Als Umsteiger:in möchte ich aus einer Anforderung in Prosa die beteiligten Dinge herauslesen und als Klassendiagramm aufzeichnen, damit ich weiß, woher die Klassen in meinem Java-Code eigentlich kommen.
+
+&gt; **Hinweis:** Hier wird **gezeichnet, nicht programmiert** – Papier und Stift
+&gt; genügen, ein UML-Werkzeug brauchst Du ausdrücklich nicht. Es gibt zu dieser
+&gt; Übung bewusst keine Musterlösung: Die Diagramme werden anschließend
+&gt; miteinander verglichen, und es gibt mehr als eine tragfähige Lösung.
+
+## Lernziele
+
+Die Lernenden…
+
+* lesen aus einem Anforderungstext Kandidaten für Klassen, Eigenschaften und Fähigkeiten heraus.
+* entscheiden begründet, ob ein Begriff eine eigene Klasse oder nur eine Eigenschaft wird.
+* zeichnen ein einfaches UML-Klassendiagramm mit Klassen, Eigenschaften, Fähigkeiten und Beziehungen.
+* geben an den Beziehungen an, wie viele Objekte beteiligt sind (1:1, 1:n, n:m).
+* unterscheiden fachliche Aussagen von Umsetzungsentscheidungen.
+* benennen, was sie bewusst weggelassen haben.
+
+## Definition of Done
+
+* [ ] Du hast den Text gelesen und die Begriffe markiert, die Dir wichtig erscheinen.
+* [ ] Dein Diagramm enthält **Klassen** mit **Eigenschaften** und mindestens je einer **Fähigkeit**.
+* [ ] **Beziehungen** zwischen den Klassen sind als Linie eingezeichnet, mit **Multiplizitäten** an beiden Enden (`1`, `*`, `0..1`).
+* [ ] Du kannst zu jeder Klasse sagen, **warum** sie eine eigene Klasse ist.
+* [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
+
+## Der Anforderungstext
+
+&gt; Eine Bank möchte ihre Konten verwalten.
+&gt;
+&gt; Zu jeder **Kundin und jedem Kunden** sind Name und Wohnort bekannt. Beim
+&gt; Anlegen vergibt die Bank eine eindeutige Kundennummer; zieht jemand um, wird
+&gt; der Wohnort geändert.
+&gt;
+&gt; Ein **Konto** hat eine IBAN und einen Kontostand und gehört genau einer Kundin
+&gt; oder einem Kunden – wer mehrere Konten braucht, bekommt mehrere. Auf ein Konto
+&gt; kann **eingezahlt** werden, und es kann **abgehoben** werden, allerdings nur,
+&gt; solange genug Guthaben vorhanden ist. Der aktuelle Kontostand lässt sich
+&gt; abfragen.
+&gt;
+&gt; Jede Ein- und Auszahlung wird als **Buchung** festgehalten, mit Betrag,
+&gt; Zeitpunkt und Verwendungszweck. Zu einem Konto lässt sich der gesamte
+&gt; Buchungsverlauf ausgeben.
+&gt;
+&gt; Bei einer **Überweisung** wird der Betrag von einem Konto abgebucht und einem
+&gt; anderen gutgeschrieben.
+&gt;
+&gt; Die **Bank** selbst kennt ihre Kundschaft und deren Konten und kann ein Konto
+&gt; anhand der IBAN heraussuchen.
+
+&gt; **Hinweis:** Alle Konten sind hier gleichartig – verschiedene Kontoarten (Giro,
+&gt; Spar, Kredit) lassen wir in diesem Modell bewusst weg. Wie man Gemeinsames und
+&gt; Unterschiedliches sauber trennt, kommt später im Kurs.
+
+## Arbeitsschritte
+
+### Den Text lesen und markieren
+
+Lies den Text einmal ganz und markiere dann:
+
+* **Substantive** – das sind Kandidaten für Klassen oder Eigenschaften.
+* **Verben** – das sind Kandidaten für Fähigkeiten.
+* **Sätze, die zwei Dinge verbinden** – daraus werden Beziehungen.
+
+&gt; **Hinweis:** Kandidat heißt Kandidat. Nicht jedes Substantiv wird eine Klasse –
+&gt; manches ist nur ein Wert an einer anderen Klasse.
+
+### Entscheiden, was eine eigene Klasse wird
+
+Geh Deine Kandidaten durch und entscheide für jeden: **eigene Klasse oder
+Eigenschaft?** Frag Dich dabei:
+
+* Hat das Ding eigene Daten *und* eigenes Verhalten?
+* Kommt es mehrfach und unabhängig vor?
+
+&gt; **Hinweis:** Denk bei der Überweisung kurz nach: Ist sie ein eigenes Ding – oder
+&gt; beschreibt der Satz etwas, das zwei Konten miteinander tun?
+
+### Das Diagramm zeichnen
+
+Zeichne für jede Klasse ein **Kästchen** mit drei Bereichen:
+
+```
+┌───────────────────────────┐
+│ Konto                     │   ← Name
+├───────────────────────────┤
+│ iban                      │   ← Eigenschaften
+│ kontostand                │
+├───────────────────────────┤
+│ einzahlen()               │   ← Fähigkeiten
+│ abheben()                 │
+└───────────────────────────┘
+```
+
+Verbinde Klassen, die etwas miteinander zu tun haben, mit einer **einfachen
+Linie**. Wenn Du möchtest, schreib an die Linie, worin die Beziehung besteht
+(z. B. „gehört zu“).
+
+**Schreib an beide Enden der Linie, wie viele es sein können** – daran erkennt man
+später den Unterschied zwischen 1:1, 1:n und n:m:
+
+```
+Kunde  1 ────────── *  Konto        ein Kunde hat beliebig viele Konten,
+                                    ein Konto gehört genau einem Kunden
+
+Kurs   * ────────── *  Mitglied     jeder Kurs hat viele Mitglieder,
+                                    jedes Mitglied besucht viele Kurse
+```
+
+Üblich sind `1` (genau eins), `*` (beliebig viele, auch keines) und `0..1`
+(höchstens eins).
+
+&gt; **Achtung:** Alles, was schon eine Aussage über die spätere Umsetzung wäre,
+&gt; lassen wir weg – **keine Pfeilspitzen**, keine Rauten, keine Vererbung. Ob eine
+&gt; Klasse die andere „kennt“ (und nicht umgekehrt), ist ein Implementierungsdetail
+&gt; und noch keine fachliche Aussage.
+
+### Prüfen, ob Dein Modell den Text trägt
+
+Geh den Text noch einmal durch und prüfe an ein, zwei Aussagen, ob Dein Diagramm
+sie hergibt – zum Beispiel: *„Abheben ist nur möglich, solange genug Guthaben
+vorhanden ist.“* An welcher Stelle Deines Modells könnte diese Regel geprüft
+werden? Und: *„Zu einem Konto lässt sich der gesamte Buchungsverlauf ausgeben.“*
+Wo steht dieser Verlauf?
+
+&gt; **Hinweis:** Wenn Dir dabei etwas fehlt, ergänze es. Wenn Du etwas eingezeichnet
+&gt; hast, das der Text gar nicht erwähnt, streich es wieder – Modellieren heißt
+&gt; auch weglassen.
+
+&gt; **Hinweis:** Nicht jede Frage musst Du hier beantworten. Ob der Kontostand als
+&gt; eigener Wert geführt oder jedes Mal aus den Buchungen aufsummiert wird, ist eine
+&gt; Frage der Umsetzung – fachlich hat ein Konto einfach einen Kontostand. Solche
+&gt; Entscheidungen fallen später im Code.
+
+### Für Schnelle: noch ein Text
+
+Das Vorgehen ist immer dasselbe – und genau das ist die gute Nachricht: Ab dem
+zweiten oder dritten Text läuft es fast von allein. Such Dir einen der folgenden
+Texte aus und zeichne auch dazu ein Diagramm.
+
+**Stadtbibliothek**
+
+&gt; Die Bibliothek besitzt Bücher mit Titel, Autor und ISBN. Von einem beliebten
+&gt; Buch stehen mehrere Exemplare im Regal, jedes mit eigener Inventarnummer und
+&gt; Standort; ein Exemplar kann ausgeliehen und zurückgegeben werden. Leserinnen
+&gt; und Leser melden sich mit Name und Adresse an und erhalten eine Ausweisnummer.
+&gt; Bei jeder Ausleihe wird festgehalten, wer welches Exemplar wann mitgenommen hat
+&gt; und bis wann es zurückzugeben ist; eine Ausleihe kann verlängert werden.
+
+**Kino**
+
+&gt; Ein Kino zeigt Filme mit Titel, Länge und Altersfreigabe. Eine Vorstellung
+&gt; findet in einem bestimmten Saal zu einer bestimmten Uhrzeit statt und zeigt
+&gt; genau einen Film. Ein Saal hat eine Bezeichnung und nummerierte Sitzplätze. Für
+&gt; eine Vorstellung lassen sich Plätze reservieren; eine Reservierung gehört zu
+&gt; einer Person mit Name und Telefonnummer und kann storniert werden.
+
+**Fitnessstudio**
+
+&gt; Mitglieder melden sich mit Name, Geburtsdatum und Mitgliedsnummer an. Das Studio
+&gt; bietet Kurse an, jeweils mit Titel, Wochentag, Uhrzeit und einer maximalen
+&gt; Teilnehmerzahl. Ein Mitglied kann sich für einen Kurs anmelden und wieder
+&gt; abmelden; ist der Kurs voll, ist keine Anmeldung mehr möglich. Jeder Kurs wird
+&gt; von einer Trainerin oder einem Trainer geleitet.
+
+## Reflexionsfragen
+
+* Welche Substantive aus dem Text sind bei Dir **keine** Klasse geworden – und warum nicht?
+* Wo hast Du Verhalten eingezeichnet, und woran hast Du entschieden, an welche Klasse es gehört?
+* Was hast Du bewusst weggelassen?</textarea>
+    </main>
+    <aside class="avd-academy-guide-sidebar">
+      <div class="avd-academy-guide-side avd-academy-guide-side--toc" data-avd-academy-toc-box hidden>
+        <div class="avd-academy-guide-side__label">Auf dieser Seite</div>
+        <nav class="avd-academy-toc" data-avd-academy-toc aria-label="Inhaltsverzeichnis"></nav>
+      </div>
+      <div class="avd-academy-guide-side avd-academy-guide-side--bordered" data-avd-academy-progress hidden>
+        <div class="avd-academy-guide-side__label">Fortschritt</div>
+        <div class="avd-academy-progress__bar"><div class="avd-academy-progress__fill"></div></div>
+        <div class="avd-academy-progress__text"></div>
+      </div>
+    </aside>
+  </div><div class="avd-academy-print-contact" aria-hidden="true">
+    <span>Kontakt: <a href="mailto:academy@atvantage.com">academy@atvantage.com</a></span>
+    <span><a href="https://www.atvantage.com">ATVANTAGE Academy</a></span>
+  </div>
+
+  <footer class="avd-academy-footer">
+  <div class="avd-academy-footer__grid">
+    <div>
+      <strong>Java SE (ATVANTAGE Academy)</strong>
+      <p>Schulungen im Bereich 'Java SE'</p>
+    </div>
+    <div>
+      <strong>Kontakt</strong>
+      <p><a href="mailto:academy@atvantage.com">academy@atvantage.com</a><br>
+      </p>
+    </div><div>
+      <strong>Weitere Informationen</strong>
+      <p><a href="https://atvantage-academy.github.io/academy-online/" target="_blank" rel="noopener">ATVANTAGE Academy</a></p>
+    </div></div>
+  <div class="avd-academy-footer__legal">
+    © <span data-avd-academy-year>2026</span> ATVANTAGE
+  </div>
+</footer>
+
+</body>
+</html>

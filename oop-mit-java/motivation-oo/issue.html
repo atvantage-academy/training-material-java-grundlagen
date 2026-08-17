@@ -66,8 +66,8 @@
 --><html lang="de">
 <head>
   <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1"><title>Das erste Projekt in der IDE anlegen und starten · Java SE (ATVANTAGE Academy)</title>
-<meta name="description" content="Lege ein eigenes Java-Projekt in der IDE an, bring den Code aus der ersten Übung hinein und starte ihn."><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Drei Objekte in diesem Raum · Java SE (ATVANTAGE Academy)</title>
+<meta name="description" content="Finde drei Dinge in diesem Raum und beschreibe sie mit drei Eigenschaften und einer Sache, die sie können."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786964417"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786964417">
 <link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786964417">
@@ -109,8 +109,8 @@
             aria-label="Farbschema umschalten">◐</button>
   </nav>
 </header>
-<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Das erste Projekt in der IDE anlegen und starten</span></nav><div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 35 Minuten</span><span class="avd-academy-tag">Werkzeuge</span><span class="avd-academy-tag">IDE</span>
+<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Drei Objekte in diesem Raum</span></nav><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 10 Minuten</span><span class="avd-academy-tag">Objektorientierung</span><span class="avd-academy-tag">Modellierung</span>
       </div>
       <div class="avd-academy-guide-hero__actions">
         <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
@@ -119,20 +119,18 @@
                 title="Diese Seite auf Deinem Smartphone öffnen"
                 aria-label="Diese Seite auf Deinem Smartphone öffnen"></button>
       </div>
-    </div><h1>Das erste Projekt in der IDE anlegen und starten</h1>
+    </div><h1>Drei Objekte in diesem Raum</h1>
   </section>
 
   <div class="avd-academy-guide-layout">
     <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
-      <h1 id="das-erste-projekt-in-der-ide-anlegen-und-starten">Das erste Projekt in der IDE anlegen und starten</h1>
+      <h1 id="drei-objekte-in-diesem-raum">Drei Objekte in diesem Raum</h1>
 
-<p>Als Entwickler:in möchte ich mein erstes eigenes Projekt in einer IDE anlegen und starten, damit ich für den Rest der Woche komfortabel arbeiten kann, statt jeden Schritt von Hand auf der Kommandozeile zu tippen.</p>
+<p>Als Umsteiger:in möchte ich an alltäglichen Dingen sehen, was ein Objekt ausmacht, damit mir der Sprung vom prozeduralen Denken zur Objektorientierung leichter fällt.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Diese Übung machst Du <strong>gemeinsam mit der Trainerin bzw. dem Trainer</strong>:
-Jeder Schritt wird vorgemacht, Du machst ihn direkt an Deinem Rechner mit. Diese Seite
-ist Deine Mitschrift zum Mitlesen und Nacharbeiten – bleib im Tempo der Gruppe und sag
-Bescheid, wenn etwas hakt.</p>
+  <p><strong>Hinweis:</strong> Hier wird nicht programmiert. Zettel und Stift genügen – oder ein
+Notizfenster, wenn Du online dabei bist.</p>
 </blockquote>
 
 <h2 id="lernziele">Lernziele</h2>
@@ -140,129 +138,113 @@ Bescheid, wenn etwas hakt.</p>
 <p>Die Lernenden…</p>
 
 <ul>
-  <li>legen ein neues Java-Projekt in der IDE an und wählen dabei ein JDK aus.</li>
-  <li>übernehmen vorhandenen Quellcode in das Projekt und benennen, was die IDE gegenüber dem einfachen Texteditor zusätzlich leistet.</li>
-  <li>starten das Programm aus der IDE und finden die Ausgabe wieder.</li>
-  <li>lesen eine Compiler-Fehlermeldung in der IDE und beheben den Fehler.</li>
+  <li>benennen an alltäglichen Dingen deren Eigenschaften (Zustand) und eine Fähigkeit (Verhalten).</li>
+  <li>unterscheiden, was ein Ding <em>hat</em> und was man mit ihm <em>tun</em> kann.</li>
+  <li>beschreiben Objekte in einer Form, die sich später in Code überführen lässt.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Das Projekt <code>my-first-project</code> ist in der IDE angelegt und ein JDK ist zugeordnet.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Die Klasse <code>HelloWorld</code> aus der ersten Übung liegt im Projekt.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Das Programm läuft aus der IDE und gibt „Hello, World!“ aus.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast bewusst einen kleinen Fehler (z. B. fehlendes Semikolon) erzeugt, die Meldung gelesen und ihn behoben.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast <strong>drei</strong> Dinge aus diesem Raum notiert.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Zu jedem Ding stehen <strong>drei Eigenschaften</strong> und <strong>eine Sache, die es kann</strong> (oder die man damit tun kann).</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du kannst Deine Auswahl kurz vorstellen.</li>
 </ul>
 
 <h2 id="arbeitsschritte">Arbeitsschritte</h2>
 
-<h3 id="ein-neues-projekt-anlegen">Ein neues Projekt anlegen</h3>
+<h3 id="drei-dinge-auswählen">Drei Dinge auswählen</h3>
 
-<p>Lege in der IDE ein neues Java-Projekt mit dem Namen <code>my-first-project</code> an und wähle das installierte JDK aus.</p>
+<p>Sieh Dich im Raum um und such Dir <strong>drei Dinge</strong> aus – irgendetwas, das Du siehst.
+Es muss nichts mit Software zu tun haben.</p>
 
-<blockquote>
-  <p><strong>Hinweis:</strong> Ein Build-Werkzeug brauchst Du dafür noch nicht – nimm die einfachste
-Variante, die Deine IDE anbietet. Gradle und Maven kommen an Tag 5.</p>
-</blockquote>
+<h3 id="jedes-ding-beschreiben">Jedes Ding beschreiben</h3>
 
-<h3 id="den-code-aus-der-ersten-übung-übernehmen">Den Code aus der ersten Übung übernehmen</h3>
-
-<p>Lege im Projekt eine Klasse <code>HelloWorld</code> an und bring den Quellcode der ersten Übung hinein. Tippe ihn dabei bewusst selbst, statt ihn zu kopieren, und schau der IDE zu:</p>
+<p>Notiere zu jedem Ding:</p>
 
 <ul>
-  <li>Wie färbt sie Schlüsselwörter, Typen und Zeichenketten ein?</li>
-  <li>Was schlägt sie Dir beim Tippen von <code>System.out.</code> vor?</li>
-  <li>Was passiert, wenn Du eine Zeile unvollständig lässt?</li>
+  <li><strong>drei Eigenschaften</strong> – was hat es, wie ist es?</li>
+  <li><strong>eine Fähigkeit</strong> – was kann es, oder was kann man damit tun?</li>
 </ul>
 
-<h3 id="das-programm-starten">Das Programm starten</h3>
-
-<p>Starte das Programm aus der IDE und finde die Ausgabe im Ausgabefenster wieder.</p>
+<p>Beispiel:</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Vergleiche mit der ersten Übung: <code>javac</code> und <code>java</code> hast Du dort selbst
-aufgerufen – die IDE nimmt Dir genau diese Schritte ab.</p>
+  <p><strong>Kaffeetasse</strong></p>
+  <ul>
+    <li>Eigenschaften: Farbe = weiß, Füllstand = 200 ml, Fassungsvermögen = 300 ml</li>
+    <li>Kann: gefüllt werden (<code>fuellen</code>)</li>
+  </ul>
 </blockquote>
 
-<h3 id="einen-fehler-provozieren-und-lesen">Einen Fehler provozieren und lesen</h3>
-
-<p>Entferne testweise ein Semikolon. Sieh nach, wann die IDE den Fehler anzeigt, lies die Meldung und stelle den Zustand danach wieder her.</p>
+<p>Schreib die Eigenschaften ruhig als <strong>Name = Wert</strong> auf – so wie oben. Das macht
+später den Unterschied zwischen „was ist das für ein Ding?“ und „welches genau
+meine ich?“ sichtbar.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Achte auf Datei, Zeile und die eigentliche Ursache in der Meldung –
-nicht nur auf die erste rote Markierung.</p>
+  <p><strong>Hinweis:</strong> Wenn Dir mehr Fähigkeiten einfallen: notiere sie, aber eine genügt.
+Wichtiger ist, dass die drei Dinge unterschiedlich sind.</p>
 </blockquote>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Welche Funktionen bietet Dir die IDE – wie unterstützt sie Dich bei der Java-Entwicklung?</li>
-  <li>Ist sie ein vollwertiger Ersatz für die Arbeit mit der Kommandozeile (CLI)?</li>
+  <li>Woran hast Du gemerkt, ob etwas eine Eigenschaft oder eine Fähigkeit ist?</li>
+  <li>Gibt es in diesem Raum zwei Dinge, die Du <strong>gleich</strong> beschrieben hast – und was unterscheidet sie dann noch?</li>
 </ul>
 
-<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Das erste Projekt in der IDE anlegen und starten
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Drei Objekte in diesem Raum
 
-Als Entwickler:in möchte ich mein erstes eigenes Projekt in einer IDE anlegen und starten, damit ich für den Rest der Woche komfortabel arbeiten kann, statt jeden Schritt von Hand auf der Kommandozeile zu tippen.
+Als Umsteiger:in möchte ich an alltäglichen Dingen sehen, was ein Objekt ausmacht, damit mir der Sprung vom prozeduralen Denken zur Objektorientierung leichter fällt.
 
-&gt; **Hinweis:** Diese Übung machst Du **gemeinsam mit der Trainerin bzw. dem Trainer**:
-&gt; Jeder Schritt wird vorgemacht, Du machst ihn direkt an Deinem Rechner mit. Diese Seite
-&gt; ist Deine Mitschrift zum Mitlesen und Nacharbeiten – bleib im Tempo der Gruppe und sag
-&gt; Bescheid, wenn etwas hakt.
+&gt; **Hinweis:** Hier wird nicht programmiert. Zettel und Stift genügen – oder ein
+&gt; Notizfenster, wenn Du online dabei bist.
 
 ## Lernziele
 
 Die Lernenden…
 
-* legen ein neues Java-Projekt in der IDE an und wählen dabei ein JDK aus.
-* übernehmen vorhandenen Quellcode in das Projekt und benennen, was die IDE gegenüber dem einfachen Texteditor zusätzlich leistet.
-* starten das Programm aus der IDE und finden die Ausgabe wieder.
-* lesen eine Compiler-Fehlermeldung in der IDE und beheben den Fehler.
+* benennen an alltäglichen Dingen deren Eigenschaften (Zustand) und eine Fähigkeit (Verhalten).
+* unterscheiden, was ein Ding *hat* und was man mit ihm *tun* kann.
+* beschreiben Objekte in einer Form, die sich später in Code überführen lässt.
 
 ## Definition of Done
 
-* [ ] Das Projekt `my-first-project` ist in der IDE angelegt und ein JDK ist zugeordnet.
-* [ ] Die Klasse `HelloWorld` aus der ersten Übung liegt im Projekt.
-* [ ] Das Programm läuft aus der IDE und gibt „Hello, World!“ aus.
-* [ ] Du hast bewusst einen kleinen Fehler (z. B. fehlendes Semikolon) erzeugt, die Meldung gelesen und ihn behoben.
-* [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
+* [ ] Du hast **drei** Dinge aus diesem Raum notiert.
+* [ ] Zu jedem Ding stehen **drei Eigenschaften** und **eine Sache, die es kann** (oder die man damit tun kann).
+* [ ] Du kannst Deine Auswahl kurz vorstellen.
 
 ## Arbeitsschritte
 
-### Ein neues Projekt anlegen
+### Drei Dinge auswählen
 
-Lege in der IDE ein neues Java-Projekt mit dem Namen `my-first-project` an und wähle das installierte JDK aus.
+Sieh Dich im Raum um und such Dir **drei Dinge** aus – irgendetwas, das Du siehst.
+Es muss nichts mit Software zu tun haben.
 
-&gt; **Hinweis:** Ein Build-Werkzeug brauchst Du dafür noch nicht – nimm die einfachste
-&gt; Variante, die Deine IDE anbietet. Gradle und Maven kommen an Tag 5.
+### Jedes Ding beschreiben
 
-### Den Code aus der ersten Übung übernehmen
+Notiere zu jedem Ding:
 
-Lege im Projekt eine Klasse `HelloWorld` an und bring den Quellcode der ersten Übung hinein. Tippe ihn dabei bewusst selbst, statt ihn zu kopieren, und schau der IDE zu:
+* **drei Eigenschaften** – was hat es, wie ist es?
+* **eine Fähigkeit** – was kann es, oder was kann man damit tun?
 
-* Wie färbt sie Schlüsselwörter, Typen und Zeichenketten ein?
-* Was schlägt sie Dir beim Tippen von `System.out.` vor?
-* Was passiert, wenn Du eine Zeile unvollständig lässt?
+Beispiel:
 
-### Das Programm starten
+&gt; **Kaffeetasse**
+&gt; * Eigenschaften: Farbe = weiß, Füllstand = 200 ml, Fassungsvermögen = 300 ml
+&gt; * Kann: gefüllt werden (`fuellen`)
 
-Starte das Programm aus der IDE und finde die Ausgabe im Ausgabefenster wieder.
+Schreib die Eigenschaften ruhig als **Name = Wert** auf – so wie oben. Das macht
+später den Unterschied zwischen „was ist das für ein Ding?“ und „welches genau
+meine ich?“ sichtbar.
 
-&gt; **Hinweis:** Vergleiche mit der ersten Übung: `javac` und `java` hast Du dort selbst
-&gt; aufgerufen – die IDE nimmt Dir genau diese Schritte ab.
-
-### Einen Fehler provozieren und lesen
-
-Entferne testweise ein Semikolon. Sieh nach, wann die IDE den Fehler anzeigt, lies die Meldung und stelle den Zustand danach wieder her.
-
-&gt; **Hinweis:** Achte auf Datei, Zeile und die eigentliche Ursache in der Meldung –
-&gt; nicht nur auf die erste rote Markierung.
+&gt; **Hinweis:** Wenn Dir mehr Fähigkeiten einfallen: notiere sie, aber eine genügt.
+&gt; Wichtiger ist, dass die drei Dinge unterschiedlich sind.
 
 ## Reflexionsfragen
 
-* Welche Funktionen bietet Dir die IDE – wie unterstützt sie Dich bei der Java-Entwicklung?
-* Ist sie ein vollwertiger Ersatz für die Arbeit mit der Kommandozeile (CLI)?</textarea>
+* Woran hast Du gemerkt, ob etwas eine Eigenschaft oder eine Fähigkeit ist?
+* Gibt es in diesem Raum zwei Dinge, die Du **gleich** beschrieben hast – und was unterscheidet sie dann noch?</textarea>
     </main>
     <aside class="avd-academy-guide-sidebar">
       <div class="avd-academy-guide-side avd-academy-guide-side--toc" data-avd-academy-toc-box hidden>

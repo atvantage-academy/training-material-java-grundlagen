@@ -39,6 +39,14 @@
     --avd-academy-hero-bg:         #FFFFFF !important;
     --avd-academy-topbar-bg:       #FFFFFF !important;
     --avd-academy-code-bg:         #F4F4F4 !important;
+    /* Gruppen-Töne zurück auf die Light-Werte: Im Dark-Theme sind sie aufgehellt
+       (tokens.css) – auf weißem Papier wären sie zu blass. Die Füllpalette ist
+       ohnehin auf helle Flächen gerechnet und braucht keinen Reset. */
+    --avd-academy-tone-1:     var(--avd-academy-fill-1) !important;
+    --avd-academy-tone-2:     var(--avd-academy-fill-2) !important;
+    --avd-academy-tone-3:     var(--avd-academy-fill-3) !important;
+    --avd-academy-tone-4:     var(--avd-academy-fill-4) !important;
+    --avd-academy-tone-alert: var(--avd-academy-color-danger) !important;
   }
   html, body { background: #FFFFFF !important; color: #343E3F !important; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
