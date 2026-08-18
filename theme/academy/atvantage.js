@@ -431,7 +431,29 @@
     });
   }
 
+  /* --- Zurück-Knopf ------------------------------------------------------------
+     Ein Verweis auf „die übergeordnete Seite“ wäre geraten: Wir wissen nicht, wie
+     jemand hergekommen ist – über das Modul, aus der Suche, per QR-Code vom
+     Beamer, aus einem Chat. Deshalb kein Link auf eine gedachte Hierarchie,
+     sondern der Weg zurück, den der Browser tatsächlich kennt.
+
+     Der Knopf bleibt versteckt, wenn es nichts gibt, wohin er führen könnte –
+     etwa beim Öffnen in einem frischen Tab. `history.length` ist dafür der
+     einzige Anhaltspunkt, den eine Seite hat; er zählt auch Einträge fremder
+     Herkunft, taugt aber, um den Knopf bei einem leeren Verlauf wegzulassen. */
+  function initBackButtons() {
+    var knoepfe = document.querySelectorAll("[data-avd-academy-back]");
+    if (!knoepfe.length) return;
+    var gibtVerlauf = window.history.length > 1;
+    Array.prototype.forEach.call(knoepfe, function (knopf) {
+      if (!gibtVerlauf) return;
+      knopf.removeAttribute("hidden");
+      knopf.addEventListener("click", function () { window.history.back(); });
+    });
+  }
+
   function init() {
+    initBackButtons();
     initThemeToggle();
     initCopyButtons();
     initNavToggle();

@@ -1,1765 +1,1761 @@
-<!doctype html>
-<html lang="de">
+<!DOCTYPE html>
+<!--
+  ATVANTAGE-Academy – Layout „simulation“ (Jekyll)
+  ------------------------------------------------
+  Bühne für BEWEGTE Abläufe. Anders als eine Präsentation, die Folien wechselt,
+  zeigt eine Simulation EINEN Schauplatz, der sich Schritt für Schritt verändert:
+  Kästen entstehen, Werte wandern, Pfeile werden gezogen. Der Ablauf lässt sich
+  vorwärts und rückwärts durchgehen, zurücksetzen und automatisch abspielen.
+
+  Optisch ist die Seite an das Layout „presentation“ angelehnt – dieselbe schmale
+  Kopfleiste mit Logo, Titel, QR-Code und Farbschema-Umschalter. Drei Zonen:
+
+    ┌──────────────────────────────────────────────┐
+    │ Kopfleiste  Logo · Titel · Schritt · Werkzeug│
+    ├───────────────────────────────┬──────────────┤
+    │ Bühne (der Inhalt dieser Datei)│ Erklärtext   │
+    │                               │ (je Schritt) │
+    ├───────────────────────────────┴──────────────┤
+    │ Fortschritt + Steuerleiste (⟲ ‹ ▶ Abspielen 1×▴ ›)│
+    └──────────────────────────────────────────────┘
+
+  AUFZEICHNEN: Der Capture-Modus (Taste C oder ?capture in der Adresse) räumt alles
+  weg, was nicht zur Sache gehört – Kopfleiste, Erklärspalte, Fortschritt,
+  Steuerleiste – und blendet den Mauszeiger aus. Die Bühne füllt das Fenster. Der
+  Erklärtext ist dann nicht verloren: Taste T holt ihn als Einblendung (OST) an den
+  unteren Rand zurück, für den Fall, dass beim Aufzeichnen niemand spricht.
+
+  NICHT DRUCKBAR – bewusst. Eine Simulation lebt von der Bewegung; ein Ausdruck
+  wäre ein willkürliches Standbild. Es gibt daher weder Druck-Knopf noch
+  Drucklayout; wer die Seite trotzdem druckt, bekommt den gerade sichtbaren
+  Schritt und den QR-Code als Rückweg zur Online-Fassung.
+
+  Front Matter (alles optional außer `layout`):
+    layout: simulation
+    title:        "…"            → Titel in der Kopfleiste; sonst die erste #-Überschrift
+    description:  "…"            → Meta-Description
+    erklaerspalte: false         → rechte Spalte weglassen (Bühne über volle Breite)
+    einleitung:   "…"            → ein Satz auf der Szenario-Übersicht (nur bei mehreren)
+    tempo:  0.5 | 1 | 2 | 5      → Start-Tempo des automatischen Abspielens
+    schrittdauer: 2500           → Grunddauer je Schritt beim Abspielen (ms)
+
+  MEHRERE SZENARIEN: Meldet die Seite über `registerScenario` mehr als einen
+  Ablauf an, bekommt sie eine Reiterleiste und eine Übersicht als Startbild. Je
+  Szenario liefert die Seite ein eigenes Bühnenbild in einem Container mit
+  `data-avd-academy-sim-szene="«id»"`; sichtbar ist immer genau eines. Mit nur
+  einem Szenario (oder bloßem `registerStep`) ändert sich nichts.
+
+  Der INHALT dieser Seite ist das BÜHNENBILD: die Kulisse (Kästen, Beschriftungen,
+  Container) plus ein <script>, das die Schritte anmeldet. Das Miniframework dazu
+  liefert theme/jekyll/simulation.js als `AvdSimulation` – es wird ABSICHTLICH
+  ohne `defer` geladen, damit ein Inline-<script> im Body es bereits vorfindet.
+
+  Ohne JavaScript bleibt die Seite lesbar: Die Kulisse steht da, Steuerleiste und
+  Erklärspalte bleiben leer – der Ablauf ist eine Zutat, keine Voraussetzung.
+
+  Anleitung und Beispiel: /templates/simulations/.
+--><html lang="de">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Primitive Typen vs. Referenztypen · OOP mit Java</title>
-
-<!-- =====================================================================
-     VIDEO-VORLAGE: Schritt-Simulation für Aufzeichnung (Screen-Capture)
-     ---------------------------------------------------------------------
-     Abgeleitet von vorlage-schritt-simulation.html (Beamer-Fassung).
-     Eine Datei, kein Build, kein Framework. Diese Datei ist zugleich
-     Referenz und Dokumentation: Die drei Demo-Szenarien führen jeden
-     verfügbaren Baustein einmal vor (Szenario 3 = neue Video-Bausteine).
-     Zum Erstellen einer neuen Visualisierung: (1) Kopf-Texte anpassen,
-     (2) SCENARIOS ersetzen. CI ist für die Videoreihe fest eingestellt.
-     Struktur, CSS und Render-Logik unverändert lassen, sofern kein
-     neuer Baustein nötig ist.
-
-     Unterschiede zur Beamer-Fassung:
-     - CAPTURE-MODUS (?capture oder Taste C): blendet Kopfzeile, Seiten-
-       leiste und Steuerung aus, Bühne füllt das Fenster, Mauszeiger
-       versteckt. Taste T blendet das Info-Banner (OST) ein/aus.
-     - v3 ergänzt: actors (mehrere bewegliche Figuren an Stationen).
-     - v2 ergänzt: notes (Erläuterung, zurückgenommenes Register),
-       urns (Lostöpfe mit Füllstand), fly (wanderndes Wort),
-       banner (Merksatz vollflächig). Gestaltungsregister siehe
-       CSS-Abschnitt 3b – Erläuterungen nie als panel bauen.
-     - Neue Bausteine: panels (Chat-/Textkarten), bars (Balken, auch
-       segmentiert), grid (Füllraster, z. B. SAND-Box), overlay
-       (Aktivierungsfrage). Schema siehe Kommentar über SCENARIOS.
-     - Eintritts-Animation ist autor-gesteuert (new:true) statt
-       automatisch, damit beim Aufzeichnen nur Neues animiert.
-     ===================================================================== -->
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Referenztypen · Java SE (ATVANTAGE Academy)</title>
+<meta name="description" content="Vier Szenarien durch den Speicher: Was bei jeder Codezeile im Thread Stack und im Heap passiert – Abgrenzung zu primitiven Typen, Objektgeflecht, Identität gegen Inhalt, this und static."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787046478"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787046478">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787046478">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787046478">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787046478"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787046478">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787046478" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787046478" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787046478">
+<script type="module">
+  const _hlbase = "/training-material-java-se/theme/academy/hljs/";
+  Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
+    .then(([core, java]) => {
+      const hljs = core.default;
+      hljs.registerLanguage("java", java.default);
+      document.querySelectorAll("pre code.language-java").forEach((el) => hljs.highlightElement(el));
+    });
+</script>
+<link rel="apple-touch-icon" sizes="180x180" href="/training-material-java-se/theme/atvantage/assets/icon-180.png">
+<link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
+<link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/simulation.css?v=1787046478"><script src="/training-material-java-se/theme/jekyll/simulation.js?v=1787046478"></script>
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787046478"></head>
+<body class="avd-academy-sim" data-avd-academy-sim data-avd-academy-sim-titel="Referenztypen"
+      data-avd-academy-sim-starttempo="1"
+      data-avd-academy-sim-schrittdauer="3200">
+  <a class="avd-academy-skip-link" href="#avd-academy-sim-stage">Zum Inhalt springen</a>
 
-<!-- Zentrale ATVANTAGE-Design-Tokens (Single Source of Truth für Farben/Schriften).
-     Relativer Pfad zum theme-Ordner: hier ../../ (Lage im Templates-Repo). Beim
-     Kopieren in ein Schulungs-Repo den Pfad an die dortige Ablage anpassen, sodass
-     er auf theme/academy/atvantage.css zeigt. Diese Datei ist damit NICHT mehr komplett
-     eigenständig: theme/academy/atvantage.css muss erreichbar sein. -->
-<link rel="stylesheet" href="../../theme/academy/atvantage.css">
+  <header class="avd-academy-sim__bar">
+    <img class="avd-academy-sim__logo" src="/training-material-java-se/assets/logo-schulung.svg" alt="ATVANTAGE Academy"><span class="avd-academy-sim__title">Referenztypen</span>
+    <span class="avd-academy-sim__counter" data-avd-academy-sim-counter aria-live="off"></span>
+    <div class="avd-academy-sim__tools"><button type="button" class="avd-academy-sim__back" data-avd-academy-back hidden
+              title="Zurück" aria-label="Zurück">← Zurück</button><button type="button" class="avd-academy-qr" data-avd-academy-qr hidden
+              title="Diese Seite auf Deinem Smartphone öffnen"
+              aria-label="Diese Seite auf Deinem Smartphone öffnen"></button><button type="button" class="avd-academy-sim__tool" data-avd-academy-theme-toggle
+              title="Farbschema umschalten (hell/dunkel)" aria-label="Farbschema umschalten">◐</button>
+      <button type="button" class="avd-academy-sim__tool" data-avd-academy-sim-full
+              title="Vollbild (Taste F)" aria-label="Vollbild">⛶</button>
+    </div>
+  </header><nav class="avd-academy-sim__tabs" data-avd-academy-sim-tabs hidden aria-label="Szenarien"></nav>
+
+  <main class="avd-academy-sim__main"><div class="avd-academy-sim__stage" id="avd-academy-sim-stage" data-avd-academy-sim-stage>
+      <!-- =============================================================================
+     Schritt-Simulation im Academy-Theme (Layout `simulation`, Theme ab 1.8.0).
+     Die Datei behält bewusst die Endung .html und damit ihre Adresse: Jekyll
+     rendert auch .html-Dateien mit Front Matter durch das Layout, und alle
+     bestehenden Verweise auf primitive-vs-referenztypen.html bleiben gültig.
+
+     Der Ablauf wird über das Miniframework `AvdSimulation` angemeldet
+     (setup/registerSteps). Jeder Schritt beschreibt NUR den Zustand – das
+     Framework baut ihn bei jedem Wechsel von vorn auf, weshalb Vor, Zurück,
+     Springen und Reset ohne eigene Rückwärts-Logik funktionieren.
+
+     Bedienung: ← → blättern · Leertaste Abspielen · R Reset · T Tempo
+                C Capture-Modus (Aufzeichnung) · F Vollbild
+     Doku: academy-theme, /templates/simulations/
+     ============================================================================= -->
 
 <style>
-/* ============================================================
-   1) CI-PARAMETER – Aliasse auf die zentralen theme-Tokens
-   Die konkreten Werte liegen AUSSCHLIESSLICH in theme/academy/atvantage.css
-   (oben verlinkt). Hier werden die simulationseigenen --ci-* /
-   --fill-* / --font-Namen nur auf die --avd-academy-*-Tokens abgebildet,
-   damit die Render-Logik unten unverändert bleibt und Farben/
-   Schriften zentral gepflegt werden. Werte NICHT hier hartkodieren.
-   Der zweite Wert in var(…, fallback) greift nur, falls tokens.css
-   ausnahmsweise nicht geladen werden kann.
-   ============================================================ */
-:root {
-  --ci-primary:        var(--avd-academy-color-primary, #303E4F);
-  --ci-primary-dark:   var(--avd-academy-color-primary-dark, #1A2627);
-  --ci-primary-light:  var(--avd-academy-color-primary-light, #909090);
-  --ci-primary-tint:   var(--avd-academy-color-primary-tint, #DDE4EE);
-  --ci-accent:         var(--avd-academy-color-accent, #FF5401);
-  --ci-accent-soft:    var(--avd-academy-color-accent-soft, #FFEAE1);
-  --ci-bg:             var(--avd-academy-color-bg, #ffffff);
-  --ci-surface:        var(--avd-academy-color-bg-subtle, #EDEDED);
-  --ci-text:           var(--avd-academy-color-ink, #343E3F);
-  --ci-muted:          var(--avd-academy-color-ink-muted, #707173);
-  --ci-line:           var(--avd-academy-color-border, #DADCDF);
+  /* Bühnenbild dieser Simulation. Nur Anordnung und Kleinkram – Farben, Radien und
+     Schatten kommen aus den Academy-Tokens bzw. den Bausteinen `avd-academy-sim-*`. */
+  .speicher {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(15rem, 21rem) minmax(0, 1fr);
+    gap: clamp(1rem, 0.5rem + 2vw, 2.5rem);
+    align-items: start;
+    /* Die Bühne ist höher als das Bühnenbild – die Tafeln stünden sonst oben und
+       ließen unten eine tote Fläche. `align-content` rückt die Reihe in die Mitte,
+       `align-items` hält die Tafeln darin auf gleicher Oberkante. */
+    align-content: center;
+    min-height: 100%;
+  }
+  @media (max-width: 1000px) {
+    .speicher { grid-template-columns: minmax(0, 1fr); }
+  }
 
-  /* Füllraster-Farbfamilie (z. B. SAND-Box) – aus der theme-Füllpalette */
-  --fill-1: var(--avd-academy-fill-1, #303E4F);  --fill-1-bg: var(--avd-academy-fill-1-bg, #DDE4EE);
-  --fill-2: var(--avd-academy-fill-2, #FF5401);  --fill-2-bg: var(--avd-academy-fill-2-bg, #FFE0D1);
-  --fill-3: var(--avd-academy-fill-3, #c9a227);  --fill-3-bg: var(--avd-academy-fill-3-bg, #f6ecc4);
-  --fill-4: var(--avd-academy-fill-4, #7a6fb3);  --fill-4-bg: var(--avd-academy-fill-4-bg, #e5e1f4);
+  /* Die Speicherseite: die Thread Stacks NEBENEINANDER, der Heap DARUNTER. Das
+     ist keine Geschmacksfrage – die Anordnung trägt die Aussage: Jeder Thread hat
+     seinen eigenen Stack (drei stehen nebeneinander), der eine Heap darunter
+     gehört ihnen ALLEN gemeinsam. */
+  .speicher__speicher {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2rem, 1rem + 2vw, 3.5rem);
+  }
+  .speicher__stacks {
+    display: grid;
+    grid-template-columns: 1.7fr 1fr 1fr;
+    gap: var(--avd-academy-space-4);
+    align-items: stretch;
+  }
 
-  --font: var(--avd-academy-font-sans, "Outfit", system-ui, "Segoe UI", sans-serif);
-  --mono: var(--avd-academy-font-mono, "Consolas", "SF Mono", ui-monospace, monospace);
-}
+  /* Angedeutete Nachbar-Stacks: gleiche Form, nur ausgegraut und gestrichelt.
+     Sie tragen keinen Zustand und werden von der Simulation nie angefasst – sie
+     sagen bloß „dieser hier ist einer von vielen“. */
+  .speicher__geist {
+    border-style: dashed;
+    opacity: 0.4;
+  }
+  .speicher__geist:last-child { opacity: 0.26; }
+  .speicher__geist-zelle {
+    height: 2.9rem;
+    border-radius: var(--avd-academy-radius);
+    background: color-mix(in srgb, var(--avd-academy-color-border) 65%, transparent);
+  }
+  /* Auf schmalen Bühnen fällt die Andeutung weg: Sie ist Kontext, nicht Inhalt –
+     und drei Spalten nebeneinander wären dort ohnehin unlesbar. */
+  @media (max-width: 1250px) {
+    .speicher__stacks { grid-template-columns: 1fr; }
+    .speicher__geist { display: none; }
+  }
 
-/* ============================================================
-   2) GRUNDGERÜST – ab hier möglichst nicht verändern
-   ============================================================ */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; }
+  .speicher__gruppe {
+    margin: 0 0 var(--avd-academy-space-3) 0;
+    font-size: 0.7em;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--avd-academy-color-ink-muted);
+  }
+  .speicher__gruppe + .avd-academy-sim-code { margin-bottom: var(--avd-academy-space-4); }
 
-/* Schriftgröße am Root: alle rem-Angaben skalieren mit.
-   Auslegung für Beamer-Projektion (bewusst groß). */
-html { font-size: clamp(21px, 1.8vw, 30px); }
+  /* Die Pfeile liegen als eine SVG-Fläche über der ganzen Bühne. `pointer-events:none`,
+     damit sie nichts abfangen. */
+  .speicher__pfeile {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: visible;
+    /* VOR den Tafeln. Die Heap-Tafel ist `position: relative` (sie trägt den
+       Garbage Collector) und steht später im Baum – ohne z-index verschwände die
+       Pfeilspitze hinter ihrem Rand. */
+    z-index: 5;
+  }
+  /* Die Pfeile laufen jetzt SENKRECHT (Stack oben → Heap unten). Sie treten
+     rechts aus der Variablen aus, machen außen einen Bogen und kommen rechts am
+     Objekt wieder an – quer durch die Tafeln gezogen kreuzten sie sonst Zellen,
+     die gar nichts damit zu tun haben. */
+  .speicher__pfeil {
+    fill: none;
+    stroke: var(--avd-academy-color-accent);
+    stroke-width: 2.5;
+    marker-end: url(#speicher-spitze);
+  }
+  /* Der Pfeil wird GEZEICHNET, statt einfach da zu sein: Die Verbindung entsteht
+     vor den Augen der Teilnehmenden – genau das ist der Lernmoment. */
+  @media (prefers-reduced-motion: no-preference) {
+    .speicher__pfeil.is-neu { animation: speicher-ziehen 500ms ease-out; }
+  }
+  /* 900 statt der Pfadlänge: Der Wert muss nur GRÖSSER als jeder vorkommende Pfad
+     sein, dann läuft die Linie sichtbar von vorn nach hinten aus. */
+  @keyframes speicher-ziehen {
+    from { stroke-dasharray: 900; stroke-dashoffset: 900; }
+    to   { stroke-dasharray: 900; stroke-dashoffset: 0; }
+  }
 
-body {
-  font-family: var(--font);
-  background: var(--ci-bg);
-  color: var(--ci-text);
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
+  .speicher__adresse {
+    font-family: var(--avd-academy-font-mono);
+    font-size: 0.75em;
+    color: var(--avd-academy-color-accent);
+  }
 
-/* ---------- Kopfzeile ---------- */
-.topbar {
-  display: flex;
-  align-items: center;
-  gap: 1.4rem;
-  padding: 0.8rem 2.2rem;
-  background: var(--ci-primary-dark);
-  flex-shrink: 0;
-}
-/* Logo: entweder <img class="logo"> mit Data-URI/Pfad einsetzen
-   oder den Text-Fallback stehen lassen. */
-.topbar img.logo, .topbar svg.logo { height: 1.6rem; width: auto; display: block; }
-.logo-text { color: #fff; font-weight: 700; letter-spacing: 0.06em; font-size: 0.9rem; }
-.module-title {
-  color: rgba(255, 255, 255, 0.78);
-  font-weight: 300;
-  font-size: 0.85rem;
-  border-left: 1px solid rgba(255, 255, 255, 0.25);
-  padding-left: 1.4rem;
-}
-.tabs { margin-left: auto; display: flex; gap: 0.5rem; flex-wrap: wrap; }
-.tab {
-  font-family: var(--font);
-  font-size: 0.78rem;
-  font-weight: 500;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background: transparent;
-  color: rgba(255, 255, 255, 0.78);
-  padding: 0.4rem 1rem;
-  border-radius: 999px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-.tab.active { background: var(--ci-accent); border-color: var(--ci-accent); color: #fff; }
-.tab:focus-visible, button:focus-visible { outline: 3px solid var(--ci-accent); outline-offset: 2px; }
+  /* Das Objekt im Heap ist ein Kästchen wie im Objektdiagramm – Kopfzeile mit
+     unterstrichenem „instanz : Klasse“, darunter je Attribut eine Zeile. Es füllt
+     bewusst NICHT die Tafelbreite: Ein Objekt ist ein Ding an einer Stelle, keine
+     Zeile in einer Liste. Deshalb ist der Tafelkörper hier waagerecht. */
+  #speicher-heap { flex-direction: row; flex-wrap: wrap; align-items: flex-start; }
+  .speicher__objekt {
+    min-width: 12rem;
+    border: 1px solid var(--avd-academy-color-border);
+    border-radius: var(--avd-academy-radius);
+    background: var(--avd-academy-color-bg);
+    box-shadow: var(--avd-academy-shadow-1);
+    overflow: hidden;
+    transition: border-color var(--avd-academy-transition);
+  }
+  .speicher__objekt-kopf {
+    padding: var(--avd-academy-space-2) var(--avd-academy-space-3);
+    border-bottom: 1px solid var(--avd-academy-color-border);
+    background: var(--avd-academy-color-bg-subtle);
+    font-family: var(--avd-academy-font-mono);
+    font-size: 0.8em;
+    text-align: center;
+    text-decoration: underline;   /* Objektdiagramm-Konvention */
+  }
+  .speicher__objekt-attr {
+    display: flex;
+    gap: 0.45em;
+    padding: var(--avd-academy-space-2) var(--avd-academy-space-3);
+    font-family: var(--avd-academy-font-mono);
+    font-size: 0.9em;
+  }
+  .speicher__objekt-attr b { font-weight: var(--avd-academy-fw-bold); }
 
-/* ---------- Hauptbereich ---------- */
-main {
-  flex: 1;
-  display: flex;
-  gap: 1.4rem;
-  padding: 1.2rem 2.2rem 0.6rem;
-  min-height: 0;
-}
+  /* Unerreichbar: Auf das Objekt zeigt kein Wegweiser mehr. Es ist noch DA –
+     gestrichelt und blass –, denn genau das ist der Punkt: Weg ist es erst,
+     wenn der Garbage Collector vorbeikommt. */
+  .speicher__objekt.is-unerreichbar {
+    border-style: dashed;
+    opacity: 0.5;
+  }
+  .speicher__objekt.is-gekehrt {
+    animation: speicher-weggekehrt 2.2s ease-in forwards;
+  }
+  /* Das Objekt geht erst weg, wenn er da ist – und dann in seine Kehrrichtung
+     (nach rechts), nicht in ihn hinein. */
+  @keyframes speicher-weggekehrt {
+    0%, 22% { opacity: 0.5; transform: none; }
+    55%     { opacity: 0.3; transform: translateX(30px) rotate(7deg); }
+    100%    { opacity: 0;   transform: translateX(120px) rotate(18deg); }
+  }
 
-/* ---------- Bühne ---------- */
-.stage {
-  flex: 1;
-  position: relative;
-  background: var(--ci-surface);
-  border: 1px solid var(--ci-line);
-  border-radius: 14px;
-  min-height: 0;
-  overflow: hidden;
-}
-.stage-info {
-  position: absolute;
-  top: 0.8rem; left: 0.8rem; right: 0.8rem;
-  z-index: 30;
-  background: rgba(255, 255, 255, 0.94);
-  border: 1px solid var(--ci-line);
-  border-left: 4px solid var(--ci-accent);
-  border-radius: 10px;
-  padding: 0.55rem 0.9rem;
-  pointer-events: none;
-}
-.stage-info .scen-lede { font-size: 0.78rem; color: var(--ci-muted); }
-.stage-info .step-text { font-size: 0.92rem; line-height: 1.35; margin-top: 0.15rem; }
-.badge-count {
-  display: inline-block;
-  margin-left: 0.5rem;
-  font-size: 0.66rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #fff;
-  background: var(--ci-accent);
-  border-radius: 999px;
-  padding: 0.12rem 0.6rem;
-  vertical-align: 0.1em;
-}
+  /* Der Reinigungsmann. Er kommt von rechts, kehrt einmal durch und geht wieder –
+     absichtlich mit Verzögerung: Der GC läuft nicht auf Kommando. */
+  .speicher__heap { position: relative; overflow: hidden; }
+  .speicher__gc {
+    position: absolute;
+    /* Von LINKS: Dort liegt das Objekt – der Heap füllt sich von links. */
+    left: var(--avd-academy-space-3);
+    bottom: var(--avd-academy-space-3);
+    display: flex;
+    align-items: flex-end;
+    gap: 0.1em;
+    font-size: clamp(1.8rem, 1.2rem + 1.5vw, 2.6rem);
+    line-height: 1;
+    pointer-events: none;
+    /* `forwards` ist hier kein Feinschliff: Ohne Fill-Mode springt das Element am
+       Ende der Animation auf seinen Ausgangszustand zurück – der Reinigungsmann
+       stünde also wieder da, nachdem er gegangen ist. */
+    animation: speicher-kommt 3.4s ease-in-out forwards;
+  }
+  .speicher__gc[hidden] { display: none; }
+  .speicher__gc-besen { display: inline-block; animation: speicher-kehrt 0.5s ease-in-out 6; }
+  /* Er kommt von links ins Bild, bleibt beim Objekt stehen, kehrt – und zieht
+     dann nach rechts weiter aus dem Bild. */
+  @keyframes speicher-kommt {
+    0%   { transform: translateX(-180px); opacity: 0; }
+    14%  { transform: translateX(0);      opacity: 1; }
+    46%  { transform: translateX(0);      opacity: 1; }
+    92%  { transform: translateX(320px);  opacity: 1; }
+    100% { transform: translateX(360px);  opacity: 0; }
+  }
+  @keyframes speicher-kehrt {
+    0%, 100% { transform: rotate(-18deg); }
+    50%      { transform: rotate(14deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .speicher__objekt.is-gekehrt { animation: none; opacity: 0; }
+    .speicher__gc, .speicher__gc-besen { animation: none; }
+  }
+  .speicher__null { color: var(--avd-academy-color-danger); }
+  .speicher__unbelegt { color: var(--avd-academy-color-ink-muted); opacity: 0.7; }
+  /* Schlussbild: die Merksätze auf der Bühne. Sie liegen ÜBER dem Aufbau, der
+     blass dahinter stehen bleibt – der Weg dorthin bleibt sichtbar, aber die
+     Aussage steht vorn. */
+  .speicher__final {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--avd-academy-space-6);
+    padding: clamp(1.5rem, 1rem + 3vw, 4rem);
+    background: color-mix(in srgb, var(--avd-academy-color-bg) 86%, transparent);
+    backdrop-filter: blur(3px);
+  }
+  .speicher__final[hidden] { display: none; }
+  .speicher__final-kopf {
+    margin: 0;
+    font-size: 0.75em;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--avd-academy-color-ink-muted);
+  }
+  .speicher__final-liste {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--avd-academy-space-6);
+    max-width: 46rem;
+  }
+  .speicher__final-liste li {
+    padding-left: var(--avd-academy-space-6);
+    border-left: 4px solid var(--avd-academy-color-accent);
+    font-size: clamp(1.15rem, 0.9rem + 1.1vw, 1.9rem);
+    line-height: var(--avd-academy-lh-heading);
+    color: var(--avd-academy-color-headline);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .speicher__final-liste li { animation: speicher-merksatz 420ms ease-out backwards; }
+    .speicher__final-liste li:nth-child(2) { animation-delay: 260ms; }
+  }
+  @keyframes speicher-merksatz {
+    from { opacity: 0; transform: translateX(-0.75rem); }
+    to   { opacity: 1; transform: none; }
+  }
 
-/* Leitungs-Ebene (SVG, unter den Stationen).
-   Standard: gestrichelt, neutral. Klassen: .std (durchgezogen, Akzent),
-   .hot (Akzent, betont). */
-.wires { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 5; }
-.wires line {
-  stroke: var(--ci-primary-light);
-  stroke-width: 2.5;
-  stroke-dasharray: 7 6;
-  opacity: 0.65;
-  vector-effect: non-scaling-stroke;
-  animation: softIn 0.5s ease both;
-}
-.wires line.std { stroke: var(--ci-accent); stroke-dasharray: none; opacity: 0.9; }
-.wires line.hot { stroke: var(--ci-accent); opacity: 0.95; stroke-width: 3; }
+  /* Gemeinsames Bühnenbild der Szenarien 2–4: Quelltext links, Stack rechts oben,
+     Heap darunter. Dieselben Bausteine wie in Szenario 1, nur schlanker – dort
+     geht es um die drei Thread Stacks, hier um die Beziehungen der Objekte. */
+  .szene {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(15rem, 22rem) minmax(0, 1fr);
+    grid-template-areas: "code stack" "code heap";
+    gap: clamp(1rem, 0.5rem + 2vw, 2.5rem);
+    align-items: start;
+    align-content: center;
+    min-height: 100%;
+  }
+  .szene__code  { grid-area: code; }
+  .szene__meta  { grid-area: meta; }
+  /* „this und static“ hat eine dritte Tafel: den Bereich AUSSERHALB des Heaps,
+     in dem die geladenen Klassen samt ihrem Code liegen. */
+  .szene[data-avd-academy-sim-szene="this-static"] {
+    /* Der Metaspace steht NEBEN dem Thread Stack, nicht darunter: So bleibt der
+       Stack schmal, und alle drei Bereiche passen ohne Scrollen auf den Schirm. */
+    /* Die Quelltext-Spalte bleibt so breit, dass die längste Zeile
+       (`int groesser = Math.max(3, 7);`) ohne Abschneiden hineinpasst. */
+    grid-template-columns: minmax(19rem, 25rem) minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas: "code stack meta" "code heap heap";
+  }
+  @media (max-width: 1100px) {
+    .szene[data-avd-academy-sim-szene="this-static"] {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas: "code" "stack" "heap" "meta";
+    }
+  }
+  .szene__meta .avd-academy-sim-panel__body {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: clamp(1rem, 0.5rem + 2vw, 2.5rem);
+    align-items: flex-start;
+  }
+  /* Klassen sind keine Objekte – gestrichelt und ohne Fläche, damit niemand sie
+     für Instanzen im Heap hält. */
+  .speicher__objekt.is-klasse {
+    border-style: dashed;
+    background: none;
+    box-shadow: none;
+  }
+  .speicher__objekt.is-klasse .speicher__objekt-kopf {
+    text-decoration: none;
+    background: none;
+  }
+  .szene__stack { grid-area: stack; }
+  .szene__heap  { grid-area: heap; }
+  @media (max-width: 1000px) {
+    .szene { grid-template-columns: minmax(0, 1fr); grid-template-areas: "code" "stack" "heap"; }
+  }
+  /* Im Objektgeflecht stehen alle drei Objekte in EINER Reihe: Konto 1 links,
+     die Kundin in der Mitte, Konto 2 rechts. Die Pfeile laufen dann von außen
+     nach innen und treffen die Kundin an der Seite, die ihnen zugewandt ist –
+     keiner kreuzt eine Karte. Die Reihenfolge im Zustand ist eine andere
+     (die Kundin entsteht zuerst), deshalb `order`. */
+  [data-avd-academy-sim-szene="objektgeflecht"] .szene__objekte {
+    align-items: center;
+    justify-content: center;
+    gap: clamp(2rem, 1rem + 3vw, 4.5rem);
+  }
 
-/* Stationen. Varianten: .desk (rund, neutral – z. B. Person),
-   .base (Akzentrahmen – das Element, um das es geht). */
-.station {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 10;
-  transition: opacity 0.5s ease;
-}
-.station.ghost { opacity: 0; pointer-events: none; }
-.station .box {
-  position: relative;
-  width: clamp(64px, 7vw, 96px);
-  height: clamp(64px, 7vw, 96px);
-  background: #fff;
-  border: 3px solid var(--ci-primary-light);
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--ci-primary);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.10);
-}
-.station .box svg { width: 55%; height: 55%; }
-.station.desk .box { border-radius: 50%; border-color: var(--ci-line); color: var(--ci-muted); }
-.station.base .box { border-color: var(--ci-accent); color: var(--ci-accent); }
-.station .tag {
-  margin-top: 0.35rem;
-  font-size: 0.74rem;
-  font-weight: 600;
-  color: var(--ci-primary);
-  background: #fff;
-  border: 1px solid var(--ci-line);
-  border-radius: 999px;
-  padding: 0.1rem 0.7rem;
-  white-space: nowrap;
-}
-.station.base .tag { color: var(--ci-accent); }
-.station.desk .tag { color: var(--ci-muted); }
+  /* Objekte liegen im Heap nebeneinander – ein Objekt ist ein Ding an einer
+     Stelle, keine Zeile in einer Liste. */
+  .szene__objekte {
+    display: flex;
+    /* `row` ausdrücklich: Der Tafelkörper des Themes ist eine Spalte, und ohne
+       diese Zeile stünden die Objekte untereinander statt nebeneinander. */
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: clamp(1rem, 0.5rem + 2vw, 2.5rem);
+    align-items: flex-start;
+  }
+  /* Das Ergebnis eines Ausdrucks gehört an den CODE, nicht in den Heap: Es ist die
+     Antwort auf die Zeile, die gerade läuft – kein Objekt im Speicher. Es blendet
+     sich als Sprechblase direkt unter dem Codeblock ein, mit einer Spitze nach
+     oben, damit klar ist, worauf sie sich bezieht. */
+  .szene__popup {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--avd-academy-space-2);
+    margin-top: var(--avd-academy-space-4);
+    padding: var(--avd-academy-space-3) var(--avd-academy-space-4);
+    border: 1px solid var(--avd-academy-color-accent);
+    border-radius: var(--avd-academy-radius);
+    background: var(--avd-academy-color-bg);
+    box-shadow: var(--avd-academy-shadow-2);
+  }
+  .szene__popup[hidden] { display: none; }
+  /* Die Spitze: zwei gedrehte Quadrate übereinander – das obere in der
+     Hintergrundfarbe, damit die Rahmenlinie darunter verschwindet. */
+  .szene__popup::before,
+  .szene__popup::after {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: var(--avd-academy-space-6);
+    width: 10px;
+    height: 10px;
+    transform: rotate(45deg);
+  }
+  .szene__popup::before {
+    background: var(--avd-academy-color-accent);
+  }
+  .szene__popup::after {
+    top: -4px;
+    background: var(--avd-academy-color-bg);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .szene__popup { animation: speicher-merksatz 240ms ease-out; }
+  }
 
-/* Anschluss-Pille an der Boxkante (optional pro Station).
-   kind 'socket' = Umriss (Buchse), 'plug' = gefüllt (Stecker).
-   Leitungen enden automatisch in der Pille (siehe anchorPoint). */
-.port {
-  position: absolute;
-  top: 50%;
-  font-size: 0.52rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  padding: 0.1rem 0.45rem;
-  border-radius: 999px;
-  white-space: nowrap;
-  z-index: 12;
-}
-.port.right { left: calc(100% - 0.4rem); transform: translateY(-50%); }
-.port.left  { right: calc(100% - 0.4rem); transform: translateY(-50%); }
-.port.socket { background: #fff; border: 2px solid var(--ci-accent); color: var(--ci-accent); }
-.port.plug   { background: var(--ci-accent); border: 2px solid var(--ci-accent); color: #fff; }
+  /* Ein Ergebnis (true/false) tritt als eigene Zeile auf, nicht als Fließtext. */
+  .szene__ergebnis {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.6em;
+    font-family: var(--avd-academy-font-mono);
+    font-size: 0.9em;
+  }
+  .szene__ergebnis b { font-size: 1.15em; }
+  .szene__ergebnis.is-wahr b   { color: var(--avd-academy-color-success); }
+  .szene__ergebnis.is-falsch b { color: var(--avd-academy-color-danger); }
 
-/* Nachrichten-Paket, wandert auf den Leitungen */
-.packet {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  width: 0.95rem;
-  height: 0.95rem;
-  border-radius: 50%;
-  background: var(--ci-accent);
-  border: 3px solid #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  z-index: 45;
-  transition: top 0.7s ease-in-out, left 0.7s ease-in-out, opacity 0.4s ease;
-}
-.packet.hiddenfig { opacity: 0; }
+  /* PLATZ VON ANFANG AN RESERVIEREN.
+     Ohne das wächst eine Tafel mit jedem neuen Kasten, und alles darunter rutscht
+     nach – die frisch eingeblendete Karte scheint sich ein zweites Mal zu bewegen.
+     Die Werte sind der jeweils GRÖSSTE Zustand des Szenarios, einmal ausgemessen.
+     Kommt ein Schritt dazu, hier nachziehen. */
+  #speicher-stack               { min-height: 21rem; }   /* 4 Variablen */
+  #speicher-heap                { min-height: 5.5rem; }  /* 1 Objekt */
+  #objektgeflecht-stack         { min-height: 16rem; }   /* 3 Variablen */
+  #objektgeflecht-heap          { min-height: 8.5rem; }  /* 3 Objekte in einer Reihe */
+  #identitaet-stack             { min-height: 11rem; }   /* 2 Variablen */
+  #identitaet-heap              { min-height: 5.5rem; }  /* 2 Objekte nebeneinander */
+  #this-static-stack            { min-height: 16rem; }   /* 3 Variablen */
+  #this-static-heap             { min-height: 5.5rem; }  /* 2 Objekte nebeneinander */
+  #this-static-meta             { min-height: 7rem; }    /* Konto und Math */
 
-/* Sprechblasen. who 'u' = Primärfarbe (Person), 'a' = weiß mit
-   Akzentrahmen (System). mono = Code-Optik. pos 'below' = unterhalb
-   (für Stationen nahe am Info-Banner, damit nichts überdeckt wird). */
-.bubble {
-  position: absolute;
-  bottom: calc(100% + 12px);
-  left: 50%;
-  transform: translateX(-50%);
-  width: max-content;
-  max-width: 13rem;
-  font-size: 0.8rem;
-  line-height: 1.3;
-  text-align: center;
-  border-radius: 12px;
-  padding: 0.45rem 0.75rem;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
-  animation: softIn 0.5s ease both;
-  z-index: 50;
-}
-.bubble::after {
-  content: "";
-  position: absolute;
-  bottom: -6px;
-  left: 50%;
-  transform: translateX(-50%) rotate(45deg);
-  width: 12px; height: 12px;
-}
-.bubble.u { background: var(--ci-primary); color: #fff; }
-.bubble.u::after { background: var(--ci-primary); }
-.bubble.a { background: #fff; border: 1px solid var(--ci-accent); color: var(--ci-text); }
-.bubble.a::after { background: #fff; border-right: 1px solid var(--ci-accent); border-bottom: 1px solid var(--ci-accent); }
-.bubble.mono {
-  font-family: var(--mono);
-  font-size: 0.74rem;
-  text-align: left;
-  background: var(--ci-primary-dark);
-  color: var(--ci-accent-soft);
-  border: none;
-}
-.bubble.mono::after { background: var(--ci-primary-dark); border: none; }
-.bubble.below { bottom: auto; top: calc(100% + 12px); }
-.bubble.below::after { bottom: auto; top: -6px; }
-.bubble.a.below::after { border: none; border-left: 1px solid var(--ci-accent); border-top: 1px solid var(--ci-accent); }
-.bubble.u.below::after { background: var(--ci-primary); }
-.bubble.mono.below::after { border: none !important; background: var(--ci-primary-dark); }
-
-/* ---------- Seitenleiste: Ablauf ---------- */
-.sidebar {
-  width: clamp(300px, 25vw, 410px);
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-  border: 1px solid var(--ci-line);
-  border-radius: 14px;
-  min-height: 0;
-  overflow: hidden;
-}
-.sidebar h2 {
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ci-muted);
-  padding: 0.7rem 0.9rem;
-  border-bottom: 1px solid var(--ci-line);
-  background: var(--ci-surface);
-  flex-shrink: 0;
-}
-.steps { flex: 1; overflow-y: auto; padding: 0.7rem; display: flex; flex-direction: column; gap: 0.5rem; }
-.step-card {
-  border: 1px solid var(--ci-line);
-  border-left: 4px solid var(--ci-line);
-  border-radius: 10px;
-  background: var(--ci-surface);
-  padding: 0.5rem 0.7rem;
-  font-size: 0.8rem;
-  line-height: 1.35;
-  color: var(--ci-muted);
-  cursor: pointer;
-  display: flex;
-  gap: 0.55rem;
-  align-items: flex-start;
-  animation: softIn 0.5s ease both;
-}
-.step-card .no {
-  flex: 0 0 auto;
-  width: 1.35rem; height: 1.35rem;
-  border-radius: 50%;
-  background: var(--ci-primary-tint);
-  color: var(--ci-primary);
-  font-size: 0.7rem;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 0.05rem;
-}
-.step-card.current { border-left-color: var(--ci-accent); background: #fff; color: var(--ci-text); }
-.step-card.current .no { background: var(--ci-accent); color: #fff; }
-.step-card:hover { border-color: var(--ci-primary-light); }
-
-/* ---------- Fußzeile / Steuerung ---------- */
-.controls {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  padding: 0.7rem 2.2rem 0.9rem;
-  border-top: 1px solid var(--ci-line);
-  flex-shrink: 0;
-}
-.controls .note { font-size: 0.72rem; color: var(--ci-muted); margin-right: auto; }
-.keys { font-size: 0.72rem; color: var(--ci-muted); }
-kbd { border: 1px solid var(--ci-line); border-bottom-width: 2px; border-radius: 5px; padding: 0 0.35rem; font-family: var(--font); }
-.btn {
-  font-family: var(--font);
-  font-size: 1rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 999px;
-  padding: 0.6rem 1.6rem;
-  cursor: pointer;
-}
-.btn.primary { background: var(--ci-accent); color: #fff; min-width: 8rem; }
-.btn.secondary { background: var(--ci-primary-tint); color: var(--ci-primary); }
-.btn:disabled { opacity: 0.35; cursor: default; }
-.btn.done { background: var(--ci-primary); }
-
-/* ============================================================
-   3) VIDEO-BAUSTEINE (Panels, Balken, Füllraster, Overlay)
-   ============================================================ */
-
-/* Panel: positionierte Text-/Chatkarte (panels: [...]) */
-.vpanel {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  z-index: 20;
-  background: #fff;
-  border: 1px solid var(--ci-line);
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.10);
-  overflow: hidden;
-  animation: softIn 0.5s ease both;
-}
-.vpanel .ptitle {
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #fff;
-  background: var(--ci-primary);
-  padding: 0.3rem 0.7rem;
-}
-.vpanel .plines { padding: 0.5rem 0.6rem; display: flex; flex-direction: column; gap: 0.4rem; }
-.vpanel .pline {
-  max-width: 88%;
-  font-size: 0.72rem;
-  line-height: 1.35;
-  border-radius: 10px;
-  padding: 0.35rem 0.6rem;
-  animation: softIn 0.45s ease both;
-}
-.vpanel .pline.u { align-self: flex-end; background: var(--ci-primary); color: #fff; border-bottom-right-radius: 3px; }
-.vpanel .pline.a { align-self: flex-start; background: var(--ci-surface); border: 1px solid var(--ci-line); border-bottom-left-radius: 3px; }
-.vpanel .pline.mono { font-family: var(--mono); font-size: 0.64rem; }
-.vpanel .pline.dim { opacity: 0.45; }
-.vpanel .pline.hot { outline: 2px solid var(--ci-accent); }
-/* cls f1–f4: Zeile in der Farbfamilie des Füllrasters. Macht sichtbar,
-   welcher Prompt-Baustein zu welchem Feld der SAND-Box gehört. */
-.vpanel .pline.f1 { background: var(--fill-1-bg); border: 1px solid var(--fill-1); border-left-width: 4px; }
-.vpanel .pline.f2 { background: var(--fill-2-bg); border: 1px solid var(--fill-2); border-left-width: 4px; }
-.vpanel .pline.f3 { background: var(--fill-3-bg); border: 1px solid var(--fill-3); border-left-width: 4px; }
-.vpanel .pline.f4 { background: var(--fill-4-bg); border: 1px solid var(--fill-4); border-left-width: 4px; }
-
-/* prose: Zeile OHNE Sprechblasen-Optik. Für Texte, die als ein
-   zusammenhängender Block gelesen werden – Prompts und Antworten.
-   Wichtig: Ein Prompt ist EINE Nachricht. Ihn in mehrere Blasen zu
-   zerlegen suggeriert einen Chatverlauf, den es nicht gibt.
-   Einzelne Stellen im Text werden mit <mark class="f1..f4|bad">
-   ausgezeichnet. */
-.vpanel .pline.prose {
-  align-self: stretch;
-  max-width: 100%;
-  background: none;
-  border: none;
-  border-radius: 0;
-  padding: 0.1rem 0.15rem;
-  line-height: 1.55;
-}
-.vpanel .pline.prose + .pline.prose { margin-top: -0.15rem; }
-.vpanel .pline mark {
-  background: none;
-  color: inherit;
-  border-radius: 3px;
-  padding: 0.06em 0.18em;
-}
-.vpanel .pline mark.f1  { background: var(--fill-1-bg); box-shadow: inset 0 -2px 0 var(--fill-1); }
-.vpanel .pline mark.f2  { background: var(--fill-2-bg); box-shadow: inset 0 -2px 0 var(--fill-2); }
-.vpanel .pline mark.f3  { background: var(--fill-3-bg); box-shadow: inset 0 -2px 0 var(--fill-3); }
-.vpanel .pline mark.f4  { background: var(--fill-4-bg); box-shadow: inset 0 -2px 0 var(--fill-4); }
-.vpanel .pline mark.bad { background: var(--ci-accent-soft); box-shadow: inset 0 -2px 0 var(--ci-accent); }
-
-/* Balkengruppe (bars: {...}); Balken auch segmentiert (segs) */
-.vbars {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  z-index: 20;
-  animation: softIn 0.5s ease both;
-}
-.vbars .btitle {
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ci-muted);
-  margin-bottom: 0.2rem;
-}
-.vbars .brow {
-  display: grid;
-  grid-template-columns: minmax(4.5rem, auto) 1fr minmax(2.6rem, auto);
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 0.35rem;
-}
-.vbars .blabel { font-size: 0.72rem; font-weight: 500; white-space: nowrap; }
-.vbars .btrack {
-  height: 1rem;
-  background: var(--ci-primary-tint);
-  border-radius: 999px;
-  overflow: hidden;
-  display: flex;
-}
-.vbars .bfill {
-  height: 100%;
-  background: var(--ci-primary-light);
-  transform-origin: left;
-  animation: growX 0.7s ease both;
-}
-.vbars .bfill.win { background: var(--ci-accent); }
-.vbars .bfill.hot { background: var(--ci-accent); }
-.vbars .bfill.dim { background: var(--ci-grey, #C6CCD2); opacity: 0.7; }
-/* 'stale': inhaltlich überholt, wird aber weiter mitgeschleppt
-   (z. B. der Verlauf eines alten Themas nach einem Themenwechsel) */
-.vbars .bfill.stale {
-  background: repeating-linear-gradient(135deg,
-    var(--ci-primary-light) 0 5px, #CCD7E7 5px 10px);
-}
-.vbars .bfill + .bfill { border-left: 2px solid #fff; }
-.vbars .bval { font-size: 0.66rem; font-weight: 600; color: var(--ci-muted); text-align: right; }
-
-/* Füllraster (grid: {...}) – z. B. SAND-Box: Zellen erst als
-   Platzhalter (gestrichelt), dann gefüllt (on: true) */
-.vgrid {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  z-index: 20;
-  display: grid;
-  gap: 0.5rem;
-}
-.vgrid .cell {
-  border: 2px dashed var(--ci-line);
-  border-radius: 12px;
-  padding: 0.45rem 0.6rem;
-  min-height: 2.6rem;
-  background: rgba(255, 255, 255, 0.6);
-}
-.vgrid .cell.new { animation: softIn 0.5s ease both; }
-/* Ungefüllte Zellen deutlich zurücknehmen: sonst wirkt die Box schon
-   gefüllt und der Fülleffekt (on) trägt nicht. Höhe bleibt gleich –
-   Definitionstexte dürfen also von Anfang an mitgegeben werden. */
-.vgrid .cell:not(.on) { opacity: 0.38; }
-.vgrid .cell:not(.on) .clabel { color: var(--ci-muted); }
-.vgrid .cell .clabel {
-  font-size: 0.6rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--ci-muted);
-}
-.vgrid .cell .ctxt { font-size: 0.68rem; line-height: 1.3; margin-top: 0.15rem; }
-.vgrid .cell.on { border-style: solid; }
-.vgrid .cell.f1.on { border-color: var(--fill-1); background: var(--fill-1-bg); }
-.vgrid .cell.f1.on .clabel { color: var(--fill-1); }
-.vgrid .cell.f2.on { border-color: var(--fill-2); background: var(--fill-2-bg); }
-.vgrid .cell.f2.on .clabel { color: var(--fill-2); }
-.vgrid .cell.f3.on { border-color: var(--fill-3); background: var(--fill-3-bg); }
-.vgrid .cell.f3.on .clabel { color: var(--fill-3); }
-.vgrid .cell.f4.on { border-color: var(--fill-4); background: var(--fill-4-bg); }
-.vgrid .cell.f4.on .clabel { color: var(--fill-4); }
-
-/* Aktivierungs-Overlay (overlay: {...}) – Frage über abgedunkelter
-   Bühne; Auflösung = nächster Schritt ohne Overlay */
-.voverlay {
-  position: absolute;
-  inset: 0;
-  z-index: 70;
-  background: rgba(11, 61, 74, 0.85);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 2rem;
-  animation: softIn 0.5s ease both;
-}
-.voverlay .q { color: #fff; font-size: 1.5rem; font-weight: 600; line-height: 1.3; max-width: 82%; }
-.voverlay .sub { color: rgba(255, 255, 255, 0.75); font-size: 0.85rem; margin-top: 0.8rem; }
-
-/* ============================================================
-   3b) VIDEO-BAUSTEINE v2 – GESTALTUNGSREGISTER
-   Drei bewusst unterschiedliche Stufen, damit der Zuschauer ohne
-   Nachdenken erkennt, was Hauptsache und was Erläuterung ist:
-
-   (1) HAUPTINHALT  weiße Karte, Titelleiste, Schatten, voller
-                    Kontrast, z-index 20   → panels, bars, grid, urns
-   (2) HILFSINHALT  keine Karte, kein Schatten, keine Titelleiste;
-                    nur eine feine Akzentlinie, gedämpfte Farbe,
-                    kleinere Schrift, z-index 15   → notes
-   (3) MERKSATZ     vollflächig invertiert, alles andere entfällt
-                    → banner
-
-   Regel: Erläuterungen NIE als panel bauen. Wenn eine Erläuterung
-   wichtig genug für eine Karte scheint, ist sie Hauptinhalt und
-   gehört in einen eigenen Schritt.
-   ============================================================ */
-
-/* --- (2) Notiz: Erläuterung, bewusst zurückgenommen --- */
-.vnote {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  z-index: 15;
-  border-left: 2px solid var(--ci-primary-light);
-  padding: 0.15rem 0 0.15rem 0.75rem;
-  animation: softIn 0.5s ease both;
-}
-.vnote .nlabel {
-  font-size: 0.56rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ci-primary-light);
-  margin-bottom: 0.3rem;
-}
-.vnote .nline {
-  font-size: 0.66rem;
-  line-height: 1.45;
-  color: var(--ci-muted);
-  animation: softIn 0.45s ease both;
-}
-.vnote .nline + .nline { margin-top: 0.15rem; }
-.vnote .nline.hot { color: var(--ci-accent); font-weight: 600; }
-
-/* --- (1) Lostöpfe: Füllstand = Wahrscheinlichkeit --- */
-.vurns {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  z-index: 20;
-  animation: softIn 0.5s ease both;
-}
-.vurns .utitle {
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ci-muted);
-  margin-bottom: 0.15rem;
-}
-.vurns .usub {
-  font-size: 0.6rem;
-  color: var(--ci-primary-light);
-  font-weight: 600;
-  margin-bottom: 0.7rem;
-}
-.vurns .urow { display: grid; gap: 0.7rem; align-items: end; }
-.vurns .urn { display: flex; flex-direction: column; align-items: center; }
-
-.vurns .umark { position: relative; width: 100%; height: 1.5rem; }
-.vurns .pin {
-  position: absolute; left: 50%; bottom: 0.15rem;
-  transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center;
-  color: var(--ci-accent);
-  font-size: 0.55rem; font-weight: 700;
-  letter-spacing: 0.09em; text-transform: uppercase;
-  white-space: nowrap;
-}
-.vurns .pin::after {
-  content: ""; margin-top: 0.15rem;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-top: 8px solid var(--ci-accent);
-}
-@keyframes markerRoll {
-  from { transform: translateX(calc(-50% + var(--mdx, 0px))); }
-  to   { transform: translateX(-50%); }
-}
-.vurns .pin.roll { animation: markerRoll 1s cubic-bezier(0.3, 0.9, 0.3, 1) both; }
-
-.vurns .vessel {
-  position: relative;
-  width: 100%; height: 8rem;
-  border: 2px solid var(--ci-line);
-  border-top: none;
-  border-radius: 0 0 12px 12px;
-  background: var(--ci-bg);
-  overflow: hidden;
-}
-.vurns .fill {
-  position: absolute; left: 0; right: 0; bottom: 0;
-  background: var(--ci-primary-light);
-  transform-origin: bottom;
-  animation: fillUp 0.75s cubic-bezier(0.25, 0.9, 0.35, 1) both;
-}
-@keyframes fillUp { from { transform: scaleY(0); } to { transform: scaleY(1); } }
-.vurns .urn.win  .fill { background: var(--ci-accent); }
-.vurns .urn.win  .vessel { border-color: var(--ci-accent); }
-.vurns .urn.dim  .fill { background: #C6CCD2; opacity: 0.65; }
-.vurns .ulabel { font-size: 0.76rem; font-weight: 600; margin-top: 0.45rem; }
-.vurns .uval   { font-size: 0.64rem; font-weight: 700; color: var(--ci-muted); margin-top: 0.1rem; }
-.vurns .urn.win .ulabel, .vurns .urn.win .uval { color: var(--ci-accent); }
-/* Der Platz für item.note wird IMMER reserviert (2 Zeilen), auch wenn
-   kein Text da ist. Sonst ändert sich die Blockhöhe zwischen Schritten
-   und die Töpfe springen, sobald eine Notiz dazukommt. */
-.vurns .unote  { font-size: 0.58rem; color: var(--ci-muted); margin-top: 0.15rem; text-align: center; line-height: 1.25; min-height: 2.5em; }
-
-/* --- Flug-Chip: macht die Übernahme eines Wortes sichtbar --- */
-.vfly {
-  position: absolute;
-  z-index: 26;
-  background: var(--ci-accent);
-  color: #fff;
-  font-size: 0.8rem; font-weight: 700;
-  padding: 0.3rem 0.75rem;
-  border-radius: 10px;
-  box-shadow: 0 8px 20px rgba(235, 91, 41, 0.35);
-  white-space: nowrap;
-  animation: flyTo 1s cubic-bezier(0.35, 0.85, 0.4, 1) both;
-}
-@keyframes flyTo {
-  0%   { transform: translate(calc(-50% + var(--fdx)), calc(-50% + var(--fdy))) scale(1.15); opacity: 0; }
-  12%  { opacity: 1; }
-  82%  { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-  100% { transform: translate(-50%, -50%) scale(0.92); opacity: 0; }
-}
-
-/* --- Akteure: beschriftete Figuren an Stationen (v3) ----------------
-   Mehrere gleichzeitig, unterschiedlich handelnd. Genau dafür reicht das
-   einzelne `packet` nicht: In der Agenten-Szene sitzt der Mensch, während
-   der Agent sich bewegt – und dieser Kontrast IST die Aussage.
-   Der Chip hängt unter seiner Station; mehrere an derselben Station
-   werden nebeneinander gesetzt. Der Weg von A nach B wird über `from`
-   animiert und spielt – wie fly – nur vorwärts. */
-.vactor {
-  position: absolute;
-  z-index: 22;
-  display: flex; align-items: center; gap: 0.35rem;
-  padding: 0.28rem 0.7rem 0.28rem 0.45rem;
-  border-radius: 999px;
-  font-size: 0.7rem; font-weight: 700;
-  background: var(--ci-primary); color: #fff;
-  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.18);
-  white-space: nowrap;
-  transform: translate(calc(-50% + var(--aoff, 0px)), var(--ay, 3.4rem));
-}
-.vactor svg { width: 1rem; height: 1rem; flex: none; }
-.vactor.agent { background: var(--ci-accent); }
-.vactor.idle  { opacity: 0.62; }
-@keyframes actorWalk {
-  from { transform: translate(calc(-50% + var(--aoff, 0px) + var(--adx)), calc(var(--ay, 3.4rem) + var(--ady))); }
-  to   { transform: translate(calc(-50% + var(--aoff, 0px)), var(--ay, 3.4rem)); }
-}
-.vactor.walk { animation: actorWalk 0.95s cubic-bezier(0.4, 0.8, 0.35, 1) both; }
-
-/* --- (3) Banner: Merksatz vollflächig, invertiert --- */
-.vbanner {
-  position: absolute; inset: 0;
-  z-index: 28;
-  background: var(--ci-primary);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  text-align: center;
-  padding: 0 8%;
-  animation: softIn 0.55s ease both;
-}
-.vbanner .beyebrow {
-  color: var(--ci-primary-light);
-  font-size: 0.7rem; font-weight: 700;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  margin-bottom: 1.2rem;
-}
-.vbanner .btxt { color: #fff; font-size: 2.4rem; font-weight: 700; line-height: 1.2; }
-.vbanner .bsub { color: rgba(255, 255, 255, 0.72); font-size: 0.95rem; margin-top: 1.2rem; max-width: 46ch; }
-
-/* ============================================================
-   4) CAPTURE-MODUS – für die Video-Aufzeichnung
-   Aktivierung: URL-Parameter ?capture oder Taste C.
-   Taste T blendet das Info-Banner (OST) ein/aus.
-   ============================================================ */
-body.capture .topbar,
-body.capture .sidebar,
-body.capture .controls { display: none; }
-body.capture main { padding: 0; gap: 0; }
-body.capture .stage { border: none; border-radius: 0; }
-body.capture .stage-info { display: none; }
-body.capture.show-info .stage-info { display: block; }
-body.capture { cursor: none; }
-
-@keyframes softIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes growX { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-
-@media (max-width: 860px) {
-  main { flex-direction: column; padding: 0.8rem; }
-  .stage { flex: none; height: 46vh; }
-  .sidebar { width: 100%; flex: 1; }
-  .controls { padding: 0.6rem 0.8rem 0.8rem; flex-wrap: wrap; }
-  .controls .note, .keys { display: none; }
-  .btn.primary { flex: 1; min-width: 0; }
-}
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; }
-}
+  .speicher__leer {
+    color: var(--avd-academy-color-ink-muted);
+    font-size: 0.85em;
+    font-style: italic;
+  }
 </style>
-</head>
-<body>
 
-<header class="topbar">
-  <!-- Offizielle ATVANTAGE-Wortmarke (inverse/transparente Variante) inline,
-       damit die Datei eigenständig bleibt. Bei Bedarf durch <span class="logo-text">
-       ersetzbar. -->
-  <svg class="logo" role="img" aria-label="ATVANTAGE" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-10 300 3480 452" preserveAspectRatio="xMidYMid meet" version="1.0"><defs><clipPath id="7a46356cad"><path d="M 2713 310.746094 L 3092 310.746094 L 3092 738.996094 L 2713 738.996094 Z M 2713 310.746094 " clip-rule="nonzero"/></clipPath></defs><path fill="#FF5401" d="M 394.042969 319.292969 L 394.042969 386.609375 L 508.371094 386.609375 L 508.371094 730.449219 L 582.285156 730.449219 L 582.285156 386.609375 L 697.195312 386.609375 L 697.195312 319.292969 Z M 394.042969 319.292969 " fill-opacity="1" fill-rule="nonzero"/><path fill="#FF5401" d="M 2011.253906 319.292969 L 2011.253906 386.609375 L 2125.582031 386.609375 L 2125.582031 730.449219 L 2199.496094 730.449219 L 2199.496094 386.609375 L 2314.289062 386.609375 L 2314.289062 319.292969 Z M 2011.253906 319.292969 " fill-opacity="1" fill-rule="nonzero"/><path fill="#FF5401" d="M 3195.757812 319.292969 L 3452.40625 319.292969 L 3452.40625 386.140625 L 3195.757812 386.140625 Z M 3195.757812 319.292969 " fill-opacity="1" fill-rule="nonzero"/><path fill="#FF5401" d="M 3195.757812 487.875 L 3195.757812 730.449219 L 3459.902344 730.449219 L 3459.902344 663.601562 L 3270.140625 663.601562 L 3270.140625 553.789062 L 3420.894531 553.789062 L 3420.894531 487.875 Z M 3195.757812 487.875 " fill-opacity="1" fill-rule="nonzero"/><path fill="#FF5401" d="M 1273.867188 319.292969 L 1080.121094 730.449219 L 1162.703125 730.449219 L 1293.429688 434.023438 L 1424.273438 730.449219 L 1507.324219 730.449219 L 1313.578125 319.292969 Z M 1273.867188 319.292969 " fill-opacity="1" fill-rule="nonzero"/><path fill="#FF5401" d="M 1629.5 730.449219 L 1629.5 560.226562 C 1629.5 522.292969 1628.445312 485.886719 1627.976562 447.953125 L 1909.695312 730.449219 L 1947.765625 730.449219 L 1947.765625 319.292969 L 1876.3125 319.292969 L 1876.3125 489.632812 C 1876.3125 530.023438 1876.777344 563.972656 1877.363281 601.433594 L 1595.0625 319.292969 L 1557.109375 319.292969 L 1557.109375 730.566406 L 1629.5 730.566406 Z M 1629.5 730.449219 " fill-opacity="1" fill-rule="nonzero"/><path fill="#FF5401" d="M 2467.976562 319.292969 L 2274.230469 730.449219 L 2356.695312 730.449219 L 2487.539062 434.023438 L 2618.382812 730.449219 L 2701.316406 730.449219 L 2507.6875 319.292969 Z M 2467.976562 319.292969 " fill-opacity="1" fill-rule="nonzero"/><path fill="#FF5401" d="M 199.59375 319.292969 L 5.847656 730.449219 L 88.3125 730.449219 L 219.15625 434.023438 L 350 730.449219 L 432.933594 730.449219 L 239.304688 319.292969 Z M 199.59375 319.292969 " fill-opacity="1" fill-rule="nonzero"/><path fill="#FF5401" d="M 1066.886719 319.292969 L 947.988281 602.722656 L 828.15625 319.292969 L 745.339844 319.292969 L 927.257812 730.449219 L 965.445312 730.449219 L 1148.882812 319.292969 Z M 1066.886719 319.292969 " fill-opacity="1" fill-rule="nonzero"/><g clip-path="url(#7a46356cad)"><path fill="#FF5401" d="M 3020.515625 516.324219 L 3020.515625 652.597656 C 2998.496094 664.070312 2971.554688 672.03125 2938.167969 672.03125 C 2849.261719 672.03125 2790.339844 609.628906 2790.339844 524.753906 C 2790.339844 439.875 2848.792969 378.0625 2940.160156 378.0625 C 2996.621094 378.0625 3041.484375 399.019531 3082.484375 427.933594 L 3082.484375 348.675781 C 3051.558594 329.242188 3004.585938 310.746094 2940.160156 310.746094 C 2809.785156 310.746094 2713.964844 406.042969 2713.964844 524.871094 C 2713.964844 643.699219 2809.785156 738.996094 2938.167969 738.996094 C 3014.542969 738.996094 3068.542969 708.089844 3091.503906 692.050781 L 3091.503906 516.324219 Z M 3020.515625 516.324219 " fill-opacity="1" fill-rule="nonzero"/></g></svg>
-  <span class="module-title">OOP mit Java · Klassen &amp; Objekte</span>
-  <nav class="tabs" aria-label="Szenarien" id="tabBar"></nav>
-</header>
+<!-- Die Pfeilspitze steht EINMAL für alle Szenen: Marker werden über ihre id
+     referenziert, und die muss im Dokument eindeutig sein. Läge sie in der Szene,
+     wäre sie für die anderen nicht erreichbar, sobald deren Szene versteckt ist.
+     refX = markerWidth: Der Bezugspunkt liegt auf der SPITZE, und die sitzt damit
+     exakt auf dem Endpunkt des Pfades statt ein Stück dahinter. -->
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <defs>
+    <marker id="speicher-spitze" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" style="fill: var(--avd-academy-color-accent)"></polygon>
+    </marker>
+  </defs>
+</svg>
 
-<main>
-  <div class="stage" id="stage">
-    <div class="stage-info">
-      <div class="scen-lede" id="scenLede"></div>
-      <div class="step-text" id="stepText"></div>
-    </div>
-    <svg class="wires" id="wires" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
-    <div id="stations"></div>
-    <div class="packet hiddenfig" id="packet"></div>
+<div class="speicher" data-avd-academy-sim-szene="abgrenzung">
+
+  <svg class="speicher__pfeile" id="speicher-pfeile" aria-hidden="true"></svg>
+
+  <div class="avd-academy-sim-panel speicher__code">
+    <h2 class="avd-academy-sim-panel__title">Quelltext <span class="avd-academy-sim-panel__hint">Java</span></h2>
+    <p class="speicher__gruppe">Primitive Typen</p>
+<pre class="avd-academy-sim-code"><code class="language-java">int kontostand;
+kontostand = 10;
+int kopie;
+kopie = kontostand;
+kopie = 20;</code></pre>
+    <div class="szene__popup" id="objektgeflecht-ergebnis" hidden aria-live="polite"></div>
+    <p class="speicher__gruppe">Referenztypen (Objekte)</p>
+<pre class="avd-academy-sim-code"><code class="language-java">Konto k1;
+k1 = new Konto(100);
+Konto k2;
+k2 = k1;
+k2.stand = 500;
+print(k1.stand);
+k1 = null;
+k1.stand = 1000;
+k2 = null;</code></pre>
   </div>
 
-  <aside class="sidebar">
-    <h2 id="historyTitle">Ablauf</h2>
-    <div class="steps" id="stepList"></div>
-  </aside>
-</main>
+  <div class="speicher__final" id="speicher-final" hidden>
+    <p class="speicher__final-kopf">Zum Mitnehmen</p>
+    <ul class="speicher__final-liste">
+      <li>Zugewiesen wird immer der <b>Inhalt des Fachs</b> – bei primitiven Typen
+        der Wert, bei Objekten die Adresse.</li>
+      <li>Variablen liegen immer im <b>Thread Stack</b>, referenzierte Objekte
+        stets im <b>Heap</b>.</li>
+    </ul>
+  </div>
 
-<footer class="controls">
-  <span class="note" id="footNote">Vereinfachte Darstellung: Stack und Heap nur als Bild – Speicheradressen sind erfunden, Garbage Collection und JVM-Interna bleiben bewusst außen vor.</span>
-  <span class="keys"><kbd>←</kbd> <kbd>→</kbd> Schritte · <kbd>1</kbd>–<kbd>9</kbd> Szenarien · <kbd>R</kbd> Reset · <kbd>C</kbd> Capture · <kbd>T</kbd> OST</span>
-  <button class="btn secondary" id="btnReset" type="button">Zurücksetzen</button>
-  <button class="btn secondary" id="btnBack" type="button">Zurück</button>
-  <button class="btn primary" id="btnNext" type="button">Weiter</button>
-</footer>
+  <div class="speicher__speicher">
+
+    <div class="speicher__stacks">
+
+      <div class="avd-academy-sim-panel avd-academy-sim-panel--ton-1">
+        <h2 class="avd-academy-sim-panel__title">Thread Stack <span class="avd-academy-sim-panel__hint">Thread „main“</span></h2>
+        <div class="avd-academy-sim-panel__body" id="speicher-stack"></div>
+        <p class="speicher__leer" id="speicher-stack-leer">– noch keine Variable –</p>
+      </div>
+
+      <div class="avd-academy-sim-panel avd-academy-sim-panel--ton-1 speicher__geist" aria-hidden="true">
+        <h2 class="avd-academy-sim-panel__title">Thread Stack <span class="avd-academy-sim-panel__hint">„scheduler“</span></h2>
+        <div class="avd-academy-sim-panel__body">
+          <div class="speicher__geist-zelle"></div>
+          <div class="speicher__geist-zelle"></div>
+        </div>
+      </div>
+
+      <div class="avd-academy-sim-panel avd-academy-sim-panel--ton-1 speicher__geist" aria-hidden="true">
+        <h2 class="avd-academy-sim-panel__title">Thread Stack <span class="avd-academy-sim-panel__hint">„http-worker-3“</span></h2>
+        <div class="avd-academy-sim-panel__body">
+          <div class="speicher__geist-zelle"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="avd-academy-sim-panel avd-academy-sim-panel--ton-3 speicher__heap">
+      <h2 class="avd-academy-sim-panel__title">Heap <span class="avd-academy-sim-panel__hint">gemeinsam für alle Threads · Objekte</span></h2>
+      <div class="avd-academy-sim-panel__body" id="speicher-heap"></div>
+      <p class="speicher__leer" id="speicher-heap-leer">– noch kein Objekt –</p>
+      <div class="speicher__gc" id="speicher-gc" hidden aria-hidden="true">🧑<span class="speicher__gc-besen">🧹</span></div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="szene" data-avd-academy-sim-szene="objektgeflecht">
+
+  <svg class="speicher__pfeile" id="objektgeflecht-pfeile" aria-hidden="true"></svg>
+
+  <div class="avd-academy-sim-panel szene__code">
+    <h2 class="avd-academy-sim-panel__title">Quelltext <span class="avd-academy-sim-panel__hint">Java</span></h2>
+<pre class="avd-academy-sim-code"><code class="language-java">Kunde anna = new Kunde();
+anna.name = &quot;Anna Berger&quot;;
+anna.wohnort = &quot;Bremen&quot;;
+Konto giro = new Konto();
+giro.inhaber = anna;
+Konto spar = new Konto();
+spar.inhaber = anna;
+anna.wohnort = &quot;Hamburg&quot;;
+print(spar.inhaber.wohnort);</code></pre>
+  </div>
+
+  <div class="avd-academy-sim-panel avd-academy-sim-panel--ton-1 szene__stack">
+    <h2 class="avd-academy-sim-panel__title">Thread Stack <span class="avd-academy-sim-panel__hint">Thread „main“</span></h2>
+    <div class="avd-academy-sim-panel__body" id="objektgeflecht-stack"></div>
+    <p class="speicher__leer" id="objektgeflecht-stack-leer">– noch keine Variable –</p>
+  </div>
+
+  <div class="avd-academy-sim-panel avd-academy-sim-panel--ton-3 szene__heap">
+    <h2 class="avd-academy-sim-panel__title">Heap <span class="avd-academy-sim-panel__hint">gemeinsam für alle Threads · Objekte</span></h2>
+    <div class="avd-academy-sim-panel__body szene__objekte" id="objektgeflecht-heap"></div>
+    <p class="speicher__leer" id="objektgeflecht-heap-leer">– noch kein Objekt –</p>
+  </div>
+  <div class="speicher__final" id="objektgeflecht-final" hidden>
+    <p class="speicher__final-kopf">Zum Mitnehmen</p>
+    <ul class="speicher__final-liste">
+      <li>Eine Referenz ist kein <b>Abzug</b>, sondern der <b>Weg zum Original</b>.</li>
+      <li>Jeder Punkt ist ein Schritt entlang eines Pfeils – deshalb lässt sich <b>chainen</b>.</li>
+    </ul>
+  </div>
+
+
+</div>
+
+<div class="szene" data-avd-academy-sim-szene="identitaet">
+
+  <svg class="speicher__pfeile" id="identitaet-pfeile" aria-hidden="true"></svg>
+
+  <div class="avd-academy-sim-panel szene__code">
+    <h2 class="avd-academy-sim-panel__title">Quelltext <span class="avd-academy-sim-panel__hint">Java</span></h2>
+<pre class="avd-academy-sim-code"><code class="language-java">Kunde a = new Kunde();
+a.name = &quot;Anna Berger&quot;;
+Kunde b = new Kunde();
+b.name = &quot;Anna Berger&quot;;
+print(a == b);
+print(a.equals(b));</code></pre>
+    <div class="szene__popup" id="identitaet-ergebnis" hidden aria-live="polite"></div>
+  </div>
+
+  <div class="avd-academy-sim-panel avd-academy-sim-panel--ton-1 szene__stack">
+    <h2 class="avd-academy-sim-panel__title">Thread Stack <span class="avd-academy-sim-panel__hint">Thread „main“</span></h2>
+    <div class="avd-academy-sim-panel__body" id="identitaet-stack"></div>
+    <p class="speicher__leer" id="identitaet-stack-leer">– noch keine Variable –</p>
+  </div>
+
+  <div class="avd-academy-sim-panel avd-academy-sim-panel--ton-3 szene__heap">
+    <h2 class="avd-academy-sim-panel__title">Heap <span class="avd-academy-sim-panel__hint">zwei Objekte, gleicher Inhalt</span></h2>
+    <div class="avd-academy-sim-panel__body szene__objekte" id="identitaet-heap"></div>
+    <p class="speicher__leer" id="identitaet-heap-leer">– noch kein Objekt –</p>
+  </div>
+  <div class="speicher__final" id="identitaet-final" hidden>
+    <p class="speicher__final-kopf">Zum Mitnehmen</p>
+    <ul class="speicher__final-liste">
+      <li><b>==</b> vergleicht die <b>Fächer</b> – bei primitiven Variablen die Werte,
+        bei Referenztypen die Speicheradressen.</li>
+      <li><b>==</b> fragt damit nach dem <b>Objekt</b>, <b>equals</b> nach dem <b>Inhalt</b>.</li>
+      <li>Fest steht: Sollten Peter und Claudia <b>dasselbe</b> Auto fahren, dann fahren sie auch <b>das Gleiche</b>. 😉</li>
+    </ul>
+  </div>
+
+
+</div>
+
+<div class="szene" data-avd-academy-sim-szene="this-static">
+
+  <svg class="speicher__pfeile" id="this-static-pfeile" aria-hidden="true"></svg>
+
+  <div class="avd-academy-sim-panel szene__code">
+    <h2 class="avd-academy-sim-panel__title">Quelltext <span class="avd-academy-sim-panel__hint">Java</span></h2>
+<p class="speicher__gruppe">Die Klasse</p>
+<pre class="avd-academy-sim-code" data-kontext><code class="language-java">class Konto {
+  int stand;
+  void einzahlen(int betrag) {
+    this.stand += betrag;
+  }
+}</code></pre>
+    <p class="speicher__gruppe">Der Ablauf</p>
+<pre class="avd-academy-sim-code"><code class="language-java">giro.einzahlen(50);
+spar.einzahlen(20);
+int groesser = Math.max(3, 7);</code></pre>
+    <div class="szene__popup" id="this-static-ergebnis" hidden aria-live="polite"></div>
+  </div>
+
+  <div class="avd-academy-sim-panel avd-academy-sim-panel--ton-1 szene__stack">
+    <h2 class="avd-academy-sim-panel__title">Thread Stack <span class="avd-academy-sim-panel__hint">Thread „main“</span></h2>
+    <div class="avd-academy-sim-panel__body" id="this-static-stack"></div>
+    <p class="speicher__leer" id="this-static-stack-leer">– noch keine Variable –</p>
+  </div>
+
+  <div class="avd-academy-sim-panel avd-academy-sim-panel--ton-3 szene__heap">
+    <h2 class="avd-academy-sim-panel__title">Heap <span class="avd-academy-sim-panel__hint">die Objekte, auf denen die Methode läuft</span></h2>
+    <div class="avd-academy-sim-panel__body szene__objekte" id="this-static-heap"></div>
+    <p class="speicher__leer" id="this-static-heap-leer">– noch kein Objekt –</p>
+  </div>
+
+  <div class="avd-academy-sim-panel avd-academy-sim-panel--ton-4 szene__meta">
+    <h2 class="avd-academy-sim-panel__title">Metaspace <span class="avd-academy-sim-panel__hint">kein Heap · geladene Klassen und ihr Code</span></h2>
+    <div class="avd-academy-sim-panel__body" id="this-static-meta"></div>
+  </div>
+
+  <div class="speicher__final" id="this-static-final" hidden>
+    <p class="speicher__final-kopf">Zum Mitnehmen</p>
+    <ul class="speicher__final-liste">
+      <li>Eine Methode gehört zur <b>Klasse</b>, läuft aber auf einem <b>Objekt</b> –
+        <b>this</b> sagt ihr, auf welchem.</li>
+      <li><b>static</b> ist der Verzicht darauf: kein Objekt, kein <b>this</b>.</li>
+    </ul>
+  </div>
+
+</div>
 
 <script>
-"use strict";
-
-/* =========================================================
-   Icons (Inline-SVG, stroke = currentColor).
-   Bei Bedarf um weitere Icons im selben Stil ergänzen
-   (24×24-ViewBox, stroke-width 2, runde Linienenden).
-   ========================================================= */
-const ICONS = {
-  user: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
-  bot: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="10" x="3" y="11" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" x2="8" y1="16" y2="16"/><line x1="16" x2="16" y1="16" y2="16"/></svg>',
-  chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
-  code: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
-  gear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
-  db: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>',
-  mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>',
-  screen: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>',
-  pkg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>'
-};
-
-/* =========================================================
-   SZENARIEN – der einzige Teil, der pro Visualisierung neu
-   geschrieben wird. Die beiden Demo-Szenarien führen alle
-   Bausteine vor und werden komplett ersetzt.
-
-   Station:
-   { key, label, icon, pos:{t,l},        Position in % der Bühne
-     desk?:true,                          runde, neutrale Station (Person)
-     base?:true,                          Akzentrahmen (Hauptelement)
-     port?:{ side:'left'|'right',         Anschluss-Pille an der Boxkante;
-             kind:'socket'|'plug',        Leitungen enden automatisch darin,
-             label:'…' } }                wenn die Gegenstelle auf der
-                                          Port-Seite liegt
-
-   Schritt – beschreibt den KOMPLETTEN Bühnenzustand (deklarativ,
-   dadurch funktioniert Vor/Zurück/Springen immer korrekt):
-   { t: "Beschreibungstext",              ein Gedanke pro Schritt
-     vis: [keys],                         sichtbare Stationen
-     links: [[a, b, klasse?]],            Leitungen; Klasse '' (gestrichelt,
-                                          neutral) | 'std' | 'hot'
-     packet: null                         kein Paket
-           | { at:key, dx?, dy? }         Paket ruht an Station
-           | { from:key, to:key },        Paket wandert auf der Leitung
-     b?: { at:key, who:'u'|'a', txt,      Sprechblase an Station
-           mono?:true, pos?:'below' },
-     badge?: "Text",                      Zähler/Marker im Schritttext
-     done?: true }                        letzter Schritt des Szenarios
-
-   NEUE VIDEO-BAUSTEINE (alle optional je Schritt; Positionen in
-   % der Bühne, Breite w in % der Bühnenbreite). Eintritts-
-   Animation ist autor-gesteuert: nur Elemente mit new:true
-   animieren – beim Aufzeichnen animiert so nur, was im Schritt
-   tatsächlich neu ist ("Animation nur für Neues").
-
-   panels: [ { at:{t,l}, w, title?, new?:true,
-     lines: [ { txt, who:'u'|'a',        u rechts (Primär), a links
-       mono?:true, dim?:true,            Code-Optik / abgeblendet
-       hot?:true, new?:true,             Akzentrahmen / animiert
-       cls?:'f1'|'f2'|'f3'|'f4'          Farbfamilie wie im Füllraster
-              |'prose' } ] } ]           'prose' = Fließtext ohne Blase;
-                                         txt darf <mark class="f1..f4">
-                                         oder <mark class="bad"> enthalten
-
-   bars: { at:{t,l}, w, title?, new?:true,
-     items: [ { label, txt?,             Zeile: Label · Balken · Wert
-       value?, cls?:'win'|'hot'|'dim',   einfacher Balken (value 0–100)
-       segs?: [ {w, cls?} ],             ODER segmentierter Balken
-                                         cls: 'win'|'hot'|'dim'|'stale'
-                                         ('stale' = überholt, läuft mit)
-       new?:true } ] }                   (Segmente in % der Spur)
-
-   grid: { at:{t,l}, w, cols?,           Füllraster, z. B. SAND-Box
-     cells: [ { label, txt?, on?:true,   on=false: Platzhalter
-       cls?:'f1'|'f2'|'f3'|'f4',         Farbfamilie (CI-Block)
-       new?:true } ] }
-
-   overlay: { txt, sub? }                Aktivierungsfrage über
-                                         abgedunkelter Bühne; die
-                                         Auflösung ist der nächste
-                                         Schritt ohne Overlay
-
-   ---- v2: Register beachten (siehe CSS-Abschnitt 3b) ----
-   Hauptinhalt = panels/bars/grid/urns (Karte, voller Kontrast).
-   Erläuterungen gehören IMMER in notes, nie in ein panel.
-
-   notes: [ { at:{t,l}, w, label?,      Erläuterung: keine Karte,
-     lines: [ { txt, hot?:true } ],     feine Linie links, gedämpft
-     new?:true } ]
-
-   urns: { at:{t,l}, w, title?, sub?,   Lostöpfe: Füllstand = Wahr-
-     roll?:true,                        scheinlichkeit. roll animiert
-     items: [ { label, value,           den Ziehungsmarker von links
-       txt?, note?,                     zum markierten Topf. note:
-                                        max. 2 Zeilen, Platz wird
-                                        immer reserviert (kein
-                                        Springen zwischen Schritten).
-       cls?:'win'|'dim',
-       marker?:'Ziehung',               Marker über diesem Topf
-       new?:true } ] }
-
-   fly: { txt, from:{t,l}, to:{t,l} }   Chip wandert von A nach B und
-                                        löst sich am Ziel auf. Spielt
-                                        nur vorwärts (wie new:true).
-                                        Für die Zielkarte empfiehlt
-                                        sich lines[].delay ~0.7.
-
-   banner: { txt, eyebrow?, sub? }      Merksatz vollflächig, inver-
-                                        tiert. Andere Bausteine im
-                                        selben Schritt weglassen.
-
-   actors: [ { at:'stationKey', label,  Figuren an Stationen (v3).
-     kind?:'person'|'agent',            Mehrere gleichzeitig möglich;
-     icon?, idle?:true,                 an derselben Station werden sie
-     from?:'stationKey' } ]             in fester Reihenfolge neben-
-                                        einander gesetzt (erste Figur
-                                        mittig, weitere rechts davon –
-                                        so springt niemand, wenn eine
-                                        zweite dazukommt). from
-                                        animiert den Weg von dort –
-                                        nur vorwärts, wie fly.
-                                        idle = abgeblendet (wartet).
-                                        Sprechblasen über das normale
-                                        b:{at:stationKey,…}.
-
-   panels[].lines[].delay: Sekunden     verzögert die Zeilen-Animation
-                                        (Zusammenspiel mit fly)
-
-   anchor: "top"                        bei panels/bars/urns/notes:
-                                        an der Oberkante verankern
-                                        statt an der Mitte. Pflicht
-                                        für alles, was über mehrere
-                                        Schritte wächst – sonst
-                                        springt die ganze Gruppe,
-                                        sobald ein Eintrag dazukommt.
-   ========================================================= */
-const SCENARIOS = [
-  {
-    tab: "1 · Primitiv",
-    title: "Primitive Typen",
-    lede: "Eine primitive Variable enthält den Wert selbst. Was passiert also beim Kopieren?",
-    stations: [],
-    steps: [
-      { t: "int kontostand = 10; – die Variable enthält den Wert selbst. Sie liegt auf dem Stack, mehr braucht es nicht.",
-        vis: [], links: [], packet: null,
-        panels: [
-          { at: { t: 14, l: 20 }, w: 30, anchor: "top", title: "Der Code",
-            lines: [
-              { txt: "int kontostand = 10;", mono: true, hot: true, new: true },
-              { txt: "int kopie = kontostand;", mono: true, dim: true },
-              { txt: "kopie = 20;", mono: true, dim: true }
-            ] },
-          { at: { t: 14, l: 62 }, w: 30, anchor: "top", title: "Stack – die Variablen",
-            lines: [ { txt: "kontostand │ <mark class=\"f1\">10</mark>", mono: true, new: true } ] }
-        ],
-        notes: [
-          { at: { t: 62, l: 62 }, w: 30, label: "Merke",
-            lines: [ { txt: "Klein geschrieben – <b>int</b>, <b>double</b>, <b>boolean</b> – heißt: primitiv." } ] }
-        ] },
-
-      { t: "int kopie = kontostand; – der Wert wird kopiert. „kopie“ bekommt ein eigenes Fach mit einer eigenen 10.",
-        vis: [], links: [], packet: null,
-        panels: [
-          { at: { t: 14, l: 20 }, w: 30, anchor: "top", title: "Der Code",
-            lines: [
-              { txt: "int kontostand = 10;", mono: true, dim: true },
-              { txt: "int kopie = kontostand;", mono: true, hot: true, new: true },
-              { txt: "kopie = 20;", mono: true, dim: true }
-            ] },
-          { at: { t: 14, l: 62 }, w: 30, anchor: "top", title: "Stack – die Variablen",
-            lines: [
-              { txt: "kontostand │ <mark class=\"f1\">10</mark>", mono: true },
-              { txt: "kopie &nbsp;&nbsp;&nbsp;&nbsp; │ <mark class=\"f1\">10</mark>", mono: true, new: true }
-            ] }
-        ] },
-
-      { t: "Kurz überlegen, bevor es weitergeht.",
-        vis: [], links: [], packet: null,
-        overlay: { txt: "kopie = 20;", sub: "Was steht danach in kontostand?" } },
-
-      { t: "Nur „kopie“ ändert sich. Die beiden Fächer haben nichts miteinander zu tun – der Wert wurde beim Zuweisen kopiert.",
-        vis: [], links: [], packet: null,
-        panels: [
-          { at: { t: 14, l: 20 }, w: 30, anchor: "top", title: "Der Code",
-            lines: [
-              { txt: "int kontostand = 10;", mono: true, dim: true },
-              { txt: "int kopie = kontostand;", mono: true, dim: true },
-              { txt: "kopie = 20;", mono: true, hot: true, new: true }
-            ] },
-          { at: { t: 14, l: 62 }, w: 30, anchor: "top", title: "Stack – die Variablen",
-            lines: [
-              { txt: "kontostand │ <mark class=\"f1\">10</mark>", mono: true },
-              { txt: "kopie &nbsp;&nbsp;&nbsp;&nbsp; │ <mark class=\"f2\">20</mark>", mono: true, hot: true, new: true }
-            ] }
-        ],
-        notes: [
-          { at: { t: 66, l: 62 }, w: 30, label: "Beobachtung",
-            lines: [ { txt: "kontostand steht unverändert auf 10.", hot: true } ] }
-        ] },
-
-      { t: "Das ist die ganze Geschichte der primitiven Typen – gleich wird es interessanter.",
-        vis: [], links: [], packet: null, done: true,
-        banner: { eyebrow: "Merksatz", txt: "Bei primitiven Typen wird der Wert kopiert.",
-          sub: "Zwei Variablen, zwei Fächer, zwei unabhängige Werte." } }
-    ]
-  },
-
-  {
-    tab: "2 · Referenz",
-    title: "Referenztypen",
-    lede: "Ein Objekt liegt im Heap. In der Variablen steht nur der Wegweiser dorthin – und der wird kopiert.",
-    stations: [],
-    steps: [
-      { t: "Konto k1 = new Konto(); – new legt das Objekt im Heap an. In der Variablen landet nur der Wegweiser (hier: #A1).",
-        vis: [], links: [], packet: null,
-        panels: [
-          { at: { t: 12, l: 18 }, w: 28, anchor: "top", title: "Der Code",
-            lines: [
-              { txt: "Konto k1 = new Konto();", mono: true, hot: true, new: true },
-              { txt: "k1.stand = 100;", mono: true, dim: true },
-              { txt: "Konto k2 = k1;", mono: true, dim: true },
-              { txt: "k2.stand = 500;", mono: true, dim: true },
-              { txt: "k1 = null;", mono: true, dim: true }
-            ] },
-          { at: { t: 12, l: 50 }, w: 22, anchor: "top", title: "Stack – Variablen",
-            lines: [ { txt: "k1 │ <mark class=\"f2\">#A1</mark>", mono: true, new: true } ] },
-          { at: { t: 12, l: 80 }, w: 26, anchor: "top", title: "Heap – Objekte",
-            lines: [
-              { txt: "<mark class=\"f2\">#A1</mark> Konto", mono: true, new: true },
-              { txt: "stand = 0.0", mono: true, new: true }
-            ] }
-        ],
-        notes: [
-          { at: { t: 74, l: 18 }, w: 28, label: "Merke",
-            lines: [ { txt: "Groß geschrieben – <b>String</b>, <b>Konto</b>, <b>Kunde</b> – heißt: Referenztyp." } ] }
-        ] },
-
-      { t: "k1.stand = 100; – der Punkt folgt dem Wegweiser: Geändert wird das Objekt im Heap, nicht die Variable.",
-        vis: [], links: [], packet: null,
-        panels: [
-          { at: { t: 12, l: 18 }, w: 28, anchor: "top", title: "Der Code",
-            lines: [
-              { txt: "Konto k1 = new Konto();", mono: true, dim: true },
-              { txt: "k1.stand = 100;", mono: true, hot: true, new: true },
-              { txt: "Konto k2 = k1;", mono: true, dim: true },
-              { txt: "k2.stand = 500;", mono: true, dim: true },
-              { txt: "k1 = null;", mono: true, dim: true }
-            ] },
-          { at: { t: 12, l: 50 }, w: 22, anchor: "top", title: "Stack – Variablen",
-            lines: [ { txt: "k1 │ <mark class=\"f2\">#A1</mark>", mono: true } ] },
-          { at: { t: 12, l: 80 }, w: 26, anchor: "top", title: "Heap – Objekte",
-            lines: [
-              { txt: "<mark class=\"f2\">#A1</mark> Konto", mono: true },
-              { txt: "stand = 100.0", mono: true, hot: true, new: true }
-            ] }
-        ] },
-
-      { t: "Kurz überlegen, bevor es weitergeht.",
-        vis: [], links: [], packet: null,
-        overlay: { txt: "Konto k2 = k1;", sub: "Wird jetzt das Konto kopiert?" } },
-
-      { t: "Nein. Kopiert wird nur der Wegweiser – beide Variablen zeigen auf dasselbe Objekt. Es gibt weiterhin genau ein Konto.",
-        vis: [], links: [], packet: null,
-        panels: [
-          { at: { t: 12, l: 18 }, w: 28, anchor: "top", title: "Der Code",
-            lines: [
-              { txt: "Konto k1 = new Konto();", mono: true, dim: true },
-              { txt: "k1.stand = 100;", mono: true, dim: true },
-              { txt: "Konto k2 = k1;", mono: true, hot: true, new: true },
-              { txt: "k2.stand = 500;", mono: true, dim: true },
-              { txt: "k1 = null;", mono: true, dim: true }
-            ] },
-          { at: { t: 12, l: 50 }, w: 22, anchor: "top", title: "Stack – Variablen",
-            lines: [
-              { txt: "k1 │ <mark class=\"f2\">#A1</mark>", mono: true },
-              { txt: "k2 │ <mark class=\"f2\">#A1</mark>", mono: true, hot: true, new: true }
-            ] },
-          { at: { t: 12, l: 80 }, w: 26, anchor: "top", title: "Heap – Objekte",
-            lines: [
-              { txt: "<mark class=\"f2\">#A1</mark> Konto", mono: true },
-              { txt: "stand = 100.0", mono: true }
-            ] }
-        ],
-        notes: [
-          { at: { t: 74, l: 50 }, w: 40, label: "Beobachtung",
-            lines: [ { txt: "Zweimal derselbe Wegweiser <b>#A1</b> – kein zweites Objekt entstanden.", hot: true } ] }
-        ] },
-
-      { t: "k2.stand = 500; – wir folgen dem Wegweiser von k2 und ändern das Objekt. k1 sieht die Änderung natürlich auch.",
-        vis: [], links: [], packet: null,
-        panels: [
-          { at: { t: 12, l: 18 }, w: 28, anchor: "top", title: "Der Code",
-            lines: [
-              { txt: "Konto k1 = new Konto();", mono: true, dim: true },
-              { txt: "k1.stand = 100;", mono: true, dim: true },
-              { txt: "Konto k2 = k1;", mono: true, dim: true },
-              { txt: "k2.stand = 500;", mono: true, hot: true, new: true },
-              { txt: "k1 = null;", mono: true, dim: true }
-            ] },
-          { at: { t: 12, l: 50 }, w: 22, anchor: "top", title: "Stack – Variablen",
-            lines: [
-              { txt: "k1 │ <mark class=\"f2\">#A1</mark>", mono: true },
-              { txt: "k2 │ <mark class=\"f2\">#A1</mark>", mono: true }
-            ] },
-          { at: { t: 12, l: 80 }, w: 26, anchor: "top", title: "Heap – Objekte",
-            lines: [
-              { txt: "<mark class=\"f2\">#A1</mark> Konto", mono: true },
-              { txt: "stand = 500.0", mono: true, hot: true, new: true }
-            ] }
-        ],
-        notes: [
-          { at: { t: 74, l: 50 }, w: 40, label: "Beobachtung",
-            lines: [ { txt: "k1.stand ist jetzt ebenfalls 500 – es ist dasselbe Objekt.", hot: true } ] }
-        ] },
-
-      { t: "k1 = null; – nur der Wegweiser wird gelöscht. Das Objekt lebt weiter, solange k2 darauf zeigt.",
-        vis: [], links: [], packet: null,
-        panels: [
-          { at: { t: 12, l: 18 }, w: 28, anchor: "top", title: "Der Code",
-            lines: [
-              { txt: "Konto k1 = new Konto();", mono: true, dim: true },
-              { txt: "k1.stand = 100;", mono: true, dim: true },
-              { txt: "Konto k2 = k1;", mono: true, dim: true },
-              { txt: "k2.stand = 500;", mono: true, dim: true },
-              { txt: "k1 = null;", mono: true, hot: true, new: true }
-            ] },
-          { at: { t: 12, l: 50 }, w: 22, anchor: "top", title: "Stack – Variablen",
-            lines: [
-              { txt: "k1 │ <mark class=\"bad\">null</mark>", mono: true, hot: true, new: true },
-              { txt: "k2 │ <mark class=\"f2\">#A1</mark>", mono: true }
-            ] },
-          { at: { t: 12, l: 80 }, w: 26, anchor: "top", title: "Heap – Objekte",
-            lines: [
-              { txt: "<mark class=\"f2\">#A1</mark> Konto", mono: true },
-              { txt: "stand = 500.0", mono: true }
-            ] }
-        ],
-        notes: [
-          { at: { t: 74, l: 50 }, w: 40, label: "Und jetzt?",
-            lines: [ { txt: "k1.stand = 1000; führt hier zur <b>NullPointerException</b> – ein Wegweiser ins Nichts lässt sich nicht verfolgen." } ] }
-        ] },
-
-      { t: "Das ist der Unterschied, um den es in diesem Modul geht.",
-        vis: [], links: [], packet: null, done: true,
-        banner: { eyebrow: "Merksatz", txt: "Bei Referenztypen wird der Wegweiser kopiert – nie das Objekt.",
-          sub: "Deshalb sehen zwei Variablen dieselbe Änderung." } }
-    ]
-  },
-
-  {
-    tab: "3 · Objektgeflecht",
-    title: "Zwei Konten, eine Kundin",
-    lede: "Aus dem Klassendiagramm (Baupläne) wird zur Laufzeit ein Geflecht aus konkreten Objekten.",
-    stations: [
-      { key: "giro", label: "giro : Konto", icon: "code", pos: { t: 26, l: 26 } },
-      { key: "spar", label: "spar : Konto", icon: "code", pos: { t: 72, l: 26 } },
-      { key: "anna", label: "anna : Kunde<br>wohnort = Hamburg", icon: "user", pos: { t: 49, l: 72 }, base: true },
-      { key: "anna2", label: "anna : Kunde<br>wohnort = Bremen", icon: "user", pos: { t: 49, l: 72 }, base: true }
-    ],
-    steps: [
-      { t: "giro.inhaber = anna; – die Variable im Konto hält kein Wort, sondern das Kundenobjekt selbst.",
-        vis: ["giro", "anna"], links: [["giro", "anna", "std"]], packet: null },
-
-      { t: "spar.inhaber = anna; – dasselbe Objekt ein zweites Mal. Kein weiteres new Kunde(): Es gibt nur eine Anna.",
-        vis: ["giro", "spar", "anna"],
-        links: [["giro", "anna", "std"], ["spar", "anna", "std"]], packet: null },
-
-      { t: "Kurz überlegen, bevor es weitergeht.",
-        vis: ["giro", "spar", "anna"],
-        links: [["giro", "anna", "std"], ["spar", "anna", "std"]], packet: null,
-        overlay: { txt: "anna.wohnort = \"Bremen\";", sub: "Was gibt spar.inhaber.wohnort jetzt aus?" } },
-
-      { t: "Beide Konten sehen den neuen Wohnort – sie führen ja zum selben Objekt. Ein kopierter Name wäre jetzt veraltet.",
-        vis: ["giro", "spar", "anna2"],
-        links: [["giro", "anna2", "hot"], ["spar", "anna2", "hot"]], packet: null,
-        notes: [
-          { at: { t: 88, l: 50 }, w: 56, label: "Punkt-Schreibweise",
-            lines: [ { txt: "giro.inhaber.wohnort läuft genau diesen Pfeil entlang: Konto → Inhaber → Wohnort.", hot: true } ] }
-        ] },
-
-      { t: "Genau dafür steht die Linie im Klassendiagramm.",
-        vis: ["giro", "spar", "anna2"],
-        links: [["giro", "anna2", "std"], ["spar", "anna2", "std"]], packet: null, done: true,
-        banner: { eyebrow: "Merksatz", txt: "Eine Referenz ist kein Abzug, sondern der Weg zum Original.",
-          sub: "Deshalb steht dort Kunde inhaber – und nicht String inhaber." } }
-    ]
-  },
-
-  {
-    tab: "4 · Gleich oder dasselbe",
-    title: "„das Gleiche“ oder „dasselbe“?",
-    lede: "Zwei Objekte mit gleichem Inhalt sind noch lange nicht dasselbe Objekt.",
-    stations: [
-      { key: "a", label: "a", icon: "code", pos: { t: 28, l: 24 } },
-      { key: "b", label: "b", icon: "code", pos: { t: 72, l: 24 } },
-      { key: "o1", label: "#A1 : Kunde<br>name = Anna Berger", icon: "user", pos: { t: 28, l: 58 }, base: true },
-      { key: "o2", label: "#B7 : Kunde<br>name = Anna Berger", icon: "user", pos: { t: 72, l: 58 }, base: true }
-    ],
-    steps: [
-      { t: "Kunde a = new Kunde(); a.name = \"Anna Berger\";",
-        vis: ["a", "o1"], links: [["a", "o1", "std"]], packet: null },
-
-      { t: "Kunde b = new Kunde(); b.name = \"Anna Berger\"; – gleicher Name, aber ein zweites new: ein zweites Objekt.",
-        vis: ["a", "b", "o1", "o2"],
-        links: [["a", "o1", "std"], ["b", "o2", "std"]], packet: null },
-
-      { t: "Kurz überlegen, bevor es weitergeht.",
-        vis: ["a", "b", "o1", "o2"],
-        links: [["a", "o1", "std"], ["b", "o2", "std"]], packet: null,
-        overlay: { txt: "a == b", sub: "true oder false?" } },
-
-      { t: "false. Der Vergleich mit == fragt nach der Identität: Führen beide Wegweiser zum selben Objekt? Hier nicht.",
-        vis: ["a", "b", "o1", "o2"],
-        links: [["a", "o1", "std"], ["b", "o2", "std"]], packet: null,
-        panels: [
-          { at: { t: 50, l: 88 }, w: 20, title: "Ergebnis",
-            lines: [ { txt: "a == b<br><mark class=\"bad\">false</mark>", mono: true, new: true } ] }
-        ],
-        notes: [
-          { at: { t: 90, l: 50 }, w: 60, label: "Sprachlich",
-            lines: [ { txt: "Die beiden sind <b>das Gleiche</b> (gleicher Inhalt), aber nicht <b>dasselbe</b> (ein Objekt)." } ] }
-        ] },
-
-      { t: "Und a.equals(b)? Auch false – solange die Klasse Kunde nichts anderes festlegt, vergleicht equals ebenfalls die Identität.",
-        vis: ["a", "b", "o1", "o2"],
-        links: [["a", "o1", "std"], ["b", "o2", "std"]], packet: null,
-        panels: [
-          { at: { t: 50, l: 88 }, w: 20, title: "Ergebnis",
-            lines: [
-              { txt: "a == b<br><mark class=\"bad\">false</mark>", mono: true },
-              { txt: "a.equals(b)<br><mark class=\"bad\">false</mark>", mono: true, hot: true, new: true }
-            ] }
-        ],
-        notes: [
-          { at: { t: 90, l: 50 }, w: 60, label: "Kommt noch",
-            lines: [ { txt: "Dass equals nach dem <b>Inhalt</b> fragt, muss die Klasse selbst festlegen – das ist Thema des Moduls <b>Objektbeziehungen</b>.", hot: true } ] }
-        ] },
-
-      { t: "Bei String ist genau das schon passiert: equals vergleicht dort den Text – == aber weiterhin die Identität.",
-        vis: [], links: [], packet: null,
-        panels: [
-          { at: { t: 30, l: 30 }, w: 34, title: "Der Code", anchor: "top",
-            lines: [
-              { txt: "String s1 = \"Hamburg\";", mono: true },
-              { txt: "String s2 = new String(\"Hamburg\");", mono: true }
-            ] },
-          { at: { t: 30, l: 70 }, w: 26, title: "Ergebnis", anchor: "top",
-            lines: [
-              { txt: "s1 == s2 &nbsp; <mark class=\"bad\">false</mark>", mono: true, new: true },
-              { txt: "s1.equals(s2) &nbsp; <mark class=\"f1\">true</mark>", mono: true, new: true }
-            ] }
-        ],
-        notes: [
-          { at: { t: 78, l: 50 }, w: 56, label: "Deshalb",
-            lines: [ { txt: "Texte vergleicht man in Java mit <b>equals</b>, nie mit ==." } ] }
-        ] },
-
-      { t: "Damit ist die Frage beantwortet, mit der die Einheit angefangen hat.",
-        vis: [], links: [], packet: null, done: true,
-        banner: { eyebrow: "Merksatz", txt: "== fragt nach dem Objekt, equals nach dem Inhalt.",
-          sub: "„dasselbe“ oder nur „das Gleiche“ – im Code ist das ein Unterschied." } }
-    ]
-  },
-
-  {
-    tab: "5 · this & static",
-    title: "this und static",
-    lede: "Eine Methode läuft auf einem Objekt – this ist der Wegweiser dorthin. Statische Methoden kommen ohne Objekt aus.",
-    stations: [
-      { key: "giroA", label: "giro : Konto<br>stand = 0.0",  icon: "pkg", pos: { t: 28, l: 26 } },
-      { key: "giroB", label: "giro : Konto<br>stand = 50.0", icon: "pkg", pos: { t: 28, l: 26 } },
-      { key: "sparA", label: "spar : Konto<br>stand = 0.0",  icon: "pkg", pos: { t: 74, l: 26 } },
-      { key: "sparB", label: "spar : Konto<br>stand = 20.0", icon: "pkg", pos: { t: 74, l: 26 } },
-      { key: "klasse", label: "Klasse Konto<br>der Bauplan", icon: "screen", pos: { t: 50, l: 26 }, base: true }
-    ],
-    steps: [
-      { t: "giro.einzahlen(50); – der Aufruf steht an einem Objekt. Innerhalb der Methode zeigt this genau dorthin.",
-        vis: ["giroB", "sparA"], links: [], packet: null,
-        b: { at: "giroB", who: "a", txt: "this" },
-        panels: [
-          { at: { t: 30, l: 70 }, w: 40, anchor: "top", title: "Die Methode in Konto",
-            lines: [
-              { txt: "void einzahlen(double betrag) {", mono: true },
-              { txt: "&nbsp;&nbsp;&nbsp;&nbsp;this.stand = this.stand + betrag;", mono: true, hot: true, new: true },
-              { txt: "}", mono: true },
-              { txt: "giro.einzahlen(50);", mono: true, hot: true, new: true }
-            ] }
-        ] },
-
-      { t: "spar.einzahlen(20); – dasselbe Codestück, aber this zeigt jetzt auf spar. Deshalb genügt eine Methode für alle Objekte.",
-        vis: ["giroB", "sparB"], links: [], packet: null,
-        b: { at: "sparB", who: "a", txt: "this" },
-        panels: [
-          { at: { t: 30, l: 70 }, w: 40, anchor: "top", title: "Die Methode in Konto",
-            lines: [
-              { txt: "void einzahlen(double betrag) {", mono: true },
-              { txt: "&nbsp;&nbsp;&nbsp;&nbsp;this.stand = this.stand + betrag;", mono: true },
-              { txt: "}", mono: true },
-              { txt: "spar.einzahlen(20);", mono: true, hot: true, new: true }
-            ] }
-        ],
-        notes: [
-          { at: { t: 88, l: 50 }, w: 56, label: "Merke",
-            lines: [ { txt: "<b>this</b> ist der Wegweiser auf das Objekt, auf dem die Methode gerade läuft.", hot: true } ] }
-        ] },
-
-      { t: "Meist darf this wegbleiben – Java ergänzt es. Nötig wird es erst, wenn ein Parameter genauso heißt wie das Feld.",
-        vis: ["giroB", "sparB"], links: [], packet: null,
-        panels: [
-          { at: { t: 30, l: 70 }, w: 40, anchor: "top", title: "Mit und ohne this",
-            lines: [
-              { txt: "stand = stand + betrag;", mono: true, new: true },
-              { txt: "// dasselbe wie this.stand", mono: true, dim: true, new: true },
-              { txt: "void umziehen(String wohnort) {", mono: true, new: true },
-              { txt: "&nbsp;&nbsp;&nbsp;&nbsp;<mark class=\"f2\">this.</mark>wohnort = wohnort;", mono: true, hot: true, new: true },
-              { txt: "}", mono: true, new: true }
-            ] }
-        ],
-        notes: [
-          { at: { t: 88, l: 50 }, w: 56, label: "Ohne this",
-            lines: [ { txt: "wäre in der letzten Zeile der Parameter gemeint – die Zuweisung liefe ins Leere." } ] }
-        ] },
-
-      { t: "Kurz überlegen, bevor es weitergeht.",
-        vis: [], links: [], packet: null,
-        overlay: { txt: "Math.max(3, 7)", sub: "Auf welchem Objekt läuft dieser Aufruf – wer ist hier this?" } },
-
-      { t: "Auf keinem. Der Aufruf steht am Klassennamen: Statische Methoden gehören zur Klasse, nicht zu einem Objekt – und kennen deshalb kein this.",
-        vis: ["klasse"], links: [], packet: null,
-        panels: [
-          { at: { t: 30, l: 70 }, w: 40, anchor: "top", title: "Aufruf ohne Objekt",
-            lines: [
-              { txt: "double groesster = Math.max(3, 7);", mono: true, new: true },
-              { txt: "String zahl = String.valueOf(42);", mono: true, new: true },
-              { txt: "// Klassenname statt Objekt", mono: true, dim: true, new: true }
-            ] }
-        ],
-        notes: [
-          { at: { t: 88, l: 50 }, w: 56, label: "Woran man es sieht",
-            lines: [ { txt: "Vor dem Punkt steht ein <b>Klassenname</b> (groß geschrieben), nicht eine Variable.", hot: true } ] }
-        ] },
-
-      { t: "Und genau deshalb funktioniert this in main nicht: main ist static. Beim Start gibt es noch kein Objekt – erst new erzeugt eines.",
-        vis: ["klasse"], links: [], packet: null,
-        panels: [
-          { at: { t: 30, l: 70 }, w: 40, anchor: "top", title: "Der Einstiegspunkt",
-            lines: [
-              { txt: "public static void main(String[] args) {", mono: true, new: true },
-              { txt: "&nbsp;&nbsp;&nbsp;&nbsp;Konto giro = new Konto();", mono: true, new: true },
-              { txt: "&nbsp;&nbsp;&nbsp;&nbsp;<mark class=\"bad\">this.stand = 50;</mark>", mono: true, hot: true, new: true },
-              { txt: "}", mono: true, new: true }
-            ] }
-        ],
-        notes: [
-          { at: { t: 88, l: 50 }, w: 56, label: "Compilerfehler",
-            lines: [ { txt: "„non-static variable this cannot be referenced from a static context“ – die Meldung sagt genau das.", hot: true } ] }
-        ] },
-
-      { t: "Damit ist auch geklärt, warum die Objekte erst in main entstehen müssen.",
-        vis: [], links: [], packet: null, done: true,
-        banner: { eyebrow: "Merksatz", txt: "Instanzmethoden laufen auf einem Objekt – statische gehören zur Klasse.",
-          sub: "this gibt es nur dort, wo es ein Objekt gibt." } }
-    ]
-  }
-];
-
-/* =========================================================
-   Render-Logik – ab hier nicht verändern.
-   ========================================================= */
-let scen = 0;
-let step = 0;
-
-const $ = (id) => document.getElementById(id);
-
-SCENARIOS.forEach((s, i) => {
-  const btn = document.createElement("button");
-  btn.className = "tab";
-  btn.type = "button";
-  btn.textContent = s.tab;
-  btn.addEventListener("click", () => { scen = i; step = 0; renderScenario(); });
-  $("tabBar").appendChild(btn);
-});
-
-function stationByKey(key) {
-  return SCENARIOS[scen].stations.find((st) => st.key === key);
-}
-
-/* Endpunkt einer Leitung: Liegt die Gegenstelle auf der Seite des Ports,
-   endet das Kabel in der Port-Pille – sonst in der Stationsmitte.
-   Die Port-Position wird im DOM gemessen (Pixel → Prozent), weil die
-   Boxgröße per clamp() von der Fenstergröße abhängt. */
-function anchorPoint(key, otherKey) {
-  const st = stationByKey(key);
-  const other = stationByKey(otherKey);
-  if (st.port) {
-    const facing = st.port.side === "right" ? other.pos.l > st.pos.l : other.pos.l < st.pos.l;
-    if (facing) {
-      const stageR = $("stage").getBoundingClientRect();
-      const pEl = document.querySelector(`.station[data-key="${key}"] .port`);
-      if (pEl && stageR.width > 0) {
-        const r = pEl.getBoundingClientRect();
-        return {
-          x: ((r.left + r.width / 2) - stageR.left) / stageR.width * 100,
-          y: ((r.top + r.height / 2) - stageR.top) / stageR.height * 100
-        };
-      }
-    }
-  }
-  return { x: st.pos.l, y: st.pos.t };
-}
-
-function renderScenario() {
-  const s = SCENARIOS[scen];
-
-  document.querySelectorAll(".tab").forEach((el, i) => el.classList.toggle("active", i === scen));
-  $("scenLede").textContent = s.lede;
-
-  const box = $("stations");
-  box.innerHTML = "";
-  s.stations.forEach((st) => {
-    const div = document.createElement("div");
-    div.className = "station ghost" + (st.desk ? " desk" : "") + (st.base ? " base" : "");
-    div.dataset.key = st.key;
-    div.style.top = st.pos.t + "%";
-    div.style.left = st.pos.l + "%";
-    const port = st.port
-      ? `<span class="port ${st.port.kind} ${st.port.side}">${st.port.label}</span>`
-      : "";
-    div.innerHTML = `<div class="box">${ICONS[st.icon]}${port}</div><span class="tag">${st.label}</span>`;
-    box.appendChild(div);
-  });
-
-  renderStep(false);
-}
-
-function renderStep(animate = true) {
-  const s = SCENARIOS[scen];
-  const d = s.steps[step];
-
-  /* Stationen ein-/ausblenden */
-  document.querySelectorAll(".station").forEach((el) => {
-    el.classList.toggle("ghost", !d.vis.includes(el.dataset.key));
-  });
-
-  /* Leitungen zeichnen */
-  const svg = $("wires");
-  svg.innerHTML = "";
-  (d.links || []).forEach(([a, b, cls], i) => {
-    const pa = anchorPoint(a, b);
-    const pb = anchorPoint(b, a);
-    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    line.setAttribute("x1", pa.x); line.setAttribute("y1", pa.y);
-    line.setAttribute("x2", pb.x); line.setAttribute("y2", pb.y);
-    if (cls) line.setAttribute("class", cls);
-    if (!animate) line.style.animation = "none";
-    else line.style.animationDelay = (i * 0.05) + "s";
-    svg.appendChild(line);
-  });
-
-  /* Paket positionieren.
-     { from, to }: wandert auf der Leitung (Anker zu Anker).
-     { at }: ruht an einer Station. */
-  const pk = $("packet");
-  const setPk = (x, y) => { pk.style.left = x + "%"; pk.style.top = y + "%"; };
-  if (d.packet && d.packet.from) {
-    const pa = anchorPoint(d.packet.from, d.packet.to);
-    const pb = anchorPoint(d.packet.to, d.packet.from);
-    pk.classList.remove("hiddenfig");
-    pk.style.transition = "none";
-    setPk(animate ? pa.x : pb.x, animate ? pa.y : pb.y);
-    pk.getBoundingClientRect(); /* Reflow erzwingen, damit der Startpunkt greift */
-    pk.style.transition = "";
-    if (animate) setPk(pb.x, pb.y);
-  } else if (d.packet) {
-    const p = stationByKey(d.packet.at).pos;
-    setPk(p.l + (d.packet.dx || 0), p.t + (d.packet.dy || 0));
-    pk.classList.remove("hiddenfig");
-  } else {
-    pk.classList.add("hiddenfig");
-  }
-
-  /* Sprechblase */
-  document.querySelectorAll(".bubble").forEach((el) => el.remove());
-  if (d.b) {
-    const host = document.querySelector(`.station[data-key="${d.b.at}"]`);
-    const bubble = document.createElement("div");
-    bubble.className = "bubble " + (d.b.who || "a") + (d.b.mono ? " mono" : "") + (d.b.pos === "below" ? " below" : "");
-    bubble.textContent = d.b.txt;
-    host.appendChild(bubble);
-  }
-
-  /* Video-Bausteine: Panels, Balken, Füllraster, Overlay.
-     Deklarativ je Schritt; Eintritts-Animation nur bei new:true
-     (und nur bei Vorwärts-Navigation). */
-  document.querySelectorAll(".vpanel, .vbars, .vgrid, .voverlay, .vnote, .vurns, .vfly, .vbanner, .vactor").forEach((el) => el.remove());
-  const stage = $("stage");
-  const animIf = (isNew) => (animate && isNew) ? "" : "animation:none;";
-  /* anchor:"top" verankert an der Oberkante statt an der Mitte. Nötig für
-     Elemente, die über mehrere Schritte wachsen (Chatverlauf, Balkenliste) –
-     sonst verschiebt sich bei jedem neuen Eintrag die ganze Gruppe. */
-  const anchorIf = (a) => a === "top" ? "transform:translate(-50%,0);" : "";
-
-  (d.panels || []).forEach((p) => {
-    const el = document.createElement("div");
-    el.className = "vpanel";
-    el.style.cssText = `top:${p.at.t}%;left:${p.at.l}%;width:${p.w || 30}%;${anchorIf(p.anchor)}${animIf(p.new)}`;
-    el.innerHTML =
-      (p.title ? `<div class="ptitle">${p.title}</div>` : "") +
-      `<div class="plines">` +
-      p.lines.map((l) =>
-        `<div class="pline ${l.who || "a"}${l.mono ? " mono" : ""}${l.dim ? " dim" : ""}${l.hot ? " hot" : ""}${l.cls ? " " + l.cls : ""}" style="${animIf(l.new)}${(animate && l.new && l.delay) ? `animation-delay:${l.delay}s;` : ""}">${l.txt}</div>`
-      ).join("") +
-      `</div>`;
-    stage.appendChild(el);
-  });
-
-  if (d.bars) {
-    const el = document.createElement("div");
-    el.className = "vbars";
-    el.style.cssText = `top:${d.bars.at.t}%;left:${d.bars.at.l}%;width:${d.bars.w || 32}%;${anchorIf(d.bars.anchor)}${animIf(d.bars.new)}`;
-    el.innerHTML =
-      (d.bars.title ? `<div class="btitle">${d.bars.title}</div>` : "") +
-      d.bars.items.map((it) => {
-        const fill = it.segs
-          ? it.segs.map((sg) => `<div class="bfill ${sg.cls || ""}" style="width:${sg.w}%;${animIf(it.new)}"></div>`).join("")
-          : `<div class="bfill ${it.cls || ""}" style="width:${it.value}%;${animIf(it.new)}"></div>`;
-        return `<div class="brow"><span class="blabel">${it.label}</span><span class="btrack">${fill}</span><span class="bval">${it.txt || ""}</span></div>`;
-      }).join("");
-    stage.appendChild(el);
-  }
-
-  if (d.grid) {
-    const el = document.createElement("div");
-    el.className = "vgrid";
-    el.style.cssText =
-      `top:${d.grid.at.t}%;left:${d.grid.at.l}%;width:${d.grid.w || 50}%;${anchorIf(d.grid.anchor)}` +
-      `grid-template-columns:repeat(${d.grid.cols || d.grid.cells.length}, 1fr);`;
-    el.innerHTML = d.grid.cells.map((c) =>
-      `<div class="cell ${c.cls || ""}${c.on ? " on" : ""}${(animate && c.new) ? " new" : ""}">` +
-      `<div class="clabel">${c.label}</div>` +
-      (c.txt ? `<div class="ctxt">${c.txt}</div>` : "") +
-      `</div>`
-    ).join("");
-    stage.appendChild(el);
-  }
-
-  /* --- v2: Notizen (Register 2 – Hilfsinhalt) --- */
-  (d.notes || []).forEach((n) => {
-    const el = document.createElement("div");
-    el.className = "vnote";
-    el.style.cssText = `top:${n.at.t}%;left:${n.at.l}%;width:${n.w || 24}%;${anchorIf(n.anchor)}${animIf(n.new)}`;
-    el.innerHTML =
-      (n.label ? `<div class="nlabel">${n.label}</div>` : "") +
-      n.lines.map((l) =>
-        `<div class="nline${l.hot ? " hot" : ""}" style="${animIf(n.new)}">${l.txt}</div>`
-      ).join("");
-    stage.appendChild(el);
-  });
-
-  /* --- v2: Lostöpfe (Register 1 – Hauptinhalt) --- */
-  if (d.urns) {
-    const u = d.urns;
-    const n = u.items.length;
-    const markIdx = u.items.findIndex((it) => it.marker);
-    const el = document.createElement("div");
-    el.className = "vurns";
-    el.style.cssText = `top:${u.at.t}%;left:${u.at.l}%;width:${u.w || 34}%;${anchorIf(u.anchor)}${animIf(u.new)}`;
-    el.innerHTML =
-      (u.title ? `<div class="utitle">${u.title}</div>` : "") +
-      (u.sub ? `<div class="usub">${u.sub}</div>` : "") +
-      `<div class="urow" style="grid-template-columns:repeat(${n},1fr);">` +
-      u.items.map((it, i) =>
-        `<div class="urn ${it.cls || ""}">` +
-          `<div class="umark">${it.marker ? `<div class="pin${(animate && u.roll) ? " roll" : ""}" data-i="${i}">${it.marker}</div>` : ""}</div>` +
-          `<div class="vessel"><div class="fill" style="height:${it.value}%;${animIf(it.new)}"></div></div>` +
-          `<div class="ulabel">${it.label}</div>` +
-          `<div class="uval">${it.txt || ""}</div>` +
-          `<div class="unote">${it.note || ""}</div>` +
-        `</div>`
-      ).join("") +
-      `</div>`;
-    stage.appendChild(el);
-    /* Marker rollt von ganz links zum markierten Topf */
-    if (animate && u.roll && markIdx > 0) {
-      const cols = el.querySelectorAll(".urn");
-      const dx = cols[0].getBoundingClientRect().left - cols[markIdx].getBoundingClientRect().left;
-      el.querySelector(".pin").style.setProperty("--mdx", dx + "px");
-    }
-  }
-
-  /* --- v2: Flug-Chip (nur vorwärts, wie new:true) --- */
-  if (d.fly && animate) {
-    const r = stage.getBoundingClientRect();
-    const el = document.createElement("div");
-    el.className = "vfly";
-    el.textContent = d.fly.txt;
-    el.style.top = d.fly.to.t + "%";
-    el.style.left = d.fly.to.l + "%";
-    el.style.setProperty("--fdx", ((d.fly.from.l - d.fly.to.l) / 100) * r.width + "px");
-    el.style.setProperty("--fdy", ((d.fly.from.t - d.fly.to.t) / 100) * r.height + "px");
-    stage.appendChild(el);
-  }
-
-  /* --- v2: Banner (Register 3 – Merksatz) --- */
-  /* --- v3: Akteure --- */
-  if (d.actors) {
-    const r = stage.getBoundingClientRect();
-    const proStation = {};
-    d.actors.forEach((a) => { (proStation[a.at] = proStation[a.at] || []).push(a); });
-    Object.keys(proStation).forEach((key) => {
-      const st = stationByKey(key);
-      if (!st) return;
-      const liste = proStation[key];
-      liste.forEach((a, i) => {
-        const el = document.createElement("div");
-        const laeuft = animate && a.from && a.from !== a.at;
-        el.className = "vactor " + (a.kind || "person") + (a.idle ? " idle" : "") + (laeuft ? " walk" : "");
-        el.style.top = st.pos.t + "%";
-        el.style.left = st.pos.l + "%";
-        /* Feste Slots statt zentrierter Gruppe: Sonst verschiebt sich die
-           erste Figur, sobald eine zweite dazukommt oder weggeht. */
-        el.style.setProperty("--aoff", (i * 6.2) + "rem");
-        if (laeuft) {
-          const von = stationByKey(a.from);
-          if (von) {
-            el.style.setProperty("--adx", ((von.pos.l - st.pos.l) / 100) * r.width + "px");
-            el.style.setProperty("--ady", ((von.pos.t - st.pos.t) / 100) * r.height + "px");
-          }
+(function () {
+  "use strict";
+
+  var sim = window.AvdSimulation;
+
+  var stackBox = document.getElementById("speicher-stack");
+  var heapBox  = document.getElementById("speicher-heap");
+  var svg      = document.getElementById("speicher-pfeile");
+  var buehne   = document.querySelector(".speicher");
+
+  /* ---------------------------------------------------------------------------
+     1) AUSGANGSLAGE + ZEICHNEN
+     Der Zustand ist reine Datenhaltung: Was steht im Stack, was liegt im Heap,
+     welche Codezeile ist dran. `render` übersetzt ihn ins Bild – und NUR hier
+     wird das DOM angefasst.
+  --------------------------------------------------------------------------- */
+  sim.setup({
+    state: function () {
+      return { zeile: -1, stack: [], heap: [], liest: null, fehler: false, gc: false, final: false };
+    },
+
+    render: function (s, ctx) {
+      // Codezeile hervorheben – der Balken liegt hinter dem Text, damit die
+      // Syntaxfarben von highlight.js unangetastet bleiben.
+      var kid = ctx.szenario;
+      zeigeZeile(kid, s.zeile);
+
+      // Stack – Abgleich über den Variablennamen, damit eine bestehende Variable
+      // beim Wertwechsel NICHT neu entsteht (sonst gäbe es keinen Übergang).
+      sim.list(stackBox, s.stack, {
+        animiert: ctx.animiert,
+        key: function (v) { return v.name; },
+        create: function () {
+          var el = document.createElement("div");
+          el.className = "avd-academy-sim-cell";
+          el.innerHTML =
+            '<div><span class="avd-academy-sim-cell__label"></span>' +
+            '<span class="avd-academy-sim-cell__name"></span></div>' +
+            '<span class="avd-academy-sim-cell__value"></span>';
+          return el;
+        },
+        update: function (el, v) {
+          el.querySelector(".avd-academy-sim-cell__label").textContent = v.typ;
+          el.querySelector(".avd-academy-sim-cell__name").textContent = v.name;
+          var wert = el.querySelector(".avd-academy-sim-cell__value");
+          // Ein deklariertes, noch nicht zugewiesenes Fach ist nicht „0“ und nicht
+          // „null“ – es ist LEER. Genau diese Unterscheidung ist der Grund, warum
+          // Deklaration und Zuweisung hier zwei Schritte sind.
+          wert.textContent = v.leer ? "–" : v.wert;
+          wert.className = "avd-academy-sim-cell__value" +
+            (v.leer ? " speicher__unbelegt"
+                    : v.wert === "null" ? " speicher__null"
+                    : v.ref ? " speicher__adresse" : "");
+          // Der Fehlerzustand BEBT (siehe `.is-fehler.is-puls`) – aber nur in dem
+          // Schritt, in dem er eintritt, nicht bei jedem erneuten Zeichnen.
+          var warFehler = el.classList.contains("is-fehler");
+          var istFehler = s.fehler && v.name === "k1";
+          el.classList.toggle("is-fehler", istFehler);
+          if (istFehler && !warFehler && ctx.animiert) sim.puls(el);
+          el.classList.toggle("is-aktiv", s.liest === v.name);
+          el.id = "speicher-var-" + v.name;
         }
-        el.innerHTML = (ICONS[a.icon || (a.kind === "agent" ? "bot" : "user")] || "") +
-          `<span>${a.label}</span>`;
-        stage.appendChild(el);
       });
+
+      // Heap
+      sim.list(heapBox, s.heap, {
+        animiert: ctx.animiert,
+        key: function (o) { return o.id; },
+        create: function () {
+          var el = document.createElement("div");
+          el.className = "speicher__objekt";
+          el.innerHTML =
+            '<div class="speicher__objekt-kopf"></div>' +
+            '<div class="speicher__objekt-attr"><span>stand =</span><b></b></div>';
+          return el;
+        },
+        update: function (el, o) {
+          el.querySelector(".speicher__objekt-kopf").textContent = o.adresse + " : Konto";
+          var wert = el.querySelector(".speicher__objekt-attr b");
+          var alt = wert.textContent;
+          wert.textContent = String(o.stand);
+          el.id = "speicher-obj-" + o.id;
+          el.classList.toggle("is-unerreichbar", !!o.unerreichbar);
+          el.classList.toggle("is-gekehrt", !!o.gekehrt);
+          // Der WERTWECHSEL pulsiert – und das Lesen über k1 ebenfalls, denn
+          // genau dort ist der Lernmoment: dieselbe Zelle, anderer Weg.
+          var anlass = (alt && alt !== wert.textContent) || s.liest;
+          if (anlass && ctx.animiert) sim.puls(el);
+        }
+      });
+
+      document.getElementById("speicher-stack-leer").hidden = s.stack.length > 0;
+      document.getElementById("speicher-heap-leer").hidden = s.heap.length > 0;
+
+      // Der Reinigungsmann wird bei jedem Betreten des Schrittes NEU eingehängt –
+      // sonst liefe seine Animation beim Zurück- und Wiedervorgehen nicht erneut.
+      document.getElementById("speicher-final").hidden = !s.final;
+
+      var gc = document.getElementById("speicher-gc");
+      gc.hidden = !s.gc;
+      if (s.gc && ctx.animiert) {
+        gc.style.animation = "none";
+        void gc.offsetWidth;
+        gc.style.animation = "";
+      }
+
+      // Pfeile zuletzt – sie brauchen die Maße der eben gesetzten Kästen.
+      // Kein `requestAnimationFrame` nötig: `getBoundingClientRect()` erzwingt
+      // das Layout selbst. Über rAF gezeichnet bliebe der Pfeil stehen, wenn der
+      // Browser gerade keine Frames liefert (Hintergrund-Tab, Aufzeichnung).
+      pfeile(s, ctx.animiert);
+    }
+  });
+
+  /* ---------------------------------------------------------------------------
+     2) PFEILE – Stack-Variable zeigt auf Heap-Objekt
+     Sie liegen als eigene SVG-Fläche über der Bühne und werden nach jedem Schritt
+     sowie bei jeder Größenänderung neu berechnet.
+  --------------------------------------------------------------------------- */
+  var letzterStand = null;
+
+  function pfeile(s, animiert) {
+    letzterStand = s;
+    svg.querySelectorAll(".speicher__pfeil").forEach(function (p) { p.remove(); });
+    var rahmen = buehne.getBoundingClientRect();
+    var spur = 0;   // je Pfeil eine eigene Höhe für das Zwischenstück
+
+    s.stack.forEach(function (v) {
+      if (!v.ziel) return;
+      var von = document.getElementById("speicher-var-" + v.name);
+      var nach = document.getElementById("speicher-obj-" + v.ziel);
+      if (!von || !nach) return;
+
+      var a = von.getBoundingClientRect();
+      var b = nach.getBoundingClientRect();
+      var tafel = von.closest(".avd-academy-sim-panel").getBoundingClientRect();
+
+      // Der Pfeil verlässt die Zelle LINKS und läuft in einer Gasse NEBEN der
+      // Tafel hinunter – nicht durch sie hindurch. Innen käme er quer über die
+      // Variablen, die zwischen Start und Heap liegen.
+      var x1 = a.left - rahmen.left;
+      var y1 = a.top + a.height / 2 - rahmen.top;
+      // Eigene Gasse je Pfeil, sonst lägen k1 und k2 exakt übereinander.
+      var gasse = tafel.left - rahmen.left - 14 - spur * 20;
+      // Eintritt links am Objekt, auf verschiedenen Höhen – zwei Wegweiser auf
+      // dasselbe Objekt sollen beide sichtbar ankommen.
+      var x2 = b.left - rahmen.left - 5;
+      var y2 = b.top - rahmen.top + b.height * (0.3 + spur * 0.42);
+
+      var pfad = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      pfad.setAttribute("d", eckig([[x1, y1], [gasse, y1], [gasse, y2], [x2, y2]], 10));
+            pfad.setAttribute("class", "speicher__pfeil" + (animiert ? " is-neu" : ""));
+      svg.appendChild(pfad);
     });
   }
 
-  if (d.banner) {
-    const el = document.createElement("div");
-    el.className = "vbanner";
-    if (!animate) el.style.animation = "none";
-    el.innerHTML =
-      (d.banner.eyebrow ? `<div class="beyebrow">${d.banner.eyebrow}</div>` : "") +
-      `<div class="btxt">${d.banner.txt}</div>` +
-      (d.banner.sub ? `<div class="bsub">${d.banner.sub}</div>` : "");
-    stage.appendChild(el);
+  /* Rechtwinklige Route mit abgerundeten Ecken.
+     BEWUSST keine einzelne Bézierkurve: Die käme schräg am Ziel an, während die
+     Pfeilspitze immer in Richtung der ENDTANGENTE steht – genau daraus entsteht
+     der Eindruck, die Linie komme neben der Spitze an. Ein gerades Schlussstück
+     löst das. */
+  function eckig(punkte, radius) {
+    var d = "M " + punkte[0][0] + " " + punkte[0][1];
+    for (var i = 1; i < punkte.length - 1; i++) {
+      var vor = punkte[i - 1], ecke = punkte[i], nach = punkte[i + 1];
+      var r = Math.min(radius, laenge(vor, ecke) / 2, laenge(ecke, nach) / 2);
+      var a = weg(ecke, vor, r);      // r weit von der Ecke Richtung Vorgänger
+      var b = weg(ecke, nach, r);     // r weit von der Ecke Richtung Nachfolger
+      d += " L " + a[0] + " " + a[1] +
+           " Q " + ecke[0] + " " + ecke[1] + ", " + b[0] + " " + b[1];
+    }
+    var letzter = punkte[punkte.length - 1];
+    return d + " L " + letzter[0] + " " + letzter[1];
   }
 
-  if (d.overlay) {
-    const el = document.createElement("div");
-    el.className = "voverlay";
-    if (!animate) el.style.animation = "none";
-    el.innerHTML = `<div class="q">${d.overlay.txt}</div>` +
-      (d.overlay.sub ? `<div class="sub">${d.overlay.sub}</div>` : "");
-    stage.appendChild(el);
+  function laenge(p, q) { return Math.hypot(q[0] - p[0], q[1] - p[1]); }
+
+  function weg(von, zu, r) {
+    var l = laenge(von, zu) || 1;
+    return [von[0] + (zu[0] - von[0]) / l * r, von[1] + (zu[1] - von[1]) / l * r];
   }
 
-  /* Schritttext + Badge */
-  $("stepText").innerHTML = d.t + (d.badge ? `<span class="badge-count">${d.badge}</span>` : "");
-  $("historyTitle").textContent = `Ablauf · ${s.title} (${step + 1} / ${s.steps.length})`;
+  window.addEventListener("resize", function () {
+    if (letzterStand) pfeile(letzterStand, false);
+  });
 
-  /* Seitenleiste */
-  const list = $("stepList");
-  list.innerHTML = "";
-  for (let i = 0; i <= step; i++) {
-    const card = document.createElement("div");
-    card.className = "step-card" + (i === step ? " current" : "");
-    if (!animate || i < step) card.style.animation = "none";
-    card.innerHTML = `<span class="no">${i + 1}</span><span>${s.steps[i].t}</span>`;
-    card.addEventListener("click", () => { step = i; renderStep(false); });
-    list.appendChild(card);
+  /* ---------------------------------------------------------------------------
+     3) DIE SCHRITTE
+     Jedes `apply` beschreibt NUR den Zustand – es läuft beim Zurückspringen
+     erneut und darf deshalb nichts anderes tun.
+  --------------------------------------------------------------------------- */
+  sim.registerScenario({
+    id: "abgrenzung",
+    titel: "Abgrenzung zu primitiven Datentypen",
+    beschreibung: "Was beim Kopieren passiert – bei einem <code>int</code> und bei einem Objekt. " +
+                  "Bis hin zur NullPointerException und dem Garbage Collector.",
+    steps: [
+    {
+      titel: "Zwei Lager",
+      text: "<p>Java verwahrt Daten an <b>zwei</b> Orten. Im <b>Thread Stack</b> liegen die " +
+            "Variablen selbst – ein Fach je Name. Im <b>Heap</b> darunter liegen die Objekte.</p>" +
+            "<p><b>Jeder Thread hat seinen eigenen Stack</b> – die blassen Kästen oben sind die " +
+            "der anderen. Der Heap dagegen gehört ihnen allen gemeinsam. Genau daher rührt " +
+            "später die halbe Nebenläufigkeits-Problematik.</p>" +
+            "<p>Wir gehen den Quelltext links Zeile für Zeile durch – im Thread „main“.</p>",
+      apply: function () { /* Ausgangslage */ }
+    },
+
+    /* --- Primitive Typen --------------------------------------------------- */
+    {
+      titel: "int kontostand;",
+      text: "<p>Die <b>Deklaration</b> schafft nur das <b>Fach</b>: ein Platz im Stack, " +
+            "beschriftet mit <code>kontostand</code>, groß genug für ein <code>int</code>.</p>" +
+            "<p>Drin ist noch nichts. Nicht <code>0</code>, nicht <code>null</code> – " +
+            "<b>nichts</b>. Java lässt Dich aus so einem Fach auch nicht lesen.</p>",
+      apply: function (s) {
+        s.zeile = 0;
+        s.stack.push({ name: "kontostand", typ: "int", wert: "", leer: true });
+      }
+    },
+    {
+      titel: "kontostand = 10;",
+      text: "<p>Jetzt die <b>Zuweisung</b>: Der Wert <code>10</code> landet <b>direkt im Fach</b>. " +
+            "Kein Objekt, kein Umweg.</p>" +
+            "<p>Zwei Zeilen, zwei Vorgänge – meist schreibt man sie zusammen, aber es " +
+            "bleiben zwei.</p>",
+      apply: function (s) {
+        s.zeile = 1;
+        finde(s.stack, "kontostand").wert = "10";
+        finde(s.stack, "kontostand").leer = false;
+      }
+    },
+    {
+      titel: "int kopie;",
+      text: "<p>Ein <b>eigenes, zweites Fach</b> entsteht – wieder leer. Mit " +
+            "<code>kontostand</code> hat es bis hierher nichts zu tun.</p>",
+      apply: function (s) {
+        s.zeile = 2;
+        s.stack.push({ name: "kopie", typ: "int", wert: "", leer: true });
+      }
+    },
+    {
+      titel: "kopie = kontostand;",
+      text: "<p>Rechts steht ein Fach – gelesen wird sein <b>Inhalt</b>, also <code>10</code>. " +
+            "Diese <code>10</code> wird ins linke Fach <b>kopiert</b>.</p>" +
+            "<p>Zwei Fächer, zwei Zehnen. Keine Verbindung.</p>",
+      apply: function (s) {
+        s.zeile = 3;
+        finde(s.stack, "kopie").wert = "10";
+        finde(s.stack, "kopie").leer = false;
+      }
+    },
+    {
+      titel: "kopie = 20;",
+      text: "<p>Nur <code>kopie</code> ändert sich. <code>kontostand</code> bleibt bei <code>10</code>.</p>" +
+            "<p><b>Merke:</b> Bei primitiven Typen wird der Wert kopiert – nichts bleibt verbunden.</p>",
+      apply: function (s) {
+        s.zeile = 4;
+        finde(s.stack, "kopie").wert = "20";
+      }
+    },
+
+    /* --- Referenztypen ----------------------------------------------------- */
+    {
+      titel: "Konto k1;",
+      text: "<p>Auch hier zuerst nur das <b>Fach</b> – und zwar eines im Stack, nicht im Heap. " +
+            "Es ist nicht groß genug für ein Konto, sondern nur für eine <b>Adresse</b>.</p>" +
+            "<p><code>new</code> stand hier noch nirgends: Es gibt <b>kein Objekt</b>.</p>",
+      apply: function (s) {
+        s.zeile = 5;
+        s.stack.push({ name: "k1", typ: "Konto", wert: "", leer: true, ref: true });
+      }
+    },
+    {
+      titel: "k1 = new Konto(100);",
+      text: "<p>Zwei Dinge auf einmal: <code>new</code> legt das <b>Objekt im Heap</b> an – " +
+            "und liefert dessen <b>Adresse</b> <code>#A1</code> zurück. Die wird ins Fach " +
+            "von <code>k1</code> geschrieben.</p>" +
+            "<p>Das Konto liegt unten. Oben steht nur der Wegweiser.</p>",
+      apply: function (s) {
+        s.zeile = 6;
+        s.heap.push({ id: "h1", adresse: "#A1", stand: 100 });
+        var k1 = finde(s.stack, "k1");
+        k1.wert = "#A1"; k1.leer = false; k1.ziel = "h1";
+      }
+    },
+    {
+      titel: "Konto k2;",
+      text: "<p>Ein zweites Adressfach – leer. Noch zeigt es nirgendwohin.</p>",
+      apply: function (s) {
+        s.zeile = 7;
+        s.stack.push({ name: "k2", typ: "Konto", wert: "", leer: true, ref: true });
+      }
+    },
+    {
+      titel: "k2 = k1;",
+      text: "<p>Dieselbe Regel wie oben: Kopiert wird der <b>Inhalt des Fachs</b> – und der ist " +
+            "hier eine Adresse.</p>" +
+            "<p>Es entsteht <b>kein zweites Konto</b>. Zwei Wegweiser, ein Ziel.</p>",
+      apply: function (s) {
+        s.zeile = 8;
+        var k2 = finde(s.stack, "k2");
+        k2.wert = "#A1"; k2.leer = false; k2.ziel = "h1";
+      }
+    },
+    {
+      titel: "k2.stand = 500;",
+      text: "<p>Der Punkt folgt dem Wegweiser nach unten in den Heap und ändert <b>dort</b> " +
+            "den Wert.</p>" +
+            "<p>Und <code>k1</code>? Zeigt auf dasselbe Objekt – sieht die 500 also auch. " +
+            "Das ist der Unterschied, der in echtem Code Fehler kostet.</p>",
+      apply: function (s) {
+        s.zeile = 9;
+        s.heap.filter(function (o) { return o.id === "h1"; })[0].stand = 500;
+      }
+    },
+    {
+      titel: "print(k1.stand);",
+      text: "<p>Gelesen wird über <code>k1</code> – und heraus kommt <b>500</b>, nicht 100.</p>" +
+            "<p><code>k1</code> wurde nie angefasst. Geändert hat jemand über <code>k2</code>. " +
+            "Beide Wege führen zu <b>demselben</b> Objekt, und ein Objekt hat nur einen " +
+            "Zustand.</p>" +
+            "<p>Genau hier entstehen die Fehler, die man beim Lesen des Codes nicht sieht: " +
+            "Die Änderung steht woanders.</p>",
+      apply: function (s) {
+        s.zeile = 10;
+        s.liest = "k1";
+      },
+      dauer: 4000
+    },
+    {
+      titel: "k1 = null;",
+      text: "<p>Nur der <b>Wegweiser</b> wird gelöscht, nicht das Objekt. Es lebt weiter, " +
+            "solange <code>k2</code> darauf zeigt.</p>" +
+            "<p><code>null</code> ist übrigens etwas anderes als das leere Fach vom Anfang: " +
+            "Hier steht bewusst „nirgendwohin“ drin.</p>",
+      apply: function (s) {
+        s.zeile = 11;
+        s.liest = null;          // die Hervorhebung des Leseschritts endet hier
+        var k1 = finde(s.stack, "k1");
+        k1.wert = "null";
+        k1.ziel = null;
+      }
+    },
+    {
+      titel: "k1.stand = 1000; 💥",
+      text: "<p>Dem Wegweiser folgen, der auf <b>nichts</b> zeigt – das geht nicht: " +
+            "<b>NullPointerException</b>.</p>" +
+            "<p>Nicht das Objekt ist weg. Der <b>Weg dorthin</b> ist weg.</p>",
+      apply: function (s) {
+        s.zeile = 12;
+        s.fehler = true;
+      },
+      dauer: 4200
+    },
+    {
+      titel: "k2 = null;",
+      text: "<p>Nehmen wir an, die Exception war abgefangen – das Programm läuft weiter. " +
+            "Jetzt wird auch der letzte Wegweiser gelöscht.</p>" +
+            "<p>Das Objekt ist noch <b>da</b> – aber <b>unerreichbar</b>: Kein Fach in " +
+            "keinem Stack enthält seine Adresse mehr. Niemand kommt je wieder hin.</p>",
+      apply: function (s) {
+        s.zeile = 13;
+        s.fehler = false;
+        finde(s.stack, "k2").wert = "null";
+        finde(s.stack, "k2").ziel = null;
+        s.heap[0].unerreichbar = true;
+      }
+    },
+    {
+      titel: "Irgendwann kommt der Garbage Collector",
+      text: "<p>Speicher freigeben musst Du in Java nicht. Das erledigt der " +
+            "<b>Garbage Collector</b>: Er sucht, was nicht mehr erreichbar ist, und " +
+            "kehrt es weg.</p>" +
+            "<p><b>Im Hintergrund und irgendwann</b> – nicht in dem Moment, in dem die " +
+            "letzte Referenz fällt. Zwischen „unerreichbar“ und „weg“ liegt eine " +
+            "unbestimmte Zeit, auf die Du keinen Einfluss hast.</p>" +
+            "<p>Deshalb: <code>null</code> zu setzen gibt nichts frei. Es nimmt nur " +
+            "den letzten Weg zum Objekt weg – den Rest macht er.</p>",
+      apply: function (s) {
+        s.zeile = 13;
+        s.gc = true;
+        s.heap[0].unerreichbar = true;
+        s.heap[0].gekehrt = true;
+      },
+      dauer: 6000
+    },
+    {
+      titel: "Zum Mitnehmen",
+      text: "<p>Bei primitiven Typen ist der Inhalt des Fachs der <b>Wert</b> – die " +
+            "Kopie ist eigenständig. Bei Objekten ist es die <b>Adresse</b> – die " +
+            "Kopie führt zum selben Objekt.</p>" +
+            "<p>Und ein Objekt lebt genau so lange, wie noch <b>irgendein</b> Fach " +
+            "seine Adresse kennt.</p>",
+      apply: function (s) {
+        s.zeile = 13;
+        s.heap.length = 0;      // aufgeräumt
+        s.gc = false;           // der Reinigungsmann ist wieder weg
+        s.final = true;         // die Merksätze treten nach vorn
+      }
+    }
+    ]
+  });
+
+  /* ===========================================================================
+     GEMEINSAMES FÜR DIE SZENARIEN 2–4
+     Alle drei zeigen dasselbe Bild: Quelltext, ein Thread Stack, ein Heap mit
+     Objektkarten und Pfeilen dazwischen. Deshalb EIN Zeichner statt drei –
+     unterschieden wird nur über die Kennung des Szenarios (`ctx.szenario`).
+     =========================================================================== */
+  function el(id) { return document.getElementById(id); }
+
+  /* Die laufende Codezeile. Ein Szenario kann MEHRERE Codeblöcke haben (etwa
+     „Primitive Typen“ und „Referenztypen“ untereinander); die Schrittnummer zählt
+     durchgehend über alle. Deshalb wird sie hier auf den passenden Block und
+     dessen eigene Zeilennummer heruntergerechnet. */
+  function zeigeZeile(kid, n) {
+    // `data-kontext` markiert Blöcke, die NICHT durchlaufen werden – etwa eine
+    // Klassendefinition, die als Kulisse danebensteht. Sie zählen auch nicht mit,
+    // sonst verschöbe sich die Nummerierung des Ablaufs.
+    var bloecke = document.querySelectorAll(
+      '[data-avd-academy-sim-szene="' + kid + '"] .avd-academy-sim-code:not([data-kontext])');
+    var rest = (n === null || n === undefined || n < 0) ? -1 : n;
+    Array.prototype.forEach.call(bloecke, function (block) {
+      var code = block.querySelector("code");
+      var anzahl = code ? code.textContent.replace(/\n$/, "").split("\n").length : 0;
+      if (rest >= 0 && rest < anzahl) {
+        sim.codeZeile(block, rest);
+        rest = -1;              // verbraucht – die übrigen Blöcke bleiben leer
+      } else {
+        sim.codeZeile(block, null);
+        if (rest >= 0) rest -= anzahl;
+      }
+    });
   }
-  list.scrollTop = list.scrollHeight;
 
-  /* Buttons */
-  const next = $("btnNext");
-  next.classList.remove("done");
-  if (!d.done || scen < SCENARIOS.length - 1) {
-    next.disabled = false;
-    next.textContent = "Weiter";
-  } else {
-    next.disabled = true;
-    next.classList.add("done");
-    next.textContent = "Simulation beendet";
+  /* Eine Objektkarte im Objektdiagramm-Stil: „#A1 : Konto“, darunter je Attribut
+     eine Zeile. Attribute, die auf ein anderes Objekt zeigen, bekommen eine
+     eigene id – daran hängt später der Pfeil. */
+  function objektKarte() {
+    var k = document.createElement("div");
+    k.className = "speicher__objekt";
+    k.innerHTML = '<div class="speicher__objekt-kopf"></div><div class="speicher__objekt-felder"></div>';
+    return k;
   }
-  $("btnBack").disabled = scen === 0 && step === 0;
-}
 
-function goNext() {
-  const s = SCENARIOS[scen];
-  if (step < s.steps.length - 1) {
-    step++;
-    renderStep();
-  } else if (scen < SCENARIOS.length - 1) {
-    scen++;
-    step = 0;
-    renderScenario();
+  function objektFuellen(k, o, kid) {
+    k.querySelector(".speicher__objekt-kopf").textContent = o.adresse + " : " + o.klasse;
+    var felder = k.querySelector(".speicher__objekt-felder");
+    var alt = felder.textContent;
+    felder.textContent = "";
+    (o.felder || []).forEach(function (f) {
+      var z = document.createElement("div");
+      z.className = "speicher__objekt-attr";
+      z.id = kid + "-attr-" + o.id + "-" + f.name;
+      var name = document.createElement("span");
+      name.textContent = f.name + " =";
+      var wert = document.createElement("b");
+      wert.textContent = f.wert;
+      if (f.ref) wert.className = "speicher__adresse";
+      if (f.wert === "null") wert.className = "speicher__null";
+      z.appendChild(name);
+      z.appendChild(wert);
+      felder.appendChild(z);
+    });
+    k.id = kid + "-obj-" + o.id;
+    // NUR eine echte Änderung meldet „geändert“. Bei einer frisch entstandenen
+    // Karte war `alt` leer – die meldete sonst ebenfalls eine Änderung und
+    // pulsierte zusätzlich zu ihrer Einblend-Animation: zwei Anstöße
+    // hintereinander, die wie ein Ruckeln aussehen.
+    return alt !== "" && alt !== felder.textContent;
   }
-}
 
-function goBack() {
-  if (step > 0) {
-    step--;
-    renderStep(false);
-  } else if (scen > 0) {
-    scen--;
-    renderScenario();
-    step = SCENARIOS[scen].steps.length - 1;
-    renderStep(false);
+  /* Pfeile einer Szene neu zeichnen. `verbindungen` sind Paare von Element-IDs;
+     die Route läuft links an den Tafeln vorbei (siehe Szenario 1). */
+  function pfeileZeichnen(kid, verbindungen, animiert) {
+    var svg = el(kid + "-pfeile");
+    var buehne = svg && svg.parentNode;
+    if (!svg || !buehne) return;
+    svg.querySelectorAll(".speicher__pfeil").forEach(function (p) { p.remove(); });
+    var rahmen = buehne.getBoundingClientRect();
+    verbindungen.forEach(function (v, spur) {
+      var von = el(v.von), nach = el(v.nach);
+      if (!von || !nach) return;
+      var a = von.getBoundingClientRect();
+      var b = nach.getBoundingClientRect();
+      var tafelVon  = von.closest(".avd-academy-sim-panel").getBoundingClientRect();
+      var tafelNach = nach.closest(".avd-academy-sim-panel").getBoundingClientRect();
+      var y1 = a.top + a.height / 2 - rahmen.top;
+
+      var x1, gasse, x2, y2;
+      var gleicheTafel = tafelVon.left === tafelNach.left && tafelVon.top === tafelNach.top;
+
+      if (gleicheTafel) {
+        /* Beide in DERSELBEN Tafel – etwa zwei Objekte im Heap nebeneinander.
+           Dann läuft der Pfeil durch die Lücke ZWISCHEN ihnen und kommt auf der
+           Seite an, die dem Start zugewandt ist. Träte er stur links ein, liefe
+           er quer durch das Zielobjekt hindurch. */
+        var linksHin = b.left < a.left;
+        x1 = (linksHin ? a.left : a.right) - rahmen.left;
+        x2 = (linksHin ? b.right + 5 : b.left - 5) - rahmen.left;
+        // Die Gasse liegt mittig zwischen den beiden Kästen.
+        var innen = linksHin ? (b.right + a.left) / 2 : (a.right + b.left) / 2;
+        gasse = innen - rahmen.left + spur * 10;
+        y2 = b.top - rahmen.top + b.height * (0.3 + spur * 0.25);
+        var pfadQuer = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        pfadQuer.setAttribute("d", eckig([[x1, y1], [gasse, y1], [gasse, y2], [x2, y2]], 10));
+        pfadQuer.setAttribute("class", "speicher__pfeil" + (animiert ? " is-neu" : ""));
+        svg.appendChild(pfadQuer);
+        return;
+      }
+
+      /* Verschiedene Tafeln (Stack oben, Heap unten): NEBEN der Quelltafel
+         hinunter, oberhalb der Zieltafel herüber und von OBEN ins Objekt.
+         Von links einzutreten hieße, quer durch alle Objekte zu laufen, die
+         weiter links im Heap stehen. */
+      x1 = a.left - rahmen.left;
+      gasse = tafelVon.left - rahmen.left - 14 - spur * 20;
+      var quer = tafelNach.top - rahmen.top - 14 - spur * 12;
+      x2 = b.left + b.width / 2 - rahmen.left;
+      y2 = b.top - rahmen.top - 4;
+
+      var pfad = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      pfad.setAttribute("d", eckig([[x1, y1], [gasse, y1], [gasse, quer], [x2, quer], [x2, y2]], 10));
+      pfad.setAttribute("class", "speicher__pfeil" + (animiert ? " is-neu" : ""));
+      svg.appendChild(pfad);
+    });
   }
-}
 
-$("btnNext").addEventListener("click", goNext);
-$("btnBack").addEventListener("click", goBack);
-$("btnReset").addEventListener("click", () => { step = 0; renderScenario(); });
+  /* Der gemeinsame Zeichner. Der Zustand ist überall gleich aufgebaut:
+     { zeile, stack: [], heap: [], pfeile: [], ergebnis: null }. */
+  function zeichneSzene(s, ctx) {
+    var kid = ctx.szenario;
 
-document.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") { e.preventDefault(); goNext(); }
-  else if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); goBack(); }
-  else if (/^[1-9]$/.test(e.key) && Number(e.key) <= SCENARIOS.length) { scen = Number(e.key) - 1; step = 0; renderScenario(); }
-  else if (e.key.toLowerCase() === "r") { step = 0; renderScenario(); }
-  else if (e.key.toLowerCase() === "c") { document.body.classList.toggle("capture"); renderStep(false); }
-  else if (e.key.toLowerCase() === "t") { document.body.classList.toggle("show-info"); }
-});
+    zeigeZeile(kid, s.zeile);
 
-/* Capture-Modus für die Video-Aufzeichnung: ?capture in der URL */
-if (new URLSearchParams(location.search).has("capture")) {
-  document.body.classList.add("capture");
-}
+    sim.list(el(kid + "-stack"), s.stack, {
+      animiert: ctx.animiert,
+      key: function (v) { return v.name; },
+      create: function () {
+        var c = document.createElement("div");
+        c.className = "avd-academy-sim-cell";
+        c.innerHTML = '<div><span class="avd-academy-sim-cell__label"></span>' +
+                      '<span class="avd-academy-sim-cell__name"></span></div>' +
+                      '<span class="avd-academy-sim-cell__value"></span>';
+        return c;
+      },
+      update: function (c, v) {
+        c.querySelector(".avd-academy-sim-cell__label").textContent = v.typ;
+        c.querySelector(".avd-academy-sim-cell__name").textContent = v.name;
+        var w = c.querySelector(".avd-academy-sim-cell__value");
+        w.textContent = v.leer ? "–" : v.wert;
+        w.className = "avd-academy-sim-cell__value" +
+          (v.leer ? " speicher__unbelegt" : v.ref ? " speicher__adresse" : "");
+        c.classList.toggle("is-aktiv", s.betont === v.name);
+        c.id = kid + "-var-" + v.name;
+      }
+    });
 
-renderScenario();
-window.addEventListener("resize", () => renderStep(false));
+    sim.list(el(kid + "-heap"), s.heap, {
+      animiert: ctx.animiert,
+      key: function (o) { return o.id; },
+      create: objektKarte,
+      update: function (k, o) {
+        var geaendert = objektFuellen(k, o, kid);
+        k.classList.toggle("is-aktiv", s.betont === o.id);
+        if (o.spalte !== undefined) k.style.order = o.spalte;
+        if (geaendert && ctx.animiert) sim.puls(k);
+      }
+    });
+
+    // Metaspace – nur „this und static“ hat diese Tafel.
+    var metaBox = el(kid + "-meta");
+    if (metaBox) {
+      sim.list(metaBox, s.meta || [], {
+        animiert: ctx.animiert,
+        key: function (k) { return k.id; },
+        create: function () {
+          var n = document.createElement("div");
+          n.className = "speicher__objekt is-klasse";
+          n.innerHTML = '<div class="speicher__objekt-kopf"></div><div class="speicher__objekt-felder"></div>';
+          return n;
+        },
+        update: function (n, k) {
+          n.querySelector(".speicher__objekt-kopf").textContent = "class " + k.name;
+          var felder = n.querySelector(".speicher__objekt-felder");
+          felder.textContent = "";
+          (k.member || []).forEach(function (m) {
+            var z = document.createElement("div");
+            z.className = "speicher__objekt-attr";
+            var a = document.createElement("span");
+            a.textContent = m;
+            z.appendChild(a);
+            felder.appendChild(z);
+          });
+          n.id = kid + "-klasse-" + k.id;
+          n.classList.toggle("is-aktiv", s.betont === "klasse:" + k.id);
+        }
+      });
+    }
+
+    // Schlussbild mit den Merksätzen – wie in Szenario 1.
+    var fin = el(kid + "-final");
+    if (fin) fin.hidden = !s.final;
+
+    el(kid + "-stack-leer").hidden = s.stack.length > 0;
+    el(kid + "-heap-leer").hidden = s.heap.length > 0;
+
+    var erg = el(kid + "-ergebnis");
+    if (erg) {
+      erg.textContent = "";
+      // Das Ergebnis gehört an den CODE, nicht in den Heap: Es ist die Antwort auf
+      // die Zeile, die gerade läuft – kein Objekt im Speicher.
+      erg.hidden = !(s.ergebnis && s.ergebnis.length);
+      (s.ergebnis || []).forEach(function (e) {
+        var d = document.createElement("div");
+        // Wahrheitswerte werden eingefärbt (grün/rot), alles andere bleibt neutral –
+        // eine Zahl ist weder richtig noch falsch.
+        var boolesch = typeof e.wert === "boolean";
+        d.className = "szene__ergebnis" + (boolesch ? (e.wert ? " is-wahr" : " is-falsch") : "");
+        d.innerHTML = "<span></span><b></b>";
+        d.querySelector("span").textContent = e.ausdruck;
+        d.querySelector("b").textContent = boolesch ? (e.wert ? "true" : "false") : String(e.wert);
+        erg.appendChild(d);
+        if (ctx.animiert) d.classList.add("is-neu");
+      });
+    }
+
+    pfeileZeichnen(kid, s.pfeile || [], ctx.animiert);
+  }
+
+  function leereSzene() {
+    return { zeile: -1, stack: [], heap: [], meta: [], pfeile: [], ergebnis: [],
+             betont: null, final: false };
+  }
+
+  /* ---------------------------------------------------------------------------
+     SZENARIO 2 – Objektgeflecht
+     Ein Schritt = genau EINE Codezeile. Zwei Zeilen auf einmal lassen die
+     Lernenden raten, welche von beiden den Effekt hatte.
+     --------------------------------------------------------------------------- */
+  sim.registerScenario({
+    id: "objektgeflecht",
+    titel: "Objektgeflecht",
+    beschreibung: "Zwei Konten, eine Kundin: Aus dem Klassendiagramm (Baupläne) wird " +
+                  "zur Laufzeit ein Geflecht aus konkreten Objekten.",
+    state: leereSzene,
+    render: zeichneSzene,
+    steps: [
+      {
+        titel: "Baupläne und Dinge",
+        text: "<p>Das Klassendiagramm zeigt <b>Baupläne</b>: eine Klasse <code>Konto</code>, " +
+              "eine Klasse <code>Kunde</code>, dazwischen eine Linie.</p>" +
+              "<p>Zur Laufzeit entsteht daraus etwas anderes: <b>konkrete Objekte</b>, " +
+              "und aus der Linie werden Pfeile. Sehen wir zu.</p>",
+        apply: function () {}
+      },
+      {
+        titel: "Kunde anna = new Kunde();",
+        text: "<p>Ein Kundenobjekt entsteht im Heap. Die Felder sind noch leer – " +
+              "<code>null</code>, weil es Referenzen auf <code>String</code>-Objekte sind.</p>",
+        apply: function (s) {
+          s.zeile = 0;
+          s.heap.push({ id: "anna", adresse: "#K1", klasse: "Kunde", spalte: 0,
+                        felder: [{ name: "name", wert: "null" }, { name: "wohnort", wert: "null" }] });
+          s.stack.push({ name: "anna", typ: "Kunde", wert: "#K1", ref: true });
+        }
+      },
+      {
+        titel: "anna.name = \"Anna Berger\";",
+        text: "<p>Der Punkt folgt dem Wegweiser: Geschrieben wird <b>im Heap</b>, am Objekt.</p>",
+        apply: function (s) {
+          s.zeile = 1;
+          s.heap[0].felder[0] = { name: "name", wert: "\"Anna Berger\"" };
+        }
+      },
+      {
+        titel: "anna.wohnort = \"Bremen\";",
+        text: "<p>Dasselbe für das zweite Feld. Im Stack steht weiterhin nur die " +
+              "Adresse – dort ändert sich nichts.</p>",
+        apply: function (s) {
+          s.zeile = 2;
+          s.heap[0].felder[0] = { name: "name", wert: "\"Anna Berger\"" };
+          s.heap[0].felder[1] = { name: "wohnort", wert: "\"Bremen\"" };
+        }
+      },
+      {
+        titel: "Konto giro = new Konto();",
+        text: "<p>Ein Konto entsteht – noch ohne Inhaberin. Das Feld <code>inhaber</code> " +
+              "ist <code>null</code>: Es <b>zeigt auf nichts</b>.</p>",
+        apply: function (s) {
+          s.zeile = 3;
+          s.heap[0].felder[0] = { name: "name", wert: "\"Anna Berger\"" };
+          s.heap[0].felder[1] = { name: "wohnort", wert: "\"Bremen\"" };
+          s.heap.push({ id: "giro", adresse: "#A1", klasse: "Konto", spalte: -1,
+                        felder: [{ name: "stand", wert: "0" }, { name: "inhaber", wert: "null" }] });
+          s.stack.push({ name: "giro", typ: "Konto", wert: "#A1", ref: true });
+        }
+      },
+      {
+        titel: "giro.inhaber = anna;",
+        text: "<p>Jetzt die Linie aus dem Klassendiagramm – als <b>Pfeil zwischen zwei " +
+              "Objekten</b>. Das Konto hält kein Wort, sondern das Kundenobjekt selbst.</p>",
+        apply: function (s) {
+          s.zeile = 4;
+          s.heap[1].felder[1] = { name: "inhaber", wert: "#K1", ref: true };
+          s.pfeile.push({ von: "objektgeflecht-attr-giro-inhaber", nach: "objektgeflecht-obj-anna" });
+        }
+      },
+      {
+        titel: "Konto spar = new Konto();",
+        text: "<p>Ein zweites Konto – wieder ohne Inhaberin.</p>",
+        apply: function (s) {
+          s.zeile = 5;
+          s.heap.push({ id: "spar", adresse: "#A2", klasse: "Konto", spalte: 1,
+                        felder: [{ name: "stand", wert: "0" }, { name: "inhaber", wert: "null" }] });
+          s.stack.push({ name: "spar", typ: "Konto", wert: "#A2", ref: true });
+        }
+      },
+      {
+        titel: "spar.inhaber = anna;",
+        text: "<p>Dasselbe Objekt ein zweites Mal – <b>kein weiteres <code>new Kunde()</code></b>. " +
+              "Es gibt genau eine Anna, und zwei Konten führen zu ihr.</p>",
+        apply: function (s) {
+          s.zeile = 6;
+          s.heap[2].felder[1] = { name: "inhaber", wert: "#K1", ref: true };
+          s.pfeile.push({ von: "objektgeflecht-attr-spar-inhaber", nach: "objektgeflecht-obj-anna" });
+        }
+      },
+      {
+        titel: "anna.wohnort = \"Hamburg\";",
+        text: "<p>Anna zieht um. Geändert wird <b>ein</b> Objekt – und <b>beide</b> Konten " +
+              "sehen den neuen Wohnort, weil beide Pfeile dorthin führen.</p>" +
+              "<p>Ein kopierter Name wäre jetzt an einer Stelle veraltet. Genau davor " +
+              "schützt die Referenz.</p>",
+        apply: function (s) {
+          s.zeile = 7;
+          s.heap[0].felder[1] = { name: "wohnort", wert: "\"Hamburg\"" };
+          s.betont = "anna";
+        },
+        dauer: 4200
+      },
+      {
+        titel: "print(spar.inhaber.wohnort);",
+        text: "<p>Der Punkt läuft <b>am Pfeil entlang</b>: <code>spar</code> führt zum " +
+              "Kontoobjekt, <code>.inhaber</code> von dort zum Kundenobjekt, " +
+              "<code>.wohnort</code> liest dessen Feld.</p>" +
+              "<p>Zwei Punkte, zwei Schritte durch den Heap – <b>Chaining</b>. Nichts " +
+              "davon ist eine Kopie; jeder Punkt ist ein Weg.</p>" +
+              "<p>Heraus kommt <b>Hamburg</b>, obwohl <code>spar</code> nie etwas von " +
+              "einem Umzug erfahren hat.</p>",
+        apply: function (s) {
+          s.zeile = 8;
+          s.heap[0].felder[1] = { name: "wohnort", wert: "\"Hamburg\"" };
+          s.betont = "anna";
+          s.ergebnis = [{ ausdruck: "spar.inhaber.wohnort", wert: "\"Hamburg\"" }];
+        },
+        dauer: 4600
+      },
+      {
+        titel: "Der Merksatz",
+        text: "<p><b>Eine Referenz ist kein Abzug, sondern der Weg zum Original.</b></p>" +
+              "<p>Genau dafür steht die Linie im Klassendiagramm – und deshalb lässt " +
+              "sie sich mit dem Punkt entlanglaufen.</p>",
+        apply: function (s) {
+          s.zeile = 8;
+          s.heap[0].felder[1] = { name: "wohnort", wert: "\"Hamburg\"" };
+          s.ergebnis = [{ ausdruck: "spar.inhaber.wohnort", wert: "\"Hamburg\"" }];
+          s.final = true;
+        }
+      }
+    ]
+  });
+
+  /* ---------------------------------------------------------------------------
+     SZENARIO 3 – Das Gleiche oder dasselbe
+     --------------------------------------------------------------------------- */
+  sim.registerScenario({
+    id: "identitaet",
+    titel: "Das Gleiche oder dasselbe",
+    beschreibung: "Zwei Objekte mit gleichem Inhalt sind noch lange nicht dasselbe " +
+                  "Objekt. <code>==</code> fragt nach der Identität, <code>equals</code> " +
+                  "nach der logischen Gleichheit – die jede Klasse selbst festlegt.",
+    state: leereSzene,
+    render: zeichneSzene,
+    steps: [
+      {
+        titel: "Das gleiche Auto – oder dasselbe?",
+        text: "<p>Peter und Claudia haben beide ein grünes Auto. Sie fahren " +
+              "<b>das gleiche</b> Auto.</p>" +
+              "<p>Peter und Claudia haben ein Auto. Oder haben Peter und Claudia " +
+              "<b>EIN</b> Auto? Dann fahren sie <b>dasselbe</b> … 😵‍💫</p>" +
+              "<p>Zwei Fragen, die im Alltag munter durcheinandergehen. Java trennt sie " +
+              "sauber – mit <code>==</code> und <code>equals</code>.</p>",
+        apply: function () {}
+      },
+      {
+        titel: "Kunde a = new Kunde();",
+        text: "<p>Ein Objekt im Heap, ein Wegweiser im Stack. Nichts Neues.</p>",
+        apply: function (s) {
+          s.zeile = 0;
+          s.heap.push({ id: "a", adresse: "#K1", klasse: "Kunde",
+                        felder: [{ name: "name", wert: "null" }] });
+          s.stack.push({ name: "a", typ: "Kunde", wert: "#K1", ref: true });
+        }
+      },
+      {
+        titel: "a.name = \"Anna Berger\";",
+        text: "<p>Das Feld wird gefüllt – im Heap, am Objekt.</p>",
+        apply: function (s) {
+          s.zeile = 1;
+          s.heap[0].felder[0] = { name: "name", wert: "\"Anna Berger\"" };
+        }
+      },
+      {
+        titel: "Kunde b = new Kunde();",
+        text: "<p>Ein <b>zweites <code>new</code></b> – und jedes <code>new</code> legt " +
+              "ein eigenes Objekt an, an einer eigenen Adresse.</p>",
+        apply: function (s) {
+          s.zeile = 2;
+          s.heap.push({ id: "b", adresse: "#K2", klasse: "Kunde",
+                        felder: [{ name: "name", wert: "null" }] });
+          s.stack.push({ name: "b", typ: "Kunde", wert: "#K2", ref: true });
+        }
+      },
+      {
+        titel: "b.name = \"Anna Berger\";",
+        text: "<p>Gleicher Name, zweites Objekt. Zwei Kästen im Heap mit demselben Inhalt " +
+              "– aber an zwei Adressen.</p>",
+        apply: function (s) {
+          s.zeile = 3;
+          s.heap[1].felder[0] = { name: "name", wert: "\"Anna Berger\"" };
+        }
+      },
+      {
+        titel: "print(a == b);",
+        text: "<p><code>==</code> vergleicht, was <b>in den Fächern steht</b> – also die " +
+              "Adressen: <code>#K1</code> gegen <code>#K2</code>.</p>" +
+              "<p><b>false.</b> Die Frage war „dasselbe Objekt?“, und die Antwort ist nein.</p>",
+        apply: function (s) {
+          s.zeile = 4;
+          s.ergebnis = [{ ausdruck: "a == b", wert: false }];
+        }
+      },
+      {
+        titel: "print(a.equals(b));",
+        text: "<p><b>true</b> – hier geht es nicht mehr um die Adresse, sondern um den " +
+              "<b>Inhalt</b>: Beide Objekte tragen denselben Namen.</p>" +
+              "<p>Das nennt man <b>logische Gleichheit</b>, und was sie bedeutet, legt " +
+              "<b>jede Klasse selbst fest</b>: Bei <code>Kunde</code> mag der Name " +
+              "genügen, bei einem Konto wäre es die Kontonummer, bei einer Adresse " +
+              "vielleicht Straße und Ort.</p>" +
+              "<p>Und genau deshalb: <b>Diese Antwort gibt es nicht geschenkt.</b> " +
+              "<code>equals</code> muss in <code>Kunde</code> geschrieben sein – sonst " +
+              "beantwortet der Aufruf dieselbe Frage wie <code>==</code>.</p>",
+        apply: function (s) {
+          s.zeile = 5;
+          s.ergebnis = [{ ausdruck: "a == b", wert: false },
+                        { ausdruck: "a.equals(b)", wert: true }];
+        },
+        dauer: 4600
+      },
+      {
+        titel: "Der Merksatz",
+        text: "<p><b><code>==</code> fragt nach dem Objekt, <code>equals</code> nach dem " +
+              "Inhalt.</b></p>" +
+              "<p>Bei Objekten willst Du fast immer <code>equals</code> – und musst es in " +
+              "Deinen eigenen Klassen schreiben, denn nur Du weißt, wann zwei davon als " +
+              "gleich gelten sollen.</p>" +
+              "<p>Bei primitiven Typen gibt es die Frage gar nicht – dort steht der Wert " +
+              "ja selbst im Fach.</p>" +
+              "<p><b>Und das betrifft mehr, als man denkt:</b> Auch <code>String</code> " +
+              "und Arrays sind Objekte. Für sie gilt alles von dieser Bühne – " +
+              "Wegweiser statt Wert, <code>==</code> gegen <code>equals</code>, geteilte " +
+              "Objekte.</p>",
+        apply: function (s) {
+          s.zeile = 5;
+          s.final = true;
+        }
+      }
+    ]
+  });
+
+  /* ---------------------------------------------------------------------------
+     SZENARIO 4 – this und static
+     Die Klassendefinition ist KULISSE (eigener Block, `data-kontext`) – sie wird
+     nicht Zeile für Zeile ausgeführt. Gelaufen wird nur der Aufruf-Block.
+     --------------------------------------------------------------------------- */
+  sim.registerScenario({
+    id: "this-static",
+    titel: "this und static",
+    beschreibung: "Eine Methode läuft <em>auf</em> einem Objekt – <code>this</code> ist " +
+                  "der Wegweiser dorthin. Statische Methoden kommen ohne Objekt aus.",
+    state: leereSzene,
+    render: zeichneSzene,
+    steps: [
+      {
+        titel: "Eine Methode, viele Objekte",
+        text: "<p>Zwei Konten liegen im <b>Heap</b>. Den Code von <code>einzahlen</code> " +
+              "gibt es aber nur <b>einmal</b> – er steht in der <b>Klasse</b>, nicht im " +
+              "Objekt.</p>" +
+              "<p>Und die Klasse liegt woanders: im <b>Metaspace</b>, einem Bereich " +
+              "außerhalb des Heaps. Dorthin lädt die JVM jede Klasse einmal, samt ihrem " +
+              "Code.</p>" +
+              "<p>Wie weiß die Methode dann, welchen Kontostand sie erhöhen soll?</p>",
+        apply: function (s) {
+          s.heap.push({ id: "giro", adresse: "#A1", klasse: "Konto",
+                        felder: [{ name: "stand", wert: "0" }] });
+          s.heap.push({ id: "spar", adresse: "#A2", klasse: "Konto",
+                        felder: [{ name: "stand", wert: "0" }] });
+          s.stack.push({ name: "giro", typ: "Konto", wert: "#A1", ref: true });
+          s.stack.push({ name: "spar", typ: "Konto", wert: "#A2", ref: true });
+          s.meta.push({ id: "Konto", name: "Konto", member: ["int stand;", "void einzahlen(int)"] });
+          // Die Wegweiser stehen von Anfang an – sie sind hier nicht die Neuigkeit.
+          // In den Aufrufen ändert sich nur der Kontostand; tauchten die Linien
+          // erst dort auf, sähe es aus, als entstünden sie durch den Aufruf.
+          s.pfeile.push({ von: "this-static-var-giro", nach: "this-static-obj-giro" });
+          s.pfeile.push({ von: "this-static-var-spar", nach: "this-static-obj-spar" });
+        }
+      },
+      {
+        titel: "giro.einzahlen(50);",
+        text: "<p>Der Aufruf steht <b>an einem Objekt</b>. Genau dieses Objekt bekommt die " +
+              "Methode als <code>this</code> mitgeliefert – unsichtbar, aber es ist da.</p>" +
+              "<p><code>this.stand += 50</code> trifft deshalb <code>#A1</code>.</p>",
+        apply: function (s) {
+          s.zeile = 0;
+          s.heap[0].felder = [{ name: "stand", wert: "50" }];
+          s.betont = "giro";
+        }
+      },
+      {
+        titel: "spar.einzahlen(20);",
+        text: "<p><b>Derselbe Code</b>, anderes Objekt. <code>this</code> zeigt jetzt auf " +
+              "<code>#A2</code>, und dort steigt der Stand.</p>" +
+              "<p>Deshalb genügt <b>eine</b> Methode für alle Objekte einer Klasse. " +
+              "Meist darf <code>this</code> wegbleiben – Java ergänzt es. Nötig wird es, " +
+              "wenn ein Parameter genauso heißt wie das Feld.</p>",
+        apply: function (s) {
+          s.zeile = 1;
+          s.heap[1].felder = [{ name: "stand", wert: "20" }];
+          s.betont = "spar";
+        },
+        dauer: 4200
+      },
+      {
+        titel: "int groesser = Math.max(3, 7);",
+        text: "<p>Der Gegenpol: Vor dem Punkt steht ein <b>Klassenname</b>, kein Objekt. " +
+              "<code>Math</code> wird in den <b>Metaspace</b> geladen – im Heap entsteht " +
+              "nichts.</p>" +
+              "<p>Die Methode ist <code>static</code>: Es gibt nichts, worauf " +
+              "<code>this</code> zeigen könnte, und deshalb gibt es <code>this</code> " +
+              "dort auch nicht.</p>" +
+              "<p><b>Und daher ist <code>main</code> static:</b> Beim Programmstart " +
+              "existiert noch kein Objekt. Deshalb musst Du dort erst mit <code>new</code> " +
+              "etwas erzeugen – und <code>this</code> gibt in <code>main</code> einen " +
+              "Compilerfehler.</p>",
+        apply: function (s) {
+          s.zeile = 2;
+          s.betont = "klasse:Math";
+          s.meta.push({ id: "Math", name: "Math", member: ["static int max(int, int)"] });
+          s.stack.push({ name: "groesser", typ: "int", wert: "7" });
+          s.ergebnis = [{ ausdruck: "Math.max(3, 7)", wert: 7 }];
+        },
+        dauer: 5000
+      },
+      {
+        titel: "Zum Mitnehmen",
+        text: "<p>Eine Methode gehört zur <b>Klasse</b> – geladen einmal, im Metaspace. " +
+              "Laufen tut sie auf einem <b>Objekt</b> im Heap, und <code>this</code> ist " +
+              "der Wegweiser dorthin.</p>" +
+              "<p><code>static</code> lässt genau diesen Wegweiser weg.</p>",
+        apply: function (s) {
+          s.zeile = 2;
+          s.final = true;
+        }
+      }
+    ]
+  });
+
+  // Kleine Hilfe, weil jeder Schritt sein Fach im Stack wiederfinden muss.
+  function finde(liste, name) {
+    return liste.filter(function (v) { return v.name === name; })[0];
+  }
+})();
 </script>
+
+    </div><div class="avd-academy-sim__intro" data-avd-academy-sim-intro hidden
+         data-lead="Vier Abläufe zu einer Frage: Was steht eigentlich in einer Variablen – und was passiert damit beim Kopieren, Vergleichen und Aufrufen? Jedes Szenario beginnt von vorn und lässt sich einzeln zeigen."></div><div class="avd-academy-sim__ost" data-avd-academy-sim-ost hidden aria-hidden="true">
+      <p class="avd-academy-sim__ost-title" data-avd-academy-sim-ost-title></p>
+      <div class="avd-academy-sim__ost-text" data-avd-academy-sim-ost-text></div>
+    </div>
+    <aside class="avd-academy-sim__aside" aria-label="Erklärung zum aktuellen Schritt">
+      <h2 class="avd-academy-sim__note-title" data-avd-academy-sim-note-title></h2>
+      <div class="avd-academy-sim__note" data-avd-academy-sim-note aria-live="polite"></div>
+    </aside>
+  </main>
+
+  <div class="avd-academy-sim__progress" aria-hidden="true">
+    <div class="avd-academy-sim__progress-fill" data-avd-academy-sim-progress></div>
+  </div>
+
+  <footer class="avd-academy-sim__controls" aria-label="Simulation steuern" data-avd-academy-sim-controls>
+    <button type="button" class="avd-academy-sim__btn" data-avd-academy-sim-reset
+            title="Zurück auf Anfang (Taste R)" aria-label="Zurück auf Anfang">⟲</button>
+    <button type="button" class="avd-academy-sim__btn" data-avd-academy-sim-prev
+            title="Schritt zurück (←)" aria-label="Schritt zurück">‹</button><div class="avd-academy-sim__play-group">
+      <button type="button" class="avd-academy-sim__btn avd-academy-sim__btn--play" data-avd-academy-sim-play
+              title="Abspielen (Leertaste)" aria-label="Abspielen">
+        <span class="avd-academy-sim__btn-icon" data-avd-academy-sim-play-icon>▶</span>
+        <span class="avd-academy-sim__btn-text" data-avd-academy-sim-play-text>Abspielen</span>
+      </button>
+      <button type="button" class="avd-academy-sim__btn avd-academy-sim__btn--tempo" data-avd-academy-sim-tempo
+              title="Tempo wählen (Taste T)" aria-label="Tempo wählen"
+              aria-haspopup="true" aria-expanded="false">
+        <span data-avd-academy-sim-tempo-label>1×</span>
+        <span class="avd-academy-sim__caret" aria-hidden="true">▴</span>
+      </button>
+      <ul class="avd-academy-sim__tempo-menu" data-avd-academy-sim-tempo-menu hidden role="menu"
+          aria-label="Tempo"><li role="none"><button type="button" role="menuitemradio" aria-checked="false" data-avd-academy-sim-tempo-wert="0.5">0,5×<span> langsam</span></button></li>
+        <li role="none"><button type="button" role="menuitemradio" aria-checked="true"  data-avd-academy-sim-tempo-wert="1">1×<span> normal</span></button></li>
+        <li role="none"><button type="button" role="menuitemradio" aria-checked="false" data-avd-academy-sim-tempo-wert="2">2×<span> zügig</span></button></li>
+        <li role="none"><button type="button" role="menuitemradio" aria-checked="false" data-avd-academy-sim-tempo-wert="5">5×<span> im Zeitraffer</span></button></li>
+      </ul>
+    </div>
+    <button type="button" class="avd-academy-sim__btn" data-avd-academy-sim-next
+            title="Schritt vor (→)" aria-label="Schritt vor">›</button>
+  </footer><p class="avd-academy-sim__capture-hint" data-avd-academy-sim-capture-hint hidden aria-hidden="true">
+    Capture-Modus · <b>C</b> beenden · <b>T</b> Text einblenden
+  </p><p class="avd-academy-sim__print-hint" aria-hidden="true">
+    Diese Simulation lebt von der Bewegung. Auf Papier steht nur der gerade
+    sichtbare Schritt – der QR-Code oben führt zurück zur laufenden Fassung.
+  </p>
 </body>
 </html>

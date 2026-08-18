@@ -78,11 +78,16 @@
 /* Der QR-Code ist genauso groß wie die Werkzeug-Knöpfe daneben (2 rem, s. u.). */
 .avd-academy-present__tools .avd-academy-qr { --avd-academy-qr-size: 2rem; }
 .avd-academy-present__back {
+  border: 0;
+  padding: 0;
+  background: none;
+  font: inherit;
   font-size: var(--avd-academy-fs-sm);
   color: var(--avd-academy-color-ink-muted);
-  text-decoration: none;
   white-space: nowrap;
+  cursor: pointer;
 }
+.avd-academy-present__back[hidden] { display: none; }
 .avd-academy-present__back:hover { color: var(--avd-academy-color-accent); }
 .avd-academy-present__tool {
   border: 1px solid var(--avd-academy-color-border);
