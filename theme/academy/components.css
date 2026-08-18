@@ -290,6 +290,91 @@ pre > .avd-academy-copy.is-copied { opacity: 1; }
   border: 1px solid var(--avd-academy-color-border);
 }
 
+/* --- Typisierte Dokumentlinks (Academy-Ergänzung) --------------------------
+   Ein Link, dem sein ZIELFORMAT vorangestellt ist: Übung, Präsentation,
+   Visualisierung, Simulation, Übersicht. Das Icon kommt aus dem Theme
+   (theme/academy/icons/, mit dem Paket ausgeliefert) – Projekte pflegen KEINE
+   eigenen Icon-Dateien und schreiben kein <img> in den Fließtext. Vorher trug
+   jede Aufstellung ihre eigene Kopie der SVGs; damit sahen dieselben Formate
+   von Repo zu Repo unterschiedlich aus.
+
+   Die Icons sind Farbkacheln (Orange bzw. Slate/Anthrazit) und tragen ihre
+   Fläche selbst – sie funktionieren in Light UND Dark unverändert. Im Dark Mode
+   liefe die Kachel mit dem Seitenhintergrund zusammen, deshalb der feine Ring;
+   im Light Mode fällt er nicht auf. Gedruckt erscheinen sie, weil print.css
+   `print-color-adjust: exact` global setzt.
+
+   Pfade sind RELATIV zu dieser Datei – so gilt derselbe Verweis für die
+   Doku-Site (theme/ in-repo) wie für Consumer, die das Paket nach site/theme/
+   laden. Keine absolute URL, die ein `baseurl` bräuchte.               */
+.avd-academy-doclink {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--avd-academy-space-2);
+}
+.avd-academy-doclink::before {
+  content: "";
+  flex: none;
+  width: 1.05rem;
+  height: 1.05rem;
+  border-radius: 3px;
+  transform: translateY(.15rem);
+  background: center / contain no-repeat;
+  box-shadow: 0 0 0 1px var(--avd-academy-color-border);
+}
+.avd-academy-doclink--guide::before         { background-image: url("icons/icon-guide.svg"); }
+.avd-academy-doclink--slides::before        { background-image: url("icons/icon-slides.svg"); }
+.avd-academy-doclink--visualization::before { background-image: url("icons/icon-visualization.svg"); }
+.avd-academy-doclink--simulation::before    { background-image: url("icons/icon-simulation.svg"); }
+.avd-academy-doclink--overview::before      { background-image: url("icons/icon-overview.svg"); }
+
+/* --- Materialübersicht: Themenblock + zwei Spalten (Academy-Ergänzung) -----
+   Die Aufstellung der Unterlagen für Lernende. Je Themenblock zwei Spalten:
+   links, was man SELBST TUT (Übungen), rechts, was man NACHSCHLÄGT (Folien,
+   Visualisierungen, Simulationen). Diese Trennung ist der Zweck der
+   Darstellung – und sie steht je Themenblock, nicht global, damit
+   Zusammengehörendes zusammen bleibt.                                  */
+.avd-academy-topic { margin: var(--avd-academy-space-8) 0 0; }
+.avd-academy-topic > h3 {
+  margin: 0 0 var(--avd-academy-space-3);
+  padding-bottom: .35rem;
+  font-size: 1.1rem;
+  border-bottom: 2px solid var(--avd-academy-color-accent);
+}
+
+.avd-academy-materials {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.2rem, .8rem + 2vw, 2.5rem);
+}
+/* Themenblöcke ohne Nachschlage-Spalte behalten die Spaltenbreite – die
+   Übungsspalte soll von Block zu Block nicht springen. Erst auf schmalen
+   Anzeigen fallen die Spalten untereinander. */
+@media (max-width: 800px) {
+  .avd-academy-materials { grid-template-columns: 1fr; gap: var(--avd-academy-space-6); }
+}
+
+.avd-academy-materials__head {
+  margin: 0 0 var(--avd-academy-space-2);
+  font-size: .68rem;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  font-weight: 700;
+  opacity: .7;
+}
+
+/* Das Icon des Links trägt die Typunterscheidung – Aufzählungspunkte wären
+   daneben ein zweiter, stummer Marker. */
+.avd-academy-materials__col ul { list-style: none; margin: 0; padding: 0; }
+.avd-academy-materials__col li { margin: 0 0 .45rem; }
+
+@media print {
+  .avd-academy-topic { break-inside: avoid; margin-top: 10pt; }
+  .avd-academy-topic > h3 { font-size: 11pt; margin-bottom: 5pt; }
+  .avd-academy-materials { grid-template-columns: 1fr 1fr; gap: 12pt; }
+  .avd-academy-materials__col li { margin-bottom: 2pt; font-size: 9pt; }
+}
+
 /* --- Callouts / Hinweisboxen (Academy-Ergänzung; atvantage kennt keine) ---- */
 .avd-academy-callout {
   border-left: 4px solid var(--avd-academy-color-info);
