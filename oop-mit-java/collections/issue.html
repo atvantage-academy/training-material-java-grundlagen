@@ -67,15 +67,15 @@
 <head>
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Transaktionen und Konten in Collections verwalten · Java SE (ATVANTAGE Academy)</title>
-<meta name="description" content="Verwalte Transaktionen eines Kontos in einer Liste und schütze sie durch eine unveränderbare Sicht."><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="description" content="Verwalte Buchungen und Konten in passenden Collections, schütze die interne Liste und lege fest, wann zwei Kunden gleich sind."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787049652"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787049652">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787049652">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787049652">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787049652"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787049652">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787049652" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1787049652" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787049652">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787051351"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787051351">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787051351">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787051351">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787051351"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787051351">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787051351" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787051351" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787051351">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,8 +89,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787049652">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787049652"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787051351">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787051351"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -116,7 +116,7 @@
   </div>
 </header>
 <section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Transaktionen und Konten in Collections verwalten</span></nav><div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 75 Minuten</span><span class="avd-academy-tag">Collections</span><span class="avd-academy-tag">Banking</span>
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 90 Minuten</span><span class="avd-academy-tag">Collections</span><span class="avd-academy-tag">equals/hashCode</span><span class="avd-academy-tag">Banking</span>
       </div>
       <div class="avd-academy-guide-hero__actions">
         <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
@@ -140,6 +140,7 @@
   <li>wählst eine passende Collection (<code>List</code>/<code>Set</code>/<code>Map</code>) für eine Aufgabe aus.</li>
   <li>fügst Elemente hinzu und iterierst über die Collection.</li>
   <li>gibst eine interne Liste als unveränderbare Sicht heraus.</li>
+  <li>legst fest, wann zwei Objekte fachlich gleich sind, und machst das für hash-basierte Strukturen nutzbar.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
@@ -149,6 +150,7 @@
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Jede Ein-/Auszahlung ergänzt die Liste.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>getBuchungen()</code> liefert eine <strong>unveränderbare</strong> Sicht (kein direkter Schreibzugriff von außen).</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Konten werden in einer <code>Map&lt;String, Konto&gt;</code> (IBAN → Konto) nachschlagbar gehalten.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Zwei <code>Kunde</code>-Objekte mit derselben Kundennummer gelten in einem <code>HashSet</code> als <strong>ein</strong> Element.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
@@ -183,12 +185,32 @@
   <p><strong>Hinweis:</strong> Frage Dich: brauche ich Reihenfolge (List), Eindeutigkeit (Set) oder schnellen Zugriff per Schlüssel (Map)?</p>
 </blockquote>
 
+<h3 id="festlegen-wann-zwei-kunden-gleich-sind">Festlegen, wann zwei Kunden gleich sind</h3>
+
+<p>Leg zwei <code>Kunde</code>-Objekte mit <strong>derselben Kundennummer</strong> an, steck sie in ein
+<code>HashSet</code> und gib dessen Größe aus. Das Ergebnis wird Dich zunächst überraschen –
+sorg dafür, dass am Ende <strong>1</strong> herauskommt.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Ohne eigenes Zutun vergleicht Java Objekte über ihre Identität, so
+wie Du es an Tag 2 gesehen hast. Welche zwei Methoden musst Du überschreiben,
+damit stattdessen die fachliche Gleichheit zählt – und warum reicht eine davon
+allein nicht?</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Nimm als Grundlage das Feld, das den Kunden <strong>eindeutig und
+dauerhaft</strong> ausmacht – nicht eines, das sich ändern kann.</p>
+</blockquote>
+
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
   <li>Warum ist die IBAN ein guter Schlüssel für eine <code>Map</code> der Konten?</li>
   <li>Welche Gefahr bestünde, wenn <code>getBuchungen()</code> die echte, veränderbare Liste zurückgäbe?</li>
   <li>Für die Menge aller Kunden-IDs – welche Collection passt und warum?</li>
+  <li>Warum genügt es nicht, nur <code>equals</code> zu überschreiben?</li>
+  <li>Warum sollte in die Gleichheit ein Feld einfließen, das sich nicht mehr ändert?</li>
 </ul>
 
 <textarea id="avd-academy-md-source" hidden aria-hidden="true"># Transaktionen und Konten in Collections verwalten
@@ -202,6 +224,7 @@ Du…
 * wählst eine passende Collection (`List`/`Set`/`Map`) für eine Aufgabe aus.
 * fügst Elemente hinzu und iterierst über die Collection.
 * gibst eine interne Liste als unveränderbare Sicht heraus.
+* legst fest, wann zwei Objekte fachlich gleich sind, und machst das für hash-basierte Strukturen nutzbar.
 
 ## Definition of Done
 
@@ -209,6 +232,7 @@ Du…
 * [ ] Jede Ein-/Auszahlung ergänzt die Liste.
 * [ ] `getBuchungen()` liefert eine **unveränderbare** Sicht (kein direkter Schreibzugriff von außen).
 * [ ] Konten werden in einer `Map&lt;String, Konto&gt;` (IBAN → Konto) nachschlagbar gehalten.
+* [ ] Zwei `Kunde`-Objekte mit derselben Kundennummer gelten in einem `HashSet` als **ein** Element.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
 ## Arbeitsschritte
@@ -237,11 +261,27 @@ Verwalte Konten in einer `Map&lt;String, Konto&gt;` und schlage per IBAN nach.
 
 &gt; **Hinweis:** Frage Dich: brauche ich Reihenfolge (List), Eindeutigkeit (Set) oder schnellen Zugriff per Schlüssel (Map)?
 
+### Festlegen, wann zwei Kunden gleich sind
+
+Leg zwei `Kunde`-Objekte mit **derselben Kundennummer** an, steck sie in ein
+`HashSet` und gib dessen Größe aus. Das Ergebnis wird Dich zunächst überraschen –
+sorg dafür, dass am Ende **1** herauskommt.
+
+&gt; **Hinweis:** Ohne eigenes Zutun vergleicht Java Objekte über ihre Identität, so
+&gt; wie Du es an Tag 2 gesehen hast. Welche zwei Methoden musst Du überschreiben,
+&gt; damit stattdessen die fachliche Gleichheit zählt – und warum reicht eine davon
+&gt; allein nicht?
+
+&gt; **Hinweis:** Nimm als Grundlage das Feld, das den Kunden **eindeutig und
+&gt; dauerhaft** ausmacht – nicht eines, das sich ändern kann.
+
 ## Reflexionsfragen
 
 * Warum ist die IBAN ein guter Schlüssel für eine `Map` der Konten?
 * Welche Gefahr bestünde, wenn `getBuchungen()` die echte, veränderbare Liste zurückgäbe?
-* Für die Menge aller Kunden-IDs – welche Collection passt und warum?</textarea>
+* Für die Menge aller Kunden-IDs – welche Collection passt und warum?
+* Warum genügt es nicht, nur `equals` zu überschreiben?
+* Warum sollte in die Gleichheit ein Feld einfließen, das sich nicht mehr ändert?</textarea>
     </main>
     <aside class="avd-academy-guide-sidebar">
       <div class="avd-academy-guide-side avd-academy-guide-side--toc" data-avd-academy-toc-box hidden>
