@@ -69,13 +69,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Gemeinsamkeiten herausziehen · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Zieh aus mehreren Klassen das Gemeinsame heraus und zeichne es als Oberklasse – mit Vererbungspfeil, noch ohne Java."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787064185"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787064185">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787064185">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787064185">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787064185"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787064185">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787064185" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1787064185" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787064185">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787065255"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787065255">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787065255">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787065255">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787065255"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787065255">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787065255" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787065255" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787065255">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,8 +89,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787064185">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787064185"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787065255">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787065255"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -130,7 +130,7 @@
     <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
       <h1 id="gemeinsamkeiten-herausziehen">Gemeinsamkeiten herausziehen</h1>
 
-<p>Als Umsteiger:in möchte ich erkennen, was mehrere Klassen gemeinsam haben, und das an einer Stelle beschreiben, damit ich es nicht in jeder Klasse wiederholen muss.</p>
+<p>Als Entwickler:in möchte ich erkennen, was mehrere Klassen gemeinsam haben, und das an einer Stelle beschreiben, damit ich es nicht in jeder Klasse wiederholen muss.</p>
 
 <blockquote>
   <p><strong>Hinweis:</strong> Hier wird wieder <strong>gezeichnet, nicht programmiert</strong> – Papier und
@@ -170,31 +170,15 @@ Einträge er enthält.</p>
 <p>Zeichne die beiden Klassen, zieh das Gemeinsame in eine Oberklasse und setz die
 Pfeile.</p>
 
-<blockquote>
-  <p><strong>Hinweis:</strong> Für die Oberklasse brauchst Du einen Namen, den es im Text so nicht
-gibt. Wie nennst Du das Ding, das „Datei oder Ordner“ sein kann?</p>
-</blockquote>
-
-<blockquote>
-  <p><strong>Hinweis:</strong> „Den Inhalt auslesen“ heißt bei einer Datei und bei einem Ordner
-etwas ganz Verschiedenes. Überleg Dir, ob die Fähigkeit trotzdem nach oben
-gehört – und notier Dir Deine Begründung. Wir kommen darauf zurück.</p>
-</blockquote>
-
 <h2 id="aufgabe-2-medien-einer-bibliothek">Aufgabe 2: Medien einer Bibliothek</h2>
 
 <blockquote>
   <p>Eine Bibliothek verleiht <strong>Bücher</strong>, <strong>Hörbücher</strong> und <strong>Zeitschriften</strong>. Alles
 davon hat einen Titel und ein Erscheinungsjahr und kann ausgeliehen und
 zurückgegeben werden. Bücher und Zeitschriften stehen im Regal und haben eine
-Seitenzahl und einen Standort; ein Buch hat zusätzlich eine ISBN, eine
+Seitenzahl und einen Standort; ein Buch hat zusätzlich eine Auflage, eine
 Zeitschrift eine Ausgabennummer. Ein Hörbuch dagegen wird heruntergeladen und
 hat eine Spieldauer und eine Dateigröße.</p>
-</blockquote>
-
-<blockquote>
-  <p><strong>Hinweis:</strong> Hier reicht eine Ebene nicht aus. Zwischen dem Allgemeinsten und
-den drei konkreten Arten fehlt noch etwas.</p>
 </blockquote>
 
 <h2 id="aufgabe-3-fahrzeuge-einer-spedition">Aufgabe 3: Fahrzeuge einer Spedition</h2>
@@ -206,22 +190,17 @@ außerdem ein Kennzeichen, einen Kraftstoffstand und eine Motorleistung; nur der
 LKW hat eine Nutzlast, nur der PKW eine Sitzplatzzahl.</p>
 </blockquote>
 
-<blockquote>
-  <p><strong>Hinweis:</strong> Auch hier lohnt eine Zwischenstufe. Woran erkennst Du, dass sie
-gebraucht wird?</p>
-</blockquote>
-
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
   <li>Woran hast Du entschieden, was in die Oberklasse gehört?</li>
-  <li>Lies einen Deiner Vererbungspfeile laut vor – ergibt der Satz Sinn?</li>
+  <li>Beschreibe die Beziehung zwischen Ober- und Unterklasse mithilfe der Begriffe Generalisierung und Spezialisierung.</li>
   <li>Was wäre die Alternative, wenn Du das Gemeinsame nicht herausziehst?</li>
 </ul>
 
 <textarea id="avd-academy-md-source" hidden aria-hidden="true"># Gemeinsamkeiten herausziehen
 
-Als Umsteiger:in möchte ich erkennen, was mehrere Klassen gemeinsam haben, und das an einer Stelle beschreiben, damit ich es nicht in jeder Klasse wiederholen muss.
+Als Entwickler:in möchte ich erkennen, was mehrere Klassen gemeinsam haben, und das an einer Stelle beschreiben, damit ich es nicht in jeder Klasse wiederholen muss.
 
 &gt; **Hinweis:** Hier wird wieder **gezeichnet, nicht programmiert** – Papier und
 &gt; Stift genügen. Wie das in Java aussieht, kommt gleich danach.
@@ -253,24 +232,14 @@ Du…
 Zeichne die beiden Klassen, zieh das Gemeinsame in eine Oberklasse und setz die
 Pfeile.
 
-&gt; **Hinweis:** Für die Oberklasse brauchst Du einen Namen, den es im Text so nicht
-&gt; gibt. Wie nennst Du das Ding, das „Datei oder Ordner“ sein kann?
-
-&gt; **Hinweis:** „Den Inhalt auslesen“ heißt bei einer Datei und bei einem Ordner
-&gt; etwas ganz Verschiedenes. Überleg Dir, ob die Fähigkeit trotzdem nach oben
-&gt; gehört – und notier Dir Deine Begründung. Wir kommen darauf zurück.
-
 ## Aufgabe 2: Medien einer Bibliothek
 
 &gt; Eine Bibliothek verleiht **Bücher**, **Hörbücher** und **Zeitschriften**. Alles
 &gt; davon hat einen Titel und ein Erscheinungsjahr und kann ausgeliehen und
 &gt; zurückgegeben werden. Bücher und Zeitschriften stehen im Regal und haben eine
-&gt; Seitenzahl und einen Standort; ein Buch hat zusätzlich eine ISBN, eine
+&gt; Seitenzahl und einen Standort; ein Buch hat zusätzlich eine Auflage, eine
 &gt; Zeitschrift eine Ausgabennummer. Ein Hörbuch dagegen wird heruntergeladen und
 &gt; hat eine Spieldauer und eine Dateigröße.
-
-&gt; **Hinweis:** Hier reicht eine Ebene nicht aus. Zwischen dem Allgemeinsten und
-&gt; den drei konkreten Arten fehlt noch etwas.
 
 ## Aufgabe 3: Fahrzeuge einer Spedition
 
@@ -279,13 +248,10 @@ Pfeile.
 &gt; außerdem ein Kennzeichen, einen Kraftstoffstand und eine Motorleistung; nur der
 &gt; LKW hat eine Nutzlast, nur der PKW eine Sitzplatzzahl.
 
-&gt; **Hinweis:** Auch hier lohnt eine Zwischenstufe. Woran erkennst Du, dass sie
-&gt; gebraucht wird?
-
 ## Reflexionsfragen
 
 * Woran hast Du entschieden, was in die Oberklasse gehört?
-* Lies einen Deiner Vererbungspfeile laut vor – ergibt der Satz Sinn?
+* Beschreibe die Beziehung zwischen Ober- und Unterklasse mithilfe der Begriffe Generalisierung und Spezialisierung.
 * Was wäre die Alternative, wenn Du das Gemeinsame nicht herausziehst?</textarea>
     </main>
     <aside class="avd-academy-guide-sidebar">

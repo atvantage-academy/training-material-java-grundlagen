@@ -69,13 +69,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Objektorientierung mit Java (Vererbung) · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Vom Vererbungspfeil zum Code: extends, super(…), die Oberklasse Object und die Regel „links allgemein, rechts konkret“ – am Bibliotheksbeispiel."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787064185"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787064185">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787064185">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787064185">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787064185"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787064185">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787064185" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1787064185" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787064185">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787065255"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787065255">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787065255">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787065255">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787065255"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787065255">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787065255" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787065255" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787065255">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,8 +89,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787064185">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787064185"></head><body class="avd-academy-guide avd-academy-guide--viz">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787065255">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787065255"></head><body class="avd-academy-guide avd-academy-guide--viz">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a><section class="avd-academy-guide-hero avd-academy-guide-hero--slim"><div class="avd-academy-guide-hero__meta">
       <div class="avd-academy-guide-hero__tags">
       </div>
@@ -152,6 +152,18 @@
 .ojv-line em{position:absolute;top:-1.5rem;left:50%;transform:translateX(-50%);font-size:.7rem;font-style:normal;opacity:.75;white-space:nowrap;}
 .ojv-mult{font-size:.72rem;opacity:.75;padding:0 .3rem;}
 
+/* Klassendiagramm als Inline-SVG: Linien und Text über currentColor, damit es in
+   Light wie Dark stimmt. Die Dreiecksspitze der Vererbung ist HOHL – deshalb wird
+   sie mit der Seitenfläche gefüllt, nicht transparent gelassen (sonst liefe die
+   Leitung sichtbar hindurch). */
+.ojv-diagramm{margin:.2rem 0 .8rem;}
+.ojv-diagramm svg{display:block;width:100%;max-width:34rem;margin:0 auto;color:var(--avd-academy-color-ink,#343E3F);}
+.ojv-svg-kasten rect,.ojv-svg-kasten line{fill:none;stroke:currentColor;stroke-width:2;}
+.ojv-svg-name text{fill:currentColor;font-size:15px;font-weight:700;text-anchor:middle;}
+.ojv-svg-feld text{fill:currentColor;font-size:13px;font-family:var(--avd-academy-font-mono,monospace);opacity:.85;}
+.ojv-svg-linie path{fill:none;stroke:currentColor;stroke-width:2;}
+.ojv-svg-spitze{fill:var(--avd-academy-color-bg,#fff);stroke:currentColor;stroke-width:2;}
+
 @media print{
   .ojv-lead{font-size:10.5pt;opacity:1;}
   .ojv-sec{break-inside:auto;margin:0 0 14pt;}
@@ -179,15 +191,32 @@
 <section class="ojv-sec" id="extends">
 <h2><span class="ojv-num">1</span> Der Pfeil wird zu <code>extends</code></h2>
 
-<div class="ojv-uml" style="margin:.2rem 0 1.4rem">
-  <div class="ojv-box"><b>Medium</b><span>titel<br />jahr</span></div>
+<div class="ojv-diagramm">
+<svg viewBox="0 0 560 250" role="img" aria-label="Klassendiagramm: Buch und Hörbuch erben von Medium">
+  <title>Medium mit den Unterklassen Buch und Hörbuch</title>
+  <g class="ojv-svg-kasten">
+    <rect x="200" y="8" width="160" height="94" rx="4" />
+    <line x1="200" y1="34" x2="360" y2="34" />
+    <rect x="30" y="168" width="170" height="76" rx="4" />
+    <line x1="30" y1="194" x2="200" y2="194" />
+    <rect x="360" y="168" width="170" height="76" rx="4" />
+    <line x1="360" y1="194" x2="530" y2="194" />
+  </g>
+  <g class="ojv-svg-name"><text x="280" y="26">Medium</text><text x="115" y="186">Buch</text><text x="445" y="186">Hörbuch</text></g>
+  <g class="ojv-svg-feld">
+    <text x="212" y="52">titel</text><text x="212" y="70">jahr</text><text x="212" y="88">isbn</text>
+    <text x="42" y="212">seiten</text>
+    <text x="372" y="212">dauer</text>
+  </g>
+  <g class="ojv-svg-linie">
+    <path d="M115 168 V140 H280 V114 M445 168 V140 H280" />
+    <polygon class="ojv-svg-spitze" points="280,102 269,120 291,120" />
+  </g>
+</svg>
 </div>
-<div class="ojv-uml" style="margin:0 0 1.2rem">
-  <div class="ojv-box"><b>Buch</b><span>isbn<br />seiten</span></div>
-  <span class="ojv-mult">&nbsp;</span>
-  <div class="ojv-box"><b>Hoerbuch</b><span>dauer</span></div>
-</div>
-<p class="ojv-note" style="margin-top:0">Beide Pfeile zeigen <strong>nach oben</strong> auf <code>Medium</code> und lesen sich als „ist ein“: Ein Buch ist ein Medium. Der Satz ist die verlässlichste Prüfung – „Ein Medium ist ein Buch“ stimmt nicht.</p>
+<p class="ojv-note" style="margin-top:.4rem">Beide Pfeile zeigen <strong>nach oben</strong> auf <code>Medium</code>, und die <strong>hohle Dreiecksspitze</strong> an der Oberklasse ist in UML das Zeichen für Vererbung. Gelesen wird der Pfeil als „ist ein“: Ein Buch ist ein Medium. Das ist die verlässlichste Prüfung der Richtung – „Ein Medium ist ein Buch“ stimmt nicht.</p>
+
+<p class="ojv-note"><strong>Warum steht die ISBN oben?</strong> Weil ein Hörbuch genauso eine hat wie ein Buch – und was für alle gilt, gehört in die Oberklasse. Unten bleibt nur, was die Arten wirklich unterscheidet: die Seitenzahl beim Buch, die Spieldauer beim Hörbuch.</p>
 
 <div class="ojv-grid" style="margin-top:1.2rem">
 <div class="ojv-card">
@@ -195,12 +224,12 @@
 <pre><code class="language-java">class Medium {
     String titel;
     int jahr;
+    String isbn;
 
     void ausleihen() { … }
 }
 
 class Buch extends Medium {
-    String isbn;
     int seiten;
 }</code></pre>
 <p><code>Buch</code> schreibt nichts ab: <code>titel</code>, <code>jahr</code> und <code>ausleihen()</code> sind durch <code>extends</code> schon da. Unten steht nur noch das Eigene.</p>
@@ -208,8 +237,9 @@ class Buch extends Medium {
 <div class="ojv-card">
 <h3>Und so fühlt sich das an</h3>
 <pre><code class="language-java">Buch b = new Buch();
-b.titel = "Erdsee";    // von Medium geerbt
-b.isbn  = "978-…";     // aus Buch selbst
+b.titel  = "Erdsee";   // von Medium geerbt
+b.isbn   = "978-…";    // von Medium geerbt
+b.seiten = 320;        // aus Buch selbst
 b.ausleihen();         // von Medium geerbt</code></pre>
 <p>Am Objekt ist nicht zu sehen, woher was kommt – das Buch <em>ist</em> ein Medium und hat deshalb alles, was ein Medium hat.</p>
 </div>
@@ -229,7 +259,7 @@ b.ausleihen();         // von Medium geerbt</code></pre>
 }
 
 class Buch extends Medium {
-    public Buch(String titel, String isbn) {
+    public Buch(String titel, int seiten) {
         this.titel = titel;   // Fehler:
         // titel has private access in Medium
     }
@@ -239,11 +269,12 @@ class Buch extends Medium {
 <div class="ojv-card ojv-card--good">
 <h3><span class="ojv-flag">✓</span> Nach oben durchreichen</h3>
 <pre><code class="language-java">class Buch extends Medium {
-    private final String isbn;
+    private final int seiten;
 
-    public Buch(String titel, int jahr, String isbn) {
-        super(titel, jahr);   // MUSS die erste Zeile sein
-        this.isbn = isbn;
+    public Buch(String titel, int jahr,
+                String isbn, int seiten) {
+        super(titel, jahr, isbn);  // MUSS zuerst stehen
+        this.seiten = seiten;
     }
 }</code></pre>
 <p>Die Unterklasse nimmt die Werte entgegen und gibt sie weiter. Erst danach kümmert sie sich um ihr Eigenes.</p>
@@ -283,30 +314,30 @@ public String toString() {
 
 <div class="ojv-card ojv-card--wide">
 <h3>Die Variable darf allgemeiner sein als das Objekt</h3>
-<pre><code class="language-java">Buch   b = new Buch("Erdsee", 1968, "978-…");   // konkret
-Medium m = new Buch("Erdsee", 1968, "978-…");   // erlaubt: ein Buch IST ein Medium
+<pre><code class="language-java">Buch   b = new Buch("Erdsee", 1968, "978-…", 320);   // konkret
+Medium m = new Buch("Erdsee", 1968, "978-…", 320);   // erlaubt: ein Buch IST ein Medium
 
 // umgekehrt nicht:
-// Buch x = new Medium("Irgendwas", 2020);      // ein Medium ist KEIN Buch</code></pre>
+// Buch x = new Medium("Irgendwas", 2020, "978-…");  // ein Medium ist KEIN Buch</code></pre>
 <p>Es ist derselbe Satz wie am Pfeil. Wenn „ist ein“ stimmt, ist die Zuweisung erlaubt.</p>
 </div>
 
 <div class="ojv-grid" style="margin-top:1.1rem">
 <div class="ojv-card">
 <h3>Was Du über die Variable siehst</h3>
-<pre><code class="language-java">Medium m = new Buch("Erdsee", 1968, "978-…");
+<pre><code class="language-java">Medium m = new Buch("Erdsee", 1968, "978-…", 320);
 
 m.titel;       // ✓ Medium hat einen Titel
 m.ausleihen(); // ✓ kann jedes Medium
-// m.isbn;     // ✗ sieht Medium nicht</code></pre>
-<p>Die ISBN <em>ist</em> im Objekt – die Variable zeigt sie nur nicht. <strong>Der Typ links entscheidet, was sichtbar ist; das Objekt rechts entscheidet, was es wirklich ist.</strong></p>
+// m.seiten;   // ✗ sieht Medium nicht</code></pre>
+<p>Die Seitenzahl <em>ist</em> im Objekt – die Variable zeigt sie nur nicht. <strong>Der Typ links entscheidet, was sichtbar ist; das Objekt rechts entscheidet, was es wirklich ist.</strong></p>
 </div>
 <div class="ojv-card">
 <h3>Warum man das will</h3>
 <pre><code class="language-java">Medium[] regal = {
-    new Buch("Erdsee", 1968, "978-…"),
-    new Hoerbuch("Momo", 1973, 480),
-    new Buch("Momo", 1973, "978-…")
+    new Buch("Erdsee", 1968, "978-…", 320),
+    new Hörbuch("Momo", 1973, "978-…", 480),
+    new Buch("Momo", 1973, "978-…", 288)
 };
 
 for (Medium m : regal) {

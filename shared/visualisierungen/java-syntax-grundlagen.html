@@ -69,13 +69,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Java-Syntax auf einen Blick · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Kompakte Übersicht der Java-Grundsyntax: Einstieg über main, primitive Datentypen, Variablen, Strings und Arrays, Typumwandlung, Methoden und Kontrollstrukturen."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787064185"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787064185">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787064185">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787064185">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787064185"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787064185">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787064185" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1787064185" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787064185">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787065255"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787065255">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787065255">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787065255">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787065255"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787065255">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787065255" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787065255" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787065255">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,8 +89,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787064185">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787064185"></head><body class="avd-academy-guide avd-academy-guide--viz">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787065255">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787065255"></head><body class="avd-academy-guide avd-academy-guide--viz">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a><section class="avd-academy-guide-hero avd-academy-guide-hero--slim"><div class="avd-academy-guide-hero__meta">
       <div class="avd-academy-guide-hero__tags">
       </div>
@@ -320,7 +320,7 @@ int wert, Wert;</code></pre>
 <pre><code class="language-java">String iban = "DE02120300000000202051";
 
 // Länge über die Methode length()
-int laenge = iban.length();
+int länge = iban.length();
 
 // einzelnes Zeichen, zählt ab 0 → 'D'
 char erstes = iban.charAt(0);
@@ -335,18 +335,18 @@ String zusammen = "IBAN: " + iban;</code></pre>
 <div class="jsg-card">
 <h3>Array<span class="jsg-tag">Länge: length</span></h3>
 <pre><code class="language-java">// drei Elemente, alle mit dem Wert 0
-int[] betraege = new int[3];
+int[] beträge = new int[3];
 
 // Zugriff über den Index, ab 0
-betraege[0] = 1250;
+beträge[0] = 1250;
 
 // length ist ein Feld, keine Methode → 3
-int anzahl = betraege.length;
+int anzahl = beträge.length;
 
 // direkt mit Werten füllen
 int[] direkt = { 1250, -300, 80 };
 
-// betraege[3] = 1;  → ArrayIndexOutOfBoundsException</code></pre>
+// beträge[3] = 1;  → ArrayIndexOutOfBoundsException</code></pre>
 <p>Die Länge steht bei der Erzeugung fest und lässt sich <strong>nicht</strong> ändern. Wer wachsen können muss, nimmt später eine <code>List</code>.</p>
 </div>
 </div>
@@ -461,26 +461,26 @@ String text = saldo &gt;= 0
 <h3><code>switch</code></h3>
 <pre><code class="language-java">switch (kontoart) {
     case "giro":
-        gebuehr = 0;
+        gebühr = 0;
         // ohne break läuft es in den nächsten case weiter!
         break;
     case "spar":
-        gebuehr = 100;
+        gebühr = 100;
         break;
     default:
-        gebuehr = 50;
+        gebühr = 50;
 }</code></pre>
 </div>
 <div class="jsg-card">
 <h3>Zählschleife: klassisches <code>for</code></h3>
-<pre><code class="language-java">for (int i = 0; i &lt; betraege.length; i++) {
-    System.out.println(betraege[i]);
+<pre><code class="language-java">for (int i = 0; i &lt; beträge.length; i++) {
+    System.out.println(beträge[i]);
 }</code></pre>
 <p>Start · Bedingung · Fortschaltung – passend, wenn Du den Index brauchst.</p>
 </div>
 <div class="jsg-card">
 <h3>Durchlaufen: <code>for-each</code></h3>
-<pre><code class="language-java">for (int betrag : betraege) {
+<pre><code class="language-java">for (int betrag : beträge) {
     System.out.println(betrag);
 }</code></pre>
 <p>Kürzer und weniger fehleranfällig, wenn der Index egal ist.</p>

@@ -69,13 +69,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Die Kontenhierarchie bauen · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Zeichne die Kontenhierarchie und setz sie in Java um – mit extends, super(...) und geerbten Feldern."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787064185"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787064185">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787064185">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787064185">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787064185"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787064185">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787064185" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1787064185" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787064185">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787065255"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787065255">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787065255">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787065255">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787065255"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787065255">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787065255" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787065255" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787065255">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,8 +89,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787064185">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787064185"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787065255">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787065255"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -220,16 +220,17 @@ Oberklasse hat: <code>Konto k = new Girokonto(...);</code>. Läuft das? Und komm
 <h3 id="für-schnelle">Für Schnelle</h3>
 
 <ul>
-  <li>Ergänze eine dritte Kontoart und zähl mit, wie viele Zeilen Du dafür brauchst.</li>
+  <li>Ergänze ein <strong>Festgeldkonto</strong>: Es hat zusätzlich eine Laufzeit in Monaten und einen festen Zinssatz, der sich nach dem Anlegen nicht mehr ändert. Achte darauf, welchen bestehenden Code Du dafür anfassen musst.</li>
   <li>Gib jeder Kontoart ein eigenes <code>toString()</code>, das die Besonderheit mit ausgibt.</li>
   <li>Leg beide Konten in eine gemeinsame Variable nacheinander (<code>Konto k = ...</code>) und ruf <code>einzahlen</code> auf. Fällt Dir etwas auf?</li>
+  <li><strong>Zum Nachdenken, noch nicht zum Bauen:</strong> Ein Kreditkonto ist immer im Minus – man kann darauf nur einzahlen und niemals abheben. Kannst Du das mit dem, was Du heute kennst, sauber umsetzen? Die Kontoart soll ja etwas <em>weglassen</em>, was die Oberklasse verspricht. Halt Deine Antwort fest; wir kommen darauf zurück.</li>
 </ul>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
   <li>Was steht in Deiner Oberklasse, was in den Unterklassen – und warum?</li>
-  <li>Wie viele Zeilen bräuchtest Du für eine weitere Kontoart?</li>
+  <li>Angenommen, morgen kommt eine weitere Kontoart dazu: Welchen <strong>bestehenden</strong> Code müsstest Du dafür ändern?</li>
   <li><code>Konto k = new Girokonto(...);</code> – warum geht das, und was siehst Du über <code>k</code>?</li>
 </ul>
 
@@ -308,14 +309,15 @@ aus.
 
 ### Für Schnelle
 
-* Ergänze eine dritte Kontoart und zähl mit, wie viele Zeilen Du dafür brauchst.
+* Ergänze ein **Festgeldkonto**: Es hat zusätzlich eine Laufzeit in Monaten und einen festen Zinssatz, der sich nach dem Anlegen nicht mehr ändert. Achte darauf, welchen bestehenden Code Du dafür anfassen musst.
 * Gib jeder Kontoart ein eigenes `toString()`, das die Besonderheit mit ausgibt.
 * Leg beide Konten in eine gemeinsame Variable nacheinander (`Konto k = ...`) und ruf `einzahlen` auf. Fällt Dir etwas auf?
+* **Zum Nachdenken, noch nicht zum Bauen:** Ein Kreditkonto ist immer im Minus – man kann darauf nur einzahlen und niemals abheben. Kannst Du das mit dem, was Du heute kennst, sauber umsetzen? Die Kontoart soll ja etwas *weglassen*, was die Oberklasse verspricht. Halt Deine Antwort fest; wir kommen darauf zurück.
 
 ## Reflexionsfragen
 
 * Was steht in Deiner Oberklasse, was in den Unterklassen – und warum?
-* Wie viele Zeilen bräuchtest Du für eine weitere Kontoart?
+* Angenommen, morgen kommt eine weitere Kontoart dazu: Welchen **bestehenden** Code müsstest Du dafür ändern?
 * `Konto k = new Girokonto(...);` – warum geht das, und was siehst Du über `k`?
 
 ## Weiterführende Informationen
