@@ -69,13 +69,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Ein generisches Repository bauen · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Ersetze doppelte Repository-Klassen durch ein typsicheres, generisches Repository."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786967558"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786967558"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786967558">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786967558" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786967558" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786967558">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787034693"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787034693"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787034693">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787034693" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787034693" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787034693">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,8 +89,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786967558">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786967558"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787034693">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787034693"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -145,9 +145,9 @@
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt ein generisches <code>Repository&lt;T extends Identifiable&gt;</code> mit <code>save(T)</code> und <code>findById(String)</code>.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt ein generisches <code>Repository&lt;T extends Identifizierbar&gt;</code> mit <code>save(T)</code> und <code>findById(String)</code>.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Intern speichert es die Elemente in einer <code>Map&lt;String, T&gt;</code> (ID → Element).</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es existieren ein <code>Repository&lt;Customer&gt;</code> und ein <code>Repository&lt;Account&gt;</code> ohne duplizierten Code.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es existieren ein <code>Repository&lt;Kunde&gt;</code> und ein <code>Repository&lt;Konto&gt;</code> ohne duplizierten Code.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Die Verwendung kommt ohne explizite Casts aus.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
@@ -156,43 +156,43 @@
 
 <h3 id="das-generische-repository-definieren">Das generische Repository definieren</h3>
 
-<p>Führe einen Typparameter <code>T</code> ein und schränke ihn auf <code>Identifiable</code> ein.</p>
+<p>Führe einen Typparameter <code>T</code> ein und schränke ihn auf <code>Identifizierbar</code> ein.</p>
 
-<pre><code class="language-java">public class Repository&lt;T extends Identifiable&gt; {
-  private final Map&lt;String, T&gt; items = new HashMap&lt;&gt;();
+<pre><code class="language-java">public class Repository&lt;T extends Identifizierbar&gt; {
+  private final Map&lt;String, T&gt; elemente = new HashMap&lt;&gt;();
 
-  public void save(T item) {
-    items.put(item.getId(), item);
+  public void save(T element) {
+    elemente.put(element.getId(), element);
   }
 
   public T findById(String id) {
-    return items.get(id);
+    return elemente.get(id);
   }
 }
 </code></pre>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Nur wegen der Schranke <code>extends Identifiable</code> darfst Du innen <code>item.getId()</code> aufrufen.</p>
+  <p><strong>Hinweis:</strong> Nur wegen der Schranke <code>extends Identifizierbar</code> darfst Du innen <code>element.getId()</code> aufrufen.</p>
 </blockquote>
 
 <h3 id="für-zwei-typen-verwenden">Für zwei Typen verwenden</h3>
 
 <p>Erzeuge je ein Repository für Kunden und Konten und speichere/lies Objekte.</p>
 
-<pre><code class="language-java">Repository&lt;Customer&gt; customers = new Repository&lt;&gt;();
-customers.save(alice);
-Customer found = customers.findById(alice.getId()); // kein Cast nötig
+<pre><code class="language-java">Repository&lt;Kunde&gt; kunden = new Repository&lt;&gt;();
+kunden.save(anna);
+Kunde gefunden = kunden.findById(anna.getId()); // kein Cast nötig
 </code></pre>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Beobachte, wie die IDE beim falschen Typ (<code>customers.save(account)</code>) schon vor dem Ausführen meckert – das ist Typsicherheit zur Compile-Zeit.</p>
+  <p><strong>Hinweis:</strong> Beobachte, wie die IDE beim falschen Typ (<code>kunden.save(konto)</code>) schon vor dem Ausführen meckert – das ist Typsicherheit zur Compile-Zeit.</p>
 </blockquote>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
   <li>Was wäre der Nachteil eines Repositories, das intern <code>Object</code> speichert?</li>
-  <li>Warum brauchst Du die Typschranke <code>extends Identifiable</code> – was ginge ohne sie nicht?</li>
+  <li>Warum brauchst Du die Typschranke <code>extends Identifizierbar</code> – was ginge ohne sie nicht?</li>
   <li>An welcher anderen Stelle im Banking-System würde sich ein generischer Typ noch lohnen?</li>
 </ul>
 
@@ -210,9 +210,9 @@ Du…
 
 ## Definition of Done
 
-* [ ] Es gibt ein generisches `Repository&lt;T extends Identifiable&gt;` mit `save(T)` und `findById(String)`.
+* [ ] Es gibt ein generisches `Repository&lt;T extends Identifizierbar&gt;` mit `save(T)` und `findById(String)`.
 * [ ] Intern speichert es die Elemente in einer `Map&lt;String, T&gt;` (ID → Element).
-* [ ] Es existieren ein `Repository&lt;Customer&gt;` und ein `Repository&lt;Account&gt;` ohne duplizierten Code.
+* [ ] Es existieren ein `Repository&lt;Kunde&gt;` und ein `Repository&lt;Konto&gt;` ohne duplizierten Code.
 * [ ] Die Verwendung kommt ohne explizite Casts aus.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
@@ -220,40 +220,40 @@ Du…
 
 ### Das generische Repository definieren
 
-Führe einen Typparameter `T` ein und schränke ihn auf `Identifiable` ein.
+Führe einen Typparameter `T` ein und schränke ihn auf `Identifizierbar` ein.
 
 ```java
-public class Repository&lt;T extends Identifiable&gt; {
-  private final Map&lt;String, T&gt; items = new HashMap&lt;&gt;();
+public class Repository&lt;T extends Identifizierbar&gt; {
+  private final Map&lt;String, T&gt; elemente = new HashMap&lt;&gt;();
 
-  public void save(T item) {
-    items.put(item.getId(), item);
+  public void save(T element) {
+    elemente.put(element.getId(), element);
   }
 
   public T findById(String id) {
-    return items.get(id);
+    return elemente.get(id);
   }
 }
 ```
 
-&gt; **Hinweis:** Nur wegen der Schranke `extends Identifiable` darfst Du innen `item.getId()` aufrufen.
+&gt; **Hinweis:** Nur wegen der Schranke `extends Identifizierbar` darfst Du innen `element.getId()` aufrufen.
 
 ### Für zwei Typen verwenden
 
 Erzeuge je ein Repository für Kunden und Konten und speichere/lies Objekte.
 
 ```java
-Repository&lt;Customer&gt; customers = new Repository&lt;&gt;();
-customers.save(alice);
-Customer found = customers.findById(alice.getId()); // kein Cast nötig
+Repository&lt;Kunde&gt; kunden = new Repository&lt;&gt;();
+kunden.save(anna);
+Kunde gefunden = kunden.findById(anna.getId()); // kein Cast nötig
 ```
 
-&gt; **Hinweis:** Beobachte, wie die IDE beim falschen Typ (`customers.save(account)`) schon vor dem Ausführen meckert – das ist Typsicherheit zur Compile-Zeit.
+&gt; **Hinweis:** Beobachte, wie die IDE beim falschen Typ (`kunden.save(konto)`) schon vor dem Ausführen meckert – das ist Typsicherheit zur Compile-Zeit.
 
 ## Reflexionsfragen
 
 * Was wäre der Nachteil eines Repositories, das intern `Object` speichert?
-* Warum brauchst Du die Typschranke `extends Identifiable` – was ginge ohne sie nicht?
+* Warum brauchst Du die Typschranke `extends Identifizierbar` – was ginge ohne sie nicht?
 * An welcher anderen Stelle im Banking-System würde sich ein generischer Typ noch lohnen?</textarea>
     </main>
     <aside class="avd-academy-guide-sidebar">

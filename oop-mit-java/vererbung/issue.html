@@ -67,15 +67,15 @@
 <head>
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Kontoarten per Vererbung modellieren · Java SE (ATVANTAGE Academy)</title>
-<meta name="description" content="Bilde Giro- und Sparkonto als Unterklassen einer abstrakten Basisklasse Account."><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="description" content="Bilde Giro- und Sparkonto als Unterklassen einer abstrakten Basisklasse Konto."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786967558"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786967558"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786967558">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786967558" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786967558" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786967558">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787034693"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787034693"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787034693">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787034693" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787034693" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787034693">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,8 +89,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786967558">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786967558"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787034693">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787034693"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -145,38 +145,38 @@
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>Account</code> ist <code>abstract</code> und lässt sich nicht direkt instanziieren.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>CurrentAccount</code> und <code>SavingsAccount</code> erben von <code>Account</code>.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Beide Unterklassen rufen im Konstruktor <code>super(iban, owner)</code> auf.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>CurrentAccount</code> ergänzt einen Dispositionskredit, <code>SavingsAccount</code> einen Habenzins.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>Konto</code> ist <code>abstract</code> und lässt sich nicht direkt instanziieren.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>Girokonto</code> und <code>Sparkonto</code> erben von <code>Konto</code>.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Beide Unterklassen rufen im Konstruktor <code>super(iban, inhaber)</code> auf.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>Girokonto</code> ergänzt einen Dispositionskredit, <code>Sparkonto</code> einen Habenzins.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Das Programm erzeugt je ein Objekt beider Kontoarten und gibt sie aus.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
 <h2 id="arbeitsschritte">Arbeitsschritte</h2>
 
-<h3 id="account-abstrakt-machen">Account abstrakt machen</h3>
+<h3 id="konto-abstrakt-machen">Konto abstrakt machen</h3>
 
-<p>Wandle <code>Account</code> in eine abstrakte Klasse mit den gemeinsamen Feldern (IBAN, Saldo, Inhaber) um.</p>
+<p>Wandle <code>Konto</code> in eine abstrakte Klasse mit den gemeinsamen Feldern (IBAN, Kontostand, Inhaber) um.</p>
 
-<pre><code class="language-java">public abstract class Account {
+<pre><code class="language-java">public abstract class Konto {
   private final String iban;
-  private Money balance;
-  private Customer owner;
+  private Betrag stand;
+  private Kunde inhaber;
   // ...
 }
 </code></pre>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> <code>abstract</code> bedeutet: „nicht direkt erzeugbar“. <code>new Account(...)</code> muss zu einem Compilerfehler führen.</p>
+  <p><strong>Hinweis:</strong> <code>abstract</code> bedeutet: „nicht direkt erzeugbar“. <code>new Konto(...)</code> muss zu einem Compilerfehler führen.</p>
 </blockquote>
 
 <h3 id="unterklassen-ableiten">Unterklassen ableiten</h3>
 
-<p>Lege <code>CurrentAccount</code> und <code>SavingsAccount</code> an, die von <code>Account</code> erben und im Konstruktor <code>super(...)</code> aufrufen.</p>
+<p>Lege <code>Girokonto</code> und <code>Sparkonto</code> an, die von <code>Konto</code> erben und im Konstruktor <code>super(...)</code> aufrufen.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Ergänze nur das, was die Kontoart wirklich unterscheidet (z. B. <code>limit</code> beim Girokonto, <code>creditInterestRate</code> beim Sparkonto).</p>
+  <p><strong>Hinweis:</strong> Ergänze nur das, was die Kontoart wirklich unterscheidet (z. B. <code>dispolimit</code> beim Girokonto, <code>habenzins</code> beim Sparkonto).</p>
 </blockquote>
 
 <h3 id="objekte-erzeugen">Objekte erzeugen</h3>
@@ -186,7 +186,7 @@
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Welches Verhalten gehört in <code>Account</code>, welches nur in eine bestimmte Kontoart?</li>
+  <li>Welches Verhalten gehört in <code>Konto</code>, welches nur in eine bestimmte Kontoart?</li>
   <li>Woran würdest Du merken, dass Vererbung hier <em>nicht</em> das richtige Mittel ist?</li>
   <li>Was gewinnst Du dadurch, dass die gemeinsamen Felder nur einmal in der Basisklasse stehen?</li>
 </ul>
@@ -205,35 +205,35 @@ Du…
 
 ## Definition of Done
 
-* [ ] `Account` ist `abstract` und lässt sich nicht direkt instanziieren.
-* [ ] `CurrentAccount` und `SavingsAccount` erben von `Account`.
-* [ ] Beide Unterklassen rufen im Konstruktor `super(iban, owner)` auf.
-* [ ] `CurrentAccount` ergänzt einen Dispositionskredit, `SavingsAccount` einen Habenzins.
+* [ ] `Konto` ist `abstract` und lässt sich nicht direkt instanziieren.
+* [ ] `Girokonto` und `Sparkonto` erben von `Konto`.
+* [ ] Beide Unterklassen rufen im Konstruktor `super(iban, inhaber)` auf.
+* [ ] `Girokonto` ergänzt einen Dispositionskredit, `Sparkonto` einen Habenzins.
 * [ ] Das Programm erzeugt je ein Objekt beider Kontoarten und gibt sie aus.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
 ## Arbeitsschritte
 
-### Account abstrakt machen
+### Konto abstrakt machen
 
-Wandle `Account` in eine abstrakte Klasse mit den gemeinsamen Feldern (IBAN, Saldo, Inhaber) um.
+Wandle `Konto` in eine abstrakte Klasse mit den gemeinsamen Feldern (IBAN, Kontostand, Inhaber) um.
 
 ```java
-public abstract class Account {
+public abstract class Konto {
   private final String iban;
-  private Money balance;
-  private Customer owner;
+  private Betrag stand;
+  private Kunde inhaber;
   // ...
 }
 ```
 
-&gt; **Hinweis:** `abstract` bedeutet: „nicht direkt erzeugbar“. `new Account(...)` muss zu einem Compilerfehler führen.
+&gt; **Hinweis:** `abstract` bedeutet: „nicht direkt erzeugbar“. `new Konto(...)` muss zu einem Compilerfehler führen.
 
 ### Unterklassen ableiten
 
-Lege `CurrentAccount` und `SavingsAccount` an, die von `Account` erben und im Konstruktor `super(...)` aufrufen.
+Lege `Girokonto` und `Sparkonto` an, die von `Konto` erben und im Konstruktor `super(...)` aufrufen.
 
-&gt; **Hinweis:** Ergänze nur das, was die Kontoart wirklich unterscheidet (z. B. `limit` beim Girokonto, `creditInterestRate` beim Sparkonto).
+&gt; **Hinweis:** Ergänze nur das, was die Kontoart wirklich unterscheidet (z. B. `dispolimit` beim Girokonto, `habenzins` beim Sparkonto).
 
 ### Objekte erzeugen
 
@@ -241,7 +241,7 @@ Erzeuge in `Main` je ein Giro- und ein Sparkonto und gib beide aus.
 
 ## Reflexionsfragen
 
-* Welches Verhalten gehört in `Account`, welches nur in eine bestimmte Kontoart?
+* Welches Verhalten gehört in `Konto`, welches nur in eine bestimmte Kontoart?
 * Woran würdest Du merken, dass Vererbung hier *nicht* das richtige Mittel ist?
 * Was gewinnst Du dadurch, dass die gemeinsamen Felder nur einmal in der Basisklasse stehen?</textarea>
     </main>

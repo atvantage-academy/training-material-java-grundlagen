@@ -69,13 +69,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Fehlerfälle mit Ausnahmen behandeln · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Behandle unzureichendes Guthaben mit einer eigenen checked Exception."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786967558"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786967558"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786967558">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786967558" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786967558" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786967558">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787034693"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787034693"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787034693">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787034693" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787034693" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787034693">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,8 +89,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786967558">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786967558"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787034693">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787034693"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -145,8 +145,8 @@
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt eine Exception <code>InsufficientFundsException</code> (checked).</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>withdraw</code> wirft diese Exception, wenn der Betrag nicht verfügbar ist.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt eine Exception <code>KeineDeckungException</code> (checked).</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>abheben</code> wirft diese Exception, wenn der Betrag nicht verfügbar ist.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der Aufrufer in <code>Main</code> fängt die Exception mit <code>try</code>/<code>catch</code> und gibt eine sinnvolle Meldung aus.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Ein Programmierfehler (z. B. <code>null</code>-Betrag) wird über eine <em>unchecked</em> Exception abgelehnt.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
@@ -158,8 +158,8 @@
 
 <p>Lege eine checked Exception an (erbt von <code>Exception</code>).</p>
 
-<pre><code class="language-java">public class InsufficientFundsException extends Exception {
-  public InsufficientFundsException(String message) {
+<pre><code class="language-java">public class KeineDeckungException extends Exception {
+  public KeineDeckungException(String message) {
     super(message);
   }
 }
@@ -171,19 +171,19 @@
 
 <h3 id="die-ausnahme-werfen">Die Ausnahme werfen</h3>
 
-<p>Lass <code>withdraw</code> die Ausnahme werfen, wenn <code>isAmountAvailable</code> <code>false</code> liefert. Deklariere sie mit <code>throws</code>.</p>
+<p>Lass <code>abheben</code> die Ausnahme werfen, wenn <code>istGedeckt</code> <code>false</code> liefert. Deklariere sie mit <code>throws</code>.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Prüfe zuerst die Vorbedingung; erst wenn sie erfüllt ist, verändere den Saldo – sonst bleibt das Konto im gültigen Zustand.</p>
+  <p><strong>Hinweis:</strong> Prüfe zuerst die Vorbedingung; erst wenn sie erfüllt ist, verändere den Kontostand – sonst bleibt das Konto im gültigen Zustand.</p>
 </blockquote>
 
 <h3 id="den-fehler-behandeln">Den Fehler behandeln</h3>
 
-<p>Rufe <code>withdraw</code> in <code>Main</code> in einem <code>try</code>/<code>catch</code> auf und reagiere sinnvoll.</p>
+<p>Rufe <code>abheben</code> in <code>Main</code> in einem <code>try</code>/<code>catch</code> auf und reagiere sinnvoll.</p>
 
 <pre><code class="language-java">try {
-  account.withdraw(Money.euro(100));
-} catch (InsufficientFundsException e) {
+  konto.abheben(Betrag.euro(100));
+} catch (KeineDeckungException e) {
   System.out.println("Abhebung nicht möglich: " + e.getMessage());
 }
 </code></pre>
@@ -210,8 +210,8 @@ Du…
 
 ## Definition of Done
 
-* [ ] Es gibt eine Exception `InsufficientFundsException` (checked).
-* [ ] `withdraw` wirft diese Exception, wenn der Betrag nicht verfügbar ist.
+* [ ] Es gibt eine Exception `KeineDeckungException` (checked).
+* [ ] `abheben` wirft diese Exception, wenn der Betrag nicht verfügbar ist.
 * [ ] Der Aufrufer in `Main` fängt die Exception mit `try`/`catch` und gibt eine sinnvolle Meldung aus.
 * [ ] Ein Programmierfehler (z. B. `null`-Betrag) wird über eine *unchecked* Exception abgelehnt.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
@@ -223,8 +223,8 @@ Du…
 Lege eine checked Exception an (erbt von `Exception`).
 
 ```java
-public class InsufficientFundsException extends Exception {
-  public InsufficientFundsException(String message) {
+public class KeineDeckungException extends Exception {
+  public KeineDeckungException(String message) {
     super(message);
   }
 }
@@ -234,18 +234,18 @@ public class InsufficientFundsException extends Exception {
 
 ### Die Ausnahme werfen
 
-Lass `withdraw` die Ausnahme werfen, wenn `isAmountAvailable` `false` liefert. Deklariere sie mit `throws`.
+Lass `abheben` die Ausnahme werfen, wenn `istGedeckt` `false` liefert. Deklariere sie mit `throws`.
 
-&gt; **Hinweis:** Prüfe zuerst die Vorbedingung; erst wenn sie erfüllt ist, verändere den Saldo – sonst bleibt das Konto im gültigen Zustand.
+&gt; **Hinweis:** Prüfe zuerst die Vorbedingung; erst wenn sie erfüllt ist, verändere den Kontostand – sonst bleibt das Konto im gültigen Zustand.
 
 ### Den Fehler behandeln
 
-Rufe `withdraw` in `Main` in einem `try`/`catch` auf und reagiere sinnvoll.
+Rufe `abheben` in `Main` in einem `try`/`catch` auf und reagiere sinnvoll.
 
 ```java
 try {
-  account.withdraw(Money.euro(100));
-} catch (InsufficientFundsException e) {
+  konto.abheben(Betrag.euro(100));
+} catch (KeineDeckungException e) {
   System.out.println(&quot;Abhebung nicht möglich: &quot; + e.getMessage());
 }
 ```

@@ -69,13 +69,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Ein Klassendiagramm zur Bank · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Lies einen Anforderungstext zur Bank und zeichne daraus ein einfaches UML-Klassendiagramm – Klassen, Eigenschaften, Fähigkeiten, Beziehungen mit Multiplizitäten."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786967558"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786967558"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786967558">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786967558" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786967558" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786967558">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787034693"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787034693"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787034693">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787034693" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787034693" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787034693">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,8 +89,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786967558">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786967558"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787034693">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787034693"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -177,13 +177,6 @@ kann <strong>eingezahlt</strong> werden, und es kann <strong>abgehoben</strong> 
 solange genug Guthaben vorhanden ist. Der aktuelle Kontostand lässt sich
 abfragen.</p>
 
-  <p>Jede Ein- und Auszahlung wird als <strong>Buchung</strong> festgehalten, mit Betrag,
-Zeitpunkt und Verwendungszweck. Zu einem Konto lässt sich der gesamte
-Buchungsverlauf ausgeben.</p>
-
-  <p>Bei einer <strong>Überweisung</strong> wird der Betrag von einem Konto abgebucht und einem
-anderen gutgeschrieben.</p>
-
   <p>Die <strong>Bank</strong> selbst kennt ihre Kundschaft und deren Konten und kann ein Konto
 anhand der IBAN heraussuchen.</p>
 </blockquote>
@@ -222,8 +215,8 @@ Eigenschaft?</strong> Frag Dich dabei:</p>
 </ul>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Denk bei der Überweisung kurz nach: Ist sie ein eigenes Ding – oder
-beschreibt der Satz etwas, das zwei Konten miteinander tun?</p>
+  <p><strong>Hinweis:</strong> Denk bei Kundennummer, IBAN und Kontostand kurz nach: eigenes Ding
+– oder nur ein Wert an einer anderen Klasse?</p>
 </blockquote>
 
 <h3 id="das-diagramm-zeichnen">Das Diagramm zeichnen</h3>
@@ -234,7 +227,7 @@ beschreibt der Satz etwas, das zwei Konten miteinander tun?</p>
 │ Konto                     │   ← Name
 ├───────────────────────────┤
 │ iban                      │   ← Eigenschaften
-│ kontostand                │
+│ stand                │
 ├───────────────────────────┤
 │ einzahlen()               │   ← Fähigkeiten
 │ abheben()                 │
@@ -270,8 +263,8 @@ und noch keine fachliche Aussage.</p>
 <p>Geh den Text noch einmal durch und prüfe an ein, zwei Aussagen, ob Dein Diagramm
 sie hergibt – zum Beispiel: <em>„Abheben ist nur möglich, solange genug Guthaben
 vorhanden ist.“</em> An welcher Stelle Deines Modells könnte diese Regel geprüft
-werden? Und: <em>„Zu einem Konto lässt sich der gesamte Buchungsverlauf ausgeben.“</em>
-Wo steht dieser Verlauf?</p>
+werden? Und: <em>„Wer mehrere Konten braucht, bekommt mehrere.“</em> Woran sieht man das
+in Deinem Diagramm?</p>
 
 <blockquote>
   <p><strong>Hinweis:</strong> Wenn Dir dabei etwas fehlt, ergänze es. Wenn Du etwas eingezeichnet
@@ -280,10 +273,10 @@ auch weglassen.</p>
 </blockquote>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Nicht jede Frage musst Du hier beantworten. Ob der Kontostand als
-eigener Wert geführt oder jedes Mal aus den Buchungen aufsummiert wird, ist eine
-Frage der Umsetzung – fachlich hat ein Konto einfach einen Kontostand. Solche
-Entscheidungen fallen später im Code.</p>
+  <p><strong>Hinweis:</strong> Nicht jede Frage musst Du hier beantworten. Ob die Bank ihre Konten
+in einer Liste hält oder nach IBAN nachschlägt, ist eine Frage der Umsetzung –
+fachlich kennt die Bank einfach ihre Konten. Solche Entscheidungen fallen später
+im Code.</p>
 </blockquote>
 
 <h3 id="für-schnelle-noch-ein-text">Für Schnelle: noch ein Text</h3>
@@ -373,13 +366,6 @@ Du…
 &gt; solange genug Guthaben vorhanden ist. Der aktuelle Kontostand lässt sich
 &gt; abfragen.
 &gt;
-&gt; Jede Ein- und Auszahlung wird als **Buchung** festgehalten, mit Betrag,
-&gt; Zeitpunkt und Verwendungszweck. Zu einem Konto lässt sich der gesamte
-&gt; Buchungsverlauf ausgeben.
-&gt;
-&gt; Bei einer **Überweisung** wird der Betrag von einem Konto abgebucht und einem
-&gt; anderen gutgeschrieben.
-&gt;
 &gt; Die **Bank** selbst kennt ihre Kundschaft und deren Konten und kann ein Konto
 &gt; anhand der IBAN heraussuchen.
 
@@ -408,8 +394,8 @@ Eigenschaft?** Frag Dich dabei:
 * Hat das Ding eigene Daten *und* eigenes Verhalten?
 * Kommt es mehrfach und unabhängig vor?
 
-&gt; **Hinweis:** Denk bei der Überweisung kurz nach: Ist sie ein eigenes Ding – oder
-&gt; beschreibt der Satz etwas, das zwei Konten miteinander tun?
+&gt; **Hinweis:** Denk bei Kundennummer, IBAN und Kontostand kurz nach: eigenes Ding
+&gt; – oder nur ein Wert an einer anderen Klasse?
 
 ### Das Diagramm zeichnen
 
@@ -420,7 +406,7 @@ Zeichne für jede Klasse ein **Kästchen** mit drei Bereichen:
 │ Konto                     │   ← Name
 ├───────────────────────────┤
 │ iban                      │   ← Eigenschaften
-│ kontostand                │
+│ stand                │
 ├───────────────────────────┤
 │ einzahlen()               │   ← Fähigkeiten
 │ abheben()                 │
@@ -455,17 +441,17 @@ Kurs   * ────────── *  Mitglied     jeder Kurs hat viele Mit
 Geh den Text noch einmal durch und prüfe an ein, zwei Aussagen, ob Dein Diagramm
 sie hergibt – zum Beispiel: *„Abheben ist nur möglich, solange genug Guthaben
 vorhanden ist.“* An welcher Stelle Deines Modells könnte diese Regel geprüft
-werden? Und: *„Zu einem Konto lässt sich der gesamte Buchungsverlauf ausgeben.“*
-Wo steht dieser Verlauf?
+werden? Und: *„Wer mehrere Konten braucht, bekommt mehrere.“* Woran sieht man das
+in Deinem Diagramm?
 
 &gt; **Hinweis:** Wenn Dir dabei etwas fehlt, ergänze es. Wenn Du etwas eingezeichnet
 &gt; hast, das der Text gar nicht erwähnt, streich es wieder – Modellieren heißt
 &gt; auch weglassen.
 
-&gt; **Hinweis:** Nicht jede Frage musst Du hier beantworten. Ob der Kontostand als
-&gt; eigener Wert geführt oder jedes Mal aus den Buchungen aufsummiert wird, ist eine
-&gt; Frage der Umsetzung – fachlich hat ein Konto einfach einen Kontostand. Solche
-&gt; Entscheidungen fallen später im Code.
+&gt; **Hinweis:** Nicht jede Frage musst Du hier beantworten. Ob die Bank ihre Konten
+&gt; in einer Liste hält oder nach IBAN nachschlägt, ist eine Frage der Umsetzung –
+&gt; fachlich kennt die Bank einfach ihre Konten. Solche Entscheidungen fallen später
+&gt; im Code.
 
 ### Für Schnelle: noch ein Text
 

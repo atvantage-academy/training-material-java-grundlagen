@@ -66,16 +66,16 @@
 --><html lang="de">
 <head>
   <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1"><title>Kunden und Konten als Klassen modellieren · Java SE (ATVANTAGE Academy)</title>
-<meta name="description" content="Modelliere Kunde und Konto als eigene Klassen und erzeuge daraus Objekte."><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Das Banking-Diagramm in Java · Java SE (ATVANTAGE Academy)</title>
+<meta name="description" content="Übertrage Dein Klassendiagramm zur Bank in Java-Code und erzeuge in der main-Methode Beispielobjekte."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786967558"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786967558"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786967558">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786967558" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786967558" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786967558">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787034693"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787034693"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787034693">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787034693" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787034693" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787034693">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,8 +89,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786967558">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786967558"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787034693">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787034693"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -115,133 +115,243 @@
             aria-label="Farbschema umschalten">◐</button>
   </div>
 </header>
-<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Kunden und Konten als Klassen modellieren</span></nav><div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 75 Minuten</span><span class="avd-academy-tag">Klassen & Objekte</span><span class="avd-academy-tag">Banking</span>
+<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Das Banking-Diagramm in Java</span></nav><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 30 Minuten</span><span class="avd-academy-tag">Klassen & Objekte</span><span class="avd-academy-tag">Banking</span>
       </div>
       <div class="avd-academy-guide-hero__actions">
         <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
                 data-avd-academy-copy-md="#avd-academy-md-source"
                 title="Markdown kopieren" aria-label="Markdown kopieren"></button>
       </div>
-    </div><h1>Kunden und Konten als Klassen modellieren</h1>
+    </div><h1>Das Banking-Diagramm in Java</h1>
   </section>
 
   <div class="avd-academy-guide-layout">
     <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
-      <h1 id="kunden-und-konten-als-klassen-modellieren">Kunden und Konten als Klassen modellieren</h1>
+      <h1 id="das-banking-diagramm-in-java">Das Banking-Diagramm in Java</h1>
 
-<p>Als Entwickler:in im Banking-Team möchte ich Kunden und Konten als eigene Klassen abbilden, damit zusammengehörige Daten und Verhalten an einem Ort liegen statt in verstreuten Variablen.</p>
+<p>Als Umsteiger:in möchte ich mein Klassendiagramm in Java-Code übertragen, damit aus den gezeichneten Kästchen ein Programm wird, das ich starten kann.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Du machst hier <strong>dasselbe wie der Trainer eben in der Demo</strong> – nur
+mit Deinem eigenen Diagramm zur Bank. Die Visualisierung <em>Objektorientierung mit
+Java (einfach)</em> (unter „Weiterführende Informationen“) zeigt jeden Baustein noch
+einmal an einem anderen Beispiel. Schlag dort nach, statt zu fragen.</p>
+</blockquote>
 
 <h2 id="lernziele">Lernziele</h2>
 
 <p>Du…</p>
 
 <ul>
-  <li>legst eine Klasse mit privaten Feldern, einem Konstruktor und Methoden an.</li>
-  <li>erzeugst mit <code>new</code> Objekte und rufst ihre Methoden auf.</li>
-  <li>erklärst, warum Bauplan (Klasse) und Instanz (Objekt) verschiedene Dinge sind.</li>
+  <li>übersetzt Kästchen in Klassen, Eigenschaften in Instanzvariablen und Fähigkeiten in Methoden.</li>
+  <li>erzeugst mit <code>new</code> mehrere Objekte einer Klasse und gibst ihnen eigene Werte.</li>
+  <li>setzt eine Beziehung aus dem Diagramm als <strong>Referenz auf ein anderes Objekt</strong> um.</li>
+  <li>machst die Ausgabe eines Objekts mit <code>toString()</code> lesbar.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt eine Klasse <code>Customer</code> mit den Feldern <code>name</code> und <code>city</code> sowie einer automatisch erzeugten <code>id</code>.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt eine Klasse <code>Account</code> mit <code>iban</code>, <code>balance</code> und einem <code>owner</code> (ein <code>Customer</code>).</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />In <code>Main</code> werden mindestens zwei Kunden und ein Konto erzeugt und ausgegeben.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Für jedes Kästchen Deines Diagramms gibt es eine Klasse in einer eigenen Datei.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Die Eigenschaften stehen als Instanzvariablen, mindestens eine Fähigkeit je Klasse als Methode darin.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Die Beziehung aus dem Diagramm ist im Code umgesetzt.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />In <code>Main</code> entstehen <strong>Beispielobjekte</strong>: Werte setzen, wieder abfragen, ausgeben.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Beide Klassen haben ein <code>toString()</code>, das die wichtigsten Werte ausgibt.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Das Programm startet und läuft fehlerfrei.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
+<blockquote>
+  <p><strong>Hinweis:</strong> Konstruktoren, <code>private</code>, Getter und Setter brauchst Du hier noch
+nicht – die Variablen bleiben ohne Vorsatz und werden direkt gesetzt. Das ist
+Absicht: Wir halten die Sprache klein, bis das Prinzip sitzt.</p>
+</blockquote>
+
 <h2 id="arbeitsschritte">Arbeitsschritte</h2>
 
-<h3 id="die-klasse-customer-anlegen">Die Klasse Customer anlegen</h3>
+<h3 id="die-klassen-anlegen">Die Klassen anlegen</h3>
 
-<p>Lege im Paket <code>domain</code> eine Klasse <code>Customer</code> mit den Feldern für Name und Stadt an. Erzeuge im Konstruktor eine eindeutige ID.</p>
-
-<blockquote>
-  <p><strong>Hinweis:</strong> Für eindeutige IDs eignet sich <code>java.util.UUID.randomUUID()</code>. Ein Feld, das sich nach der Erzeugung nicht mehr ändern soll, kannst Du <code>final</code> machen.</p>
-</blockquote>
-
-<h3 id="die-klasse-account-anlegen">Die Klasse Account anlegen</h3>
-
-<p>Lege eine Klasse <code>Account</code> an, die eine <code>iban</code>, einen Kontostand und den Inhaber (<code>Customer</code>) kennt. Ein Konto „hat einen“ Kunden als Inhaber.</p>
+<p>Nimm Dein Klassendiagramm von gestern und übersetze es Kästchen für Kästchen:
+jede Klasse in eine eigene Datei, die genauso heißt wie die Klasse. Die
+Eigenschaften aus dem Kästchen werden zu <strong>Instanzvariablen</strong>, die Fähigkeiten zu
+<strong>Methoden</strong>.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Überlege, welche Felder beim Erzeugen zwingend nötig sind – die gehören in den Konstruktor.</p>
+  <p><strong>Hinweis:</strong> Der Name einer Variablen wird im Kontext ihrer Klasse gelesen. In
+<code>Konto</code> genügt deshalb <code>stand</code> – <code>kontostand</code> wäre eine Dopplung, der
+Klassenname steht ja schon davor.</p>
 </blockquote>
 
-<h3 id="objekte-erzeugen-und-benutzen">Objekte erzeugen und benutzen</h3>
+<h3 id="die-beziehung-umsetzen">Die Beziehung umsetzen</h3>
 
-<p>Erzeuge in <code>Main</code> zwei <code>Customer</code>-Objekte und daraus ein <code>Account</code>-Objekt. Gib sie mit <code>System.out.println</code> aus.</p>
+<p>In Deinem Diagramm verbindet eine <strong>Linie</strong> zwei Kästchen. Überlege, wie diese
+Linie im Code aussieht, und setze sie um.</p>
 
-<pre><code class="language-java">Customer alice = new Customer("Alice", "Hamburg");
-Account account = new Account("DE...", alice);
-System.out.println(account);
-</code></pre>
+<h3 id="beispielobjekte-in-main-erzeugen">Beispielobjekte in <code>main</code> erzeugen</h3>
+
+<p>Leg eine Klasse <code>Main</code> mit einer <code>main</code>-Methode an. Erzeuge dort mit <code>new</code>
+<strong>mehrere Beispielobjekte</strong>, setz ihre Werte, ruf eine Methode auf und gib die
+Werte anschließend wieder aus.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Wenn die Ausgabe kryptisch aussieht (<code>Account@1b6d3586</code>), ist das erwartbar – eine schöne Textform folgt im Modul <em>Objektbeziehungen &amp; equals/hashCode</em>.</p>
+  <p><strong>Hinweis:</strong> Nimm bewusst <strong>mehr als ein Objekt derselben Klasse</strong> und gib ihnen
+unterschiedliche Werte. Dann siehst Du an der Ausgabe, was eine Instanzvariable
+ausmacht.</p>
 </blockquote>
+
+<h3 id="die-ausgabe-lesbar-machen">Die Ausgabe lesbar machen</h3>
+
+<p>Gib einmal ein ganzes Objekt aus – die Ausgabe sieht aus wie <code>Konto@1b6d3586</code>,
+also Klassenname und eine interne Kennung. Ergänze in beiden Klassen ein
+<code>toString()</code> und lass dieselbe Zeile noch einmal laufen.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> <code>toString()</code> wird automatisch benutzt, sobald ein Objekt als Text
+gebraucht wird – Du musst es nicht selbst aufrufen. Damit beschreibt sich die
+Klasse selbst, statt dass jede Ausgabestelle die Felder einzeln zusammensetzt.</p>
+</blockquote>
+
+<h3 id="anregung-mit-dem-debugger-hineinschauen">Anregung: mit dem Debugger hineinschauen</h3>
+
+<p>Den Debugger kennst Du aus Tag 1 – jetzt lohnt er sich richtig. Setz in <code>main</code>
+einen <strong>Breakpoint</strong> auf die erste Zeile und lass das Programm dann <strong>Schritt für
+Schritt</strong> laufen. Sieh Dir nach jeder Zeile im Variablen-Fenster an, was sich
+verändert hat.</p>
+
+<p>Achte dabei auf drei Dinge:</p>
+
+<ul>
+  <li><strong>Wie stellt der Debugger ein Objekt dar?</strong> Vor dem <code>new</code> steht dort <code>null</code>, danach etwas wie <code>Konto@1b6d3586</code> – dieselbe kryptische Form, die Du auch bei <code>System.out.println</code> gesehen hast.</li>
+  <li><strong>Klapp das Objekt auf.</strong> Darin stecken genau die Instanzvariablen, die Du deklariert hast – mit ihren aktuellen Werten. Sieh zu, wie sich der Stand beim Aufruf Deiner Methode ändert.</li>
+  <li><strong>Folge der Beziehung.</strong> Hinter der Referenz steht kein Text, sondern wieder ein Objekt, das sich seinerseits aufklappen lässt.</li>
+</ul>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Sobald <code>toString()</code> existiert, zeigen die meisten IDEs im
+Variablen-Fenster diese Textform statt <code>Klasse@Kennung</code> – ein Grund mehr für
+eine gute <code>toString()</code>-Methode.</p>
+</blockquote>
+
+<h3 id="für-schnelle">Für Schnelle</h3>
+
+<ul>
+  <li>Ergänze eine zweite Methode, die etwas prüft, bevor sie den Zustand ändert – zum Beispiel Abheben nur bis zur Höhe des Guthabens.</li>
+  <li>Bau eine Methode, mit der ein Kunde umzieht, und ruf sie auf. Gib den Wohnort davor und danach aus.</li>
+  <li>Gib in <code>toString()</code> auch etwas aus dem verbundenen Objekt mit aus.</li>
+</ul>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Welche Daten und welches Verhalten „gehören“ zu einem Konto – und was gehört bewusst nicht hinein?</li>
-  <li>Was wäre der Nachteil, Kontostand und Inhaber in getrennten Arrays statt in einem <code>Account</code>-Objekt zu halten?</li>
-  <li>Warum ist es sinnvoll, dass ein Konto seine ID/IBAN nicht nachträglich ändern lässt?</li>
+  <li>Wie ist der Zusammenhang zwischen Klassen und Objekten? Erkläre beispielhaft.</li>
+  <li>Wie werden Beziehungen zwischen Klassen im Code umgesetzt?</li>
+  <li>Wofür war <code>toString()</code> gut?</li>
 </ul>
 
-<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Kunden und Konten als Klassen modellieren
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Das Banking-Diagramm in Java
 
-Als Entwickler:in im Banking-Team möchte ich Kunden und Konten als eigene Klassen abbilden, damit zusammengehörige Daten und Verhalten an einem Ort liegen statt in verstreuten Variablen.
+Als Umsteiger:in möchte ich mein Klassendiagramm in Java-Code übertragen, damit aus den gezeichneten Kästchen ein Programm wird, das ich starten kann.
+
+&gt; **Hinweis:** Du machst hier **dasselbe wie der Trainer eben in der Demo** – nur
+&gt; mit Deinem eigenen Diagramm zur Bank. Die Visualisierung *Objektorientierung mit
+&gt; Java (einfach)* (unter „Weiterführende Informationen“) zeigt jeden Baustein noch
+&gt; einmal an einem anderen Beispiel. Schlag dort nach, statt zu fragen.
 
 ## Lernziele
 
 Du…
 
-* legst eine Klasse mit privaten Feldern, einem Konstruktor und Methoden an.
-* erzeugst mit `new` Objekte und rufst ihre Methoden auf.
-* erklärst, warum Bauplan (Klasse) und Instanz (Objekt) verschiedene Dinge sind.
+* übersetzt Kästchen in Klassen, Eigenschaften in Instanzvariablen und Fähigkeiten in Methoden.
+* erzeugst mit `new` mehrere Objekte einer Klasse und gibst ihnen eigene Werte.
+* setzt eine Beziehung aus dem Diagramm als **Referenz auf ein anderes Objekt** um.
+* machst die Ausgabe eines Objekts mit `toString()` lesbar.
 
 ## Definition of Done
 
-* [ ] Es gibt eine Klasse `Customer` mit den Feldern `name` und `city` sowie einer automatisch erzeugten `id`.
-* [ ] Es gibt eine Klasse `Account` mit `iban`, `balance` und einem `owner` (ein `Customer`).
-* [ ] In `Main` werden mindestens zwei Kunden und ein Konto erzeugt und ausgegeben.
+* [ ] Für jedes Kästchen Deines Diagramms gibt es eine Klasse in einer eigenen Datei.
+* [ ] Die Eigenschaften stehen als Instanzvariablen, mindestens eine Fähigkeit je Klasse als Methode darin.
+* [ ] Die Beziehung aus dem Diagramm ist im Code umgesetzt.
+* [ ] In `Main` entstehen **Beispielobjekte**: Werte setzen, wieder abfragen, ausgeben.
+* [ ] Beide Klassen haben ein `toString()`, das die wichtigsten Werte ausgibt.
 * [ ] Das Programm startet und läuft fehlerfrei.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
+&gt; **Hinweis:** Konstruktoren, `private`, Getter und Setter brauchst Du hier noch
+&gt; nicht – die Variablen bleiben ohne Vorsatz und werden direkt gesetzt. Das ist
+&gt; Absicht: Wir halten die Sprache klein, bis das Prinzip sitzt.
+
 ## Arbeitsschritte
 
-### Die Klasse Customer anlegen
+### Die Klassen anlegen
 
-Lege im Paket `domain` eine Klasse `Customer` mit den Feldern für Name und Stadt an. Erzeuge im Konstruktor eine eindeutige ID.
+Nimm Dein Klassendiagramm von gestern und übersetze es Kästchen für Kästchen:
+jede Klasse in eine eigene Datei, die genauso heißt wie die Klasse. Die
+Eigenschaften aus dem Kästchen werden zu **Instanzvariablen**, die Fähigkeiten zu
+**Methoden**.
 
-&gt; **Hinweis:** Für eindeutige IDs eignet sich `java.util.UUID.randomUUID()`. Ein Feld, das sich nach der Erzeugung nicht mehr ändern soll, kannst Du `final` machen.
+&gt; **Hinweis:** Der Name einer Variablen wird im Kontext ihrer Klasse gelesen. In
+&gt; `Konto` genügt deshalb `stand` – `kontostand` wäre eine Dopplung, der
+&gt; Klassenname steht ja schon davor.
 
-### Die Klasse Account anlegen
+### Die Beziehung umsetzen
 
-Lege eine Klasse `Account` an, die eine `iban`, einen Kontostand und den Inhaber (`Customer`) kennt. Ein Konto „hat einen“ Kunden als Inhaber.
+In Deinem Diagramm verbindet eine **Linie** zwei Kästchen. Überlege, wie diese
+Linie im Code aussieht, und setze sie um.
 
-&gt; **Hinweis:** Überlege, welche Felder beim Erzeugen zwingend nötig sind – die gehören in den Konstruktor.
+### Beispielobjekte in `main` erzeugen
 
-### Objekte erzeugen und benutzen
+Leg eine Klasse `Main` mit einer `main`-Methode an. Erzeuge dort mit `new`
+**mehrere Beispielobjekte**, setz ihre Werte, ruf eine Methode auf und gib die
+Werte anschließend wieder aus.
 
-Erzeuge in `Main` zwei `Customer`-Objekte und daraus ein `Account`-Objekt. Gib sie mit `System.out.println` aus.
+&gt; **Hinweis:** Nimm bewusst **mehr als ein Objekt derselben Klasse** und gib ihnen
+&gt; unterschiedliche Werte. Dann siehst Du an der Ausgabe, was eine Instanzvariable
+&gt; ausmacht.
 
-```java
-Customer alice = new Customer(&quot;Alice&quot;, &quot;Hamburg&quot;);
-Account account = new Account(&quot;DE...&quot;, alice);
-System.out.println(account);
-```
+### Die Ausgabe lesbar machen
 
-&gt; **Hinweis:** Wenn die Ausgabe kryptisch aussieht (`Account@1b6d3586`), ist das erwartbar – eine schöne Textform folgt im Modul *Objektbeziehungen &amp; equals/hashCode*.
+Gib einmal ein ganzes Objekt aus – die Ausgabe sieht aus wie `Konto@1b6d3586`,
+also Klassenname und eine interne Kennung. Ergänze in beiden Klassen ein
+`toString()` und lass dieselbe Zeile noch einmal laufen.
+
+&gt; **Hinweis:** `toString()` wird automatisch benutzt, sobald ein Objekt als Text
+&gt; gebraucht wird – Du musst es nicht selbst aufrufen. Damit beschreibt sich die
+&gt; Klasse selbst, statt dass jede Ausgabestelle die Felder einzeln zusammensetzt.
+
+### Anregung: mit dem Debugger hineinschauen
+
+Den Debugger kennst Du aus Tag 1 – jetzt lohnt er sich richtig. Setz in `main`
+einen **Breakpoint** auf die erste Zeile und lass das Programm dann **Schritt für
+Schritt** laufen. Sieh Dir nach jeder Zeile im Variablen-Fenster an, was sich
+verändert hat.
+
+Achte dabei auf drei Dinge:
+
+* **Wie stellt der Debugger ein Objekt dar?** Vor dem `new` steht dort `null`, danach etwas wie `Konto@1b6d3586` – dieselbe kryptische Form, die Du auch bei `System.out.println` gesehen hast.
+* **Klapp das Objekt auf.** Darin stecken genau die Instanzvariablen, die Du deklariert hast – mit ihren aktuellen Werten. Sieh zu, wie sich der Stand beim Aufruf Deiner Methode ändert.
+* **Folge der Beziehung.** Hinter der Referenz steht kein Text, sondern wieder ein Objekt, das sich seinerseits aufklappen lässt.
+
+&gt; **Hinweis:** Sobald `toString()` existiert, zeigen die meisten IDEs im
+&gt; Variablen-Fenster diese Textform statt `Klasse@Kennung` – ein Grund mehr für
+&gt; eine gute `toString()`-Methode.
+
+### Für Schnelle
+
+* Ergänze eine zweite Methode, die etwas prüft, bevor sie den Zustand ändert – zum Beispiel Abheben nur bis zur Höhe des Guthabens.
+* Bau eine Methode, mit der ein Kunde umzieht, und ruf sie auf. Gib den Wohnort davor und danach aus.
+* Gib in `toString()` auch etwas aus dem verbundenen Objekt mit aus.
 
 ## Reflexionsfragen
 
-* Welche Daten und welches Verhalten „gehören“ zu einem Konto – und was gehört bewusst nicht hinein?
-* Was wäre der Nachteil, Kontostand und Inhaber in getrennten Arrays statt in einem `Account`-Objekt zu halten?
-* Warum ist es sinnvoll, dass ein Konto seine ID/IBAN nicht nachträglich ändern lässt?</textarea>
+* Wie ist der Zusammenhang zwischen Klassen und Objekten? Erkläre beispielhaft.
+* Wie werden Beziehungen zwischen Klassen im Code umgesetzt?
+* Wofür war `toString()` gut?
+
+## Weiterführende Informationen
+
+- [Visualisierung: Objektorientierung mit Java (einfach)](../../shared/visualisierungen/objektorientierung-java-einfach.html)
+</textarea>
     </main>
     <aside class="avd-academy-guide-sidebar">
       <div class="avd-academy-guide-side avd-academy-guide-side--toc" data-avd-academy-toc-box hidden>
@@ -252,6 +362,11 @@ System.out.println(account);
         <div class="avd-academy-guide-side__label">Fortschritt</div>
         <div class="avd-academy-progress__bar"><div class="avd-academy-progress__fill"></div></div>
         <div class="avd-academy-progress__text"></div>
+      </div>
+      <div class="avd-academy-guide-side avd-academy-guide-side--bordered">
+        <div class="avd-academy-guide-side__label">Weiterführende Informationen</div>
+        <div class="avd-academy-guide-side__links"><a href="../../shared/visualisierungen/objektorientierung-java-einfach.html"><span>Visualisierung: Objektorientierung mit Java (einfach)</span></a>
+        </div>
       </div>
     </aside>
   </div><div class="avd-academy-print-contact" aria-hidden="true">

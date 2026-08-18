@@ -69,13 +69,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Transaktionen und Konten in Collections verwalten · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Verwalte Transaktionen eines Kontos in einer Liste und schütze sie durch eine unveränderbare Sicht."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786967558"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786967558"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786967558">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786967558" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786967558" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786967558">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787034693"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787034693"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787034693">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787034693" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787034693" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787034693">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,8 +89,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786967558">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786967558"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787034693">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787034693"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -145,10 +145,10 @@
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Ein <code>Account</code> führt seine Transaktionen in einer <code>List&lt;Transaction&gt;</code>.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Ein <code>Konto</code> führt seine Transaktionen in einer <code>List&lt;Buchung&gt;</code>.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Jede Ein-/Auszahlung ergänzt die Liste.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>getTransactions()</code> liefert eine <strong>unveränderbare</strong> Sicht (kein direkter Schreibzugriff von außen).</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Konten werden in einer <code>Map&lt;String, Account&gt;</code> (IBAN → Konto) nachschlagbar gehalten.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>getBuchungen()</code> liefert eine <strong>unveränderbare</strong> Sicht (kein direkter Schreibzugriff von außen).</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Konten werden in einer <code>Map&lt;String, Konto&gt;</code> (IBAN → Konto) nachschlagbar gehalten.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
@@ -156,7 +156,7 @@
 
 <h3 id="transaktionen-als-liste-führen">Transaktionen als Liste führen</h3>
 
-<p>Gib <code>Account</code> ein Feld <code>List&lt;Transaction&gt;</code> und ergänze es bei jeder Buchung.</p>
+<p>Gib <code>Konto</code> ein Feld <code>List&lt;Buchung&gt;</code> und ergänze es bei jeder Buchung.</p>
 
 <blockquote>
   <p><strong>Hinweis:</strong> Eine <code>ArrayList</code> bewahrt die Reihenfolge – passend für einen chronologischen Buchungsverlauf.</p>
@@ -166,8 +166,8 @@
 
 <p>Gib die Liste nur als unveränderbare Sicht zurück.</p>
 
-<pre><code class="language-java">public List&lt;Transaction&gt; getTransactions() {
-  return Collections.unmodifiableList(transactions);
+<pre><code class="language-java">public List&lt;Buchung&gt; getBuchungen() {
+  return Collections.unmodifiableList(buchungen);
 }
 </code></pre>
 
@@ -177,7 +177,7 @@
 
 <h3 id="konten-nachschlagbar-machen">Konten nachschlagbar machen</h3>
 
-<p>Verwalte Konten in einer <code>Map&lt;String, Account&gt;</code> und schlage per IBAN nach.</p>
+<p>Verwalte Konten in einer <code>Map&lt;String, Konto&gt;</code> und schlage per IBAN nach.</p>
 
 <blockquote>
   <p><strong>Hinweis:</strong> Frage Dich: brauche ich Reihenfolge (List), Eindeutigkeit (Set) oder schnellen Zugriff per Schlüssel (Map)?</p>
@@ -187,7 +187,7 @@
 
 <ul>
   <li>Warum ist die IBAN ein guter Schlüssel für eine <code>Map</code> der Konten?</li>
-  <li>Welche Gefahr bestünde, wenn <code>getTransactions()</code> die echte, veränderbare Liste zurückgäbe?</li>
+  <li>Welche Gefahr bestünde, wenn <code>getBuchungen()</code> die echte, veränderbare Liste zurückgäbe?</li>
   <li>Für die Menge aller Kunden-IDs – welche Collection passt und warum?</li>
 </ul>
 
@@ -205,17 +205,17 @@ Du…
 
 ## Definition of Done
 
-* [ ] Ein `Account` führt seine Transaktionen in einer `List&lt;Transaction&gt;`.
+* [ ] Ein `Konto` führt seine Transaktionen in einer `List&lt;Buchung&gt;`.
 * [ ] Jede Ein-/Auszahlung ergänzt die Liste.
-* [ ] `getTransactions()` liefert eine **unveränderbare** Sicht (kein direkter Schreibzugriff von außen).
-* [ ] Konten werden in einer `Map&lt;String, Account&gt;` (IBAN → Konto) nachschlagbar gehalten.
+* [ ] `getBuchungen()` liefert eine **unveränderbare** Sicht (kein direkter Schreibzugriff von außen).
+* [ ] Konten werden in einer `Map&lt;String, Konto&gt;` (IBAN → Konto) nachschlagbar gehalten.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
 ## Arbeitsschritte
 
 ### Transaktionen als Liste führen
 
-Gib `Account` ein Feld `List&lt;Transaction&gt;` und ergänze es bei jeder Buchung.
+Gib `Konto` ein Feld `List&lt;Buchung&gt;` und ergänze es bei jeder Buchung.
 
 &gt; **Hinweis:** Eine `ArrayList` bewahrt die Reihenfolge – passend für einen chronologischen Buchungsverlauf.
 
@@ -224,8 +224,8 @@ Gib `Account` ein Feld `List&lt;Transaction&gt;` und ergänze es bei jeder Buchu
 Gib die Liste nur als unveränderbare Sicht zurück.
 
 ```java
-public List&lt;Transaction&gt; getTransactions() {
-  return Collections.unmodifiableList(transactions);
+public List&lt;Buchung&gt; getBuchungen() {
+  return Collections.unmodifiableList(buchungen);
 }
 ```
 
@@ -233,14 +233,14 @@ public List&lt;Transaction&gt; getTransactions() {
 
 ### Konten nachschlagbar machen
 
-Verwalte Konten in einer `Map&lt;String, Account&gt;` und schlage per IBAN nach.
+Verwalte Konten in einer `Map&lt;String, Konto&gt;` und schlage per IBAN nach.
 
 &gt; **Hinweis:** Frage Dich: brauche ich Reihenfolge (List), Eindeutigkeit (Set) oder schnellen Zugriff per Schlüssel (Map)?
 
 ## Reflexionsfragen
 
 * Warum ist die IBAN ein guter Schlüssel für eine `Map` der Konten?
-* Welche Gefahr bestünde, wenn `getTransactions()` die echte, veränderbare Liste zurückgäbe?
+* Welche Gefahr bestünde, wenn `getBuchungen()` die echte, veränderbare Liste zurückgäbe?
 * Für die Menge aller Kunden-IDs – welche Collection passt und warum?</textarea>
     </main>
     <aside class="avd-academy-guide-sidebar">

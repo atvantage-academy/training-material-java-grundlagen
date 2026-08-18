@@ -69,13 +69,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Das Konto mit JUnit testen · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Sichere das Verhalten eines Kontos mit JUnit-Tests ab und finde einen Fehler mit dem Debugger."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786967558"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786967558"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786967558">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786967558" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786967558" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786967558">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787034693"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787034693"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787034693">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787034693" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787034693" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787034693">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,8 +89,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786967558">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786967558"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787034693">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787034693"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -159,10 +159,10 @@
 <p>Schreibe einen Test, der nach einer Einzahlung den erwarteten Kontostand prüft.</p>
 
 <pre><code class="language-java">@Test
-void einzahlungErhoehtDenSaldo() {
-  Account account = new SavingsAccount("DE...", alice);
-  account.deposit(Money.euro(50));
-  assertEquals(Money.euro(50), account.getBalance());
+void einzahlungErhoehtDenKontostand() {
+  Konto konto = new Sparkonto("DE...", anna);
+  konto.einzahlen(Betrag.euro(50));
+  assertEquals(Betrag.euro(50), konto.getStand());
 }
 </code></pre>
 
@@ -175,12 +175,12 @@ void einzahlungErhoehtDenSaldo() {
 <p>Prüfe, dass eine unzulässige Abhebung die erwartete Ausnahme wirft.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Für erwartete Ausnahmen eignet sich <code>assertThrows(InsufficientFundsException.class, () -&gt; account.withdraw(...))</code>.</p>
+  <p><strong>Hinweis:</strong> Für erwartete Ausnahmen eignet sich <code>assertThrows(KeineDeckungException.class, () -&gt; konto.abheben(...))</code>.</p>
 </blockquote>
 
 <h3 id="mit-dem-debugger-nachsehen">Mit dem Debugger nachsehen</h3>
 
-<p>Setze im <code>withdraw</code>-Pfad einen Breakpoint und verfolge, wie sich der Saldo verändert.</p>
+<p>Setze im <code>abheben</code>-Pfad einen Breakpoint und verfolge, wie sich der Kontostand verändert.</p>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
@@ -218,10 +218,10 @@ Schreibe einen Test, der nach einer Einzahlung den erwarteten Kontostand prüft.
 
 ```java
 @Test
-void einzahlungErhoehtDenSaldo() {
-  Account account = new SavingsAccount(&quot;DE...&quot;, alice);
-  account.deposit(Money.euro(50));
-  assertEquals(Money.euro(50), account.getBalance());
+void einzahlungErhoehtDenKontostand() {
+  Konto konto = new Sparkonto(&quot;DE...&quot;, anna);
+  konto.einzahlen(Betrag.euro(50));
+  assertEquals(Betrag.euro(50), konto.getStand());
 }
 ```
 
@@ -231,11 +231,11 @@ void einzahlungErhoehtDenSaldo() {
 
 Prüfe, dass eine unzulässige Abhebung die erwartete Ausnahme wirft.
 
-&gt; **Hinweis:** Für erwartete Ausnahmen eignet sich `assertThrows(InsufficientFundsException.class, () -&gt; account.withdraw(...))`.
+&gt; **Hinweis:** Für erwartete Ausnahmen eignet sich `assertThrows(KeineDeckungException.class, () -&gt; konto.abheben(...))`.
 
 ### Mit dem Debugger nachsehen
 
-Setze im `withdraw`-Pfad einen Breakpoint und verfolge, wie sich der Saldo verändert.
+Setze im `abheben`-Pfad einen Breakpoint und verfolge, wie sich der Kontostand verändert.
 
 ## Reflexionsfragen
 

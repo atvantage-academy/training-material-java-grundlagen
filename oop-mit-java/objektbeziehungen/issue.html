@@ -69,13 +69,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Gleichheit und Beziehungen modellieren · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Definiere Gleichheit (equals/hashCode), eine lesbare Darstellung und die Beziehung Konto–Inhaber."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786967558"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786967558"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786967558">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786967558" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786967558" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786967558">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787034693"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787034693"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787034693">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787034693" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787034693" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787034693">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,8 +89,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786967558">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786967558"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787034693">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787034693"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -145,10 +145,10 @@
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>Customer</code> und <code>Account</code> besitzen ein aussagekräftiges <code>toString</code>.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>equals</code> und <code>hashCode</code> von <code>Customer</code> basieren auf der <code>id</code>.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Ein <code>Account</code> hält eine Referenz auf seinen <code>Customer</code>-Inhaber.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Ein <code>HashSet&lt;Customer&gt;</code> erkennt zwei Objekte mit gleicher <code>id</code> als dasselbe Element.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>Kunde</code> und <code>Konto</code> besitzen ein aussagekräftiges <code>toString</code>.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>equals</code> und <code>hashCode</code> von <code>Kunde</code> basieren auf der <code>nummer</code>.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Ein <code>Konto</code> hält eine Referenz auf seinen <code>Kunde</code>-Inhaber.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Ein <code>HashSet&lt;Kunde&gt;</code> erkennt zwei Objekte mit gleicher <code>nummer</code> als dasselbe Element.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
@@ -156,32 +156,32 @@
 
 <h3 id="tostring-überschreiben">toString überschreiben</h3>
 
-<p>Gib eine lesbare Darstellung zurück (z. B. <code>Customer[id=…, name=Alice, city=Hamburg]</code>).</p>
+<p>Gib eine lesbare Darstellung zurück (z. B. <code>Kunde[nummer=…, name=Anna, wohnort=Hamburg]</code>).</p>
 
 <blockquote>
   <p><strong>Hinweis:</strong> Die meisten IDEs können <code>toString</code>, <code>equals</code> und <code>hashCode</code> generieren – nutze das, aber lies das Ergebnis bewusst.</p>
 </blockquote>
 
-<h3 id="equals-und-hashcode-auf-der-id-aufbauen">equals und hashCode auf der id aufbauen</h3>
+<h3 id="equals-und-hashcode-auf-der-kundennummer-aufbauen">equals und hashCode auf der Kundennummer aufbauen</h3>
 
-<p>Zwei Kunden sind gleich, wenn ihre <code>id</code> gleich ist – unabhängig von Name/Stadt.</p>
+<p>Zwei Kunden sind gleich, wenn ihre <code>nummer</code> gleich ist – unabhängig von Name und Wohnort.</p>
 
 <pre><code class="language-java">@Override
 public boolean equals(Object o) {
   if (this == o) return true;
-  if (!(o instanceof Customer other)) return false;
-  return this.id.equals(other.id);
+  if (!(o instanceof Kunde other)) return false;
+  return this.nummer.equals(other.nummer);
 }
 
 @Override
 public int hashCode() {
-  return Objects.hash(id);
+  return Objects.hash(nummer);
 }
 </code></pre>
 
 <h3 id="gleichheit-im-hashset-prüfen">Gleichheit im HashSet prüfen</h3>
 
-<p>Lege zwei <code>Customer</code> mit derselben <code>id</code> in ein <code>HashSet</code> und prüfe die Größe.</p>
+<p>Lege zwei <code>Kunde</code> mit derselben <code>nummer</code> in ein <code>HashSet</code> und prüfe die Größe.</p>
 
 <blockquote>
   <p><strong>Hinweis:</strong> Ohne konsistente <code>equals</code>/<code>hashCode</code> enthält das Set zwei Einträge – mit korrekter Umsetzung nur einen.</p>
@@ -190,7 +190,7 @@ public int hashCode() {
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Warum sollte die Gleichheit auf einer stabilen <code>id</code> beruhen und nicht auf veränderlichen Feldern wie dem Namen?</li>
+  <li>Warum sollte die Gleichheit auf einer stabilen <code>nummer</code> beruhen und nicht auf veränderlichen Feldern wie dem Namen?</li>
   <li>Was passiert in einer <code>HashMap</code>, wenn <code>hashCode</code> zweier gleicher Objekte unterschiedlich ist?</li>
   <li>Ist die Beziehung Konto→Inhaber eine Assoziation oder eine Komposition? Begründe.</li>
 </ul>
@@ -209,47 +209,47 @@ Du…
 
 ## Definition of Done
 
-* [ ] `Customer` und `Account` besitzen ein aussagekräftiges `toString`.
-* [ ] `equals` und `hashCode` von `Customer` basieren auf der `id`.
-* [ ] Ein `Account` hält eine Referenz auf seinen `Customer`-Inhaber.
-* [ ] Ein `HashSet&lt;Customer&gt;` erkennt zwei Objekte mit gleicher `id` als dasselbe Element.
+* [ ] `Kunde` und `Konto` besitzen ein aussagekräftiges `toString`.
+* [ ] `equals` und `hashCode` von `Kunde` basieren auf der `nummer`.
+* [ ] Ein `Konto` hält eine Referenz auf seinen `Kunde`-Inhaber.
+* [ ] Ein `HashSet&lt;Kunde&gt;` erkennt zwei Objekte mit gleicher `nummer` als dasselbe Element.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
 ## Arbeitsschritte
 
 ### toString überschreiben
 
-Gib eine lesbare Darstellung zurück (z. B. `Customer[id=…, name=Alice, city=Hamburg]`).
+Gib eine lesbare Darstellung zurück (z. B. `Kunde[nummer=…, name=Anna, wohnort=Hamburg]`).
 
 &gt; **Hinweis:** Die meisten IDEs können `toString`, `equals` und `hashCode` generieren – nutze das, aber lies das Ergebnis bewusst.
 
-### equals und hashCode auf der id aufbauen
+### equals und hashCode auf der Kundennummer aufbauen
 
-Zwei Kunden sind gleich, wenn ihre `id` gleich ist – unabhängig von Name/Stadt.
+Zwei Kunden sind gleich, wenn ihre `nummer` gleich ist – unabhängig von Name und Wohnort.
 
 ```java
 @Override
 public boolean equals(Object o) {
   if (this == o) return true;
-  if (!(o instanceof Customer other)) return false;
-  return this.id.equals(other.id);
+  if (!(o instanceof Kunde other)) return false;
+  return this.nummer.equals(other.nummer);
 }
 
 @Override
 public int hashCode() {
-  return Objects.hash(id);
+  return Objects.hash(nummer);
 }
 ```
 
 ### Gleichheit im HashSet prüfen
 
-Lege zwei `Customer` mit derselben `id` in ein `HashSet` und prüfe die Größe.
+Lege zwei `Kunde` mit derselben `nummer` in ein `HashSet` und prüfe die Größe.
 
 &gt; **Hinweis:** Ohne konsistente `equals`/`hashCode` enthält das Set zwei Einträge – mit korrekter Umsetzung nur einen.
 
 ## Reflexionsfragen
 
-* Warum sollte die Gleichheit auf einer stabilen `id` beruhen und nicht auf veränderlichen Feldern wie dem Namen?
+* Warum sollte die Gleichheit auf einer stabilen `nummer` beruhen und nicht auf veränderlichen Feldern wie dem Namen?
 * Was passiert in einer `HashMap`, wenn `hashCode` zweier gleicher Objekte unterschiedlich ist?
 * Ist die Beziehung Konto→Inhaber eine Assoziation oder eine Komposition? Begründe.</textarea>
     </main>

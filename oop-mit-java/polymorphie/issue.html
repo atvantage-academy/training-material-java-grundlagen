@@ -69,13 +69,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Kontoarten polymorph behandeln · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Lass Giro- und Sparkonto dieselbe Abhebe-Logik unterschiedlich ausführen – über Polymorphie."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1786967558"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1786967558">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1786967558"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1786967558">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1786967558" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1786967558" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1786967558">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787034693"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787034693"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787034693">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787034693" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787034693" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787034693">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,8 +89,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1786967558">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1786967558"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787034693">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787034693"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -139,15 +139,15 @@
 <ul>
   <li>überschreibst eine geerbte Methode in einer Unterklasse mit <code>@Override</code>.</li>
   <li>arbeitest über eine Basisklassen-Referenz und erklärst die dynamische Bindung.</li>
-  <li>verarbeitest eine <code>List&lt;Account&gt;</code> einheitlich.</li>
+  <li>verarbeitest eine <code>List&lt;Konto&gt;</code> einheitlich.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>Account</code> besitzt eine Methode <code>isAmountAvailable(Money)</code>, die <code>withdraw</code> nutzt.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>CurrentAccount</code> überschreibt <code>isAmountAvailable</code>, sodass der Dispositionskredit berücksichtigt wird.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Eine <code>List&lt;Account&gt;</code> mit Giro- und Sparkonto wird in einer Schleife einheitlich abgefragt.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>Konto</code> besitzt eine Methode <code>istGedeckt(Betrag)</code>, die <code>abheben</code> nutzt.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>Girokonto</code> überschreibt <code>istGedeckt</code>, sodass der Dispositionskredit berücksichtigt wird.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Eine <code>List&lt;Konto&gt;</code> mit Giro- und Sparkonto wird in einer Schleife einheitlich abgefragt.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der Abhebe-Versuch verhält sich je Kontoart korrekt unterschiedlich.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
@@ -156,37 +156,37 @@
 
 <h3 id="verfügbarkeitsprüfung-in-der-basisklasse">Verfügbarkeitsprüfung in der Basisklasse</h3>
 
-<p>Gib <code>Account</code> eine Methode <code>isAmountAvailable(Money amount)</code>, die standardmäßig nur den Saldo prüft, und nutze sie in <code>withdraw</code>.</p>
+<p>Gib <code>Konto</code> eine Methode <code>istGedeckt(Betrag betrag)</code>, die standardmäßig nur den Kontostand prüft, und nutze sie in <code>abheben</code>.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> <code>withdraw</code> bleibt in der Basisklasse – es ruft nur <code>isAmountAvailable(...)</code> auf. Genau darüber greift später die Polymorphie.</p>
+  <p><strong>Hinweis:</strong> <code>abheben</code> bleibt in der Basisklasse – es ruft nur <code>istGedeckt(...)</code> auf. Genau darüber greift später die Polymorphie.</p>
 </blockquote>
 
 <h3 id="verhalten-im-girokonto-überschreiben">Verhalten im Girokonto überschreiben</h3>
 
-<p>Überschreibe <code>isAmountAvailable</code> in <code>CurrentAccount</code>, sodass zusätzlich der Dispositionskredit zählt.</p>
+<p>Überschreibe <code>istGedeckt</code> in <code>Girokonto</code>, sodass zusätzlich der Dispositionskredit zählt.</p>
 
 <pre><code class="language-java">@Override
-protected boolean isAmountAvailable(Money amount) {
-  // verfügbar = Saldo + Dispolimit
-  return getBalance().plus(limit).isGreaterOrEqual(amount);
+protected boolean istGedeckt(Betrag betrag) {
+  // verfügbar = Kontostand + Dispolimit
+  return getStand().plus(dispolimit).istMindestens(betrag);
 }
 </code></pre>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> <code>SavingsAccount</code> überschreibt nichts – es erbt die strengere Standardprüfung. Auch das ist eine bewusste Entwurfsaussage.</p>
+  <p><strong>Hinweis:</strong> <code>Sparkonto</code> überschreibt nichts – es erbt die strengere Standardprüfung. Auch das ist eine bewusste Entwurfsaussage.</p>
 </blockquote>
 
 <h3 id="einheitlich-über-den-basistyp-arbeiten">Einheitlich über den Basistyp arbeiten</h3>
 
-<p>Lege beide Konten in eine <code>List&lt;Account&gt;</code> und versuche in einer Schleife, denselben Betrag abzuheben.</p>
+<p>Lege beide Konten in eine <code>List&lt;Konto&gt;</code> und versuche in einer Schleife, denselben Betrag abzuheben.</p>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Warum musst Du <code>withdraw</code> nicht ändern, obwohl sich das Verhalten je Kontoart unterscheidet?</li>
+  <li>Warum musst Du <code>abheben</code> nicht ändern, obwohl sich das Verhalten je Kontoart unterscheidet?</li>
   <li>Was müsstest Du für eine neue Kontoart (z. B. „Festgeld“) tun – und was ausdrücklich nicht?</li>
-  <li>Wo liegt der Unterschied zwischen dem <em>deklarierten</em> Typ (<code>Account</code>) und dem <em>tatsächlichen</em> Typ (<code>CurrentAccount</code>) beim Methodenaufruf?</li>
+  <li>Wo liegt der Unterschied zwischen dem <em>deklarierten</em> Typ (<code>Konto</code>) und dem <em>tatsächlichen</em> Typ (<code>Girokonto</code>) beim Methodenaufruf?</li>
 </ul>
 
 <textarea id="avd-academy-md-source" hidden aria-hidden="true"># Kontoarten polymorph behandeln
@@ -199,13 +199,13 @@ Du…
 
 * überschreibst eine geerbte Methode in einer Unterklasse mit `@Override`.
 * arbeitest über eine Basisklassen-Referenz und erklärst die dynamische Bindung.
-* verarbeitest eine `List&lt;Account&gt;` einheitlich.
+* verarbeitest eine `List&lt;Konto&gt;` einheitlich.
 
 ## Definition of Done
 
-* [ ] `Account` besitzt eine Methode `isAmountAvailable(Money)`, die `withdraw` nutzt.
-* [ ] `CurrentAccount` überschreibt `isAmountAvailable`, sodass der Dispositionskredit berücksichtigt wird.
-* [ ] Eine `List&lt;Account&gt;` mit Giro- und Sparkonto wird in einer Schleife einheitlich abgefragt.
+* [ ] `Konto` besitzt eine Methode `istGedeckt(Betrag)`, die `abheben` nutzt.
+* [ ] `Girokonto` überschreibt `istGedeckt`, sodass der Dispositionskredit berücksichtigt wird.
+* [ ] Eine `List&lt;Konto&gt;` mit Giro- und Sparkonto wird in einer Schleife einheitlich abgefragt.
 * [ ] Der Abhebe-Versuch verhält sich je Kontoart korrekt unterschiedlich.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
@@ -213,33 +213,33 @@ Du…
 
 ### Verfügbarkeitsprüfung in der Basisklasse
 
-Gib `Account` eine Methode `isAmountAvailable(Money amount)`, die standardmäßig nur den Saldo prüft, und nutze sie in `withdraw`.
+Gib `Konto` eine Methode `istGedeckt(Betrag betrag)`, die standardmäßig nur den Kontostand prüft, und nutze sie in `abheben`.
 
-&gt; **Hinweis:** `withdraw` bleibt in der Basisklasse – es ruft nur `isAmountAvailable(...)` auf. Genau darüber greift später die Polymorphie.
+&gt; **Hinweis:** `abheben` bleibt in der Basisklasse – es ruft nur `istGedeckt(...)` auf. Genau darüber greift später die Polymorphie.
 
 ### Verhalten im Girokonto überschreiben
 
-Überschreibe `isAmountAvailable` in `CurrentAccount`, sodass zusätzlich der Dispositionskredit zählt.
+Überschreibe `istGedeckt` in `Girokonto`, sodass zusätzlich der Dispositionskredit zählt.
 
 ```java
 @Override
-protected boolean isAmountAvailable(Money amount) {
-  // verfügbar = Saldo + Dispolimit
-  return getBalance().plus(limit).isGreaterOrEqual(amount);
+protected boolean istGedeckt(Betrag betrag) {
+  // verfügbar = Kontostand + Dispolimit
+  return getStand().plus(dispolimit).istMindestens(betrag);
 }
 ```
 
-&gt; **Hinweis:** `SavingsAccount` überschreibt nichts – es erbt die strengere Standardprüfung. Auch das ist eine bewusste Entwurfsaussage.
+&gt; **Hinweis:** `Sparkonto` überschreibt nichts – es erbt die strengere Standardprüfung. Auch das ist eine bewusste Entwurfsaussage.
 
 ### Einheitlich über den Basistyp arbeiten
 
-Lege beide Konten in eine `List&lt;Account&gt;` und versuche in einer Schleife, denselben Betrag abzuheben.
+Lege beide Konten in eine `List&lt;Konto&gt;` und versuche in einer Schleife, denselben Betrag abzuheben.
 
 ## Reflexionsfragen
 
-* Warum musst Du `withdraw` nicht ändern, obwohl sich das Verhalten je Kontoart unterscheidet?
+* Warum musst Du `abheben` nicht ändern, obwohl sich das Verhalten je Kontoart unterscheidet?
 * Was müsstest Du für eine neue Kontoart (z. B. „Festgeld“) tun – und was ausdrücklich nicht?
-* Wo liegt der Unterschied zwischen dem *deklarierten* Typ (`Account`) und dem *tatsächlichen* Typ (`CurrentAccount`) beim Methodenaufruf?</textarea>
+* Wo liegt der Unterschied zwischen dem *deklarierten* Typ (`Konto`) und dem *tatsächlichen* Typ (`Girokonto`) beim Methodenaufruf?</textarea>
     </main>
     <aside class="avd-academy-guide-sidebar">
       <div class="avd-academy-guide-side avd-academy-guide-side--toc" data-avd-academy-toc-box hidden>

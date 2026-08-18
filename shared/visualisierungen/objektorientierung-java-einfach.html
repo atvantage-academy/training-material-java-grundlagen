@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<!--
+  ATVANTAGE-Academy – EINZIGES Seitenlayout (Jekyll)
+  --------------------------------------------------
+  Ein Layout für alles: allgemeine Doku-Seiten UND Guides (Übungen/Anleitungen).
+  Optik nach der ATVANTAGE-Website: Meta-Nav, weiße sticky Kopfzeile, Hero-Band,
+  zweispaltig mit rechter Sidebar (automatisches Inhaltsverzeichnis, Fortschritt
+  aus Task-Listen, weiterführende Ressourcen). Überschriften ohne Emoji-Icons.
+
+  Verwendung im Front Matter:  layout: default   (oder `layout: guide` – Alias,
+  siehe guide.html; beides rendert dieselbe Guide-Ansicht)
+
+  `layout: visualization` (siehe visualization.html) rendert dieselbe Seite OHNE
+  obere Navigation (Meta-Leiste + Kopfzeile/TopNav), OHNE Brotkrumen und OHNE den
+  rechten Bereich (Inhaltsverzeichnis, Fortschritt, Ressourcen – auch bei gesetztem
+  `resources`), mit schmalerem Hero-Balken und breiterem, zentriertem Inhalt – für
+  eigenständige Visualisierungen/Simulationen.
+
+  Alle Front-Matter-Felder sind OPTIONAL (Convention over Configuration). Nur der
+  Titel ist faktisch erforderlich – als `title:` ODER als erste `#`-Überschrift:
+
+    title:       "…"                → sonst erste #-Überschrift (eins von beiden nötig)
+    description: "…"                → Meta-Description
+    duration:    8                  → Zahl in Minuten → Hero-Tag „ca. 8 Minuten“
+                                       (ungefähre LESEDAUER; bei Guides/Übungen die
+                                       Dauer der Übung). Aktiviert zugleich die
+                                       nummerierten Arbeitsschritte und die
+                                       automatische Prev/Next-Navigation zwischen
+                                       gleichartigen Geschwister-Seiten. Alle drei
+                                       entfallen bei `layout: visualization`.
+    topics:      ["Cloud & DevOps"] → weitere Hero-Tags
+    resources:   [{titel, url, icon}, …] → Sidebar-Karte „Weiterführende Informationen“.
+                                       titel und/oder icon (Bildpfad); icon erscheint
+                                       rechts und wird kreisrund dargestellt.
+    breadcrumb:                     → Brotkrumen anpassen (beides optional):
+      label: "…"                    → überschreibt den Ordnernamen dieser Ebene;
+                                       in der Ordner-`index.md` gesetzt gilt es für
+                                       ALLE Seiten im Ordner und in Unterordnern.
+      path: [{title, url}, …]       → explizite Vorfahren-Kette OHNE die aktuelle
+                                       Seite (diese wird automatisch angehängt); in
+                                       der `index.md` gesetzt wird sie vererbt.
+    zurueck / weiter: {title, url}  → explizite Prev/Next-Links (sonst automatisch)
+
+  „Markdown kopieren“ (Button im Hero) erscheint NUR auf Guides (Übungen,
+  Anleitungen) – dort ist das Übernehmen des Quelltexts der Zweck. Bedingungen:
+  Markdown-Seite (`.md`, nicht reines HTML) UND als Guide erkennbar UND keine
+  Visualisierung. Guide ist eine Seite mit `layout: guide` ODER gesetztem
+  `duration` – letzteres ist der etablierte Marker (er schaltet auch die
+  nummerierten Arbeitsschritte und Prev/Next frei), und die Guide-Vorlage des
+  Themes wie auch die von didaktikon erzeugten Übungen nutzen `layout: default`
+  plus `duration`. Nur auf `layout: guide` zu prüfen würde den Button dort
+  entfernen. Doku-Seiten haben kein `duration`; Visualisierungen sind
+  ausgeschlossen, weil ihr Inhalt nicht sinnvoll als Markdown kopierbar ist.
+
+  QR-CODE der Seitenadresse + DRUCKEN-KNOPF: In dieser Ansicht (`visualization`)
+  stehen beide rechts im Hero – QR links, Drucken rechts. Sie hat weder Kopfzeile
+  noch Sidebar, in der sie sonst Platz hätten.
+
+  Auf `default`/`guide` steht im Hero KEINES von beiden: Der QR-Code sitzt in der
+  Kopfzeile neben dem Farbschema-Umschalter (siehe `_includes/header.html`), und zum
+  Drucken bleibt es beim Browser-Befehl (Strg/Cmd+P). Tooltip des QR-Codes überall:
+  „Diese Seite auf Deinem Smartphone öffnen“. Er wird erst im Browser erzeugt (theme/academy/atvantage.js), weil die
+  Adresse zur Build-Zeit nicht feststeht; ohne JavaScript erscheint er nicht.
+  Kein Front-Matter-Schalter: Es gibt keine Seite, auf der der Weg aufs eigene
+  Smartphone schaden würde.
+--><html lang="de">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Objektorientierung mit Java (einfach) · Java SE (ATVANTAGE Academy)</title>
+<meta name="description" content="Vom Klassendiagramm zum Java-Code: Klasse, Instanzvariablen, Methoden, Objekte mit new, Beziehungen als Referenz und toString – die Bausteine für den Einstieg, an einem durchgehenden Beispiel."><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787034693"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787034693">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787034693"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787034693">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787034693" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787034693" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787034693">
+<script type="module">
+  const _hlbase = "/training-material-java-se/theme/academy/hljs/";
+  Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
+    .then(([core, java]) => {
+      const hljs = core.default;
+      hljs.registerLanguage("java", java.default);
+      document.querySelectorAll("pre code.language-java").forEach((el) => hljs.highlightElement(el));
+    });
+</script>
+<link rel="apple-touch-icon" sizes="180x180" href="/training-material-java-se/theme/atvantage/assets/icon-180.png">
+<link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
+<link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
+
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787034693">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787034693"></head><body class="avd-academy-guide avd-academy-guide--viz">
+  <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a><section class="avd-academy-guide-hero avd-academy-guide-hero--slim"><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags">
+      </div>
+      <div class="avd-academy-guide-hero__actions">
+        <button type="button" class="avd-academy-qr" data-avd-academy-qr hidden
+                title="Diese Seite auf Deinem Smartphone öffnen"
+                aria-label="Diese Seite auf Deinem Smartphone öffnen"></button>
+        <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-print-btn"
+                data-avd-academy-print
+                title="Diese Seite drucken" aria-label="Diese Seite drucken"></button>
+      </div>
+    </div><h1>Objektorientierung mit Java (einfach)</h1>
+  </section>
+
+  <div class="avd-academy-guide-layout">
+    <main class="avd-academy-guide-main" id="avd-academy-content">
+      
+<style>
+/* Aufbau und Klassennamen bewusst analog zu „Java-Syntax auf einen Blick“
+   (Präfix dort jsg-, hier oje-), damit beide Nachschlagewerke gleich aussehen
+   und sich gleich bedienen. Keine eigene Breitenbegrenzung: Die Breite der
+   Inhaltsspalte gibt das Theme über `--avd-academy-guide-max` vor. */
+.oje-lead{opacity:.85;margin:0 0 2rem;}
+
+.oje-sec{margin:0 0 2.75rem;}
+.oje-sec > h2{display:flex;align-items:baseline;gap:.7rem;margin:0 0 1rem;font-size:1.45rem;line-height:1.2;border-bottom:1px solid var(--avd-academy-color-border,#e2e2e2);padding-bottom:.5rem;}
+.oje-num{flex:none;display:inline-flex;align-items:center;justify-content:center;width:1.9rem;height:1.9rem;border-radius:var(--radius,5px);background:var(--avd-slate,#303E4F);color:#fff;font-size:.9rem;font-weight:700;}
+.oje-note{margin:.9rem 0 0;font-size:.92rem;opacity:.85;}
+.oje-note strong{color:var(--color-orange,#FF5401);}
+
+.oje-table-wrap{overflow-x:auto;}
+.oje-table{width:100%;border-collapse:collapse;font-size:.88rem;}
+.oje-table th,.oje-table td{text-align:left;vertical-align:top;padding:.5rem .7rem;border-bottom:1px solid var(--avd-academy-color-border,#e2e2e2);}
+.oje-table th{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;opacity:.75;white-space:nowrap;}
+.oje-table td:first-child{white-space:nowrap;font-weight:700;color:var(--color-orange,#FF5401);}
+
+.oje-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(24rem,1fr));gap:1.1rem;}
+.oje-card{background:var(--avd-academy-color-bg-subtle,var(--color-surface-card,#EDEDED));border:1px solid var(--avd-academy-color-border,#e2e2e2);border-radius:var(--radius,5px);padding:1rem 1.15rem;}
+.oje-card--wide{grid-column:1/-1;}
+.oje-card h3{margin:0 0 .5rem;font-size:1rem;line-height:1.25;}
+.oje-card p{margin:0 0 .6rem;font-size:.88rem;opacity:.85;}
+.oje-card p:last-child{margin-bottom:0;}
+.oje-card pre{margin:0;overflow-x:auto;}
+.oje-card pre + p{margin-top:.6rem;}
+.oje-root pre code.hljs{border-radius:var(--radius-dark,8px);font-size:.8rem;line-height:1.5;}
+
+/* Gegenüberstellung richtig/falsch – für die Assoziations-Falle */
+.oje-card--good{border-left:4px solid var(--color-orange,#FF5401);}
+.oje-card--bad{border-left:4px solid var(--avd-academy-color-ink-muted,#707173);}
+.oje-flag{display:inline-block;margin-right:.4rem;font-weight:800;}
+.oje-card--good .oje-flag{color:var(--color-orange,#FF5401);}
+
+/* Diagramm-zu-Code-Skizze: zwei Kästchen mit Verbindungslinie */
+.oje-uml{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;margin:.2rem 0 .8rem;}
+.oje-box{border:2px solid var(--avd-academy-color-ink,#343E3F);border-radius:var(--radius,5px);min-width:9.5rem;font-size:.82rem;background:var(--avd-academy-color-bg,#fff);}
+.oje-box b{display:block;padding:.35rem .6rem;border-bottom:1px solid var(--avd-academy-color-ink,#343E3F);text-align:center;}
+.oje-box span{display:block;padding:.3rem .6rem;font-family:var(--avd-academy-font-mono,monospace);}
+.oje-line{flex:none;width:4.5rem;border-top:2px solid var(--avd-academy-color-ink,#343E3F);position:relative;}
+.oje-line em{position:absolute;top:-1.5rem;left:50%;transform:translateX(-50%);font-size:.7rem;font-style:normal;opacity:.75;white-space:nowrap;}
+.oje-mult{font-size:.72rem;opacity:.75;padding:0 .3rem;}
+
+@media print{
+  .oje-lead{font-size:10.5pt;opacity:1;}
+  .oje-sec{break-inside:auto;margin:0 0 14pt;}
+  .oje-sec > h2{font-size:14pt;margin:0 0 6pt;padding-bottom:3pt;border-bottom:2px solid var(--color-orange,#FF5401);break-after:avoid;}
+  .oje-num{width:auto;height:auto;background:transparent !important;color:#000 !important;font-size:14pt;}
+  .oje-table{font-size:8.5pt;}
+  .oje-table th,.oje-table td{padding:2pt 4pt;}
+  .oje-table td:first-child{color:#000 !important;}
+  .oje-grid{display:block;}
+  .oje-card{break-inside:avoid;background:transparent !important;border:none !important;padding:0 !important;margin:0 0 9pt;}
+  .oje-card--good,.oje-card--bad{border-left:2pt solid #000 !important;padding-left:6pt !important;}
+  .oje-card h3{font-size:10.5pt;margin:0 0 2pt;}
+  .oje-card p{font-size:9pt;margin:0 0 3pt;opacity:1;}
+  .oje-note{font-size:9pt;opacity:1;margin-top:5pt;}
+  .oje-note strong{color:#000 !important;}
+  .oje-root pre,.oje-root pre code,.oje-root pre code *{color:#000 !important;background:transparent !important;}
+  .oje-root pre{white-space:pre-wrap;word-break:break-word;font-size:8pt;border:none !important;padding:2pt 0 !important;margin:0;break-inside:avoid;}
+}
+</style>
+
+<div class="oje-root">
+
+<p class="oje-lead">Wie aus einem Klassendiagramm Java-Code wird – auf das Nötigste beschränkt: Klassen mit Variablen und Methoden, Objekte mit <code>new</code>, Beziehungen als Referenz und eine lesbare Ausgabe mit <code>toString()</code>. Das Beispiel ist bewusst ein anderes als in Deiner Übung, damit Du übertragen musst statt abzuschreiben. Konstruktoren, <code>private</code>, Getter/Setter und Packages fehlen hier ebenfalls mit Absicht – die kommen später im Kurs.</p>
+
+<section class="oje-sec" id="mapping">
+<h2><span class="oje-num">1</span> Vom Diagramm zum Code</h2>
+
+<div class="oje-table-wrap">
+<table class="oje-table">
+<thead>
+<tr><th>Im Klassendiagramm</th><th>In Java</th><th>Beispiel</th></tr>
+</thead>
+<tbody>
+<tr><td>Kästchen</td><td>Klasse – eine Datei je Klasse, Dateiname = Klassenname</td><td><code>class Buch { }</code> in <code>Buch.java</code></td></tr>
+<tr><td>Eigenschaft</td><td>Instanzvariable (jedes Objekt hat eigene Werte)</td><td><code>int seiten;</code></td></tr>
+<tr><td>Fähigkeit</td><td>Methode</td><td><code>void bewerten(int sterne) { … }</code></td></tr>
+<tr><td>Linie</td><td>Variable vom Typ der anderen Klasse – eine <strong>Referenz</strong></td><td><code>Autor autor;</code></td></tr>
+<tr><td>ein konkretes Ding</td><td>Objekt, erzeugt mit <code>new</code></td><td><code>Buch erdsee = new Buch();</code></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="oje-uml" style="margin-top:1.4rem">
+  <div class="oje-box"><b>Buch</b><span>titel<br>seiten</span></div>
+  <span class="oje-mult">*</span>
+  <div class="oje-line"><em>geschrieben von</em></div>
+  <span class="oje-mult">1</span>
+  <div class="oje-box"><b>Autor</b><span>name<br>geburtsjahr</span></div>
+</div>
+<p class="oje-note">Dieses Bild wird auf den folgenden Abschnitten Zeile für Zeile zu Code. <strong>Die Linie ist der interessante Teil</strong> – aus ihr wird keine Textvariable, sondern eine Referenz auf das andere Objekt.</p>
+</section>
+
+<section class="oje-sec" id="klasse">
+<h2><span class="oje-num">2</span> Die Klasse: der Bauplan</h2>
+
+<div class="oje-grid">
+<div class="oje-card">
+<h3>Variablen und Methoden in einer Klasse</h3>
+<pre><code class="language-java">class Buch {
+
+    // Instanzvariablen – der Zustand
+    String titel;
+    int seiten;
+    int bewertung;
+
+    // Methode – das Verhalten
+    void bewerten(int sterne) {
+        bewertung = bewertung + sterne;
+    }
+}</code></pre>
+<p>Die Klasse beschreibt, <em>was ein Buch hat und kann</em>. Sie ist selbst noch kein Buch – so wie ein Bauplan noch kein Haus ist.</p>
+</div>
+<div class="oje-card">
+<h3>Innen ohne Punkt, außen mit Punkt</h3>
+<pre><code class="language-java">// innerhalb der Klasse: direkt
+bewertung = bewertung + sterne;
+
+// außerhalb: über das Objekt
+erdsee.titel = "Erdsee";
+erdsee.bewerten(5);</code></pre>
+<p>Innerhalb einer Methode ist klar, um welches Objekt es geht: um das, auf dem die Methode gerade läuft. Von außen musst Du sagen, welches gemeint ist.</p>
+</div>
+</div>
+<p class="oje-note">Der Dateiname muss zum Klassennamen passen: <code>Buch</code> lebt in <code>Buch.java</code>. <strong>Klassennamen schreibt man groß</strong>, Variablen und Methoden klein. Und: Der Name einer Variablen wird immer <strong>im Kontext ihrer Klasse</strong> gelesen – in <code>Buch</code> heißt das Feld <code>titel</code> und nicht <code>buchtitel</code>. Der Klassenname steht ja schon davor: <code>buch.titel</code>.</p>
+</section>
+
+<section class="oje-sec" id="objekte">
+<h2><span class="oje-num">3</span> Objekte erzeugen mit <code>new</code></h2>
+
+<div class="oje-grid">
+<div class="oje-card">
+<h3>Ein Bauplan, viele Objekte</h3>
+<pre><code class="language-java">Buch erdsee = new Buch();
+erdsee.titel = "Erdsee";
+erdsee.seiten = 320;
+
+Buch dunkelheit = new Buch();
+dunkelheit.titel = "Die linke Hand der Dunkelheit";
+dunkelheit.seiten = 288;
+
+System.out.println(erdsee.seiten);      // 320
+System.out.println(dunkelheit.seiten);  // 288</code></pre>
+<p><code>new Buch()</code> baut ein neues Buch und gibt Dir den Zugriff darauf. Beide Bücher haben dieselben Variablen – aber jedes seine eigenen Werte.</p>
+</div>
+<div class="oje-card">
+<h3>Deshalb: <em>Instanz</em>variablen</h3>
+<pre><code class="language-java">erdsee.seiten = 320;
+dunkelheit.seiten = 288;
+
+erdsee.bewerten(5);
+
+// erdsee bewertet, dunkelheit unberührt</code></pre>
+<p>Jede Instanz – also jedes Objekt – hat ihren eigenen Satz Variablen. Was Du an einem Objekt änderst, lässt die anderen unberührt.</p>
+</div>
+</div>
+<p class="oje-note">Wer <code>new</code> vergisst, hat nur eine leere Variable: <code>Buch erdsee;</code> zeigt noch auf <strong>nichts</strong> (<code>null</code>). Der Zugriff darauf endet in einer <code>NullPointerException</code>.</p>
+</section>
+
+<section class="oje-sec" id="referenz">
+<h2><span class="oje-num">4</span> Beziehungen: Referenz statt Text</h2>
+
+<div class="oje-grid">
+<div class="oje-card oje-card--good">
+<h3><span class="oje-flag">✓</span> So gehört es</h3>
+<pre><code class="language-java">class Buch {
+    String titel;
+    Autor autor;        // die Linie im Diagramm
+}
+
+Autor ursula = new Autor();
+ursula.name = "Ursula K. Le Guin";
+ursula.geburtsjahr = 1929;
+
+Buch erdsee = new Buch();
+erdsee.autor = ursula;
+
+// alles, was der Autor weiß, hängt am Buch
+System.out.println(erdsee.autor.geburtsjahr);</code></pre>
+<p>Das Buch kennt <strong>das Autorenobjekt</strong> – mit allem, was daran hängt.</p>
+</div>
+<div class="oje-card oje-card--bad">
+<h3><span class="oje-flag">✗</span> Die häufigste Falle</h3>
+<pre><code class="language-java">class Buch {
+    String titel;
+    String autor;       // nur der Name
+}
+
+erdsee.autor = "Ursula K. Le Guin";
+
+// und jetzt? Geburtsjahr? Weitere Bücher?
+// Und was, wenn zwei Autoren
+// gleich heißen?</code></pre>
+<p>Ein Text ist eine <strong>Kopie</strong>, die niemand mitpflegt. Damit zerfällt das Objektmodell wieder in verstreute Daten – genau das, was wir hinter uns lassen wollten.</p>
+</div>
+</div>
+
+<div class="oje-card oje-card--wide" style="margin-top:1.1rem">
+<h3>Die Punkt-Schreibweise folgt der Linie</h3>
+<pre><code class="language-java">System.out.println(erdsee.titel);              // Erdsee
+System.out.println(erdsee.autor.name);         // Ursula K. Le Guin
+System.out.println(erdsee.autor.geburtsjahr);  // 1929</code></pre>
+<p><code>erdsee.autor.name</code> heißt: nimm das Buch <code>erdsee</code>, geh zu seinem Autor, und lies dort den Namen. So entsteht aus einzelnen Objekten ein <strong>Objektgeflecht</strong>, durch das Du Dich hangeln kannst.</p>
+</div>
+</section>
+
+<section class="oje-sec" id="tostring">
+<h2><span class="oje-num">5</span> Lesbare Ausgabe mit <code>toString()</code></h2>
+
+<div class="oje-grid">
+<div class="oje-card">
+<h3>Ohne <code>toString()</code></h3>
+<pre><code class="language-java">System.out.println(erdsee);
+
+// Ausgabe:
+// Buch@1b6d3586</code></pre>
+<p>Java kennt keine sinnvolle Textform für Deine Klasse und gibt Klassenname plus eine interne Kennung aus.</p>
+</div>
+<div class="oje-card">
+<h3>Mit <code>toString()</code></h3>
+<pre><code class="language-java">class Buch {
+    String titel;
+    int seiten;
+
+    public String toString() {
+        return titel + " (" + seiten + " Seiten)";
+    }
+}
+
+// Ausgabe:
+// Erdsee (320 Seiten)</code></pre>
+<p>Die Methode wird automatisch benutzt, sobald ein Objekt als Text gebraucht wird – aufrufen musst Du sie nicht.</p>
+</div>
+</div>
+<p class="oje-note"><strong>Die Klasse beschreibt sich selbst.</strong> Ohne <code>toString()</code> müsste jede Ausgabestelle die Felder einzeln zusammensetzen – und bei jeder Änderung nachziehen.</p>
+</section>
+
+</div>
+
+
+
+    </main>
+  </div><div class="avd-academy-print-contact" aria-hidden="true">
+    <span>Kontakt: <a href="mailto:academy@atvantage.com">academy@atvantage.com</a></span>
+    <span><a href="https://www.atvantage.com">ATVANTAGE Academy</a></span>
+  </div>
+
+  <footer class="avd-academy-footer">
+  <div class="avd-academy-footer__grid">
+    <div>
+      <strong>Java SE (ATVANTAGE Academy)</strong>
+      <p>Schulungen im Bereich 'Java SE'</p>
+    </div>
+    <div>
+      <strong>Kontakt</strong>
+      <p><a href="mailto:academy@atvantage.com">academy@atvantage.com</a><br>
+      </p>
+    </div><div>
+      <strong>Weitere Informationen</strong>
+      <p><a href="https://atvantage-academy.github.io/academy-online/" target="_blank" rel="noopener">ATVANTAGE Academy</a></p>
+    </div></div>
+  <div class="avd-academy-footer__legal">
+    © <span data-avd-academy-year>2026</span> ATVANTAGE
+  </div>
+</footer>
+
+</body>
+</html>
