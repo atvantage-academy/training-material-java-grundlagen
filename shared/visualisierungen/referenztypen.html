@@ -60,13 +60,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Referenztypen · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Vier Szenarien durch den Speicher: Was bei jeder Codezeile im Thread Stack und im Heap passiert – Abgrenzung zu primitiven Typen, Objektgeflecht, Identität gegen Inhalt, this und static."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787047910"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787047910">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787047910">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787047910">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787047910"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787047910">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787047910" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1787047910" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787047910">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787048589"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787048589">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787048589">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787048589">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787048589"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787048589">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787048589" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787048589" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787048589">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -79,8 +79,8 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/training-material-java-se/theme/atvantage/assets/icon-180.png">
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/simulation.css?v=1787047910"><script src="/training-material-java-se/theme/jekyll/simulation.js?v=1787047910"></script>
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787047910"></head>
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/simulation.css?v=1787048589"><script src="/training-material-java-se/theme/jekyll/simulation.js?v=1787048589"></script>
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787048589"></head>
 <body class="avd-academy-sim" data-avd-academy-sim data-avd-academy-sim-titel="Referenztypen"
       data-avd-academy-sim-starttempo="1"
       data-avd-academy-sim-schrittdauer="3200">
@@ -543,10 +543,10 @@ kopie = 20;</code></pre>
 k1 = new Konto(100);
 Konto k2;
 k2 = k1;
-k2.stand = 500;
-print(k1.stand);
+k2.standInCent = 500;
+print(k1.standInCent);
 k1 = null;
-k1.stand = 1000;
+k1.standInCent = 1000;
 k2 = null;</code></pre>
   </div>
 
@@ -684,9 +684,9 @@ print(a.equals(b));</code></pre>
     <h2 class="avd-academy-sim-panel__title">Quelltext <span class="avd-academy-sim-panel__hint">Java</span></h2>
 <p class="speicher__gruppe">Die Klasse</p>
 <pre class="avd-academy-sim-code" data-kontext=""><code class="language-java">class Konto {
-  int stand;
-  void einzahlen(int betrag) {
-    this.stand += betrag;
+  long standInCent;
+  void einzahlen(long betrag) {
+    this.standInCent += betrag;
   }
 }</code></pre>
     <p class="speicher__gruppe">Der Ablauf</p>
@@ -798,14 +798,14 @@ int groesser = Math.max(3, 7);</code></pre>
           el.className = "speicher__objekt";
           el.innerHTML =
             '<div class="speicher__objekt-kopf"></div>' +
-            '<div class="speicher__objekt-attr"><span>stand =</span><b></b></div>';
+            '<div class="speicher__objekt-attr"><span>standInCent =</span><b></b></div>';
           return el;
         },
         update: function (el, o) {
           el.querySelector(".speicher__objekt-kopf").textContent = o.adresse + " : Konto";
           var wert = el.querySelector(".speicher__objekt-attr b");
           var alt = wert.textContent;
-          wert.textContent = String(o.stand);
+          wert.textContent = String(o.standInCent);
           el.id = "speicher-obj-" + o.id;
           el.classList.toggle("is-unerreichbar", !!o.unerreichbar);
           el.classList.toggle("is-gekehrt", !!o.gekehrt);
@@ -1006,7 +1006,7 @@ int groesser = Math.max(3, 7);</code></pre>
             "<p>Das Konto liegt unten. Oben steht nur der Wegweiser.</p>",
       apply: function (s) {
         s.zeile = 6;
-        s.heap.push({ id: "h1", adresse: "#A1", stand: 100 });
+        s.heap.push({ id: "h1", adresse: "#A1", standInCent: 100 });
         var k1 = finde(s.stack, "k1");
         k1.wert = "#A1"; k1.leer = false; k1.ziel = "h1";
       }
@@ -1031,18 +1031,18 @@ int groesser = Math.max(3, 7);</code></pre>
       }
     },
     {
-      titel: "k2.stand = 500;",
+      titel: "k2.standInCent = 500;",
       text: "<p>Der Punkt folgt dem Wegweiser nach unten in den Heap und ändert <b>dort</b> " +
             "den Wert.</p>" +
             "<p>Und <code>k1</code>? Zeigt auf dasselbe Objekt – sieht die 500 also auch. " +
             "Das ist der Unterschied, der in echtem Code Fehler kostet.</p>",
       apply: function (s) {
         s.zeile = 9;
-        s.heap.filter(function (o) { return o.id === "h1"; })[0].stand = 500;
+        s.heap.filter(function (o) { return o.id === "h1"; })[0].standInCent = 500;
       }
     },
     {
-      titel: "print(k1.stand);",
+      titel: "print(k1.standInCent);",
       text: "<p>Gelesen wird über <code>k1</code> – und heraus kommt <b>500</b>, nicht 100.</p>" +
             "<p><code>k1</code> wurde nie angefasst. Geändert hat jemand über <code>k2</code>. " +
             "Beide Wege führen zu <b>demselben</b> Objekt, und ein Objekt hat nur einen " +
@@ -1070,7 +1070,7 @@ int groesser = Math.max(3, 7);</code></pre>
       }
     },
     {
-      titel: "k1.stand = 1000; 💥",
+      titel: "k1.standInCent = 1000; 💥",
       text: "<p>Dem Wegweiser folgen, der auf <b>nichts</b> zeigt – das geht nicht: " +
             "<b>NullPointerException</b>.</p>" +
             "<p>Nicht das Objekt ist weg. Der <b>Weg dorthin</b> ist weg.</p>",
@@ -1420,7 +1420,7 @@ int groesser = Math.max(3, 7);</code></pre>
           s.heap[0].felder[0] = { name: "name", wert: "\"Anna Berger\"" };
           s.heap[0].felder[1] = { name: "wohnort", wert: "\"Bremen\"" };
           s.heap.push({ id: "giro", adresse: "#A1", klasse: "Konto", spalte: -1,
-                        felder: [{ name: "stand", wert: "0" }, { name: "inhaber", wert: "null" }] });
+                        felder: [{ name: "standInCent", wert: "0" }, { name: "inhaber", wert: "null" }] });
           s.stack.push({ name: "giro", typ: "Konto", wert: "#A1", ref: true });
         }
       },
@@ -1440,7 +1440,7 @@ int groesser = Math.max(3, 7);</code></pre>
         apply: function (s) {
           s.zeile = 5;
           s.heap.push({ id: "spar", adresse: "#A2", klasse: "Konto", spalte: 1,
-                        felder: [{ name: "stand", wert: "0" }, { name: "inhaber", wert: "null" }] });
+                        felder: [{ name: "standInCent", wert: "0" }, { name: "inhaber", wert: "null" }] });
           s.stack.push({ name: "spar", typ: "Konto", wert: "#A2", ref: true });
         }
       },
@@ -1632,12 +1632,12 @@ int groesser = Math.max(3, 7);</code></pre>
               "<p>Wie weiß die Methode dann, welchen Kontostand sie erhöhen soll?</p>",
         apply: function (s) {
           s.heap.push({ id: "giro", adresse: "#A1", klasse: "Konto",
-                        felder: [{ name: "stand", wert: "0" }] });
+                        felder: [{ name: "standInCent", wert: "0" }] });
           s.heap.push({ id: "spar", adresse: "#A2", klasse: "Konto",
-                        felder: [{ name: "stand", wert: "0" }] });
+                        felder: [{ name: "standInCent", wert: "0" }] });
           s.stack.push({ name: "giro", typ: "Konto", wert: "#A1", ref: true });
           s.stack.push({ name: "spar", typ: "Konto", wert: "#A2", ref: true });
-          s.meta.push({ id: "Konto", name: "Konto", member: ["int stand;", "void einzahlen(int)"] });
+          s.meta.push({ id: "Konto", name: "Konto", member: ["long standInCent;", "void einzahlen(long)"] });
           // Die Wegweiser stehen von Anfang an – sie sind hier nicht die Neuigkeit.
           // In den Aufrufen ändert sich nur der Kontostand; tauchten die Linien
           // erst dort auf, sähe es aus, als entstünden sie durch den Aufruf.
@@ -1649,10 +1649,10 @@ int groesser = Math.max(3, 7);</code></pre>
         titel: "giro.einzahlen(50);",
         text: "<p>Der Aufruf steht <b>an einem Objekt</b>. Genau dieses Objekt bekommt die " +
               "Methode als <code>this</code> mitgeliefert – unsichtbar, aber es ist da.</p>" +
-              "<p><code>this.stand += 50</code> trifft deshalb <code>#A1</code>.</p>",
+              "<p><code>this.standInCent += 50</code> trifft deshalb <code>#A1</code>.</p>",
         apply: function (s) {
           s.zeile = 0;
-          s.heap[0].felder = [{ name: "stand", wert: "50" }];
+          s.heap[0].felder = [{ name: "standInCent", wert: "50" }];
           s.betont = "giro";
         }
       },
@@ -1665,7 +1665,7 @@ int groesser = Math.max(3, 7);</code></pre>
               "wenn ein Parameter genauso heißt wie das Feld.</p>",
         apply: function (s) {
           s.zeile = 1;
-          s.heap[1].felder = [{ name: "stand", wert: "20" }];
+          s.heap[1].felder = [{ name: "standInCent", wert: "20" }];
           s.betont = "spar";
         },
         dauer: 4200

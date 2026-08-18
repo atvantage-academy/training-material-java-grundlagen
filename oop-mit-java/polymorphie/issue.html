@@ -69,13 +69,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Kontoarten polymorph behandeln · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Lass Giro- und Sparkonto dieselbe Abhebe-Logik unterschiedlich ausführen – über Polymorphie."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787047910"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787047910">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787047910">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787047910">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787047910"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787047910">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787047910" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1787047910" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787047910">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787048589"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787048589">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787048589">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787048589">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787048589"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787048589">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787048589" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787048589" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787048589">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,8 +89,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787047910">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787047910"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787048589">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787048589"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -145,7 +145,7 @@
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>Konto</code> besitzt eine Methode <code>istGedeckt(Betrag)</code>, die <code>abheben</code> nutzt.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>Konto</code> besitzt eine Methode <code>istGedeckt(long)</code>, die <code>abheben</code> nutzt.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>Girokonto</code> überschreibt <code>istGedeckt</code>, sodass der Dispositionskredit berücksichtigt wird.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Eine <code>List&lt;Konto&gt;</code> mit Giro- und Sparkonto wird in einer Schleife einheitlich abgefragt.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der Abhebe-Versuch verhält sich je Kontoart korrekt unterschiedlich.</li>
@@ -156,7 +156,7 @@
 
 <h3 id="verfügbarkeitsprüfung-in-der-basisklasse">Verfügbarkeitsprüfung in der Basisklasse</h3>
 
-<p>Gib <code>Konto</code> eine Methode <code>istGedeckt(Betrag betrag)</code>, die standardmäßig nur den Kontostand prüft, und nutze sie in <code>abheben</code>.</p>
+<p>Gib <code>Konto</code> eine Methode <code>istGedeckt(long betragInCent)</code>, die standardmäßig nur den Kontostand prüft, und nutze sie in <code>abheben</code>.</p>
 
 <blockquote>
   <p><strong>Hinweis:</strong> <code>abheben</code> bleibt in der Basisklasse – es ruft nur <code>istGedeckt(...)</code> auf. Genau darüber greift später die Polymorphie.</p>
@@ -167,9 +167,9 @@
 <p>Überschreibe <code>istGedeckt</code> in <code>Girokonto</code>, sodass zusätzlich der Dispositionskredit zählt.</p>
 
 <pre><code class="language-java">@Override
-protected boolean istGedeckt(Betrag betrag) {
+protected boolean istGedeckt(long betragInCent) {
   // verfügbar = Kontostand + Dispolimit
-  return getStand().plus(dispolimit).istMindestens(betrag);
+  return standInCent + dispolimitInCent &gt;= betragInCent;
 }
 </code></pre>
 
@@ -203,7 +203,7 @@ Du…
 
 ## Definition of Done
 
-* [ ] `Konto` besitzt eine Methode `istGedeckt(Betrag)`, die `abheben` nutzt.
+* [ ] `Konto` besitzt eine Methode `istGedeckt(long)`, die `abheben` nutzt.
 * [ ] `Girokonto` überschreibt `istGedeckt`, sodass der Dispositionskredit berücksichtigt wird.
 * [ ] Eine `List&lt;Konto&gt;` mit Giro- und Sparkonto wird in einer Schleife einheitlich abgefragt.
 * [ ] Der Abhebe-Versuch verhält sich je Kontoart korrekt unterschiedlich.
@@ -213,7 +213,7 @@ Du…
 
 ### Verfügbarkeitsprüfung in der Basisklasse
 
-Gib `Konto` eine Methode `istGedeckt(Betrag betrag)`, die standardmäßig nur den Kontostand prüft, und nutze sie in `abheben`.
+Gib `Konto` eine Methode `istGedeckt(long betragInCent)`, die standardmäßig nur den Kontostand prüft, und nutze sie in `abheben`.
 
 &gt; **Hinweis:** `abheben` bleibt in der Basisklasse – es ruft nur `istGedeckt(...)` auf. Genau darüber greift später die Polymorphie.
 
@@ -223,9 +223,9 @@ Gib `Konto` eine Methode `istGedeckt(Betrag betrag)`, die standardmäßig nur de
 
 ```java
 @Override
-protected boolean istGedeckt(Betrag betrag) {
+protected boolean istGedeckt(long betragInCent) {
   // verfügbar = Kontostand + Dispolimit
-  return getStand().plus(dispolimit).istMindestens(betrag);
+  return standInCent + dispolimitInCent &gt;= betragInCent;
 }
 ```
 
