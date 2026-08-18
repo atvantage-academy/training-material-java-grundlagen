@@ -69,13 +69,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Kursbeschreibung · Java SE (ATVANTAGE Academy)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787054125"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787054125">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787054125">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787054125">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787054125"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787054125">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787054125" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1787054125" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787054125">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787059290"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787059290">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787059290">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787059290">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787059290"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787059290">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787059290" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787059290" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787059290">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,8 +89,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787054125">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787054125"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787059290">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787059290"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -179,35 +179,46 @@ Java-Aufbaukurs später aufsetzt.</p>
 <h3 id="tag-2-vom-prozeduralen-zum-objekt">Tag 2: Vom Prozeduralen zum Objekt</h3>
 
 <ul>
-  <li>Klassen &amp; Objekte: Zustand (Felder) und Verhalten (Methoden), Konstruktoren</li>
-  <li>Kapselung: Sichtbarkeiten, Zugriff, Verantwortlichkeiten</li>
-  <li>Objektbeziehungen: Referenzen, Assoziation und Komposition (beim Modellieren und im Code)</li>
+  <li>Klassen &amp; Objekte: Zustand (Felder) und Verhalten (Methoden), Objekte mit <code>new</code></li>
+  <li>Objektbeziehungen: Referenzen statt Werte, Assoziation und Komposition</li>
+  <li>Referenztypen und primitive Typen: was in einer Variablen steht, <code>this</code> und <code>static</code></li>
+  <li>Kapselung: Packages, Sichtbarkeiten, <code>final</code>, Konstruktoren</li>
+  <li>Vererbung, Teil 1: Gemeinsames erkennen und in Java umsetzen (<code>extends</code>, <code>super</code>, <code>Object</code>)</li>
 </ul>
 
-<h3 id="tag-3-wiederverwendung--abstraktion">Tag 3: Wiederverwendung &amp; Abstraktion</h3>
+<h3 id="tag-3-abstraktion--robuste-programme">Tag 3: Abstraktion &amp; robuste Programme</h3>
 
 <ul>
-  <li>Vererbung: Ober-/Unterklassen, Überschreiben, <code>super</code></li>
-  <li>Polymorphie: dynamische Bindung, Programmieren gegen Typen statt Implementierungen</li>
-  <li>Abstraktion: abstrakte Klassen und Interfaces</li>
-  <li><code>Object</code>-Grundlagen (<code>toString</code>/<code>equals</code>/<code>hashCode</code>) im Überblick</li>
-</ul>
-
-<h3 id="tag-4-robuste-programme">Tag 4: Robuste Programme</h3>
-
-<ul>
+  <li>Vererbung, Teil 2: abstrakte Klassen, Überschreiben, dynamische Bindung (Polymorphie), <code>equals</code></li>
+  <li>Abstraktion: Interfaces – Programmieren gegen den Vertrag statt gegen die Klasse</li>
   <li>Ausnahmebehandlung: <code>try</code>/<code>catch</code>/<code>finally</code>, checked vs. unchecked, eigene Exceptions</li>
+</ul>
+
+<h3 id="tag-4-daten-verwalten">Tag 4: Daten verwalten</h3>
+
+<ul>
   <li>Collections-Framework: <code>List</code>, <code>Set</code>, <code>Map</code> – die passende Struktur wählen</li>
+  <li>Gleichheit: <code>equals</code> und <code>hashCode</code> im Zusammenspiel mit hash-basierten Strukturen</li>
   <li>Generics: typsichere Container verstehen und nutzen</li>
+  <li>Build &amp; Ökosystem: Gradle-Grundlagen, Projektstruktur, Bibliotheken einbinden</li>
 </ul>
 
 <h3 id="tag-5-zusammenspiel--praxis">Tag 5: Zusammenspiel &amp; Praxis</h3>
 
 <ul>
-  <li>Build &amp; Ökosystem: Maven-Grundlagen, Projektstruktur, Bibliotheken einbinden</li>
   <li>Qualität: Testen mit JUnit im Überblick, Debugging</li>
   <li>Integrationsprojekt: Konzepte der Woche kombiniert anwenden</li>
   <li>Ausblick &amp; nächste Schritte (Java-Aufbau: Lambdas/Streams, moderne Sprachfeatures)</li>
+</ul>
+
+<h3 id="optionale-vertiefungen">Optionale Vertiefungen</h3>
+
+<p>Zwei Einheiten sind bewusst optional und werden nach Zeit und Interesse
+eingeschoben – beide führen an die Idee der <strong>Entwurfsmuster</strong> heran:</p>
+
+<ul>
+  <li>Singleton: warum es manche Dinge nur einmal geben soll</li>
+  <li>Entwurf üben: ein Dateisystem, das sich selbst enthält (Composite) – und die Frage, ob ein Quadrat wirklich ein Rechteck ist</li>
 </ul>
 
     </main>

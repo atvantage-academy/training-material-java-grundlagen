@@ -66,8 +66,8 @@
 --><html lang="de">
 <head>
   <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1"><title>Die Java-Plattform erkunden · Java SE (ATVANTAGE Academy)</title>
-<meta name="description" content="Kompiliere eine vorgegebene Java-Klasse und sieh Dir den Bytecode an, um die Plattform zu verstehen."><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Kontoarten sich unterschiedlich verhalten lassen · Java SE (ATVANTAGE Academy)</title>
+<meta name="description" content="Mach Konto abstrakt, lass das Girokonto die Verfügbarkeitsprüfung überschreiben – und beobachte, wie derselbe Aufruf sich unterschiedlich verhält."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787059290"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787059290">
 <link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787059290">
@@ -115,27 +115,26 @@
             aria-label="Farbschema umschalten">◐</button>
   </div>
 </header>
-<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Die Java-Plattform erkunden</span></nav><div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 20 Minuten</span><span class="avd-academy-tag">Java-Plattform</span>
+<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Kontoarten sich unterschiedlich verhalten lassen</span></nav><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 30 Minuten</span><span class="avd-academy-tag">Vererbung</span><span class="avd-academy-tag">Polymorphie</span><span class="avd-academy-tag">Banking</span>
       </div>
       <div class="avd-academy-guide-hero__actions">
         <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
                 data-avd-academy-copy-md="#avd-academy-md-source"
                 title="Markdown kopieren" aria-label="Markdown kopieren"></button>
       </div>
-    </div><h1>Die Java-Plattform erkunden</h1>
+    </div><h1>Kontoarten sich unterschiedlich verhalten lassen</h1>
   </section>
 
   <div class="avd-academy-guide-layout">
     <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
-      <h1 id="die-java-plattform-erkunden">Die Java-Plattform erkunden</h1>
+      <h1 id="kontoarten-sich-unterschiedlich-verhalten-lassen">Kontoarten sich unterschiedlich verhalten lassen</h1>
 
-<p>Als Umsteiger:in möchte ich sehen, was zwischen meinem Quellcode und der laufenden Anwendung passiert, damit ich verstehe, warum dasselbe Java-Programm auf jedem Betriebssystem läuft.</p>
+<p>Als Entwickler:in möchte ich Konten unterschiedlicher Art einheitlich behandeln und trotzdem das jeweils richtige Verhalten auslösen, damit eine neue Kontoart die bestehende Abhebe-Logik nicht anfassen muss.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Arbeite in dieser Übung bewusst mit einem <strong>einfachen Texteditor</strong> und
-der <strong>Kommandozeile</strong> – ohne IDE. So machst Du jeden Schritt selbst, den Dir die IDE
-später abnimmt. Die IDE kommt im nächsten Modul.</p>
+  <p><strong>Hinweis:</strong> Du baust an der Hierarchie von eben weiter – es entsteht keine neue
+Klasse von Grund auf.</p>
 </blockquote>
 
 <h2 id="lernziele">Lernziele</h2>
@@ -143,148 +142,193 @@ später abnimmt. Die IDE kommt im nächsten Modul.</p>
 <p>Du…</p>
 
 <ul>
-  <li>kompilierst eine vorgegebene <code>.java</code>-Datei mit <code>javac</code> zu einer <code>.class</code>-Datei.</li>
-  <li>betrachtest den erzeugten Bytecode mit <code>javap</code> und ordnest die Rolle der JVM ein.</li>
-  <li>erklärst am Beispiel das Prinzip „Write once, run anywhere“.</li>
-  <li>benennst, wozu der Classpath dient.</li>
+  <li>machst eine Oberklasse abstrakt, wenn es von ihr keine sinnvollen Objekte gibt.</li>
+  <li>überschreibst eine geerbte Methode und kennzeichnest das mit <code>@Override</code>.</li>
+  <li>erklärst, warum zur Laufzeit das Objekt entscheidet, welche Implementierung läuft.</li>
+  <li>legst mit <code>equals</code> fest, wann zwei Konten fachlich gleich sind.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Die vorgegebene Klasse <code>HelloWorld</code> liegt als Datei <code>HelloWorld.java</code> vor.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Die Klasse ist mit <code>javac</code> zu einer <code>.class</code>-Datei kompiliert.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast Dir den Bytecode mit <code>javap -c</code> angesehen.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Das Programm läuft mit <code>java HelloWorld</code> und gibt „Hello, World!“ aus.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>Konto</code> lässt sich nicht mehr direkt instanziieren.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Das Abheben steht <strong>nur einmal</strong> – in der Oberklasse – und fragt eine Prüfmethode.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Das Girokonto überschreibt diese Prüfung, sodass das Dispolimit zählt; das Sparkonto überschreibt sie <strong>nicht</strong>.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Ein <code>Konto[]</code> mit beiden Kontoarten wird in einer Schleife durchlaufen und verhält sich je Konto korrekt unterschiedlich.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>equals</code> in <code>Konto</code> beruht auf der IBAN.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
 <h2 id="arbeitsschritte">Arbeitsschritte</h2>
 
-<h3 id="die-vorgegebene-klasse-anlegen">Die vorgegebene Klasse anlegen</h3>
+<h3 id="die-oberklasse-abstrakt-machen">Die Oberklasse abstrakt machen</h3>
 
-<p>Übernimm den folgenden Quellcode unverändert mit einem einfachen Texteditor in eine Datei <code>HelloWorld.java</code>.</p>
-
-<pre><code class="language-java">public class HelloWorld {
-    public static void main(String[] args) {
-        System.out.println("Hello, World!");
-    }
-}
-</code></pre>
+<p>Es gibt kein Konto, das weder Giro- noch Sparkonto ist. Sorg dafür, dass der
+Compiler das durchsetzt.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Der Dateiname muss zum Klassennamen passen (<code>HelloWorld.java</code> → <code>class HelloWorld</code>).</p>
+  <p><strong>Hinweis:</strong> Probier danach bewusst <code>new Konto(...)</code> aus und lies die Meldung –
+genau diese Zusicherung wolltest Du haben.</p>
 </blockquote>
 
-<h3 id="kompilieren-und-den-bytecode-ansehen">Kompilieren und den Bytecode ansehen</h3>
+<h3 id="die-verfügbarkeitsprüfung-herausziehen">Die Verfügbarkeitsprüfung herausziehen</h3>
 
-<p>Übersetze die Datei und wirf einen Blick auf den erzeugten Bytecode.</p>
-
-<pre><code class="language-bash">javac HelloWorld.java
-javap -c HelloWorld
-</code></pre>
+<p>Beim Abheben stellt sich immer dieselbe Frage: Ist genug da? <strong>Was „genug“
+bedeutet, unterscheidet sich je Kontoart – die Frage selbst nicht.</strong> Trenne
+beides: Das Abheben bleibt in der Oberklasse, die Prüfung wird eine eigene
+Methode.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> <code>javap -c</code> zeigt den plattformunabhängigen Bytecode – genau das, was die JVM ausführt (nicht Maschinencode Deiner CPU).</p>
+  <p><strong>Hinweis:</strong> Damit die Unterklasse die Prüfung ersetzen kann, muss sie sie sehen.
+Ein <code>private</code> reicht dafür nicht – welche Sichtbarkeit passt hier?</p>
 </blockquote>
 
-<h3 id="ausführen">Ausführen</h3>
+<h3 id="das-girokonto-anders-prüfen-lassen">Das Girokonto anders prüfen lassen</h3>
 
-<p>Starte das Programm über die JVM.</p>
-
-<pre><code class="language-bash">java HelloWorld
-</code></pre>
+<p>Beim Girokonto darf bis zum Dispolimit ins Minus gegangen werden. Überschreib die
+Prüfung entsprechend – und <strong>fass das Abheben nicht an</strong>.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Die JVM findet <code>HelloWorld</code>, weil sie im aktuellen Verzeichnis sucht.
-Wo sie überhaupt nach Klassen sucht, steuert der Classpath – probier zum
-Vergleich einen Start aus einem anderen Verzeichnis, einmal ohne und einmal mit
-<code>java -cp &lt;Verzeichnis&gt; HelloWorld</code>.</p>
+  <p><strong>Hinweis:</strong> Setz <code>@Override</code> davor. Bau danach einmal absichtlich einen
+Tippfehler in den Methodennamen und sieh Dir an, was die Annotation dann meldet.</p>
 </blockquote>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Das Sparkonto bekommt nichts. Es erbt die strengere Prüfung – auch
+das ist eine bewusste Entscheidung.</p>
+</blockquote>
+
+<h3 id="beide-konten-gemeinsam-behandeln">Beide Konten gemeinsam behandeln</h3>
+
+<p>Leg ein Giro- und ein Sparkonto in ein <code>Konto[]</code> und versuch in einer Schleife,
+bei jedem denselben Betrag abzuheben.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Überleg <strong>vor</strong> dem Start, was passieren wird – und vergleich es
+danach mit der Ausgabe. Wo im Code steht eigentlich, welche Prüfung für welches
+Konto gilt?</p>
+</blockquote>
+
+<h3 id="gleichheit-festlegen">Gleichheit festlegen</h3>
+
+<p>Zwei Konten sind dasselbe Konto, wenn ihre IBAN übereinstimmt. Sorg dafür, dass
+Dein Code das auch so sieht.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Die Methode dafür erbst Du – wie <code>toString()</code> – aus <code>Object</code>.
+Vergleich anschließend zwei Objekte mit derselben IBAN einmal mit <code>==</code> und
+einmal mit Deiner Methode.</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Wenn solche Objekte später in ein <code>HashSet</code> wandern, gehört noch
+eine zweite Methode dazu. Das kommt im Kurs noch – für heute genügt <code>equals</code>.</p>
+</blockquote>
+
+<h3 id="für-schnelle">Für Schnelle</h3>
+
+<ul>
+  <li>Ergänze eine dritte Kontoart mit einer eigenen Regel und lauf die Schleife erneut – wie viel bestehenden Code musstest Du anfassen?</li>
+  <li>Gib in der Schleife zusätzlich aus, um welche Kontoart es sich handelt, <strong>ohne</strong> <code>instanceof</code> zu verwenden.</li>
+</ul>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Warum übersetzt Java den Quellcode in Bytecode und nicht direkt in ein nativ ausführbares Format?</li>
-  <li>Worauf musst Du beim Entwickeln achten, damit Deine Anwendung wirklich plattformunabhängig bleibt?</li>
-  <li>Was ist der sogenannte „Classpath“?</li>
+  <li>Warum musstest Du das Abheben nicht ändern, obwohl sich das Verhalten je Kontoart unterscheidet?</li>
+  <li>Was wäre für eine neue Kontoart zu tun – und was ausdrücklich nicht?</li>
+  <li>Wo liegt der Unterschied zwischen dem deklarierten und dem tatsächlichen Typ?</li>
+  <li>Warum ist das besser als eine Fallunterscheidung <code>if (art == GIRO) … else …</code>?</li>
 </ul>
 
-<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Die Java-Plattform erkunden
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Kontoarten sich unterschiedlich verhalten lassen
 
-Als Umsteiger:in möchte ich sehen, was zwischen meinem Quellcode und der laufenden Anwendung passiert, damit ich verstehe, warum dasselbe Java-Programm auf jedem Betriebssystem läuft.
+Als Entwickler:in möchte ich Konten unterschiedlicher Art einheitlich behandeln und trotzdem das jeweils richtige Verhalten auslösen, damit eine neue Kontoart die bestehende Abhebe-Logik nicht anfassen muss.
 
-&gt; **Hinweis:** Arbeite in dieser Übung bewusst mit einem **einfachen Texteditor** und
-&gt; der **Kommandozeile** – ohne IDE. So machst Du jeden Schritt selbst, den Dir die IDE
-&gt; später abnimmt. Die IDE kommt im nächsten Modul.
+&gt; **Hinweis:** Du baust an der Hierarchie von eben weiter – es entsteht keine neue
+&gt; Klasse von Grund auf.
 
 ## Lernziele
 
 Du…
 
-* kompilierst eine vorgegebene `.java`-Datei mit `javac` zu einer `.class`-Datei.
-* betrachtest den erzeugten Bytecode mit `javap` und ordnest die Rolle der JVM ein.
-* erklärst am Beispiel das Prinzip „Write once, run anywhere“.
-* benennst, wozu der Classpath dient.
+* machst eine Oberklasse abstrakt, wenn es von ihr keine sinnvollen Objekte gibt.
+* überschreibst eine geerbte Methode und kennzeichnest das mit `@Override`.
+* erklärst, warum zur Laufzeit das Objekt entscheidet, welche Implementierung läuft.
+* legst mit `equals` fest, wann zwei Konten fachlich gleich sind.
 
 ## Definition of Done
 
-* [ ] Die vorgegebene Klasse `HelloWorld` liegt als Datei `HelloWorld.java` vor.
-* [ ] Die Klasse ist mit `javac` zu einer `.class`-Datei kompiliert.
-* [ ] Du hast Dir den Bytecode mit `javap -c` angesehen.
-* [ ] Das Programm läuft mit `java HelloWorld` und gibt „Hello, World!“ aus.
+* [ ] `Konto` lässt sich nicht mehr direkt instanziieren.
+* [ ] Das Abheben steht **nur einmal** – in der Oberklasse – und fragt eine Prüfmethode.
+* [ ] Das Girokonto überschreibt diese Prüfung, sodass das Dispolimit zählt; das Sparkonto überschreibt sie **nicht**.
+* [ ] Ein `Konto[]` mit beiden Kontoarten wird in einer Schleife durchlaufen und verhält sich je Konto korrekt unterschiedlich.
+* [ ] `equals` in `Konto` beruht auf der IBAN.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
 ## Arbeitsschritte
 
-### Die vorgegebene Klasse anlegen
+### Die Oberklasse abstrakt machen
 
-Übernimm den folgenden Quellcode unverändert mit einem einfachen Texteditor in eine Datei `HelloWorld.java`.
+Es gibt kein Konto, das weder Giro- noch Sparkonto ist. Sorg dafür, dass der
+Compiler das durchsetzt.
 
-```java
-public class HelloWorld {
-    public static void main(String[] args) {
-        System.out.println(&quot;Hello, World!&quot;);
-    }
-}
-```
+&gt; **Hinweis:** Probier danach bewusst `new Konto(...)` aus und lies die Meldung –
+&gt; genau diese Zusicherung wolltest Du haben.
 
-&gt; **Hinweis:** Der Dateiname muss zum Klassennamen passen (`HelloWorld.java` → `class HelloWorld`).
+### Die Verfügbarkeitsprüfung herausziehen
 
-### Kompilieren und den Bytecode ansehen
+Beim Abheben stellt sich immer dieselbe Frage: Ist genug da? **Was „genug“
+bedeutet, unterscheidet sich je Kontoart – die Frage selbst nicht.** Trenne
+beides: Das Abheben bleibt in der Oberklasse, die Prüfung wird eine eigene
+Methode.
 
-Übersetze die Datei und wirf einen Blick auf den erzeugten Bytecode.
+&gt; **Hinweis:** Damit die Unterklasse die Prüfung ersetzen kann, muss sie sie sehen.
+&gt; Ein `private` reicht dafür nicht – welche Sichtbarkeit passt hier?
 
-```bash
-javac HelloWorld.java
-javap -c HelloWorld
-```
+### Das Girokonto anders prüfen lassen
 
-&gt; **Hinweis:** `javap -c` zeigt den plattformunabhängigen Bytecode – genau das, was die JVM ausführt (nicht Maschinencode Deiner CPU).
+Beim Girokonto darf bis zum Dispolimit ins Minus gegangen werden. Überschreib die
+Prüfung entsprechend – und **fass das Abheben nicht an**.
 
-### Ausführen
+&gt; **Hinweis:** Setz `@Override` davor. Bau danach einmal absichtlich einen
+&gt; Tippfehler in den Methodennamen und sieh Dir an, was die Annotation dann meldet.
 
-Starte das Programm über die JVM.
+&gt; **Hinweis:** Das Sparkonto bekommt nichts. Es erbt die strengere Prüfung – auch
+&gt; das ist eine bewusste Entscheidung.
 
-```bash
-java HelloWorld
-```
+### Beide Konten gemeinsam behandeln
 
-&gt; **Hinweis:** Die JVM findet `HelloWorld`, weil sie im aktuellen Verzeichnis sucht.
-&gt; Wo sie überhaupt nach Klassen sucht, steuert der Classpath – probier zum
-&gt; Vergleich einen Start aus einem anderen Verzeichnis, einmal ohne und einmal mit
-&gt; `java -cp &lt;Verzeichnis&gt; HelloWorld`.
+Leg ein Giro- und ein Sparkonto in ein `Konto[]` und versuch in einer Schleife,
+bei jedem denselben Betrag abzuheben.
+
+&gt; **Hinweis:** Überleg **vor** dem Start, was passieren wird – und vergleich es
+&gt; danach mit der Ausgabe. Wo im Code steht eigentlich, welche Prüfung für welches
+&gt; Konto gilt?
+
+### Gleichheit festlegen
+
+Zwei Konten sind dasselbe Konto, wenn ihre IBAN übereinstimmt. Sorg dafür, dass
+Dein Code das auch so sieht.
+
+&gt; **Hinweis:** Die Methode dafür erbst Du – wie `toString()` – aus `Object`.
+&gt; Vergleich anschließend zwei Objekte mit derselben IBAN einmal mit `==` und
+&gt; einmal mit Deiner Methode.
+
+&gt; **Hinweis:** Wenn solche Objekte später in ein `HashSet` wandern, gehört noch
+&gt; eine zweite Methode dazu. Das kommt im Kurs noch – für heute genügt `equals`.
+
+### Für Schnelle
+
+* Ergänze eine dritte Kontoart mit einer eigenen Regel und lauf die Schleife erneut – wie viel bestehenden Code musstest Du anfassen?
+* Gib in der Schleife zusätzlich aus, um welche Kontoart es sich handelt, **ohne** `instanceof` zu verwenden.
 
 ## Reflexionsfragen
 
-* Warum übersetzt Java den Quellcode in Bytecode und nicht direkt in ein nativ ausführbares Format?
-* Worauf musst Du beim Entwickeln achten, damit Deine Anwendung wirklich plattformunabhängig bleibt?
-* Was ist der sogenannte „Classpath“?
-
-## Weiterführende Informationen
-
-- [Visualisierung: Java-LTS-Evolution](../../shared/visualisierungen/java-lts-evolution.html)
-</textarea>
+* Warum musstest Du das Abheben nicht ändern, obwohl sich das Verhalten je Kontoart unterscheidet?
+* Was wäre für eine neue Kontoart zu tun – und was ausdrücklich nicht?
+* Wo liegt der Unterschied zwischen dem deklarierten und dem tatsächlichen Typ?
+* Warum ist das besser als eine Fallunterscheidung `if (art == GIRO) … else …`?</textarea>
     </main>
     <aside class="avd-academy-guide-sidebar">
       <div class="avd-academy-guide-side avd-academy-guide-side--toc" data-avd-academy-toc-box hidden>
@@ -295,11 +339,6 @@ java HelloWorld
         <div class="avd-academy-guide-side__label">Fortschritt</div>
         <div class="avd-academy-progress__bar"><div class="avd-academy-progress__fill"></div></div>
         <div class="avd-academy-progress__text"></div>
-      </div>
-      <div class="avd-academy-guide-side avd-academy-guide-side--bordered">
-        <div class="avd-academy-guide-side__label">Weiterführende Informationen</div>
-        <div class="avd-academy-guide-side__links"><a href="../../shared/visualisierungen/java-lts-evolution.html"><span>Visualisierung: Java-LTS-Evolution</span></a>
-        </div>
       </div>
     </aside>
   </div><div class="avd-academy-print-contact" aria-hidden="true">

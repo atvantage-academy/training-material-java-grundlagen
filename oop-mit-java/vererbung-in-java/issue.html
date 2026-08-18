@@ -66,8 +66,8 @@
 --><html lang="de">
 <head>
   <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1"><title>Die Java-Plattform erkunden · Java SE (ATVANTAGE Academy)</title>
-<meta name="description" content="Kompiliere eine vorgegebene Java-Klasse und sieh Dir den Bytecode an, um die Plattform zu verstehen."><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Die Kontenhierarchie bauen · Java SE (ATVANTAGE Academy)</title>
+<meta name="description" content="Zeichne die Kontenhierarchie und setz sie in Java um – mit extends, super(...) und geerbten Feldern."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787059290"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787059290">
 <link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787059290">
@@ -115,27 +115,26 @@
             aria-label="Farbschema umschalten">◐</button>
   </div>
 </header>
-<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Die Java-Plattform erkunden</span></nav><div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 20 Minuten</span><span class="avd-academy-tag">Java-Plattform</span>
+<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Die Kontenhierarchie bauen</span></nav><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 35 Minuten</span><span class="avd-academy-tag">Vererbung</span><span class="avd-academy-tag">Banking</span>
       </div>
       <div class="avd-academy-guide-hero__actions">
         <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
                 data-avd-academy-copy-md="#avd-academy-md-source"
                 title="Markdown kopieren" aria-label="Markdown kopieren"></button>
       </div>
-    </div><h1>Die Java-Plattform erkunden</h1>
+    </div><h1>Die Kontenhierarchie bauen</h1>
   </section>
 
   <div class="avd-academy-guide-layout">
     <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
-      <h1 id="die-java-plattform-erkunden">Die Java-Plattform erkunden</h1>
+      <h1 id="die-kontenhierarchie-bauen">Die Kontenhierarchie bauen</h1>
 
-<p>Als Umsteiger:in möchte ich sehen, was zwischen meinem Quellcode und der laufenden Anwendung passiert, damit ich verstehe, warum dasselbe Java-Programm auf jedem Betriebssystem läuft.</p>
+<p>Als Entwickler:in im Banking-Team möchte ich Giro- und Sparkonten als Spezialisierungen eines gemeinsamen Kontos abbilden, damit Gemeinsames nur einmal existiert und jede Kontoart nur noch ihre Besonderheit beschreibt.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Arbeite in dieser Übung bewusst mit einem <strong>einfachen Texteditor</strong> und
-der <strong>Kommandozeile</strong> – ohne IDE. So machst Du jeden Schritt selbst, den Dir die IDE
-später abnimmt. Die IDE kommt im nächsten Modul.</p>
+  <p><strong>Hinweis:</strong> Diese Übung hat zwei Hälften: <strong>erst zeichnen, dann tippen.</strong> Der
+Entwurf entscheidet, wie gut der Code wird – nicht umgekehrt.</p>
 </blockquote>
 
 <h2 id="lernziele">Lernziele</h2>
@@ -143,147 +142,185 @@ später abnimmt. Die IDE kommt im nächsten Modul.</p>
 <p>Du…</p>
 
 <ul>
-  <li>kompilierst eine vorgegebene <code>.java</code>-Datei mit <code>javac</code> zu einer <code>.class</code>-Datei.</li>
-  <li>betrachtest den erzeugten Bytecode mit <code>javap</code> und ordnest die Rolle der JVM ein.</li>
-  <li>erklärst am Beispiel das Prinzip „Write once, run anywhere“.</li>
-  <li>benennst, wozu der Classpath dient.</li>
+  <li>entscheidest, welche Eigenschaften und Fähigkeiten in die Oberklasse gehören.</li>
+  <li>leitest Unterklassen mit <code>extends</code> ab.</li>
+  <li>reichst Pflichtwerte mit <code>super(...)</code> an die Oberklasse durch.</li>
+  <li>erklärst, warum eine Variable allgemeiner sein darf als das Objekt darin.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Die vorgegebene Klasse <code>HelloWorld</code> liegt als Datei <code>HelloWorld.java</code> vor.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Die Klasse ist mit <code>javac</code> zu einer <code>.class</code>-Datei kompiliert.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast Dir den Bytecode mit <code>javap -c</code> angesehen.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Das Programm läuft mit <code>java HelloWorld</code> und gibt „Hello, World!“ aus.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Hierarchie <strong>auf Papier gezeichnet</strong>, bevor Du sie getippt hast.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt eine Oberklasse für das Gemeinsame und darunter Girokonto und Sparkonto.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Jede Unterklasse ergänzt genau das, was sie von der anderen unterscheidet.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Die Konstruktoren der Unterklassen reichen die Pflichtwerte nach oben durch.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />In <code>Main</code> entsteht je ein Objekt beider Kontoarten; beide werden benutzt und ausgegeben.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Das Programm startet und läuft fehlerfrei.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
+<h2 id="der-auftrag">Der Auftrag</h2>
+
+<blockquote>
+  <p>Die Bank führt zwei Arten von Konten. Beide haben eine IBAN, einen Stand und
+einen Inhaber; auf beide kann eingezahlt und von beiden abgehoben werden.</p>
+
+  <p>Ein <strong>Girokonto</strong> hat zusätzlich ein Dispolimit, ein <strong>Sparkonto</strong> einen
+Habenzins.</p>
+</blockquote>
+
 <h2 id="arbeitsschritte">Arbeitsschritte</h2>
 
-<h3 id="die-vorgegebene-klasse-anlegen">Die vorgegebene Klasse anlegen</h3>
+<h3 id="zuerst-zeichnen">Zuerst: zeichnen</h3>
 
-<p>Übernimm den folgenden Quellcode unverändert mit einem einfachen Texteditor in eine Datei <code>HelloWorld.java</code>.</p>
-
-<pre><code class="language-java">public class HelloWorld {
-    public static void main(String[] args) {
-        System.out.println("Hello, World!");
-    }
-}
-</code></pre>
+<p>Nimm Papier und zeichne die drei Kästchen mit den Vererbungspfeilen. Schreib in
+jedes Kästchen nur das hinein, was dort hingehört.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Der Dateiname muss zum Klassennamen passen (<code>HelloWorld.java</code> → <code>class HelloWorld</code>).</p>
+  <p><strong>Hinweis:</strong> Geh Eigenschaft für Eigenschaft durch und frag: Gilt das für <strong>beide</strong>
+Kontoarten? Dann gehört es nach oben. Die Probe: Lies den Pfeil als
+„ist ein“-Satz vor.</p>
 </blockquote>
 
-<h3 id="kompilieren-und-den-bytecode-ansehen">Kompilieren und den Bytecode ansehen</h3>
+<h3 id="die-oberklasse-aus-dem-bestehenden-konto-machen">Die Oberklasse aus dem bestehenden Konto machen</h3>
 
-<p>Übersetze die Datei und wirf einen Blick auf den erzeugten Bytecode.</p>
-
-<pre><code class="language-bash">javac HelloWorld.java
-javap -c HelloWorld
-</code></pre>
+<p>Deine heutige Klasse <code>Konto</code> ist fast schon die Oberklasse – sieh nach, was
+bleiben kann und was nicht.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> <code>javap -c</code> zeigt den plattformunabhängigen Bytecode – genau das, was die JVM ausführt (nicht Maschinencode Deiner CPU).</p>
+  <p><strong>Hinweis:</strong> Wenn Du beim Umbauen unsicher bist, was die Unterklassen später
+brauchen: Erst die Oberklasse fertig machen, dann die Unterklassen anlegen. Der
+Compiler sagt Dir zuverlässig, was noch fehlt.</p>
 </blockquote>
 
-<h3 id="ausführen">Ausführen</h3>
+<h3 id="die-unterklassen-ableiten">Die Unterklassen ableiten</h3>
 
-<p>Starte das Programm über die JVM.</p>
-
-<pre><code class="language-bash">java HelloWorld
-</code></pre>
+<p>Leg die beiden Kontoarten an und verbinde sie mit der Oberklasse. Jede bekommt
+ihre eigene Besonderheit – und einen Konstruktor.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Die JVM findet <code>HelloWorld</code>, weil sie im aktuellen Verzeichnis sucht.
-Wo sie überhaupt nach Klassen sucht, steuert der Classpath – probier zum
-Vergleich einen Start aus einem anderen Verzeichnis, einmal ohne und einmal mit
-<code>java -cp &lt;Verzeichnis&gt; HelloWorld</code>.</p>
+  <p><strong>Hinweis:</strong> Die geerbten Felder sind <code>private</code> – Deine Unterklasse kommt nicht
+direkt an sie heran. Wie bekommt die Oberklasse ihre Werte, wenn Du ein
+Girokonto erzeugst? Der Compiler stellt Dir diese Frage von selbst; die
+Visualisierung beantwortet sie.</p>
 </blockquote>
+
+<h3 id="objekte-erzeugen-und-benutzen">Objekte erzeugen und benutzen</h3>
+
+<p>Erzeuge in <code>Main</code> je ein Giro- und ein Sparkonto, zahl auf beide ein und gib sie
+aus.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Probier aus, was passiert, wenn die Variable links den Typ der
+Oberklasse hat: <code>Konto k = new Girokonto(...);</code>. Läuft das? Und kommst Du über
+<code>k</code> an das Dispolimit? Notier Dir das Ergebnis – danach wird gefragt.</p>
+</blockquote>
+
+<h3 id="für-schnelle">Für Schnelle</h3>
+
+<ul>
+  <li>Ergänze eine dritte Kontoart und zähl mit, wie viele Zeilen Du dafür brauchst.</li>
+  <li>Gib jeder Kontoart ein eigenes <code>toString()</code>, das die Besonderheit mit ausgibt.</li>
+  <li>Leg beide Konten in eine gemeinsame Variable nacheinander (<code>Konto k = ...</code>) und ruf <code>einzahlen</code> auf. Fällt Dir etwas auf?</li>
+</ul>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Warum übersetzt Java den Quellcode in Bytecode und nicht direkt in ein nativ ausführbares Format?</li>
-  <li>Worauf musst Du beim Entwickeln achten, damit Deine Anwendung wirklich plattformunabhängig bleibt?</li>
-  <li>Was ist der sogenannte „Classpath“?</li>
+  <li>Was steht in Deiner Oberklasse, was in den Unterklassen – und warum?</li>
+  <li>Wie viele Zeilen bräuchtest Du für eine weitere Kontoart?</li>
+  <li><code>Konto k = new Girokonto(...);</code> – warum geht das, und was siehst Du über <code>k</code>?</li>
 </ul>
 
-<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Die Java-Plattform erkunden
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Die Kontenhierarchie bauen
 
-Als Umsteiger:in möchte ich sehen, was zwischen meinem Quellcode und der laufenden Anwendung passiert, damit ich verstehe, warum dasselbe Java-Programm auf jedem Betriebssystem läuft.
+Als Entwickler:in im Banking-Team möchte ich Giro- und Sparkonten als Spezialisierungen eines gemeinsamen Kontos abbilden, damit Gemeinsames nur einmal existiert und jede Kontoart nur noch ihre Besonderheit beschreibt.
 
-&gt; **Hinweis:** Arbeite in dieser Übung bewusst mit einem **einfachen Texteditor** und
-&gt; der **Kommandozeile** – ohne IDE. So machst Du jeden Schritt selbst, den Dir die IDE
-&gt; später abnimmt. Die IDE kommt im nächsten Modul.
+&gt; **Hinweis:** Diese Übung hat zwei Hälften: **erst zeichnen, dann tippen.** Der
+&gt; Entwurf entscheidet, wie gut der Code wird – nicht umgekehrt.
 
 ## Lernziele
 
 Du…
 
-* kompilierst eine vorgegebene `.java`-Datei mit `javac` zu einer `.class`-Datei.
-* betrachtest den erzeugten Bytecode mit `javap` und ordnest die Rolle der JVM ein.
-* erklärst am Beispiel das Prinzip „Write once, run anywhere“.
-* benennst, wozu der Classpath dient.
+* entscheidest, welche Eigenschaften und Fähigkeiten in die Oberklasse gehören.
+* leitest Unterklassen mit `extends` ab.
+* reichst Pflichtwerte mit `super(...)` an die Oberklasse durch.
+* erklärst, warum eine Variable allgemeiner sein darf als das Objekt darin.
 
 ## Definition of Done
 
-* [ ] Die vorgegebene Klasse `HelloWorld` liegt als Datei `HelloWorld.java` vor.
-* [ ] Die Klasse ist mit `javac` zu einer `.class`-Datei kompiliert.
-* [ ] Du hast Dir den Bytecode mit `javap -c` angesehen.
-* [ ] Das Programm läuft mit `java HelloWorld` und gibt „Hello, World!“ aus.
+* [ ] Du hast die Hierarchie **auf Papier gezeichnet**, bevor Du sie getippt hast.
+* [ ] Es gibt eine Oberklasse für das Gemeinsame und darunter Girokonto und Sparkonto.
+* [ ] Jede Unterklasse ergänzt genau das, was sie von der anderen unterscheidet.
+* [ ] Die Konstruktoren der Unterklassen reichen die Pflichtwerte nach oben durch.
+* [ ] In `Main` entsteht je ein Objekt beider Kontoarten; beide werden benutzt und ausgegeben.
+* [ ] Das Programm startet und läuft fehlerfrei.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
+
+## Der Auftrag
+
+&gt; Die Bank führt zwei Arten von Konten. Beide haben eine IBAN, einen Stand und
+&gt; einen Inhaber; auf beide kann eingezahlt und von beiden abgehoben werden.
+&gt;
+&gt; Ein **Girokonto** hat zusätzlich ein Dispolimit, ein **Sparkonto** einen
+&gt; Habenzins.
 
 ## Arbeitsschritte
 
-### Die vorgegebene Klasse anlegen
+### Zuerst: zeichnen
 
-Übernimm den folgenden Quellcode unverändert mit einem einfachen Texteditor in eine Datei `HelloWorld.java`.
+Nimm Papier und zeichne die drei Kästchen mit den Vererbungspfeilen. Schreib in
+jedes Kästchen nur das hinein, was dort hingehört.
 
-```java
-public class HelloWorld {
-    public static void main(String[] args) {
-        System.out.println(&quot;Hello, World!&quot;);
-    }
-}
-```
+&gt; **Hinweis:** Geh Eigenschaft für Eigenschaft durch und frag: Gilt das für **beide**
+&gt; Kontoarten? Dann gehört es nach oben. Die Probe: Lies den Pfeil als
+&gt; „ist ein“-Satz vor.
 
-&gt; **Hinweis:** Der Dateiname muss zum Klassennamen passen (`HelloWorld.java` → `class HelloWorld`).
+### Die Oberklasse aus dem bestehenden Konto machen
 
-### Kompilieren und den Bytecode ansehen
+Deine heutige Klasse `Konto` ist fast schon die Oberklasse – sieh nach, was
+bleiben kann und was nicht.
 
-Übersetze die Datei und wirf einen Blick auf den erzeugten Bytecode.
+&gt; **Hinweis:** Wenn Du beim Umbauen unsicher bist, was die Unterklassen später
+&gt; brauchen: Erst die Oberklasse fertig machen, dann die Unterklassen anlegen. Der
+&gt; Compiler sagt Dir zuverlässig, was noch fehlt.
 
-```bash
-javac HelloWorld.java
-javap -c HelloWorld
-```
+### Die Unterklassen ableiten
 
-&gt; **Hinweis:** `javap -c` zeigt den plattformunabhängigen Bytecode – genau das, was die JVM ausführt (nicht Maschinencode Deiner CPU).
+Leg die beiden Kontoarten an und verbinde sie mit der Oberklasse. Jede bekommt
+ihre eigene Besonderheit – und einen Konstruktor.
 
-### Ausführen
+&gt; **Hinweis:** Die geerbten Felder sind `private` – Deine Unterklasse kommt nicht
+&gt; direkt an sie heran. Wie bekommt die Oberklasse ihre Werte, wenn Du ein
+&gt; Girokonto erzeugst? Der Compiler stellt Dir diese Frage von selbst; die
+&gt; Visualisierung beantwortet sie.
 
-Starte das Programm über die JVM.
+### Objekte erzeugen und benutzen
 
-```bash
-java HelloWorld
-```
+Erzeuge in `Main` je ein Giro- und ein Sparkonto, zahl auf beide ein und gib sie
+aus.
 
-&gt; **Hinweis:** Die JVM findet `HelloWorld`, weil sie im aktuellen Verzeichnis sucht.
-&gt; Wo sie überhaupt nach Klassen sucht, steuert der Classpath – probier zum
-&gt; Vergleich einen Start aus einem anderen Verzeichnis, einmal ohne und einmal mit
-&gt; `java -cp &lt;Verzeichnis&gt; HelloWorld`.
+&gt; **Hinweis:** Probier aus, was passiert, wenn die Variable links den Typ der
+&gt; Oberklasse hat: `Konto k = new Girokonto(...);`. Läuft das? Und kommst Du über
+&gt; `k` an das Dispolimit? Notier Dir das Ergebnis – danach wird gefragt.
+
+### Für Schnelle
+
+* Ergänze eine dritte Kontoart und zähl mit, wie viele Zeilen Du dafür brauchst.
+* Gib jeder Kontoart ein eigenes `toString()`, das die Besonderheit mit ausgibt.
+* Leg beide Konten in eine gemeinsame Variable nacheinander (`Konto k = ...`) und ruf `einzahlen` auf. Fällt Dir etwas auf?
 
 ## Reflexionsfragen
 
-* Warum übersetzt Java den Quellcode in Bytecode und nicht direkt in ein nativ ausführbares Format?
-* Worauf musst Du beim Entwickeln achten, damit Deine Anwendung wirklich plattformunabhängig bleibt?
-* Was ist der sogenannte „Classpath“?
+* Was steht in Deiner Oberklasse, was in den Unterklassen – und warum?
+* Wie viele Zeilen bräuchtest Du für eine weitere Kontoart?
+* `Konto k = new Girokonto(...);` – warum geht das, und was siehst Du über `k`?
 
 ## Weiterführende Informationen
 
-- [Visualisierung: Java-LTS-Evolution](../../shared/visualisierungen/java-lts-evolution.html)
+- [Visualisierung: Objektorientierung mit Java (Vererbung)](../../shared/visualisierungen/objektorientierung-java-vererbung.html)
 </textarea>
     </main>
     <aside class="avd-academy-guide-sidebar">
@@ -298,7 +335,7 @@ java HelloWorld
       </div>
       <div class="avd-academy-guide-side avd-academy-guide-side--bordered">
         <div class="avd-academy-guide-side__label">Weiterführende Informationen</div>
-        <div class="avd-academy-guide-side__links"><a href="../../shared/visualisierungen/java-lts-evolution.html"><span>Visualisierung: Java-LTS-Evolution</span></a>
+        <div class="avd-academy-guide-side__links"><a href="../../shared/visualisierungen/objektorientierung-java-vererbung.html"><span>Visualisierung: Objektorientierung mit Java (Vererbung)</span></a>
         </div>
       </div>
     </aside>

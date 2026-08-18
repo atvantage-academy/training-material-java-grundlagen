@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<!--
+  ATVANTAGE-Academy – EINZIGES Seitenlayout (Jekyll)
+  --------------------------------------------------
+  Ein Layout für alles: allgemeine Doku-Seiten UND Guides (Übungen/Anleitungen).
+  Optik nach der ATVANTAGE-Website: Meta-Nav, weiße sticky Kopfzeile, Hero-Band,
+  zweispaltig mit rechter Sidebar (automatisches Inhaltsverzeichnis, Fortschritt
+  aus Task-Listen, weiterführende Ressourcen). Überschriften ohne Emoji-Icons.
+
+  Verwendung im Front Matter:  layout: default   (oder `layout: guide` – Alias,
+  siehe guide.html; beides rendert dieselbe Guide-Ansicht)
+
+  `layout: visualization` (siehe visualization.html) rendert dieselbe Seite OHNE
+  obere Navigation (Meta-Leiste + Kopfzeile/TopNav), OHNE Brotkrumen und OHNE den
+  rechten Bereich (Inhaltsverzeichnis, Fortschritt, Ressourcen – auch bei gesetztem
+  `resources`), mit schmalerem Hero-Balken und breiterem, zentriertem Inhalt – für
+  eigenständige Visualisierungen/Simulationen.
+
+  Alle Front-Matter-Felder sind OPTIONAL (Convention over Configuration). Nur der
+  Titel ist faktisch erforderlich – als `title:` ODER als erste `#`-Überschrift:
+
+    title:       "…"                → sonst erste #-Überschrift (eins von beiden nötig)
+    description: "…"                → Meta-Description
+    duration:    8                  → Zahl in Minuten → Hero-Tag „ca. 8 Minuten“
+                                       (ungefähre LESEDAUER; bei Guides/Übungen die
+                                       Dauer der Übung). Aktiviert zugleich die
+                                       nummerierten Arbeitsschritte und die
+                                       automatische Prev/Next-Navigation zwischen
+                                       gleichartigen Geschwister-Seiten. Alle drei
+                                       entfallen bei `layout: visualization`.
+    topics:      ["Cloud & DevOps"] → weitere Hero-Tags
+    resources:   [{titel, url, icon}, …] → Sidebar-Karte „Weiterführende Informationen“.
+                                       titel und/oder icon (Bildpfad); icon erscheint
+                                       rechts und wird kreisrund dargestellt.
+    breadcrumb:                     → Brotkrumen anpassen (beides optional):
+      label: "…"                    → überschreibt den Ordnernamen dieser Ebene;
+                                       in der Ordner-`index.md` gesetzt gilt es für
+                                       ALLE Seiten im Ordner und in Unterordnern.
+      path: [{title, url}, …]       → explizite Vorfahren-Kette OHNE die aktuelle
+                                       Seite (diese wird automatisch angehängt); in
+                                       der `index.md` gesetzt wird sie vererbt.
+    zurueck / weiter: {title, url}  → explizite Prev/Next-Links (sonst automatisch)
+
+  „Markdown kopieren“ (Button im Hero) erscheint NUR auf Guides (Übungen,
+  Anleitungen) – dort ist das Übernehmen des Quelltexts der Zweck. Bedingungen:
+  Markdown-Seite (`.md`, nicht reines HTML) UND als Guide erkennbar UND keine
+  Visualisierung. Guide ist eine Seite mit `layout: guide` ODER gesetztem
+  `duration` – letzteres ist der etablierte Marker (er schaltet auch die
+  nummerierten Arbeitsschritte und Prev/Next frei), und die Guide-Vorlage des
+  Themes wie auch die von didaktikon erzeugten Übungen nutzen `layout: default`
+  plus `duration`. Nur auf `layout: guide` zu prüfen würde den Button dort
+  entfernen. Doku-Seiten haben kein `duration`; Visualisierungen sind
+  ausgeschlossen, weil ihr Inhalt nicht sinnvoll als Markdown kopierbar ist.
+
+  QR-CODE der Seitenadresse + DRUCKEN-KNOPF: In dieser Ansicht (`visualization`)
+  stehen beide rechts im Hero – QR links, Drucken rechts. Sie hat weder Kopfzeile
+  noch Sidebar, in der sie sonst Platz hätten.
+
+  Auf `default`/`guide` steht im Hero KEINES von beiden: Der QR-Code sitzt in der
+  Kopfzeile neben dem Farbschema-Umschalter (siehe `_includes/header.html`), und zum
+  Drucken bleibt es beim Browser-Befehl (Strg/Cmd+P). Tooltip des QR-Codes überall:
+  „Diese Seite auf Deinem Smartphone öffnen“. Er wird erst im Browser erzeugt (theme/academy/atvantage.js), weil die
+  Adresse zur Build-Zeit nicht feststeht; ohne JavaScript erscheint er nicht.
+  Kein Front-Matter-Schalter: Es gibt keine Seite, auf der der Weg aufs eigene
+  Smartphone schaden würde.
+--><html lang="de">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Objektorientierung mit Java (Vererbung) · Java SE (ATVANTAGE Academy)</title>
+<meta name="description" content="Vom Vererbungspfeil zum Code: extends, super(…), die Oberklasse Object und die Regel „links allgemein, rechts konkret“ – am Bibliotheksbeispiel."><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787059290"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787059290">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787059290">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787059290">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787059290"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787059290">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787059290" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787059290" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787059290">
+<script type="module">
+  const _hlbase = "/training-material-java-se/theme/academy/hljs/";
+  Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
+    .then(([core, java]) => {
+      const hljs = core.default;
+      hljs.registerLanguage("java", java.default);
+      document.querySelectorAll("pre code.language-java").forEach((el) => hljs.highlightElement(el));
+    });
+</script>
+<link rel="apple-touch-icon" sizes="180x180" href="/training-material-java-se/theme/atvantage/assets/icon-180.png">
+<link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
+<link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
+
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787059290">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787059290"></head><body class="avd-academy-guide avd-academy-guide--viz">
+  <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a><section class="avd-academy-guide-hero avd-academy-guide-hero--slim"><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags">
+      </div>
+      <div class="avd-academy-guide-hero__actions">
+        <button type="button" class="avd-academy-qr" data-avd-academy-qr hidden
+                title="Diese Seite auf Deinem Smartphone öffnen"
+                aria-label="Diese Seite auf Deinem Smartphone öffnen"></button>
+        <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-print-btn"
+                data-avd-academy-print
+                title="Diese Seite drucken" aria-label="Diese Seite drucken"></button>
+      </div>
+    </div><h1>Objektorientierung mit Java (Vererbung)</h1>
+  </section>
+
+  <div class="avd-academy-guide-layout">
+    <main class="avd-academy-guide-main" id="avd-academy-content">
+      
+<style>
+/* Aufbau und Klassennamen bewusst analog zu „Java-Syntax auf einen Blick“
+   (Präfix dort jsg-, hier ojv-), damit beide Nachschlagewerke gleich aussehen
+   und sich gleich bedienen. Keine eigene Breitenbegrenzung: Die Breite der
+   Inhaltsspalte gibt das Theme über `--avd-academy-guide-max` vor. */
+.ojv-lead{opacity:.85;margin:0 0 2rem;}
+
+.ojv-sec{margin:0 0 2.75rem;}
+.ojv-sec > h2{display:flex;align-items:baseline;gap:.7rem;margin:0 0 1rem;font-size:1.45rem;line-height:1.2;border-bottom:1px solid var(--avd-academy-color-border,#e2e2e2);padding-bottom:.5rem;}
+.ojv-num{flex:none;display:inline-flex;align-items:center;justify-content:center;width:1.9rem;height:1.9rem;border-radius:var(--radius,5px);background:var(--avd-slate,#303E4F);color:#fff;font-size:.9rem;font-weight:700;}
+.ojv-note{margin:.9rem 0 0;font-size:.92rem;opacity:.85;}
+.ojv-note strong{color:var(--color-orange,#FF5401);}
+
+.ojv-table-wrap{overflow-x:auto;}
+.ojv-table{width:100%;border-collapse:collapse;font-size:.88rem;}
+.ojv-table th,.ojv-table td{text-align:left;vertical-align:top;padding:.5rem .7rem;border-bottom:1px solid var(--avd-academy-color-border,#e2e2e2);}
+.ojv-table th{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;opacity:.75;white-space:nowrap;}
+.ojv-table td:first-child{white-space:nowrap;font-weight:700;color:var(--color-orange,#FF5401);}
+
+.ojv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(24rem,1fr));gap:1.1rem;}
+.ojv-card{background:var(--avd-academy-color-bg-subtle,var(--color-surface-card,#EDEDED));border:1px solid var(--avd-academy-color-border,#e2e2e2);border-radius:var(--radius,5px);padding:1rem 1.15rem;}
+.ojv-card--wide{grid-column:1/-1;}
+.ojv-card h3{margin:0 0 .5rem;font-size:1rem;line-height:1.25;}
+.ojv-card p{margin:0 0 .6rem;font-size:.88rem;opacity:.85;}
+.ojv-card p:last-child{margin-bottom:0;}
+.ojv-card pre{margin:0;overflow-x:auto;}
+.ojv-card pre + p{margin-top:.6rem;}
+.ojv-root pre code.hljs{border-radius:var(--radius-dark,8px);font-size:.8rem;line-height:1.5;}
+
+/* Gegenüberstellung richtig/falsch – für die Assoziations-Falle */
+.ojv-card--good{border-left:4px solid var(--color-orange,#FF5401);}
+.ojv-card--bad{border-left:4px solid var(--avd-academy-color-ink-muted,#707173);}
+.ojv-flag{display:inline-block;margin-right:.4rem;font-weight:800;}
+.ojv-card--good .ojv-flag{color:var(--color-orange,#FF5401);}
+
+/* Diagramm-zu-Code-Skizze: zwei Kästchen mit Verbindungslinie */
+.ojv-uml{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;margin:.2rem 0 .8rem;}
+.ojv-box{border:2px solid var(--avd-academy-color-ink,#343E3F);border-radius:var(--radius,5px);min-width:9.5rem;font-size:.82rem;background:var(--avd-academy-color-bg,#fff);}
+.ojv-box b{display:block;padding:.35rem .6rem;border-bottom:1px solid var(--avd-academy-color-ink,#343E3F);text-align:center;}
+.ojv-box span{display:block;padding:.3rem .6rem;font-family:var(--avd-academy-font-mono,monospace);}
+.ojv-line{flex:none;width:4.5rem;border-top:2px solid var(--avd-academy-color-ink,#343E3F);position:relative;}
+.ojv-line em{position:absolute;top:-1.5rem;left:50%;transform:translateX(-50%);font-size:.7rem;font-style:normal;opacity:.75;white-space:nowrap;}
+.ojv-mult{font-size:.72rem;opacity:.75;padding:0 .3rem;}
+
+@media print{
+  .ojv-lead{font-size:10.5pt;opacity:1;}
+  .ojv-sec{break-inside:auto;margin:0 0 14pt;}
+  .ojv-sec > h2{font-size:14pt;margin:0 0 6pt;padding-bottom:3pt;border-bottom:2px solid var(--color-orange,#FF5401);break-after:avoid;}
+  .ojv-num{width:auto;height:auto;background:transparent !important;color:#000 !important;font-size:14pt;}
+  .ojv-table{font-size:8.5pt;}
+  .ojv-table th,.ojv-table td{padding:2pt 4pt;}
+  .ojv-table td:first-child{color:#000 !important;}
+  .ojv-grid{display:block;}
+  .ojv-card{break-inside:avoid;background:transparent !important;border:none !important;padding:0 !important;margin:0 0 9pt;}
+  .ojv-card--good,.ojv-card--bad{border-left:2pt solid #000 !important;padding-left:6pt !important;}
+  .ojv-card h3{font-size:10.5pt;margin:0 0 2pt;}
+  .ojv-card p{font-size:9pt;margin:0 0 3pt;opacity:1;}
+  .ojv-note{font-size:9pt;opacity:1;margin-top:5pt;}
+  .ojv-note strong{color:#000 !important;}
+  .ojv-root pre,.ojv-root pre code,.ojv-root pre code *{color:#000 !important;background:transparent !important;}
+  .ojv-root pre{white-space:pre-wrap;word-break:break-word;font-size:8pt;border:none !important;padding:2pt 0 !important;margin:0;break-inside:avoid;}
+}
+</style>
+
+<div class="ojv-root">
+
+<p class="ojv-lead">Der dritte Teil der Reihe – wieder in der Bibliothek: Aus dem einzelnen <code>Buch</code> wird eine Familie. Wie aus dem Vererbungspfeil im Diagramm Java-Code wird, in vier Bausteinen: <code>extends</code>, <code>super(…)</code>, die Oberklasse <code>Object</code> und die Regel für Variablen. Überschreiben und abstrakte Klassen kommen später im Kurs.</p>
+
+<section class="ojv-sec" id="extends">
+<h2><span class="ojv-num">1</span> Der Pfeil wird zu <code>extends</code></h2>
+
+<div class="ojv-uml" style="margin:.2rem 0 1.4rem">
+  <div class="ojv-box"><b>Medium</b><span>titel<br />jahr</span></div>
+</div>
+<div class="ojv-uml" style="margin:0 0 1.2rem">
+  <div class="ojv-box"><b>Buch</b><span>isbn<br />seiten</span></div>
+  <span class="ojv-mult">&nbsp;</span>
+  <div class="ojv-box"><b>Hoerbuch</b><span>dauer</span></div>
+</div>
+<p class="ojv-note" style="margin-top:0">Beide Pfeile zeigen <strong>nach oben</strong> auf <code>Medium</code> und lesen sich als „ist ein“: Ein Buch ist ein Medium. Der Satz ist die verlässlichste Prüfung – „Ein Medium ist ein Buch“ stimmt nicht.</p>
+
+<div class="ojv-grid" style="margin-top:1.2rem">
+<div class="ojv-card">
+<h3>Ein Wort, und alles ist da</h3>
+<pre><code class="language-java">class Medium {
+    String titel;
+    int jahr;
+
+    void ausleihen() { … }
+}
+
+class Buch extends Medium {
+    String isbn;
+    int seiten;
+}</code></pre>
+<p><code>Buch</code> schreibt nichts ab: <code>titel</code>, <code>jahr</code> und <code>ausleihen()</code> sind durch <code>extends</code> schon da. Unten steht nur noch das Eigene.</p>
+</div>
+<div class="ojv-card">
+<h3>Und so fühlt sich das an</h3>
+<pre><code class="language-java">Buch b = new Buch();
+b.titel = "Erdsee";    // von Medium geerbt
+b.isbn  = "978-…";     // aus Buch selbst
+b.ausleihen();         // von Medium geerbt</code></pre>
+<p>Am Objekt ist nicht zu sehen, woher was kommt – das Buch <em>ist</em> ein Medium und hat deshalb alles, was ein Medium hat.</p>
+</div>
+</div>
+<p class="ojv-note">Java kennt <strong>keine Mehrfachvererbung</strong>: Jede Klasse hat genau eine Oberklasse. Was man tut, wenn etwas zu zwei Familien gehören soll, kommt bei den Interfaces.</p>
+</section>
+
+<section class="ojv-sec" id="super">
+<h2><span class="ojv-num">2</span> <code>super(…)</code>: die Oberklasse zuerst</h2>
+
+<div class="ojv-grid">
+<div class="ojv-card ojv-card--bad">
+<h3><span class="ojv-flag">✗</span> Geht nicht</h3>
+<pre><code class="language-java">class Medium {
+    private final String titel;
+    …
+}
+
+class Buch extends Medium {
+    public Buch(String titel, String isbn) {
+        this.titel = titel;   // Fehler:
+        // titel has private access in Medium
+    }
+}</code></pre>
+<p>Geerbt heißt nicht „darf ich anfassen“: Was in der Oberklasse <code>private</code> ist, bleibt ihr überlassen.</p>
+</div>
+<div class="ojv-card ojv-card--good">
+<h3><span class="ojv-flag">✓</span> Nach oben durchreichen</h3>
+<pre><code class="language-java">class Buch extends Medium {
+    private final String isbn;
+
+    public Buch(String titel, int jahr, String isbn) {
+        super(titel, jahr);   // MUSS die erste Zeile sein
+        this.isbn = isbn;
+    }
+}</code></pre>
+<p>Die Unterklasse nimmt die Werte entgegen und gibt sie weiter. Erst danach kümmert sie sich um ihr Eigenes.</p>
+</div>
+</div>
+<p class="ojv-note"><strong>Warum zuerst?</strong> Ein Objekt wird von unten nach oben gebaut wie ein Haus: erst das Fundament, dann das eigene Stockwerk. Solange der Oberklassen-Teil nicht steht, gibt es nichts, worauf die Unterklasse aufsetzen könnte – deshalb besteht der Compiler auf der Reihenfolge.</p>
+</section>
+
+<section class="ojv-sec" id="object">
+<h2><span class="ojv-num">3</span> <code>Object</code>: die Wurzel aller Klassen</h2>
+
+<div class="ojv-grid">
+<div class="ojv-card">
+<h3>Auch ohne <code>extends</code> wird geerbt</h3>
+<pre><code class="language-java">class Medium { … }
+
+// bedeutet in Wahrheit:
+class Medium extends Object { … }</code></pre>
+<p>Jede Klasse in Java hat eine Oberklasse – steht keine da, ist es <code>Object</code>. Ganz oben endet also jede Familie in derselben Wurzel.</p>
+</div>
+<div class="ojv-card">
+<h3>Daher kam <code>toString()</code></h3>
+<pre><code class="language-java">System.out.println(new Medium());
+// Medium@1b6d3586   ← aus Object
+
+// Deine eigene Fassung:
+public String toString() {
+    return titel + " (" + jahr + ")";
+}</code></pre>
+<p>Die Methode gab es immer schon – Du hast sie nicht erfunden, sondern <strong>ersetzt</strong>. Wie dieses Ersetzen heißt und was es alles ermöglicht, kommt später im Kurs.</p>
+</div>
+</div>
+</section>
+
+<section class="ojv-sec" id="zuweisung">
+<h2><span class="ojv-num">4</span> Links allgemein, rechts konkret</h2>
+
+<div class="ojv-card ojv-card--wide">
+<h3>Die Variable darf allgemeiner sein als das Objekt</h3>
+<pre><code class="language-java">Buch   b = new Buch("Erdsee", 1968, "978-…");   // konkret
+Medium m = new Buch("Erdsee", 1968, "978-…");   // erlaubt: ein Buch IST ein Medium
+
+// umgekehrt nicht:
+// Buch x = new Medium("Irgendwas", 2020);      // ein Medium ist KEIN Buch</code></pre>
+<p>Es ist derselbe Satz wie am Pfeil. Wenn „ist ein“ stimmt, ist die Zuweisung erlaubt.</p>
+</div>
+
+<div class="ojv-grid" style="margin-top:1.1rem">
+<div class="ojv-card">
+<h3>Was Du über die Variable siehst</h3>
+<pre><code class="language-java">Medium m = new Buch("Erdsee", 1968, "978-…");
+
+m.titel;       // ✓ Medium hat einen Titel
+m.ausleihen(); // ✓ kann jedes Medium
+// m.isbn;     // ✗ sieht Medium nicht</code></pre>
+<p>Die ISBN <em>ist</em> im Objekt – die Variable zeigt sie nur nicht. <strong>Der Typ links entscheidet, was sichtbar ist; das Objekt rechts entscheidet, was es wirklich ist.</strong></p>
+</div>
+<div class="ojv-card">
+<h3>Warum man das will</h3>
+<pre><code class="language-java">Medium[] regal = {
+    new Buch("Erdsee", 1968, "978-…"),
+    new Hoerbuch("Momo", 1973, 480),
+    new Buch("Momo", 1973, "978-…")
+};
+
+for (Medium m : regal) {
+    m.ausleihen();
+}</code></pre>
+<p>Ein Regal, in dem Bücher <em>und</em> Hörbücher liegen – möglich, weil beide Medien sind. Die Schleife muss nicht wissen, was genau sie in der Hand hält.</p>
+</div>
+</div>
+<p class="ojv-note"><strong>Die Faustregel:</strong> links so allgemein wie möglich, rechts so konkret wie nötig. Was daraus wird, wenn die Unterklassen dieselbe Methode <em>unterschiedlich</em> ausführen, ist das nächste große Thema im Kurs.</p>
+</section>
+
+</div>
+
+
+
+    </main>
+  </div><div class="avd-academy-print-contact" aria-hidden="true">
+    <span>Kontakt: <a href="mailto:academy@atvantage.com">academy@atvantage.com</a></span>
+    <span><a href="https://www.atvantage.com">ATVANTAGE Academy</a></span>
+  </div>
+
+  <footer class="avd-academy-footer">
+  <div class="avd-academy-footer__grid">
+    <div>
+      <strong>Java SE (ATVANTAGE Academy)</strong>
+      <p>Schulungen im Bereich 'Java SE'</p>
+    </div>
+    <div>
+      <strong>Kontakt</strong>
+      <p><a href="mailto:academy@atvantage.com">academy@atvantage.com</a><br>
+      </p>
+    </div><div>
+      <strong>Weitere Informationen</strong>
+      <p><a href="https://atvantage-academy.github.io/academy-online/" target="_blank" rel="noopener">ATVANTAGE Academy</a></p>
+    </div></div>
+  <div class="avd-academy-footer__legal">
+    © <span data-avd-academy-year>2026</span> ATVANTAGE
+  </div>
+</footer>
+
+</body>
+</html>

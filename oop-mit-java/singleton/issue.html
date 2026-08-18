@@ -66,16 +66,16 @@
 --><html lang="de">
 <head>
   <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1"><title>Kontoarten polymorph behandeln · Java SE (ATVANTAGE Academy)</title>
-<meta name="description" content="Lass Giro- und Sparkonto dieselbe Abhebe-Logik unterschiedlich ausführen – über Polymorphie."><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Die Bankverwaltung zum Singleton machen · Java SE (ATVANTAGE Academy)</title>
+<meta name="description" content="Sorg dafür, dass es die Bankverwaltung genau einmal gibt – und lern dabei Dein erstes Entwurfsmuster kennen."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787054125"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787054125">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787054125">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787054125">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787054125"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787054125">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787054125" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1787054125" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787054125">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787059290"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787059290">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787059290">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787059290">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787059290"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787059290">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787059290" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787059290" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787059290">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,8 +89,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787054125">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787054125"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787059290">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787059290"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -115,131 +115,156 @@
             aria-label="Farbschema umschalten">◐</button>
   </div>
 </header>
-<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Kontoarten polymorph behandeln</span></nav><div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 75 Minuten</span><span class="avd-academy-tag">Polymorphie</span><span class="avd-academy-tag">Banking</span>
+<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Die Bankverwaltung zum Singleton machen</span></nav><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 10 Minuten</span><span class="avd-academy-tag">Kapselung</span><span class="avd-academy-tag">Entwurfsmuster</span><span class="avd-academy-tag">Banking</span>
       </div>
       <div class="avd-academy-guide-hero__actions">
         <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
                 data-avd-academy-copy-md="#avd-academy-md-source"
                 title="Markdown kopieren" aria-label="Markdown kopieren"></button>
       </div>
-    </div><h1>Kontoarten polymorph behandeln</h1>
+    </div><h1>Die Bankverwaltung zum Singleton machen</h1>
   </section>
 
   <div class="avd-academy-guide-layout">
     <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
-      <h1 id="kontoarten-polymorph-behandeln">Kontoarten polymorph behandeln</h1>
+      <h1 id="die-bankverwaltung-zum-singleton-machen">Die Bankverwaltung zum Singleton machen</h1>
 
-<p>Als Entwickler:in möchte ich Konten unterschiedlicher Art einheitlich behandeln und trotzdem das jeweils richtige Verhalten auslösen, damit neue Kontoarten die bestehende Abhebe-Logik nicht anfassen müssen.</p>
+<p>Als Entwickler:in möchte ich sicherstellen, dass es die Bankverwaltung im ganzen Programm nur ein einziges Mal gibt, damit nicht zwei Verwaltungen mit unterschiedlichen Beständen nebeneinanderher laufen.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Eine kurze Zusatzaufgabe – und Dein erstes <strong>Entwurfsmuster</strong>.
+Alles, was Du dafür brauchst, kennst Du schon.</p>
+</blockquote>
 
 <h2 id="lernziele">Lernziele</h2>
 
 <p>Du…</p>
 
 <ul>
-  <li>überschreibst eine geerbte Methode in einer Unterklasse mit <code>@Override</code>.</li>
-  <li>arbeitest über eine Basisklassen-Referenz und erklärst die dynamische Bindung.</li>
-  <li>verarbeitest eine <code>List&lt;Konto&gt;</code> einheitlich.</li>
+  <li>verhinderst, dass von außen Objekte einer Klasse erzeugt werden.</li>
+  <li>stellst genau eine Instanz bereit und machst sie erreichbar.</li>
+  <li>benennst, was ein Entwurfsmuster ist – und was gegen dieses spricht.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>Konto</code> besitzt eine Methode <code>istGedeckt(long)</code>, die <code>abheben</code> nutzt.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>Girokonto</code> überschreibt <code>istGedeckt</code>, sodass der Dispositionskredit berücksichtigt wird.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Eine <code>List&lt;Konto&gt;</code> mit Giro- und Sparkonto wird in einer Schleife einheitlich abgefragt.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der Abhebe-Versuch verhält sich je Kontoart korrekt unterschiedlich.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>new BankVerwaltung()</code> lässt sich von außen nicht mehr aufrufen.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt einen Weg, an <strong>die eine</strong> Instanz zu kommen.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Zwei Zugriffe hintereinander liefern nachweislich dasselbe Objekt.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
 <h2 id="arbeitsschritte">Arbeitsschritte</h2>
 
-<h3 id="verfügbarkeitsprüfung-in-der-basisklasse">Verfügbarkeitsprüfung in der Basisklasse</h3>
+<h3 id="das-problem-ansehen">Das Problem ansehen</h3>
 
-<p>Gib <code>Konto</code> eine Methode <code>istGedeckt(long betragInCent)</code>, die standardmäßig nur den Kontostand prüft, und nutze sie in <code>abheben</code>.</p>
-
-<blockquote>
-  <p><strong>Hinweis:</strong> <code>abheben</code> bleibt in der Basisklasse – es ruft nur <code>istGedeckt(...)</code> auf. Genau darüber greift später die Polymorphie.</p>
-</blockquote>
-
-<h3 id="verhalten-im-girokonto-überschreiben">Verhalten im Girokonto überschreiben</h3>
-
-<p>Überschreibe <code>istGedeckt</code> in <code>Girokonto</code>, sodass zusätzlich der Dispositionskredit zählt.</p>
-
-<pre><code class="language-java">@Override
-protected boolean istGedeckt(long betragInCent) {
-  // verfügbar = Kontostand + Dispolimit
-  return standInCent + dispolimitInCent &gt;= betragInCent;
-}
-</code></pre>
+<p>Leg in <code>Main</code> zweimal eine Bankverwaltung an und trag in die erste ein Konto ein.
+Frag danach die zweite nach diesem Konto.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> <code>Sparkonto</code> überschreibt nichts – es erbt die strengere Standardprüfung. Auch das ist eine bewusste Entwurfsaussage.</p>
+  <p><strong>Hinweis:</strong> Das Ergebnis ist der Grund für diese Aufgabe. Halt es kurz fest,
+bevor Du weitermachst.</p>
 </blockquote>
 
-<h3 id="einheitlich-über-den-basistyp-arbeiten">Einheitlich über den Basistyp arbeiten</h3>
+<h3 id="das-erzeugen-von-außen-unterbinden">Das Erzeugen von außen unterbinden</h3>
 
-<p>Lege beide Konten in eine <code>List&lt;Konto&gt;</code> und versuche in einer Schleife, denselben Betrag abzuheben.</p>
+<p>Sorg dafür, dass niemand außerhalb der Klasse ein Objekt erzeugen kann.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Du hast bei der Kapselung gelernt, den Zugriff auf Variablen zu
+steuern. Dasselbe Werkzeug gibt es auch für den Konstruktor.</p>
+</blockquote>
+
+<h3 id="die-eine-instanz-bereitstellen">Die eine Instanz bereitstellen</h3>
+
+<p>Jetzt kommt niemand mehr an ein Objekt – auch die, die eines brauchen. Bau einen
+Weg, der genau eine Instanz herausgibt.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Zum Zeitpunkt des Zugriffs gibt es noch kein Objekt, an dem man
+etwas aufrufen könnte. Welche Art von Methode brauchst Du also? Und wo lebt die
+Instanz, wenn sie zu keinem Objekt gehört?</p>
+</blockquote>
+
+<h3 id="nachweisen-dass-es-wirklich-eine-ist">Nachweisen, dass es wirklich eine ist</h3>
+
+<p>Hol Dir die Instanz zweimal und prüfe, ob es dasselbe Objekt ist.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> „Dasselbe“ – dafür hattest Du an Tag 2 schon den passenden
+Vergleich.</p>
+</blockquote>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Warum musst Du <code>abheben</code> nicht ändern, obwohl sich das Verhalten je Kontoart unterscheidet?</li>
-  <li>Was müsstest Du für eine neue Kontoart (z. B. „Festgeld“) tun – und was ausdrücklich nicht?</li>
-  <li>Wo liegt der Unterschied zwischen dem <em>deklarierten</em> Typ (<code>Konto</code>) und dem <em>tatsächlichen</em> Typ (<code>Girokonto</code>) beim Methodenaufruf?</li>
+  <li>Wie verhinderst Du, dass jemand von außen ein zweites Objekt erzeugt?</li>
+  <li>Warum muss die Methode, die die Instanz herausgibt, <code>static</code> sein?</li>
+  <li>Was spricht gegen ein Singleton?</li>
 </ul>
 
-<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Kontoarten polymorph behandeln
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Die Bankverwaltung zum Singleton machen
 
-Als Entwickler:in möchte ich Konten unterschiedlicher Art einheitlich behandeln und trotzdem das jeweils richtige Verhalten auslösen, damit neue Kontoarten die bestehende Abhebe-Logik nicht anfassen müssen.
+Als Entwickler:in möchte ich sicherstellen, dass es die Bankverwaltung im ganzen Programm nur ein einziges Mal gibt, damit nicht zwei Verwaltungen mit unterschiedlichen Beständen nebeneinanderher laufen.
+
+&gt; **Hinweis:** Eine kurze Zusatzaufgabe – und Dein erstes **Entwurfsmuster**.
+&gt; Alles, was Du dafür brauchst, kennst Du schon.
 
 ## Lernziele
 
 Du…
 
-* überschreibst eine geerbte Methode in einer Unterklasse mit `@Override`.
-* arbeitest über eine Basisklassen-Referenz und erklärst die dynamische Bindung.
-* verarbeitest eine `List&lt;Konto&gt;` einheitlich.
+* verhinderst, dass von außen Objekte einer Klasse erzeugt werden.
+* stellst genau eine Instanz bereit und machst sie erreichbar.
+* benennst, was ein Entwurfsmuster ist – und was gegen dieses spricht.
 
 ## Definition of Done
 
-* [ ] `Konto` besitzt eine Methode `istGedeckt(long)`, die `abheben` nutzt.
-* [ ] `Girokonto` überschreibt `istGedeckt`, sodass der Dispositionskredit berücksichtigt wird.
-* [ ] Eine `List&lt;Konto&gt;` mit Giro- und Sparkonto wird in einer Schleife einheitlich abgefragt.
-* [ ] Der Abhebe-Versuch verhält sich je Kontoart korrekt unterschiedlich.
+* [ ] `new BankVerwaltung()` lässt sich von außen nicht mehr aufrufen.
+* [ ] Es gibt einen Weg, an **die eine** Instanz zu kommen.
+* [ ] Zwei Zugriffe hintereinander liefern nachweislich dasselbe Objekt.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
 ## Arbeitsschritte
 
-### Verfügbarkeitsprüfung in der Basisklasse
+### Das Problem ansehen
 
-Gib `Konto` eine Methode `istGedeckt(long betragInCent)`, die standardmäßig nur den Kontostand prüft, und nutze sie in `abheben`.
+Leg in `Main` zweimal eine Bankverwaltung an und trag in die erste ein Konto ein.
+Frag danach die zweite nach diesem Konto.
 
-&gt; **Hinweis:** `abheben` bleibt in der Basisklasse – es ruft nur `istGedeckt(...)` auf. Genau darüber greift später die Polymorphie.
+&gt; **Hinweis:** Das Ergebnis ist der Grund für diese Aufgabe. Halt es kurz fest,
+&gt; bevor Du weitermachst.
 
-### Verhalten im Girokonto überschreiben
+### Das Erzeugen von außen unterbinden
 
-Überschreibe `istGedeckt` in `Girokonto`, sodass zusätzlich der Dispositionskredit zählt.
+Sorg dafür, dass niemand außerhalb der Klasse ein Objekt erzeugen kann.
 
-```java
-@Override
-protected boolean istGedeckt(long betragInCent) {
-  // verfügbar = Kontostand + Dispolimit
-  return standInCent + dispolimitInCent &gt;= betragInCent;
-}
-```
+&gt; **Hinweis:** Du hast bei der Kapselung gelernt, den Zugriff auf Variablen zu
+&gt; steuern. Dasselbe Werkzeug gibt es auch für den Konstruktor.
 
-&gt; **Hinweis:** `Sparkonto` überschreibt nichts – es erbt die strengere Standardprüfung. Auch das ist eine bewusste Entwurfsaussage.
+### Die eine Instanz bereitstellen
 
-### Einheitlich über den Basistyp arbeiten
+Jetzt kommt niemand mehr an ein Objekt – auch die, die eines brauchen. Bau einen
+Weg, der genau eine Instanz herausgibt.
 
-Lege beide Konten in eine `List&lt;Konto&gt;` und versuche in einer Schleife, denselben Betrag abzuheben.
+&gt; **Hinweis:** Zum Zeitpunkt des Zugriffs gibt es noch kein Objekt, an dem man
+&gt; etwas aufrufen könnte. Welche Art von Methode brauchst Du also? Und wo lebt die
+&gt; Instanz, wenn sie zu keinem Objekt gehört?
+
+### Nachweisen, dass es wirklich eine ist
+
+Hol Dir die Instanz zweimal und prüfe, ob es dasselbe Objekt ist.
+
+&gt; **Hinweis:** „Dasselbe“ – dafür hattest Du an Tag 2 schon den passenden
+&gt; Vergleich.
 
 ## Reflexionsfragen
 
-* Warum musst Du `abheben` nicht ändern, obwohl sich das Verhalten je Kontoart unterscheidet?
-* Was müsstest Du für eine neue Kontoart (z. B. „Festgeld“) tun – und was ausdrücklich nicht?
-* Wo liegt der Unterschied zwischen dem *deklarierten* Typ (`Konto`) und dem *tatsächlichen* Typ (`Girokonto`) beim Methodenaufruf?</textarea>
+* Wie verhinderst Du, dass jemand von außen ein zweites Objekt erzeugt?
+* Warum muss die Methode, die die Instanz herausgibt, `static` sein?
+* Was spricht gegen ein Singleton?</textarea>
     </main>
     <aside class="avd-academy-guide-sidebar">
       <div class="avd-academy-guide-side avd-academy-guide-side--toc" data-avd-academy-toc-box hidden>
