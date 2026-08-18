@@ -66,16 +66,16 @@
 --><html lang="de">
 <head>
   <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1"><title>Kapselung und Validierung durchsetzen · Java SE (ATVANTAGE Academy)</title>
-<meta name="description" content="Schütze den Zustand von Kunde und Konto durch Kapselung und Validierung."><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Das Banking-Beispiel kapseln · Java SE (ATVANTAGE Academy)</title>
+<meta name="description" content="Zieh in Deinem Banking-Code die Grenzen ein: Packages, private Variablen, final und Konstruktoren mit Prüfung."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787046478"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787046478">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787046478">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787046478">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787046478"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787046478">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787046478" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1787046478" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787046478">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787046859"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787046859">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787046859">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787046859">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787046859"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787046859">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787046859" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787046859" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787046859">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,8 +89,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787046478">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787046478"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787046859">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787046859"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -115,131 +115,257 @@
             aria-label="Farbschema umschalten">◐</button>
   </div>
 </header>
-<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Kapselung und Validierung durchsetzen</span></nav><div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 75 Minuten</span><span class="avd-academy-tag">Kapselung</span><span class="avd-academy-tag">Banking</span>
+<section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Das Banking-Beispiel kapseln</span></nav><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 30 Minuten</span><span class="avd-academy-tag">Kapselung</span><span class="avd-academy-tag">Packages</span><span class="avd-academy-tag">Konstruktoren</span><span class="avd-academy-tag">Banking</span>
       </div>
       <div class="avd-academy-guide-hero__actions">
         <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
                 data-avd-academy-copy-md="#avd-academy-md-source"
                 title="Markdown kopieren" aria-label="Markdown kopieren"></button>
       </div>
-    </div><h1>Kapselung und Validierung durchsetzen</h1>
+    </div><h1>Das Banking-Beispiel kapseln</h1>
   </section>
 
   <div class="avd-academy-guide-layout">
     <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
-      <h1 id="kapselung-und-validierung-durchsetzen">Kapselung und Validierung durchsetzen</h1>
+      <h1 id="das-banking-beispiel-kapseln">Das Banking-Beispiel kapseln</h1>
 
 <p>Als Entwickler:in möchte ich, dass Kunde und Konto niemals in einen ungültigen Zustand geraten, damit ich mich im restlichen Programm auf gültige Objekte verlassen kann.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Du machst hier <strong>dasselbe wie der Trainer eben in der Demo</strong> – nur
+mit Deinem eigenen Banking-Code. Es entsteht nichts Neues: Du baust um, was Du
+schon hast. Die Visualisierung <em>Objektorientierung mit Java (Kapselung)</em> (unter
+„Weiterführende Informationen“) zeigt jeden Baustein noch einmal am
+Buch-und-Autor-Beispiel.</p>
+</blockquote>
 
 <h2 id="lernziele">Lernziele</h2>
 
 <p>Du…</p>
 
 <ul>
-  <li>deklarierst Felder <code>private</code> und steuerst den Zugriff über Getter/Setter.</li>
-  <li>validierst Eingaben in Konstruktor und Settern und lehnst ungültige Werte ab.</li>
-  <li>begründest, welche Prüfungen in die Klasse gehören.</li>
+  <li>sortierst Deine Klassen in ein Package und ergänzt die nötigen Imports.</li>
+  <li>schützt den Zustand Deiner Objekte und lässt den Zugriff kontrolliert laufen.</li>
+  <li>markierst mit <code>final</code>, was sich nach dem Erzeugen nie wieder ändern darf.</li>
+  <li>schreibst einen Konstruktor, der Pflichtwerte entgegennimmt und prüft.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Alle Felder von <code>Kunde</code> und <code>Konto</code> sind <code>private</code>.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der Konstruktor lehnt <code>null</code>-Werte für Pflichtfelder ab und erzeugt die Kundennummer selbst.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>setName</code> (o. ä.) verhindert <code>null</code> bzw. leere Werte.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der Kontostand kann nicht direkt von außen gesetzt werden (kein öffentlicher Setter dafür).</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Deine fachlichen Klassen und <code>Main</code> liegen in <strong>zwei verschiedenen Packages</strong>; das Programm startet weiterhin.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Auf die Instanzvariablen kann von außen nicht mehr direkt zugegriffen werden.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt lesende und schreibende Zugänge nur dort, wo sie fachlich gebraucht werden – der Stand ändert sich ausschließlich über Ein- und Auszahlungen.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Mindestens ein schreibender Zugang <strong>prüft den neuen Wert</strong>, bevor er ihn übernimmt.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Was sich nach dem Erzeugen nie ändern darf, ist <code>final</code>.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Beide Klassen haben einen Konstruktor, der die Pflichtwerte entgegennimmt.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code>new Konto()</code> ohne Argumente lässt sich nicht mehr aufrufen.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Das Programm startet und läuft fehlerfrei.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
 <h2 id="arbeitsschritte">Arbeitsschritte</h2>
 
-<h3 id="felder-privat-machen">Felder privat machen</h3>
+<h3 id="ordnung-schaffen-zwei-packages">Ordnung schaffen: zwei Packages</h3>
 
-<p>Stelle sicher, dass alle Felder <code>private</code> sind. Biete nur dort Getter/Setter an, wo Zugriff wirklich nötig ist.</p>
-
-<blockquote>
-  <p><strong>Hinweis:</strong> Nicht jedes Feld braucht einen Setter. Der Kontostand ändert sich nur über Ein-/Auszahlungen – nicht über einen freien Setter.</p>
-</blockquote>
-
-<h3 id="pflichtfelder-im-konstruktor-prüfen">Pflichtfelder im Konstruktor prüfen</h3>
-
-<p>Wirf eine Ausnahme, wenn ein Pflichtwert fehlt, sodass gar kein ungültiges Objekt entstehen kann.</p>
-
-<pre><code class="language-java">public Kunde(String name, String wohnort) {
-  this.name = Objects.requireNonNull(name, "name darf nicht null sein");
-  this.wohnort = Objects.requireNonNull(wohnort, "wohnort darf nicht null sein");
-  this.nummer = UUID.randomUUID().toString();
-}
-</code></pre>
-
-<h3 id="setter-validieren">Setter validieren</h3>
-
-<p>Lass den Setter für den Namen <code>null</code> (und optional Leerstrings) ablehnen, bevor er den Wert übernimmt.</p>
+<p>Leg <strong>zwei</strong> Packages an – eines für Deine fachlichen Klassen (etwa <code>bank</code>) und
+ein zweites für <code>Main</code> (etwa <code>anwendung</code>). Verschieb die Klassen hinein.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Prüfe zuerst, übernimm dann. So bleibt bei ungültiger Eingabe der alte, gültige Wert erhalten.</p>
+  <p><strong>Hinweis:</strong> Danach meckert der Compiler an mehreren Stellen. Lies die
+Meldungen der Reihe nach – sie sagen Dir genau, was jetzt fehlt. Erst wenn
+<code>Main</code> Deine Klassen wieder findet, geht es weiter.</p>
 </blockquote>
+
+<h3 id="die-grenze-einziehen-sichtbarkeit">Die Grenze einziehen: Sichtbarkeit</h3>
+
+<p>Jetzt liegt <code>Main</code> außerhalb – und damit wird zum ersten Mal sichtbar, was
+bisher unsichtbar war: Ohne Vorsatz ist eine Variable nur im <strong>eigenen</strong> Package
+zu sehen. Entscheide nun bewusst, was nach außen gehört: Die Instanzvariablen
+werden <code>private</code>, sichtbar bleibt nur, was der Rest des Programms wirklich
+braucht.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Der Zugriff aus <code>Main</code> bricht erneut. Genau so soll es sein – im
+nächsten Schritt baust Du ihn kontrolliert wieder auf.</p>
+</blockquote>
+
+<h3 id="den-zugriff-kontrolliert-wieder-aufbauen">Den Zugriff kontrolliert wieder aufbauen</h3>
+
+<p><code>Main</code> kommt nicht mehr an die Werte heran. Statt die Grenze wieder zu öffnen,
+baust Du <strong>Zugänge</strong>: lesende Methoden für das, was von außen sichtbar sein soll,
+schreibende nur dort, wo von außen wirklich etwas geändert werden darf.</p>
+
+<p>Und damit stellt sich die Frage, um die es hier eigentlich geht: <strong>Jede Änderung
+läuft jetzt durch Deinen Code – wie kannst Du beim Setzen prüfen, ob der neue Wert
+überhaupt zulässig ist?</strong> Bau diese Prüfung in mindestens einen schreibenden
+Zugang ein.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Ein <code>if</code> genügt. Ist der Wert ungültig, wird er einfach <strong>nicht</strong>
+gesetzt – der alte, gültige bleibt stehen. Prüfe zuerst, übernimm dann.</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Dass der Aufrufer davon nichts erfährt, ist unbefriedigend – und
+Absicht. Das saubere Werkzeug dafür sind <strong>Ausnahmen</strong>; die kommen an Tag 4.</p>
+</blockquote>
+
+<h3 id="unveränderliches-markieren">Unveränderliches markieren</h3>
+
+<p>Manche Werte gehören untrennbar zum Objekt: Ändern sie sich, ist es ein anderes
+Ding. Markiere diese Instanzvariablen als <code>final</code>.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Danach lässt sich der Wert nach dem <code>new</code> nicht mehr zuweisen –
+gesetzt werden muss er trotzdem. Genau dieser Widerspruch führt Dich zum
+nächsten Schritt.</p>
+</blockquote>
+
+<h3 id="konstruktoren-schreiben">Konstruktoren schreiben</h3>
+
+<p>Gib jeder Klasse einen Konstruktor, der die beim Erzeugen zwingend nötigen Werte
+entgegennimmt.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Sobald Du einen eigenen Konstruktor schreibst, verschwindet der
+automatische parameterlose. Deine <code>main</code>-Methode muss also mitziehen – auch das
+zeigt Dir der Compiler.</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Bei <code>final</code>-Feldern wird es interessant: Der Konstruktor muss sie
+<strong>in jedem Fall</strong> setzen, ein <code>if</code> ohne <code>else</code> lässt der Compiler nicht durch.
+Überleg Dir also, was im Zweifel hineinkommt. Auch das wird erst mit Ausnahmen
+wirklich rund.</p>
+</blockquote>
+
+<h3 id="für-schnelle">Für Schnelle</h3>
+
+<ul>
+  <li>Provoziere in <code>main</code> bewusst eine ungültige Eingabe und zeig, dass das Objekt danach immer noch gültig ist.</li>
+  <li>Lass die IDE Getter, Setter und Konstruktor einmal generieren und vergleiche mit Deiner Handarbeit – was macht sie anders?</li>
+  <li>Leg eine dritte Klasse in ein weiteres Package und ruf sie auf. Wann brauchst Du einen <code>import</code>, wann nicht?</li>
+</ul>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Welche Zusicherung gibst Du dem Rest des Programms, wenn der Konstruktor keine ungültigen Objekte zulässt?</li>
-  <li>Warum ist ein fehlender Setter manchmal die bessere Entwurfsentscheidung als ein vorhandener?</li>
-  <li>Was spricht dafür, die Validierung in der Klasse statt in jedem Aufrufer zu wiederholen?</li>
+  <li>Was sichert Dein Konstruktor dem Rest des Programms zu?</li>
+  <li>Welche Deiner Instanzvariablen hat bewusst keinen Setter bekommen – und warum?</li>
+  <li>Wofür sind Packages gut?</li>
 </ul>
 
-<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Kapselung und Validierung durchsetzen
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Das Banking-Beispiel kapseln
 
 Als Entwickler:in möchte ich, dass Kunde und Konto niemals in einen ungültigen Zustand geraten, damit ich mich im restlichen Programm auf gültige Objekte verlassen kann.
+
+&gt; **Hinweis:** Du machst hier **dasselbe wie der Trainer eben in der Demo** – nur
+&gt; mit Deinem eigenen Banking-Code. Es entsteht nichts Neues: Du baust um, was Du
+&gt; schon hast. Die Visualisierung *Objektorientierung mit Java (Kapselung)* (unter
+&gt; „Weiterführende Informationen“) zeigt jeden Baustein noch einmal am
+&gt; Buch-und-Autor-Beispiel.
 
 ## Lernziele
 
 Du…
 
-* deklarierst Felder `private` und steuerst den Zugriff über Getter/Setter.
-* validierst Eingaben in Konstruktor und Settern und lehnst ungültige Werte ab.
-* begründest, welche Prüfungen in die Klasse gehören.
+* sortierst Deine Klassen in ein Package und ergänzt die nötigen Imports.
+* schützt den Zustand Deiner Objekte und lässt den Zugriff kontrolliert laufen.
+* markierst mit `final`, was sich nach dem Erzeugen nie wieder ändern darf.
+* schreibst einen Konstruktor, der Pflichtwerte entgegennimmt und prüft.
 
 ## Definition of Done
 
-* [ ] Alle Felder von `Kunde` und `Konto` sind `private`.
-* [ ] Der Konstruktor lehnt `null`-Werte für Pflichtfelder ab und erzeugt die Kundennummer selbst.
-* [ ] `setName` (o. ä.) verhindert `null` bzw. leere Werte.
-* [ ] Der Kontostand kann nicht direkt von außen gesetzt werden (kein öffentlicher Setter dafür).
+* [ ] Deine fachlichen Klassen und `Main` liegen in **zwei verschiedenen Packages**; das Programm startet weiterhin.
+* [ ] Auf die Instanzvariablen kann von außen nicht mehr direkt zugegriffen werden.
+* [ ] Es gibt lesende und schreibende Zugänge nur dort, wo sie fachlich gebraucht werden – der Stand ändert sich ausschließlich über Ein- und Auszahlungen.
+* [ ] Mindestens ein schreibender Zugang **prüft den neuen Wert**, bevor er ihn übernimmt.
+* [ ] Was sich nach dem Erzeugen nie ändern darf, ist `final`.
+* [ ] Beide Klassen haben einen Konstruktor, der die Pflichtwerte entgegennimmt.
+* [ ] `new Konto()` ohne Argumente lässt sich nicht mehr aufrufen.
+* [ ] Das Programm startet und läuft fehlerfrei.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
 ## Arbeitsschritte
 
-### Felder privat machen
+### Ordnung schaffen: zwei Packages
 
-Stelle sicher, dass alle Felder `private` sind. Biete nur dort Getter/Setter an, wo Zugriff wirklich nötig ist.
+Leg **zwei** Packages an – eines für Deine fachlichen Klassen (etwa `bank`) und
+ein zweites für `Main` (etwa `anwendung`). Verschieb die Klassen hinein.
 
-&gt; **Hinweis:** Nicht jedes Feld braucht einen Setter. Der Kontostand ändert sich nur über Ein-/Auszahlungen – nicht über einen freien Setter.
+&gt; **Hinweis:** Danach meckert der Compiler an mehreren Stellen. Lies die
+&gt; Meldungen der Reihe nach – sie sagen Dir genau, was jetzt fehlt. Erst wenn
+&gt; `Main` Deine Klassen wieder findet, geht es weiter.
 
-### Pflichtfelder im Konstruktor prüfen
+### Die Grenze einziehen: Sichtbarkeit
 
-Wirf eine Ausnahme, wenn ein Pflichtwert fehlt, sodass gar kein ungültiges Objekt entstehen kann.
+Jetzt liegt `Main` außerhalb – und damit wird zum ersten Mal sichtbar, was
+bisher unsichtbar war: Ohne Vorsatz ist eine Variable nur im **eigenen** Package
+zu sehen. Entscheide nun bewusst, was nach außen gehört: Die Instanzvariablen
+werden `private`, sichtbar bleibt nur, was der Rest des Programms wirklich
+braucht.
 
-```java
-public Kunde(String name, String wohnort) {
-  this.name = Objects.requireNonNull(name, &quot;name darf nicht null sein&quot;);
-  this.wohnort = Objects.requireNonNull(wohnort, &quot;wohnort darf nicht null sein&quot;);
-  this.nummer = UUID.randomUUID().toString();
-}
-```
+&gt; **Hinweis:** Der Zugriff aus `Main` bricht erneut. Genau so soll es sein – im
+&gt; nächsten Schritt baust Du ihn kontrolliert wieder auf.
 
-### Setter validieren
+### Den Zugriff kontrolliert wieder aufbauen
 
-Lass den Setter für den Namen `null` (und optional Leerstrings) ablehnen, bevor er den Wert übernimmt.
+`Main` kommt nicht mehr an die Werte heran. Statt die Grenze wieder zu öffnen,
+baust Du **Zugänge**: lesende Methoden für das, was von außen sichtbar sein soll,
+schreibende nur dort, wo von außen wirklich etwas geändert werden darf.
 
-&gt; **Hinweis:** Prüfe zuerst, übernimm dann. So bleibt bei ungültiger Eingabe der alte, gültige Wert erhalten.
+Und damit stellt sich die Frage, um die es hier eigentlich geht: **Jede Änderung
+läuft jetzt durch Deinen Code – wie kannst Du beim Setzen prüfen, ob der neue Wert
+überhaupt zulässig ist?** Bau diese Prüfung in mindestens einen schreibenden
+Zugang ein.
+
+&gt; **Hinweis:** Ein `if` genügt. Ist der Wert ungültig, wird er einfach **nicht**
+&gt; gesetzt – der alte, gültige bleibt stehen. Prüfe zuerst, übernimm dann.
+
+&gt; **Hinweis:** Dass der Aufrufer davon nichts erfährt, ist unbefriedigend – und
+&gt; Absicht. Das saubere Werkzeug dafür sind **Ausnahmen**; die kommen an Tag 4.
+
+### Unveränderliches markieren
+
+Manche Werte gehören untrennbar zum Objekt: Ändern sie sich, ist es ein anderes
+Ding. Markiere diese Instanzvariablen als `final`.
+
+&gt; **Hinweis:** Danach lässt sich der Wert nach dem `new` nicht mehr zuweisen –
+&gt; gesetzt werden muss er trotzdem. Genau dieser Widerspruch führt Dich zum
+&gt; nächsten Schritt.
+
+### Konstruktoren schreiben
+
+Gib jeder Klasse einen Konstruktor, der die beim Erzeugen zwingend nötigen Werte
+entgegennimmt.
+
+&gt; **Hinweis:** Sobald Du einen eigenen Konstruktor schreibst, verschwindet der
+&gt; automatische parameterlose. Deine `main`-Methode muss also mitziehen – auch das
+&gt; zeigt Dir der Compiler.
+
+&gt; **Hinweis:** Bei `final`-Feldern wird es interessant: Der Konstruktor muss sie
+&gt; **in jedem Fall** setzen, ein `if` ohne `else` lässt der Compiler nicht durch.
+&gt; Überleg Dir also, was im Zweifel hineinkommt. Auch das wird erst mit Ausnahmen
+&gt; wirklich rund.
+
+### Für Schnelle
+
+* Provoziere in `main` bewusst eine ungültige Eingabe und zeig, dass das Objekt danach immer noch gültig ist.
+* Lass die IDE Getter, Setter und Konstruktor einmal generieren und vergleiche mit Deiner Handarbeit – was macht sie anders?
+* Leg eine dritte Klasse in ein weiteres Package und ruf sie auf. Wann brauchst Du einen `import`, wann nicht?
 
 ## Reflexionsfragen
 
-* Welche Zusicherung gibst Du dem Rest des Programms, wenn der Konstruktor keine ungültigen Objekte zulässt?
-* Warum ist ein fehlender Setter manchmal die bessere Entwurfsentscheidung als ein vorhandener?
-* Was spricht dafür, die Validierung in der Klasse statt in jedem Aufrufer zu wiederholen?</textarea>
+* Was sichert Dein Konstruktor dem Rest des Programms zu?
+* Welche Deiner Instanzvariablen hat bewusst keinen Setter bekommen – und warum?
+* Wofür sind Packages gut?
+
+## Weiterführende Informationen
+
+- [Visualisierung: Objektorientierung mit Java (Kapselung)](../../shared/visualisierungen/objektorientierung-java-kapselung.html)
+</textarea>
     </main>
     <aside class="avd-academy-guide-sidebar">
       <div class="avd-academy-guide-side avd-academy-guide-side--toc" data-avd-academy-toc-box hidden>
@@ -250,6 +376,11 @@ Lass den Setter für den Namen `null` (und optional Leerstrings) ablehnen, bevor
         <div class="avd-academy-guide-side__label">Fortschritt</div>
         <div class="avd-academy-progress__bar"><div class="avd-academy-progress__fill"></div></div>
         <div class="avd-academy-progress__text"></div>
+      </div>
+      <div class="avd-academy-guide-side avd-academy-guide-side--bordered">
+        <div class="avd-academy-guide-side__label">Weiterführende Informationen</div>
+        <div class="avd-academy-guide-side__links"><a href="../../shared/visualisierungen/objektorientierung-java-kapselung.html"><span>Visualisierung: Objektorientierung mit Java (Kapselung)</span></a>
+        </div>
       </div>
     </aside>
   </div><div class="avd-academy-print-contact" aria-hidden="true">

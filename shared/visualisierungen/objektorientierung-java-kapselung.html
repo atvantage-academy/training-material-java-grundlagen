@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<!--
+  ATVANTAGE-Academy – EINZIGES Seitenlayout (Jekyll)
+  --------------------------------------------------
+  Ein Layout für alles: allgemeine Doku-Seiten UND Guides (Übungen/Anleitungen).
+  Optik nach der ATVANTAGE-Website: Meta-Nav, weiße sticky Kopfzeile, Hero-Band,
+  zweispaltig mit rechter Sidebar (automatisches Inhaltsverzeichnis, Fortschritt
+  aus Task-Listen, weiterführende Ressourcen). Überschriften ohne Emoji-Icons.
+
+  Verwendung im Front Matter:  layout: default   (oder `layout: guide` – Alias,
+  siehe guide.html; beides rendert dieselbe Guide-Ansicht)
+
+  `layout: visualization` (siehe visualization.html) rendert dieselbe Seite OHNE
+  obere Navigation (Meta-Leiste + Kopfzeile/TopNav), OHNE Brotkrumen und OHNE den
+  rechten Bereich (Inhaltsverzeichnis, Fortschritt, Ressourcen – auch bei gesetztem
+  `resources`), mit schmalerem Hero-Balken und breiterem, zentriertem Inhalt – für
+  eigenständige Visualisierungen/Simulationen.
+
+  Alle Front-Matter-Felder sind OPTIONAL (Convention over Configuration). Nur der
+  Titel ist faktisch erforderlich – als `title:` ODER als erste `#`-Überschrift:
+
+    title:       "…"                → sonst erste #-Überschrift (eins von beiden nötig)
+    description: "…"                → Meta-Description
+    duration:    8                  → Zahl in Minuten → Hero-Tag „ca. 8 Minuten“
+                                       (ungefähre LESEDAUER; bei Guides/Übungen die
+                                       Dauer der Übung). Aktiviert zugleich die
+                                       nummerierten Arbeitsschritte und die
+                                       automatische Prev/Next-Navigation zwischen
+                                       gleichartigen Geschwister-Seiten. Alle drei
+                                       entfallen bei `layout: visualization`.
+    topics:      ["Cloud & DevOps"] → weitere Hero-Tags
+    resources:   [{titel, url, icon}, …] → Sidebar-Karte „Weiterführende Informationen“.
+                                       titel und/oder icon (Bildpfad); icon erscheint
+                                       rechts und wird kreisrund dargestellt.
+    breadcrumb:                     → Brotkrumen anpassen (beides optional):
+      label: "…"                    → überschreibt den Ordnernamen dieser Ebene;
+                                       in der Ordner-`index.md` gesetzt gilt es für
+                                       ALLE Seiten im Ordner und in Unterordnern.
+      path: [{title, url}, …]       → explizite Vorfahren-Kette OHNE die aktuelle
+                                       Seite (diese wird automatisch angehängt); in
+                                       der `index.md` gesetzt wird sie vererbt.
+    zurueck / weiter: {title, url}  → explizite Prev/Next-Links (sonst automatisch)
+
+  „Markdown kopieren“ (Button im Hero) erscheint NUR auf Guides (Übungen,
+  Anleitungen) – dort ist das Übernehmen des Quelltexts der Zweck. Bedingungen:
+  Markdown-Seite (`.md`, nicht reines HTML) UND als Guide erkennbar UND keine
+  Visualisierung. Guide ist eine Seite mit `layout: guide` ODER gesetztem
+  `duration` – letzteres ist der etablierte Marker (er schaltet auch die
+  nummerierten Arbeitsschritte und Prev/Next frei), und die Guide-Vorlage des
+  Themes wie auch die von didaktikon erzeugten Übungen nutzen `layout: default`
+  plus `duration`. Nur auf `layout: guide` zu prüfen würde den Button dort
+  entfernen. Doku-Seiten haben kein `duration`; Visualisierungen sind
+  ausgeschlossen, weil ihr Inhalt nicht sinnvoll als Markdown kopierbar ist.
+
+  QR-CODE der Seitenadresse + DRUCKEN-KNOPF: In dieser Ansicht (`visualization`)
+  stehen beide rechts im Hero – QR links, Drucken rechts. Sie hat weder Kopfzeile
+  noch Sidebar, in der sie sonst Platz hätten.
+
+  Auf `default`/`guide` steht im Hero KEINES von beiden: Der QR-Code sitzt in der
+  Kopfzeile neben dem Farbschema-Umschalter (siehe `_includes/header.html`), und zum
+  Drucken bleibt es beim Browser-Befehl (Strg/Cmd+P). Tooltip des QR-Codes überall:
+  „Diese Seite auf Deinem Smartphone öffnen“. Er wird erst im Browser erzeugt (theme/academy/atvantage.js), weil die
+  Adresse zur Build-Zeit nicht feststeht; ohne JavaScript erscheint er nicht.
+  Kein Front-Matter-Schalter: Es gibt keine Seite, auf der der Weg aufs eigene
+  Smartphone schaden würde.
+--><html lang="de">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Objektorientierung mit Java (Kapselung) · Java SE (ATVANTAGE Academy)</title>
+<meta name="description" content="Packages, Imports, Sichtbarkeiten, final und Konstruktoren – die Fortsetzung von „Objektorientierung mit Java (einfach)“ am selben Buch-und-Autor-Beispiel."><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787046859"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787046859">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787046859">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787046859">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787046859"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787046859">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787046859" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787046859" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787046859">
+<script type="module">
+  const _hlbase = "/training-material-java-se/theme/academy/hljs/";
+  Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
+    .then(([core, java]) => {
+      const hljs = core.default;
+      hljs.registerLanguage("java", java.default);
+      document.querySelectorAll("pre code.language-java").forEach((el) => hljs.highlightElement(el));
+    });
+</script>
+<link rel="apple-touch-icon" sizes="180x180" href="/training-material-java-se/theme/atvantage/assets/icon-180.png">
+<link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
+<link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
+
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787046859">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787046859"></head><body class="avd-academy-guide avd-academy-guide--viz">
+  <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a><section class="avd-academy-guide-hero avd-academy-guide-hero--slim"><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags">
+      </div>
+      <div class="avd-academy-guide-hero__actions">
+        <button type="button" class="avd-academy-qr" data-avd-academy-qr hidden
+                title="Diese Seite auf Deinem Smartphone öffnen"
+                aria-label="Diese Seite auf Deinem Smartphone öffnen"></button>
+        <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-print-btn"
+                data-avd-academy-print
+                title="Diese Seite drucken" aria-label="Diese Seite drucken"></button>
+      </div>
+    </div><h1>Objektorientierung mit Java (Kapselung)</h1>
+  </section>
+
+  <div class="avd-academy-guide-layout">
+    <main class="avd-academy-guide-main" id="avd-academy-content">
+      
+<style>
+/* Aufbau und Klassennamen bewusst analog zu „Objektorientierung mit Java
+   (einfach)“ (Präfix dort oje-, hier ojk-): Diese Seite führt dasselbe
+   Buch-und-Autor-Beispiel fort und muss deshalb gleich aussehen. Keine eigene Breitenbegrenzung: Die Breite der
+   Inhaltsspalte gibt das Theme über `--avd-academy-guide-max` vor. */
+.ojk-lead{opacity:.85;margin:0 0 2rem;}
+
+.ojk-sec{margin:0 0 2.75rem;}
+.ojk-sec > h2{display:flex;align-items:baseline;gap:.7rem;margin:0 0 1rem;font-size:1.45rem;line-height:1.2;border-bottom:1px solid var(--avd-academy-color-border,#e2e2e2);padding-bottom:.5rem;}
+.ojk-num{flex:none;display:inline-flex;align-items:center;justify-content:center;width:1.9rem;height:1.9rem;border-radius:var(--radius,5px);background:var(--avd-slate,#303E4F);color:#fff;font-size:.9rem;font-weight:700;}
+.ojk-note{margin:.9rem 0 0;font-size:.92rem;opacity:.85;}
+.ojk-note strong{color:var(--color-orange,#FF5401);}
+
+.ojk-table-wrap{overflow-x:auto;}
+.ojk-table{width:100%;border-collapse:collapse;font-size:.88rem;}
+.ojk-table th,.ojk-table td{text-align:left;vertical-align:top;padding:.5rem .7rem;border-bottom:1px solid var(--avd-academy-color-border,#e2e2e2);}
+.ojk-table th{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;opacity:.75;white-space:nowrap;}
+.ojk-table td:first-child{white-space:nowrap;font-weight:700;color:var(--color-orange,#FF5401);}
+
+.ojk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(24rem,1fr));gap:1.1rem;}
+.ojk-card{background:var(--avd-academy-color-bg-subtle,var(--color-surface-card,#EDEDED));border:1px solid var(--avd-academy-color-border,#e2e2e2);border-radius:var(--radius,5px);padding:1rem 1.15rem;}
+.ojk-card--wide{grid-column:1/-1;}
+.ojk-card h3{margin:0 0 .5rem;font-size:1rem;line-height:1.25;}
+.ojk-card p{margin:0 0 .6rem;font-size:.88rem;opacity:.85;}
+.ojk-card p:last-child{margin-bottom:0;}
+.ojk-card pre{margin:0;overflow-x:auto;}
+.ojk-card pre + p{margin-top:.6rem;}
+.ojk-root pre code.hljs{border-radius:var(--radius-dark,8px);font-size:.8rem;line-height:1.5;}
+
+/* Gegenüberstellung richtig/falsch – für die Assoziations-Falle */
+.ojk-card--good{border-left:4px solid var(--color-orange,#FF5401);}
+.ojk-card--bad{border-left:4px solid var(--avd-academy-color-ink-muted,#707173);}
+.ojk-flag{display:inline-block;margin-right:.4rem;font-weight:800;}
+.ojk-card--good .ojk-flag{color:var(--color-orange,#FF5401);}
+
+/* Diagramm-zu-Code-Skizze: zwei Kästchen mit Verbindungslinie */
+.ojk-uml{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;margin:.2rem 0 .8rem;}
+.ojk-box{border:2px solid var(--avd-academy-color-ink,#343E3F);border-radius:var(--radius,5px);min-width:9.5rem;font-size:.82rem;background:var(--avd-academy-color-bg,#fff);}
+.ojk-box b{display:block;padding:.35rem .6rem;border-bottom:1px solid var(--avd-academy-color-ink,#343E3F);text-align:center;}
+.ojk-box span{display:block;padding:.3rem .6rem;font-family:var(--avd-academy-font-mono,monospace);}
+.ojk-line{flex:none;width:4.5rem;border-top:2px solid var(--avd-academy-color-ink,#343E3F);position:relative;}
+.ojk-line em{position:absolute;top:-1.5rem;left:50%;transform:translateX(-50%);font-size:.7rem;font-style:normal;opacity:.75;white-space:nowrap;}
+.ojk-mult{font-size:.72rem;opacity:.75;padding:0 .3rem;}
+
+@media print{
+  .ojk-lead{font-size:10.5pt;opacity:1;}
+  .ojk-sec{break-inside:auto;margin:0 0 14pt;}
+  .ojk-sec > h2{font-size:14pt;margin:0 0 6pt;padding-bottom:3pt;border-bottom:2px solid var(--color-orange,#FF5401);break-after:avoid;}
+  .ojk-num{width:auto;height:auto;background:transparent !important;color:#000 !important;font-size:14pt;}
+  .ojk-table{font-size:8.5pt;}
+  .ojk-table th,.ojk-table td{padding:2pt 4pt;}
+  .ojk-table td:first-child{color:#000 !important;}
+  .ojk-grid{display:block;}
+  .ojk-card{break-inside:avoid;background:transparent !important;border:none !important;padding:0 !important;margin:0 0 9pt;}
+  .ojk-card--good,.ojk-card--bad{border-left:2pt solid #000 !important;padding-left:6pt !important;}
+  .ojk-card h3{font-size:10.5pt;margin:0 0 2pt;}
+  .ojk-card p{font-size:9pt;margin:0 0 3pt;opacity:1;}
+  .ojk-note{font-size:9pt;opacity:1;margin-top:5pt;}
+  .ojk-note strong{color:#000 !important;}
+  .ojk-root pre,.ojk-root pre code,.ojk-root pre code *{color:#000 !important;background:transparent !important;}
+  .ojk-root pre{white-space:pre-wrap;word-break:break-word;font-size:8pt;border:none !important;padding:2pt 0 !important;margin:0;break-inside:avoid;}
+}
+</style>
+
+<div class="ojk-root">
+
+<p class="ojk-lead">Die Fortsetzung von <a href="objektorientierung-java-einfach.html">Objektorientierung mit Java (einfach)</a> – am selben Beispiel: aus offenen Klassen werden Objekte, die ihren Zustand schützen. Packages und Imports, die Sichtbarkeiten, <code>final</code> und der Konstruktor. Ausnahmen kommen später im Kurs; geprüft wird hier mit einem <code>if</code>.</p>
+
+<section class="ojk-sec" id="packages">
+<h2><span class="ojk-num">1</span> Packages: Ordnung im Projekt</h2>
+
+<div class="ojk-grid">
+<div class="ojk-card">
+<h3>Eine Zeile, ein Ordner</h3>
+<pre><code class="language-java">// Datei: bibliothek/Buch.java
+package bibliothek;
+
+class Buch {
+    String titel;
+}</code></pre>
+<p>Die <code>package</code>-Zeile steht ganz oben, noch vor allem anderen. Sie muss zum Ordner passen: <code>package bibliothek;</code> gehört in den Ordner <code>bibliothek</code>.</p>
+</div>
+<div class="ojk-card">
+<h3>Wozu das gut ist</h3>
+<p><strong>Ordnung:</strong> Bei zwanzig Klassen findet man sonst nichts wieder.</p>
+<p><strong>Eindeutige Namen:</strong> Es darf zwei Klassen <code>Kunde</code> geben, solange sie in verschiedenen Packages liegen – der volle Name ist <code>bibliothek.Kunde</code>.</p>
+<p><strong>Und eine Grenze:</strong> Packages entscheiden mit darüber, wer was sehen darf – siehe Abschnitt 3.</p>
+</div>
+</div>
+<p class="ojk-note">In echten Projekten ist der Paketname die <strong>umgedrehte Internet-Adresse</strong> der Organisation, damit er weltweit eindeutig bleibt: <code>com.example.bibliothek</code>. Für Übungen genügt ein einfacher Name.</p>
+</section>
+
+<section class="ojk-sec" id="imports">
+<h2><span class="ojk-num">2</span> Imports: wann Du sie brauchst</h2>
+
+<div class="ojk-table-wrap">
+<table class="ojk-table">
+<thead>
+<tr><th>Woher kommt die Klasse?</th><th><code>import</code> nötig?</th><th>Beispiel</th></tr>
+</thead>
+<tbody>
+<tr><td>aus demselben Package</td><td>nein</td><td><code>Autor</code> in <code>bibliothek.Buch</code></td></tr>
+<tr><td>aus <code>java.lang</code></td><td>nein – immer da</td><td><code>String</code>, <code>System</code>, <code>Math</code></td></tr>
+<tr><td>aus einem anderen Package</td><td><strong>ja</strong></td><td><code>import bibliothek.Buch;</code></td></tr>
+<tr><td>aus einem anderen Package, einmalig</td><td>oder voll ausschreiben</td><td><code>java.util.Objects.equals(a, b)</code></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="ojk-card ojk-card--wide" style="margin-top:1.1rem">
+<h3>So sieht es im Programm aus</h3>
+<pre><code class="language-java">// Datei: anwendung/Main.java
+package anwendung;
+
+import bibliothek.Buch;      // andere Schublade → Import
+import java.util.List;       // dasselbe für die Klassenbibliothek
+
+class Main {
+    public static void main(String[] args) {
+        Buch erdsee = new Buch("978-3-453-52581-6", "Erdsee");
+        System.out.println(erdsee);   // System: java.lang, kein Import
+    }
+}</code></pre>
+<p>Ein <code>import</code> holt nichts herbei und kostet nichts zur Laufzeit – er sagt dem Compiler nur, welches <code>Buch</code> gemeint ist.</p>
+</div>
+</section>
+
+<section class="ojk-sec" id="sichtbarkeit">
+<h2><span class="ojk-num">3</span> Sichtbarkeit: die Grenze ziehen</h2>
+
+<p class="ojk-note" style="margin-top:0">Der objektorientierte Gedanke dahinter ist älter als Java: Ein Objekt zeigt nach außen, <strong>was</strong> es kann – nicht, <strong>wie</strong> es innen aussieht. Was innen liegt, darf sich ändern, ohne dass der Rest des Programms davon weiß. Java macht daraus vier Stufen.</p>
+
+<div class="ojk-table-wrap" style="margin-top:1.1rem">
+<table class="ojk-table">
+<thead>
+<tr><th>Schreibweise</th><th>Sichtbar für</th><th>Wofür</th></tr>
+</thead>
+<tbody>
+<tr><td>private</td><td>nur die eigene Klasse</td><td>Instanzvariablen und alles Innere – der Normalfall</td></tr>
+<tr><td>(ohne Vorsatz)</td><td>alle Klassen im selben Package</td><td>die Voreinstellung; genau deshalb lief bisher alles</td></tr>
+<tr><td>protected</td><td>Package und Unterklassen</td><td>ergibt erst mit Vererbung Sinn – kommt später im Kurs</td></tr>
+<tr><td>public</td><td>alle</td><td>der Vertrag nach außen: Klasse, Konstruktor, fachliche Methoden</td></tr>
+</tbody>
+</table>
+</div>
+<p class="ojk-note"><strong>Die Faustregel:</strong> so eng wie möglich. Fang mit <code>private</code> an und öffne einzeln, was gebraucht wird – nicht umgekehrt. Was einmal <code>public</code> ist, benutzt irgendwann jemand.</p>
+</section>
+
+<section class="ojk-sec" id="zugriff">
+<h2><span class="ojk-num">4</span> Kontrollierter Zugriff statt offener Felder</h2>
+
+<div class="ojk-grid">
+<div class="ojk-card ojk-card--bad">
+<h3><span class="ojk-flag">✗</span> Offen</h3>
+<pre><code class="language-java">class Buch {
+    int seiten;
+}
+
+erdsee.seiten = -100;</code></pre>
+<p>Niemand hindert das Programm daran, Unsinn hineinzuschreiben. Der Fehler fällt irgendwo später auf – weit weg von der Stelle, die ihn verursacht hat.</p>
+</div>
+<div class="ojk-card ojk-card--good">
+<h3><span class="ojk-flag">✓</span> Kontrolliert</h3>
+<pre><code class="language-java">class Buch {
+    private int seiten;
+
+    public int getSeiten() {
+        return seiten;
+    }
+
+    public void setSeiten(int seiten) {
+        if (seiten &gt; 0) {          // erst prüfen …
+            this.seiten = seiten;   // … dann übernehmen
+        }
+    }
+}</code></pre>
+<p>Jede Änderung läuft durch Deinen Code – und damit durch Deine Regeln.</p>
+</div>
+</div>
+
+<p class="ojk-note"><strong>Nicht jedes Feld braucht einen Setter.</strong> Frag zweimal: Muss man den Wert von außen <em>lesen</em> können? Und muss man ihn von außen <em>ändern</em> können? Die zweite Frage wird seltener mit Ja beantwortet, als man denkt – manche Werte ändern sich nur über fachliche Methoden, andere gar nicht.</p>
+
+<p class="ojk-note"><strong>Zwei offene Enden – bewusst.</strong> Erstens erfährt der Aufrufer nichts davon, wenn sein Wert abgelehnt wurde; das saubere Werkzeug dafür sind <strong>Ausnahmen</strong>, die später im Kurs kommen. Zweitens: Was steht eigentlich in einem Feld, das nie gesetzt wurde? Bei Zahlen die <code>0</code>, bei Referenzen <code>null</code> – der Wegweiser ins Nichts, an dem jeder Zugriff mit einer <code>NullPointerException</code> scheitert.</p>
+</section>
+
+<section class="ojk-sec" id="final">
+<h2><span class="ojk-num">5</span> <code>final</code>: was sich nie ändern darf</h2>
+
+<div class="ojk-grid">
+<div class="ojk-card">
+<h3>Einmal gesetzt, nie wieder</h3>
+<pre><code class="language-java">class Buch {
+    private final String isbn;   // identifiziert das Buch
+    private String titel;        // darf korrigiert werden
+    private int seiten;
+}</code></pre>
+<p>Die ISBN gehört untrennbar zum Buch: Ändert sie sich, ist es ein anderes. Genau das schreibt <code>final</code> auf – und der Compiler wacht darüber.</p>
+</div>
+<div class="ojk-card">
+<h3>Und jetzt klemmt es</h3>
+<pre><code class="language-java">Buch erdsee = new Buch();
+erdsee.isbn = "978-…";   // geht nicht mehr</code></pre>
+<p>Zuweisen nach dem <code>new</code> lässt der Compiler nicht mehr zu – <strong>gesetzt werden muss das Feld trotzdem.</strong> Beides zusammen geht nur an einer einzigen Stelle: beim Erzeugen.</p>
+</div>
+</div>
+</section>
+
+<section class="ojk-sec" id="konstruktor">
+<h2><span class="ojk-num">6</span> Der Konstruktor</h2>
+
+<div class="ojk-grid">
+<div class="ojk-card ojk-card--wide">
+<h3>Pflichtwerte kommen beim Erzeugen mit</h3>
+<pre><code class="language-java">class Buch {
+    private final String isbn;
+    private String titel;
+
+    public Buch(String isbn, String titel) {   // heißt wie die Klasse, kein Rückgabetyp
+        this.isbn = isbn;                      // this, weil Parameter und Feld gleich heißen
+        this.titel = titel;
+    }
+}
+
+Buch erdsee = new Buch("978-3-453-52581-6", "Erdsee");</code></pre>
+<p>Der Konstruktor läuft genau einmal – beim <code>new</code>. Danach ist das Objekt vollständig; ein halbfertiges Buch kann es nicht mehr geben.</p>
+</div>
+</div>
+
+<div class="ojk-grid" style="margin-top:1.1rem">
+<div class="ojk-card">
+<h3>Der geschenkte Konstruktor verschwindet</h3>
+<pre><code class="language-java">Buch erdsee = new Buch();   // geht jetzt nicht mehr</code></pre>
+<p>Den parameterlosen Konstruktor gibt es nur, solange die Klasse gar keinen eigenen hat. Schreibst Du einen, ist er weg – und alle Stellen, die <code>new Buch()</code> aufrufen, müssen mitziehen.</p>
+</div>
+<div class="ojk-card">
+<h3>Vorsicht bei <code>final</code></h3>
+<pre><code class="language-java">public Buch(String isbn) {
+    if (isbn != null) {
+        this.isbn = isbn;
+    }
+    // Fehler: variable isbn
+    // might not have been initialized
+}</code></pre>
+<p>Ein <code>final</code>-Feld muss der Konstruktor <strong>in jedem Fall</strong> setzen – ein <code>if</code> ohne <code>else</code> genügt nicht. Überleg Dir, was im Zweifel hineinkommt.</p>
+</div>
+</div>
+<p class="ojk-note"><strong>Der Satz, um den es hier geht:</strong> Ein Objekt ist <em>ab dem Konstruktor</em> gültig. Wer eines in die Hand bekommt, muss nicht mehr prüfen, ob es benutzbar ist.</p>
+</section>
+
+</div>
+
+
+
+    </main>
+  </div><div class="avd-academy-print-contact" aria-hidden="true">
+    <span>Kontakt: <a href="mailto:academy@atvantage.com">academy@atvantage.com</a></span>
+    <span><a href="https://www.atvantage.com">ATVANTAGE Academy</a></span>
+  </div>
+
+  <footer class="avd-academy-footer">
+  <div class="avd-academy-footer__grid">
+    <div>
+      <strong>Java SE (ATVANTAGE Academy)</strong>
+      <p>Schulungen im Bereich 'Java SE'</p>
+    </div>
+    <div>
+      <strong>Kontakt</strong>
+      <p><a href="mailto:academy@atvantage.com">academy@atvantage.com</a><br>
+      </p>
+    </div><div>
+      <strong>Weitere Informationen</strong>
+      <p><a href="https://atvantage-academy.github.io/academy-online/" target="_blank" rel="noopener">ATVANTAGE Academy</a></p>
+    </div></div>
+  <div class="avd-academy-footer__legal">
+    © <span data-avd-academy-year>2026</span> ATVANTAGE
+  </div>
+</footer>
+
+</body>
+</html>
