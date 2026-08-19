@@ -226,6 +226,56 @@ pre > .avd-academy-copy.is-copied { opacity: 1; }
    nicht mitten im Text hängen soll. */
 .avd-academy-grouptable__link { display: block; text-align: right; }
 
+/* Aktionsspalte am ZEILENENDE – die Alternative zu `…__link`. Wofür: Wenn jede
+   Zeile ein Ziel hat, das man ansteuern soll (ein Modul, ein Vorgang, ein Detail),
+   geht der Verweis IN der Inhaltszelle unter. Er beginnt dort in jeder Zeile an
+   einer anderen Stelle und sieht aus wie ein Teil des Textes. Als eigene, letzte
+   Spalte steht er in jeder Zeile an DERSELBEN Stelle und ist so hoch wie die
+   Zeile – groß genug, um ihn zu treffen, ohne zu zielen.
+
+   `…__link` bleibt für den anderen Fall: ein Verweis, der zum Satz gehört.
+
+   Getönt wird nur, wo auch ein Ziel dahintersteht (`:has(a)`) – Zeilen ohne Ziel
+   und Fortsetzungszeilen bleiben unbemalt. Ohne `:has()`-Unterstützung entfällt
+   nur die Tönung, der Link bleibt.
+
+   Das Zeichen kommt als CSS-Maske in `currentColor`, NICHT als Emoji: Ein ▶️
+   erscheint je Plattform anders (auf manchen blau), lässt sich nicht einfärben
+   und wächst nicht mit der Schrift. Die Zelle braucht deshalb kein Zeichen im
+   Markup – nur eine für Screenreader lesbare Beschriftung. */
+.avd-academy-grouptable__action {
+  width: 1%;        /* nur so breit wie ihr Inhalt */
+  padding: 0;       /* die Fläche füllt die Zelle, nicht das Polster */
+  text-align: center;
+}
+.avd-academy-grouptable__action:has(a) {
+  background: color-mix(in srgb, var(--avd-academy-color-accent) 16%, transparent);
+}
+.avd-academy-grouptable__action:has(a):hover {
+  background: color-mix(in srgb, var(--avd-academy-color-accent) 34%, transparent);
+}
+/* Der Link füllt die Zelle über die ganze Zeilenhöhe – die Farbfläche IST die
+   Schaltfläche. Fällt `height: 100%` in einer Tabellenzelle aus, trägt die Zelle
+   die Tönung weiterhin selbst. */
+.avd-academy-grouptable__action a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 2.25rem;
+  padding: 0 var(--avd-academy-space-3);
+  color: var(--avd-academy-color-accent);
+  text-decoration: none;
+}
+.avd-academy-grouptable__action a::before {
+  content: "";
+  flex: none;
+  width: 1.1em; height: 1.1em;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5.5v13l11-6.5z'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5.5v13l11-6.5z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
 /* Zwischenraum und freier Raum tragen DIESELBE Schraffur: beides ist Zeit bzw.
    Platz, der nicht mit Inhalt belegt ist – einmal zwischen den Gruppen, einmal
    innerhalb einer. Die Schraffur kommt aus dem Textton und funktioniert damit in

@@ -131,6 +131,12 @@
   }
   .avd-academy-print-contact a { color: #1A2627 !important; }
 
+  /* Die Aktionsspalte der gruppierten Tabelle entfällt auf Papier: Eine Fläche zum
+     Anklicken ist dort sinnlos, und leer getönt wäre sie nur ein Farbklecks. Zeilen
+     über die volle Breite tragen ein `colspan`, das die verbleibenden Spalten
+     überschreitet – das ist unkritisch, Browser kappen es. */
+  .avd-academy-grouptable__action { display: none !important; }
+
   /* Aufdeckbarer Inhalt (`avd-academy-reveal`): auf Papier gibt es kein
      Aufdecken. Der Inhalt steht EINGEBETTET an seiner Stelle – auch wenn das
      `<details>` zu ist (Browser blenden dessen Kinder sonst aus). Overlay,
