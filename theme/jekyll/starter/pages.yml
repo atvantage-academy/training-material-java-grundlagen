@@ -32,9 +32,21 @@ permissions:
   pages: write
   id-token: write
 
+# NUR DER LETZTE STAND ZAEHLT: Ein neuer Lauf bricht den vorigen ab.
+#
+# Vorher stand hier `cancel-in-progress: false`, und das hat einmal zwei Stunden
+# gekostet: Der deploy-Job eines Laufs bekam keinen Runner und blieb in der
+# Warteschlange. Weil die Gruppe damit belegt war, startete DANACH KEIN Lauf mehr –
+# auch keine PR-Pruefung, und die stand ohne Job und ohne Meldung auf „pending".
+# Ein haengender Lauf blockierte so die ganze Pipeline, obwohl sein Ergebnis vom
+# naechsten ohnehin ueberholt worden waere.
+#
+# DIE GRUPPE IST NACH REF GETRENNT (`github.ref`): Bei einem festen Gruppennamen
+# wuerde ein PR-Lauf einen laufenden main-Deploy abbrechen. So bricht ein Lauf nur
+# seinen eigenen Vorgaenger ab.
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   THEME_PACKAGE: "@avd-academy-tools/academy-theme"
