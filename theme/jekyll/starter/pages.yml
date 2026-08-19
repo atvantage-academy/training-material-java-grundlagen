@@ -95,6 +95,21 @@ jobs:
             echo "::warning::Org-Variable ACADEMY_WEBSITE ist nicht gesetzt – die Druck-Kontaktzeile nutzt den Theme-Default."
           fi
 
+      # Konfiguration und Front Matter gegen die Schemas des Themes prüfen – VOR dem
+      # Build, damit ein Tippfehler auffällt, statt still zu wirken (`ressources:`
+      # baut fehlerfrei und lässt die Sidebar-Karte einfach weg).
+      #
+      # Der Prüfer kommt aus dem Theme, das oben schon installiert ist – kein Download,
+      # keine zusätzliche Abhängigkeit. Wer noch früher prüfen will (vor dem
+      # Theme-Bezug), lädt Prüfer und Schemas von der veröffentlichten, versionierten
+      # URL: «Theme-Doku»/schema/«Version»/ – siehe docs/theme/schemas.md.
+      #
+      # Exit-Code 2 heißt: Die Prüfung konnte nicht laufen (Schema fehlt, oder es wurde
+      # KEINE Seite gefunden). Auch das ist ein Fehlschlag – eine Prüfung über die leere
+      # Menge ist kein Erfolg.
+      - name: Konfiguration und Front Matter gegen die Theme-Schemas prüfen
+        run: ruby theme/jekyll/schema/pruefen.rb --config _config.yml --config _config.ci.yml
+
       - name: Jekyll bauen (Theme-Defaults + Projekt-_config + CI-Overlay)
         env:
           JEKYLL_ENV: production

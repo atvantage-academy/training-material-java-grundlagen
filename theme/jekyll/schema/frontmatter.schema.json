@@ -1,0 +1,248 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Academy-Theme – Front Matter einer Seite",
+  "description": "Alle Front-Matter-Felder, die das Academy-Theme (bzw. der zielgruppengefilterte Build) einer Markdown-Seite ausliest. Schema-Version 1. Draft-07, weil die IDE-Auflöser (VS Code / JetBrains) diesen Entwurf am verlässlichsten unterstützen.",
+  "type": "object",
+  "additionalProperties": false,
+  "patternProperties": {
+    "^x_": {
+      "description": "Repo-eigenes Feld. Alles mit dem Präfix `x_` ist frei: Das Theme liest es nicht, eigene Includes und Skripte des Schulungsrepos dürfen es nutzen. So bleibt das Schema geschlossen (Tippfehler wie `ressources` fallen auf), ohne eigene Felder zu verbieten."
+    }
+  },
+  "properties": {
+    "layout": {
+      "type": "string",
+      "description": "Layout der Seite. Vom Theme mitgeliefert: `default` (gewöhnliche Seite), `page` (Alias auf `default`), `guide` (Übung mit Schritten), `visualization` (Vollflächen-Ansicht), `presentation` (Folien), `simulation` (Ablauf). Eigene Layouts sind erlaubt – sie erben über `layout:` im Front Matter des eigenen Layouts.",
+      "examples": [
+        "default",
+        "page",
+        "guide",
+        "visualization",
+        "presentation",
+        "simulation"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "description": "Seitentitel. Erscheint im Hero, in `<title>` und in den Brotkrumen. Fehlt er, nimmt das Theme die erste `#`-Überschrift."
+    },
+    "description": {
+      "type": "string",
+      "description": "Kurzbeschreibung für `<meta name=\"description\">` und Vorschauen. Ein Satz, keine Aufzählung."
+    },
+    "lang": {
+      "type": "string",
+      "description": "Sprache dieser Seite (BCP-47), überschreibt `lang` aus der `_config.yml` für diese eine Seite.",
+      "examples": [
+        "de",
+        "en"
+      ]
+    },
+    "permalink": {
+      "type": "string",
+      "description": "Jekyll-Standard: abweichende Ziel-URL dieser Seite."
+    },
+    "published": {
+      "type": "boolean",
+      "description": "Jekyll-Standard: `false` schließt die Seite vom Build aus."
+    },
+    "date": {
+      "type": [
+        "string",
+        "object"
+      ],
+      "description": "Jekyll-Standard: Datum der Seite (ISO-8601). YAML liest ein unquotiertes Datum als Datumsobjekt."
+    },
+    "audience": {
+      "type": "string",
+      "enum": [
+        "trainer",
+        "learner"
+      ],
+      "description": "Zielgruppe der Seite. Wird NICHT vom Theme gelesen, sondern vom zielgruppengefilterten Build (`bin/build.sh`): Seiten fremder Zielgruppe landen nicht in der Ausgabe. Ohne Angabe erscheint die Seite in beiden Ausgaben."
+    },
+    "duration": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Geplante Dauer in Minuten. Erscheint als Zeit-Tag im Hero (Layouts `default`, `page`, `guide`) und ist der Wert, den die Tagestabellen des Trainerleitfadens in der ⏱️-Spalte übernehmen."
+    },
+    "topics": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      },
+      "description": "Schlagworte, die im Hero als Tags erscheinen. Kurze Substantive, keine Sätze."
+    },
+    "breadcrumb": {
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x_": {
+          "description": "Repo-eigenes Feld – vom Theme nicht gelesen. Alles mit dem Präfix `x_` ist frei, damit eine geschlossene Struktur eigene Angaben nicht verbietet."
+        }
+      },
+      "description": "Brotkrumen-Steuerung. Ohne dieses Feld baut das Theme den Pfad automatisch aus der Ordnerstruktur.",
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "Anzeigename DIESES Ordners in den Brotkrumen. Gehört in die `index`-Seite des Ordners und gilt zentral für alle Seiten darunter; ohne ihn erscheint der Ordnername."
+        },
+        "path": {
+          "type": "array",
+          "description": "Explizite Vorfahren-Kette OHNE die aktuelle Seite. Überschreibt den automatischen Pfad und wird an Unterseiten vererbt (die tiefere Angabe gewinnt).",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "patternProperties": {
+              "^x_": {
+                "description": "Repo-eigenes Feld – vom Theme nicht gelesen. Alles mit dem Präfix `x_` ist frei, damit eine geschlossene Struktur eigene Angaben nicht verbietet."
+              }
+            },
+            "required": [
+              "title",
+              "url"
+            ],
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Anzeigename dieser Station."
+              },
+              "url": {
+                "type": "string",
+                "description": "Ziel dieser Station, site-relativ (führender `/`)."
+              }
+            }
+          }
+        }
+      }
+    },
+    "zurueck": {
+      "$ref": "#/definitions/blaetterlink",
+      "description": "Vorige Seite der Blätter-Navigation am Seitenfuß. Ohne Angabe ermittelt das Theme sie aus der Ordnerstruktur."
+    },
+    "weiter": {
+      "$ref": "#/definitions/blaetterlink",
+      "description": "Nächste Seite der Blätter-Navigation am Seitenfuß. Ohne Angabe ermittelt das Theme sie aus der Ordnerstruktur."
+    },
+    "resources": {
+      "type": "array",
+      "description": "Weiterführende Informationen. Erscheinen als Sidebar-Karte (Schalter `resources_box`) und im Ausdruck als Abschnitt am Textende.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "patternProperties": {
+          "^x_": {
+            "description": "Repo-eigenes Feld – vom Theme nicht gelesen. Alles mit dem Präfix `x_` ist frei, damit eine geschlossene Struktur eigene Angaben nicht verbietet."
+          }
+        },
+        "required": [
+          "url"
+        ],
+        "properties": {
+          "titel": {
+            "type": "string",
+            "description": "Anzeigetext. Gewinnt gegenüber `title`."
+          },
+          "title": {
+            "type": "string",
+            "description": "Anzeigetext, englische Schreibweise – gleichwertig zu `titel`, das gewinnt. Die Dopplung ist Altlast und Thema von Issue #122."
+          },
+          "url": {
+            "type": "string",
+            "description": "Ziel. Absolute URLs (`://`) öffnen in einem neuen Tab."
+          },
+          "icon": {
+            "type": "string",
+            "description": "Pfad eines Icons, site-relativ (führender `/`). Das Theme liefert u. a. `/theme/academy/icons/icon-guide.svg`."
+          },
+          "audience": {
+            "type": "string",
+            "enum": [
+              "trainer",
+              "learner"
+            ],
+            "description": "Beschränkt DIESEN Eintrag auf eine Zielgruppe; in der anderen Ausgabe fehlt er. Bleibt kein Eintrag übrig, entfällt die Karte."
+          }
+        }
+      }
+    },
+    "markdown_copy": {
+      "description": "Knopf „Markdown kopieren“ im Hero. Vorgabe: nur im Layout `guide` an. Enthält die Seite Liquid-Anweisungen, unterdrückt das Theme den Knopf automatisch (der Rohtext wäre irreführend) – `force` erzwingt ihn trotzdem. Gelesen in `default`, `page`, `guide`, `visualization`.",
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "const": "force"
+        }
+      ]
+    },
+    "toc": {
+      "type": "boolean",
+      "description": "Sidebar-Karte „Auf dieser Seite“. Vorgabe: an. Gelesen in `default`, `page`, `guide` – die übrigen Layouts haben keine Sidebar."
+    },
+    "progress": {
+      "type": "boolean",
+      "description": "Sidebar-Karte „Fortschritt“ – zählt die Definition-of-Done-Haken. Vorgabe: nur im Layout `guide` an. Nicht zu verwechseln mit den Fortschrittsleisten von Präsentation und Simulation; die gehören zum Ablauf und sind nicht schaltbar."
+    },
+    "resources_box": {
+      "type": "boolean",
+      "description": "Sidebar-Karte „Weiterführende Informationen“. Vorgabe: an. Sie erscheint ohnehin nur, wenn die Seite `resources` trägt. Gelesen in `default`, `page`, `guide`."
+    },
+    "print_contact": {
+      "type": "boolean",
+      "description": "Kontaktzeile, die nur im Ausdruck erscheint und dort den Footer ersetzt. Vorgabe: an. Gelesen in `default`, `page`, `guide`, `visualization`, `presentation`."
+    },
+    "print_button": {
+      "type": "boolean",
+      "description": "Drucken-Knopf DIESER Ansicht. Vorgabe: an. Gelesen nur in `visualization` (Hero) und `presentation` (Werkzeugleiste); auf gewöhnlichen Seiten wäre er eine Dopplung von Strg/Cmd+P."
+    },
+    "qr_code": {
+      "type": "boolean",
+      "description": "QR-Code – der Rückweg vom Papier bzw. vom Beamer aufs eigene Gerät. Vorgabe: an. Der einzige Schalter, den alle Layouts lesen."
+    },
+    "einleitung": {
+      "type": "string",
+      "description": "Nur Layout `simulation`: Text, der vor dem Start des Ablaufs steht."
+    },
+    "erklaerspalte": {
+      "type": "boolean",
+      "description": "Nur Layout `simulation`: Erklärspalte neben dem Ablauf. `false` macht den Ablauf über die volle Breite."
+    },
+    "schrittdauer": {
+      "type": "integer",
+      "minimum": 100,
+      "description": "Nur Layout `simulation`: Dauer eines Schritts in Millisekunden (Vorgabe 2500)."
+    },
+    "tempo": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "Nur Layout `simulation`: Starttempo als Faktor auf `schrittdauer` (Vorgabe 1)."
+    }
+  },
+  "definitions": {
+    "blaetterlink": {
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x_": {
+          "description": "Repo-eigenes Feld – vom Theme nicht gelesen. Alles mit dem Präfix `x_` ist frei, damit eine geschlossene Struktur eigene Angaben nicht verbietet."
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Anzeigetext; ohne ihn zeigt das Theme den Titel der Zielseite."
+        },
+        "url": {
+          "type": "string",
+          "description": "Ziel, site-relativ (führender `/`)."
+        }
+      }
+    }
+  }
+}
