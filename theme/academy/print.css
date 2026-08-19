@@ -131,6 +131,41 @@
   }
   .avd-academy-print-contact a { color: #1A2627 !important; }
 
+  /* Aufdeckbarer Inhalt (`avd-academy-reveal`): auf Papier gibt es kein
+     Aufdecken. Der Inhalt steht EINGEBETTET an seiner Stelle – auch wenn das
+     `<details>` zu ist (Browser blenden dessen Kinder sonst aus). Overlay,
+     Panel-Fläche und Schließen-Kreuz entfallen; der Titel bleibt als Zeile
+     stehen, damit erkennbar ist, was der Abschnitt ist.
+     Ein Ausdruck mit Lücken wäre wertlos: Wer eine Unterlage auf Papier
+     durcharbeitet, kann nichts anklicken. */
+  .avd-academy-reveal > *:not(summary),
+  .avd-academy-reveal[open] > .avd-academy-reveal__body {
+    display: block !important;
+    position: static !important;
+    inset: auto !important;
+    width: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+  .avd-academy-reveal::before { display: none !important; }
+  .avd-academy-reveal__close { display: none !important; }
+  .avd-academy-reveal > summary {
+    border-bottom: 0 !important;
+    color: inherit !important;
+    font-weight: 600;
+  }
+  .avd-academy-reveal > summary::before { display: none !important; }
+  /* Der Titel im Panel wäre auf Papier eine Dopplung des `summary`. */
+  .avd-academy-reveal__title { display: none !important; }
+  /* Ausnahme: Was auf Papier NICHT erscheinen soll – Musterlösungen neben der
+     Übung. Ein Ausdruck, der die Lösung mitbringt, nimmt der Übung den Sinn. */
+  .avd-academy-reveal--screen-only { display: none !important; }
+
   /* Umbruch-Hygiene. */
   h1, h2, h3, h4 { break-after: avoid-page; }
   pre, blockquote, table, figure, img { break-inside: avoid; }

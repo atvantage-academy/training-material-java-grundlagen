@@ -69,13 +69,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Prozedurale Logik nach Java übertragen · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Übertrage vertraute prozedurale Konstrukte in gültige Java-Syntax – in vier Schritten von der ersten Rechnung bis zur überladenen Methode."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787065546"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787065546">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787065546">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787065546">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787065546"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787065546">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787065546" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1787065546" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787065546">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787115176"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787115176">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787115176">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787115176">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787115176"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787115176">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787115176" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787115176" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787115176">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,8 +89,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787065546">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787065546"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787115176">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787115176"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -143,11 +143,11 @@ selbst und schlag dort nach, wenn Du hängst.</p>
 jedem Teil läuft Dein Programm. Diesmal arbeitest Du <strong>allein in der IDE</strong> – das
 gemeinsame Vormachen aus dem letzten Modul entfällt.</p>
 
-<p>Am Ende jedes Teils kannst Du über <strong>„Vergleiche mit der Musterlösung“</strong> eine
-mögliche Lösung einblenden. Öffne sie erst, wenn Dein eigener Code läuft – oder wenn
-Du wirklich feststeckst. Es ist <em>eine</em> Lösung, nicht <em>die</em> Lösung: Deine darf anders
-aussehen und trotzdem richtig sein. (Im Ausdruck der Seite sind die Musterlösungen
-bewusst nicht enthalten.)</p>
+<p>Am Ende jedes Teils kannst Du die <strong>Musterlösung</strong> aufdecken – sie erscheint mittig
+über der Seite, ein Klick daneben schließt sie wieder. Öffne sie erst, wenn Dein
+eigener Code läuft – oder wenn Du wirklich feststeckst. Es ist <em>eine</em> Lösung, nicht
+<em>die</em> Lösung: Deine darf anders aussehen und trotzdem richtig sein. (Im Ausdruck der
+Seite sind die Musterlösungen bewusst nicht enthalten.)</p>
 
 <h2 id="lernziele">Lernziele</h2>
 
@@ -197,11 +197,8 @@ Was die einzelnen Schlüsselwörter davor bedeuten, klären wir später in der W
 Dein Programm aus? Lass den Befund erst einmal so stehen, Du reparierst ihn in
 Teil 2.</p>
 
-<div class="loesung">
-<a class="loesung-toggle" href="#loesung-teil-1" data-loesung="loesung-teil-1">Vergleiche mit der Musterlösung</a>
-<dialog id="loesung-teil-1" class="loesung-dialog" aria-label="Musterlösung Teil 1">
-<form method="dialog" class="loesung-dialog-head"><h3>Musterlösung – Teil 1: Zwei Messwerte, ein Mittelwert</h3><button aria-label="Musterlösung schließen">&times;</button></form>
-<div class="loesung-dialog-body">
+<details class="avd-academy-reveal avd-academy-reveal--screen-only">
+<summary>Musterlösung – Teil 1: Zwei Messwerte, ein Mittelwert</summary>
 <pre><code class="language-java">public class Wetterstation {
 
     public static void main(String[] args) {
@@ -216,9 +213,7 @@ Teil 2.</p>
 
 // Ausgabe: Mittelwert: 20.0
 // Erwartet hättest Du 20.5 – warum das so ist, klärt Teil 2.</code></pre>
-</div>
-</dialog>
-</div>
+</details>
 
 <h3 id="teil-2-die-berechnung-in-eine-methode-auslagern">Teil 2: Die Berechnung in eine Methode auslagern</h3>
 
@@ -240,11 +235,8 @@ und schneidet den Rest ab – <code>41 / 2</code> ergibt <code>20</code>, nicht 
 an der Stelle, an der er wirkt, und probier beide Varianten aus.</p>
 </blockquote>
 
-<div class="loesung">
-<a class="loesung-toggle" href="#loesung-teil-2" data-loesung="loesung-teil-2">Vergleiche mit der Musterlösung</a>
-<dialog id="loesung-teil-2" class="loesung-dialog" aria-label="Musterlösung Teil 2">
-<form method="dialog" class="loesung-dialog-head"><h3>Musterlösung – Teil 2: Die Berechnung in eine Methode auslagern</h3><button aria-label="Musterlösung schließen">&times;</button></form>
-<div class="loesung-dialog-body">
+<details class="avd-academy-reveal avd-academy-reveal--screen-only">
+<summary>Musterlösung – Teil 2: Die Berechnung in eine Methode auslagern</summary>
 <pre><code class="language-java">public class Wetterstation {
 
     public static void main(String[] args) {
@@ -261,9 +253,7 @@ an der Stelle, an der er wirkt, und probier beide Varianten aus.</p>
 
 // Ausgabe: Mittelwert: 20.5
 //          Mittelwert: 20.5</code></pre>
-</div>
-</dialog>
-</div>
+</details>
 
 <h3 id="teil-3-eine-ganze-messreihe">Teil 3: Eine ganze Messreihe</h3>
 
@@ -288,11 +278,8 @@ Fall mit einer Bedingung ab.</p>
 kurz fest, Teil 4 greift ihn auf.</p>
 </blockquote>
 
-<div class="loesung">
-<a class="loesung-toggle" href="#loesung-teil-3" data-loesung="loesung-teil-3">Vergleiche mit der Musterlösung</a>
-<dialog id="loesung-teil-3" class="loesung-dialog" aria-label="Musterlösung Teil 3">
-<form method="dialog" class="loesung-dialog-head"><h3>Musterlösung – Teil 3: Eine ganze Messreihe</h3><button aria-label="Musterlösung schließen">&times;</button></form>
-<div class="loesung-dialog-body">
+<details class="avd-academy-reveal avd-academy-reveal--screen-only">
+<summary>Musterlösung – Teil 3: Eine ganze Messreihe</summary>
 <pre><code class="language-java">public class Wetterstation {
 
     public static void main(String[] args) {
@@ -321,9 +308,7 @@ kurz fest, Teil 4 greift ihn auf.</p>
 
 // Ausgabe: Durchschnitt: 20.857142857142858
 //          Durchschnitt: 0.0</code></pre>
-</div>
-</dialog>
-</div>
+</details>
 
 <h3 id="teil-4-denselben-namen-zweimal--überladen">Teil 4: Denselben Namen zweimal – Überladen</h3>
 
@@ -339,11 +324,8 @@ dafür nicht genügen. Ruf die Variante aus Teil 3 auf, statt die Berechnung zu
 kopieren.</p>
 </blockquote>
 
-<div class="loesung">
-<a class="loesung-toggle" href="#loesung-teil-4" data-loesung="loesung-teil-4">Vergleiche mit der Musterlösung</a>
-<dialog id="loesung-teil-4" class="loesung-dialog" aria-label="Musterlösung Teil 4">
-<form method="dialog" class="loesung-dialog-head"><h3>Musterlösung – Teil 4: Denselben Namen zweimal – Überladen</h3><button aria-label="Musterlösung schließen">&times;</button></form>
-<div class="loesung-dialog-body">
+<details class="avd-academy-reveal avd-academy-reveal--screen-only">
+<summary>Musterlösung – Teil 4: Denselben Namen zweimal – Überladen</summary>
 <pre><code class="language-java">public class Wetterstation {
 
     public static void main(String[] args) {
@@ -388,9 +370,7 @@ kopieren.</p>
 //          Durchschnitt: 20.857142857142858
 //          Durchschnitt: 0.0
 //          Durchschnitt: -99.0</code></pre>
-</div>
-</dialog>
-</div>
+</details>
 
 <h3 id="für-schnelle-eine-dritte-variante">Für Schnelle: eine dritte Variante</h3>
 
@@ -410,62 +390,6 @@ Index, Länge und Elementzugriff bemerkst.</p>
   <li>Warum liefert die Division zweier <code>int</code>-Werte nicht den erwarteten Mittelwert – und wo genau muss der Cast stehen, damit er hilft?</li>
 </ul>
 
-<style>
-.loesung { margin: 1.1rem 0 0; }
-.loesung-toggle {
-  display: inline-flex; align-items: center; gap: .45rem;
-  font-size: .95rem; font-weight: 600; cursor: pointer;
-  text-decoration: none; border-bottom: 1px dashed currentColor;
-}
-.loesung-toggle::before { content: "🔍"; }
-.loesung-dialog {
-  position: fixed; inset: 0; margin: auto;
-  width: min(92vw, 780px); max-height: 85vh; padding: 0; overflow: hidden;
-  border: 1px solid var(--avd-academy-color-border, #e2e2e2);
-  border-radius: var(--radius-dark, 8px);
-  background: var(--avd-academy-color-bg, var(--color-background, #fff));
-  color: var(--avd-academy-color-text, inherit);
-  box-shadow: 0 24px 70px rgba(0, 0, 0, .35);
-}
-.loesung-dialog[open] { display: flex; flex-direction: column; }
-.loesung-dialog::backdrop { background: rgba(2, 6, 23, .6); }
-.loesung-dialog-head {
-  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
-  flex: 0 0 auto; margin: 0; padding: .85rem 1.2rem;
-  border-bottom: 1px solid var(--avd-academy-color-border, #e2e2e2);
-}
-.loesung-dialog-head h3 { margin: 0; font-size: 1.1rem; line-height: 1.3; }
-.loesung-dialog-head button {
-  border: 0; background: transparent; color: inherit;
-  font-size: 1.6rem; line-height: 1; cursor: pointer; padding: 0 .2rem;
-}
-.loesung-dialog-body { flex: 1 1 auto; padding: 1rem 1.2rem; overflow: auto; }
-.loesung-dialog-body pre { margin: 0; overflow-x: auto; }
-@media print { .loesung, .loesung-dialog { display: none !important; } }
-</style>
-
-<script>
-document.querySelectorAll("a[data-loesung]").forEach(function (link) {
-  link.addEventListener("click", function (event) {
-    event.preventDefault();
-    var dialog = document.getElementById(link.dataset.loesung);
-    if (!dialog) { return; }
-    if (typeof dialog.showModal === "function") { dialog.showModal(); }
-    else { dialog.setAttribute("open", ""); }
-  });
-});
-
-// Klick neben das Popup (auf den abgedunkelten Hintergrund) schließt es.
-document.querySelectorAll("dialog.loesung-dialog").forEach(function (dialog) {
-  dialog.addEventListener("click", function (event) {
-    var box = dialog.getBoundingClientRect();
-    var imPopup = event.clientX >= box.left && event.clientX <= box.right
-      && event.clientY >= box.top && event.clientY <= box.bottom;
-    if (!imPopup) { dialog.close(); }
-  });
-});
-</script>
-
 
 <textarea id="avd-academy-md-source" hidden aria-hidden="true"># Prozedurale Logik nach Java übertragen
 
@@ -480,11 +404,11 @@ Die Übung wächst in **vier Teilen**: Jeder Teil baut auf dem vorigen auf, und 
 jedem Teil läuft Dein Programm. Diesmal arbeitest Du **allein in der IDE** – das
 gemeinsame Vormachen aus dem letzten Modul entfällt.
 
-Am Ende jedes Teils kannst Du über **„Vergleiche mit der Musterlösung“** eine
-mögliche Lösung einblenden. Öffne sie erst, wenn Dein eigener Code läuft – oder wenn
-Du wirklich feststeckst. Es ist *eine* Lösung, nicht *die* Lösung: Deine darf anders
-aussehen und trotzdem richtig sein. (Im Ausdruck der Seite sind die Musterlösungen
-bewusst nicht enthalten.)
+Am Ende jedes Teils kannst Du die **Musterlösung** aufdecken – sie erscheint mittig
+über der Seite, ein Klick daneben schließt sie wieder. Öffne sie erst, wenn Dein
+eigener Code läuft – oder wenn Du wirklich feststeckst. Es ist *eine* Lösung, nicht
+*die* Lösung: Deine darf anders aussehen und trotzdem richtig sein. (Im Ausdruck der
+Seite sind die Musterlösungen bewusst nicht enthalten.)
 
 ## Lernziele
 
@@ -526,11 +450,8 @@ Sieh Dir das Ergebnis genau an: Für `17` und `24` erwartest Du `20.5` – was g
 Dein Programm aus? Lass den Befund erst einmal so stehen, Du reparierst ihn in
 Teil 2.
 
-&lt;div class=&quot;loesung&quot;&gt;
-&lt;a class=&quot;loesung-toggle&quot; href=&quot;#loesung-teil-1&quot; data-loesung=&quot;loesung-teil-1&quot;&gt;Vergleiche mit der Musterlösung&lt;/a&gt;
-&lt;dialog id=&quot;loesung-teil-1&quot; class=&quot;loesung-dialog&quot; aria-label=&quot;Musterlösung Teil 1&quot;&gt;
-&lt;form method=&quot;dialog&quot; class=&quot;loesung-dialog-head&quot;&gt;&lt;h3&gt;Musterlösung – Teil 1: Zwei Messwerte, ein Mittelwert&lt;/h3&gt;&lt;button aria-label=&quot;Musterlösung schließen&quot;&gt;&amp;times;&lt;/button&gt;&lt;/form&gt;
-&lt;div class=&quot;loesung-dialog-body&quot;&gt;
+&lt;details class=&quot;avd-academy-reveal avd-academy-reveal--screen-only&quot; markdown=&quot;0&quot;&gt;
+&lt;summary&gt;Musterlösung – Teil 1: Zwei Messwerte, ein Mittelwert&lt;/summary&gt;
 &lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;public class Wetterstation {
 
     public static void main(String[] args) {
@@ -545,9 +466,7 @@ Teil 2.
 
 // Ausgabe: Mittelwert: 20.0
 // Erwartet hättest Du 20.5 – warum das so ist, klärt Teil 2.&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/dialog&gt;
-&lt;/div&gt;
+&lt;/details&gt;
 
 ### Teil 2: Die Berechnung in eine Methode auslagern
 
@@ -565,11 +484,8 @@ wieder eine ganze Zahl. Ruf die Methode aus `main` mit mehreren Wertepaaren auf.
 &gt; `double` allein repariert das **nicht**: Da ist der Rest schon weg. Setze den Cast
 &gt; an der Stelle, an der er wirkt, und probier beide Varianten aus.
 
-&lt;div class=&quot;loesung&quot;&gt;
-&lt;a class=&quot;loesung-toggle&quot; href=&quot;#loesung-teil-2&quot; data-loesung=&quot;loesung-teil-2&quot;&gt;Vergleiche mit der Musterlösung&lt;/a&gt;
-&lt;dialog id=&quot;loesung-teil-2&quot; class=&quot;loesung-dialog&quot; aria-label=&quot;Musterlösung Teil 2&quot;&gt;
-&lt;form method=&quot;dialog&quot; class=&quot;loesung-dialog-head&quot;&gt;&lt;h3&gt;Musterlösung – Teil 2: Die Berechnung in eine Methode auslagern&lt;/h3&gt;&lt;button aria-label=&quot;Musterlösung schließen&quot;&gt;&amp;times;&lt;/button&gt;&lt;/form&gt;
-&lt;div class=&quot;loesung-dialog-body&quot;&gt;
+&lt;details class=&quot;avd-academy-reveal avd-academy-reveal--screen-only&quot; markdown=&quot;0&quot;&gt;
+&lt;summary&gt;Musterlösung – Teil 2: Die Berechnung in eine Methode auslagern&lt;/summary&gt;
 &lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;public class Wetterstation {
 
     public static void main(String[] args) {
@@ -586,9 +502,7 @@ wieder eine ganze Zahl. Ruf die Methode aus `main` mit mehreren Wertepaaren auf.
 
 // Ausgabe: Mittelwert: 20.5
 //          Mittelwert: 20.5&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/dialog&gt;
-&lt;/div&gt;
+&lt;/details&gt;
 
 ### Teil 3: Eine ganze Messreihe
 
@@ -609,11 +523,8 @@ Fall mit einer Bedingung ab.
 &gt; `0` behauptet 0 °C, obwohl gar nichts gemessen wurde. Halt diesen Zwiespalt
 &gt; kurz fest, Teil 4 greift ihn auf.
 
-&lt;div class=&quot;loesung&quot;&gt;
-&lt;a class=&quot;loesung-toggle&quot; href=&quot;#loesung-teil-3&quot; data-loesung=&quot;loesung-teil-3&quot;&gt;Vergleiche mit der Musterlösung&lt;/a&gt;
-&lt;dialog id=&quot;loesung-teil-3&quot; class=&quot;loesung-dialog&quot; aria-label=&quot;Musterlösung Teil 3&quot;&gt;
-&lt;form method=&quot;dialog&quot; class=&quot;loesung-dialog-head&quot;&gt;&lt;h3&gt;Musterlösung – Teil 3: Eine ganze Messreihe&lt;/h3&gt;&lt;button aria-label=&quot;Musterlösung schließen&quot;&gt;&amp;times;&lt;/button&gt;&lt;/form&gt;
-&lt;div class=&quot;loesung-dialog-body&quot;&gt;
+&lt;details class=&quot;avd-academy-reveal avd-academy-reveal--screen-only&quot; markdown=&quot;0&quot;&gt;
+&lt;summary&gt;Musterlösung – Teil 3: Eine ganze Messreihe&lt;/summary&gt;
 &lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;public class Wetterstation {
 
     public static void main(String[] args) {
@@ -642,9 +553,7 @@ Fall mit einer Bedingung ab.
 
 // Ausgabe: Durchschnitt: 20.857142857142858
 //          Durchschnitt: 0.0&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/dialog&gt;
-&lt;/div&gt;
+&lt;/details&gt;
 
 ### Teil 4: Denselben Namen zweimal – Überladen
 
@@ -658,11 +567,8 @@ mit gefüllter und mit leerer Messreihe – und gib die Ergebnisse aus.
 &gt; dafür nicht genügen. Ruf die Variante aus Teil 3 auf, statt die Berechnung zu
 &gt; kopieren.
 
-&lt;div class=&quot;loesung&quot;&gt;
-&lt;a class=&quot;loesung-toggle&quot; href=&quot;#loesung-teil-4&quot; data-loesung=&quot;loesung-teil-4&quot;&gt;Vergleiche mit der Musterlösung&lt;/a&gt;
-&lt;dialog id=&quot;loesung-teil-4&quot; class=&quot;loesung-dialog&quot; aria-label=&quot;Musterlösung Teil 4&quot;&gt;
-&lt;form method=&quot;dialog&quot; class=&quot;loesung-dialog-head&quot;&gt;&lt;h3&gt;Musterlösung – Teil 4: Denselben Namen zweimal – Überladen&lt;/h3&gt;&lt;button aria-label=&quot;Musterlösung schließen&quot;&gt;&amp;times;&lt;/button&gt;&lt;/form&gt;
-&lt;div class=&quot;loesung-dialog-body&quot;&gt;
+&lt;details class=&quot;avd-academy-reveal avd-academy-reveal--screen-only&quot; markdown=&quot;0&quot;&gt;
+&lt;summary&gt;Musterlösung – Teil 4: Denselben Namen zweimal – Überladen&lt;/summary&gt;
 &lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;public class Wetterstation {
 
     public static void main(String[] args) {
@@ -707,9 +613,7 @@ mit gefüllter und mit leerer Messreihe – und gib die Ergebnisse aus.
 //          Durchschnitt: 20.857142857142858
 //          Durchschnitt: 0.0
 //          Durchschnitt: -99.0&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/dialog&gt;
-&lt;/div&gt;
+&lt;/details&gt;
 
 ### Für Schnelle: eine dritte Variante
 
@@ -724,62 +628,6 @@ beiden Varianten sich für Dich flüssiger liest.
 
 * Was gehört zur Signatur einer Methode – und wodurch unterscheiden sich zwei überladene Methoden?
 * Warum liefert die Division zweier `int`-Werte nicht den erwarteten Mittelwert – und wo genau muss der Cast stehen, damit er hilft?
-
-&lt;style&gt;
-.loesung { margin: 1.1rem 0 0; }
-.loesung-toggle {
-  display: inline-flex; align-items: center; gap: .45rem;
-  font-size: .95rem; font-weight: 600; cursor: pointer;
-  text-decoration: none; border-bottom: 1px dashed currentColor;
-}
-.loesung-toggle::before { content: &quot;🔍&quot;; }
-.loesung-dialog {
-  position: fixed; inset: 0; margin: auto;
-  width: min(92vw, 780px); max-height: 85vh; padding: 0; overflow: hidden;
-  border: 1px solid var(--avd-academy-color-border, #e2e2e2);
-  border-radius: var(--radius-dark, 8px);
-  background: var(--avd-academy-color-bg, var(--color-background, #fff));
-  color: var(--avd-academy-color-text, inherit);
-  box-shadow: 0 24px 70px rgba(0, 0, 0, .35);
-}
-.loesung-dialog[open] { display: flex; flex-direction: column; }
-.loesung-dialog::backdrop { background: rgba(2, 6, 23, .6); }
-.loesung-dialog-head {
-  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
-  flex: 0 0 auto; margin: 0; padding: .85rem 1.2rem;
-  border-bottom: 1px solid var(--avd-academy-color-border, #e2e2e2);
-}
-.loesung-dialog-head h3 { margin: 0; font-size: 1.1rem; line-height: 1.3; }
-.loesung-dialog-head button {
-  border: 0; background: transparent; color: inherit;
-  font-size: 1.6rem; line-height: 1; cursor: pointer; padding: 0 .2rem;
-}
-.loesung-dialog-body { flex: 1 1 auto; padding: 1rem 1.2rem; overflow: auto; }
-.loesung-dialog-body pre { margin: 0; overflow-x: auto; }
-@media print { .loesung, .loesung-dialog { display: none !important; } }
-&lt;/style&gt;
-
-&lt;script&gt;
-document.querySelectorAll(&quot;a[data-loesung]&quot;).forEach(function (link) {
-  link.addEventListener(&quot;click&quot;, function (event) {
-    event.preventDefault();
-    var dialog = document.getElementById(link.dataset.loesung);
-    if (!dialog) { return; }
-    if (typeof dialog.showModal === &quot;function&quot;) { dialog.showModal(); }
-    else { dialog.setAttribute(&quot;open&quot;, &quot;&quot;); }
-  });
-});
-
-// Klick neben das Popup (auf den abgedunkelten Hintergrund) schließt es.
-document.querySelectorAll(&quot;dialog.loesung-dialog&quot;).forEach(function (dialog) {
-  dialog.addEventListener(&quot;click&quot;, function (event) {
-    var box = dialog.getBoundingClientRect();
-    var imPopup = event.clientX &gt;= box.left &amp;&amp; event.clientX &lt;= box.right
-      &amp;&amp; event.clientY &gt;= box.top &amp;&amp; event.clientY &lt;= box.bottom;
-    if (!imPopup) { dialog.close(); }
-  });
-});
-&lt;/script&gt;
 
 ## Weiterführende Informationen
 

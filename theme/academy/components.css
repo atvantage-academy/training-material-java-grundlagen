@@ -415,6 +415,87 @@ pre > .avd-academy-copy.is-copied { opacity: 1; }
 .avd-academy-card h2 a, .avd-academy-card h3 a,
 .avd-academy-card h4 a, .avd-academy-card h5 a { color: inherit; font-weight: inherit; }
 
+/* --- Aufdeckbarer Inhalt (Academy-Ergänzung) -------------------------------
+   Ein Titel, der wie ein Link aussieht; der Inhalt erscheint erst auf Klick,
+   mittig über der Seite. Wofür: Material, das den Lesefluss unterbrechen würde,
+   aber greifbar bleiben soll – Musterlösungen, Legenden, Abgrenzungstabellen,
+   Hintergrund zu einer Entscheidung.
+
+   AUFGEBAUT AUF `<details>`, nicht auf einem Klick-Handler. Das ist Absicht:
+   Ohne JavaScript bleibt es ein normaler Aufklapper, und der Inhalt ist
+   erreichbar. Ein Popup, das nur mit JS existiert, verliert im Fehlerfall
+   Schulungsinhalt – und genau das darf nicht passieren.
+
+   Die mittige Darstellung macht CSS allein (`[open]`), nicht das Skript: Der
+   native Umschalter von `<details>` schaltet `[open]`, daran hängen Overlay und
+   Panel. atvantage.js ergänzt nur die Bequemlichkeiten, die `<details>` nicht
+   mitbringt: Klick daneben und ESC schließen, und ein Rahmen um den Inhalt
+   (`__body`), damit Panel und Overlay getrennt liegen.
+
+   IM AUSDRUCK steht der Inhalt EINGEBETTET an seiner Stelle in der Seite, auch
+   wenn er zu ist – auf Papier gibt es kein Aufdecken, und ein Ausdruck mit
+   Lücken ist wertlos. Wer das für einzelne Stellen nicht will (Musterlösungen
+   neben der Übung!), setzt zusätzlich `--screen-only`.               */
+.avd-academy-reveal { margin: var(--avd-academy-space-4) 0; }
+.avd-academy-reveal > summary {
+  display: inline-flex; align-items: center; gap: var(--avd-academy-space-2);
+  width: fit-content;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--avd-academy-color-accent);
+  border-bottom: 1px dashed currentColor;
+  list-style: none;             /* Standard-Dreieck weg (Firefox) */
+}
+.avd-academy-reveal > summary::-webkit-details-marker { display: none; }
+.avd-academy-reveal > summary::before {
+  content: ""; flex: none; width: 1rem; height: 1rem;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-4.5-4.5'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-4.5-4.5'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.avd-academy-reveal > summary:hover,
+.avd-academy-reveal > summary:focus-visible { border-bottom-style: solid; }
+
+/* Abdunkelung hinter dem Panel. Sie sitzt am `details` selbst, damit kein
+   zusätzliches Element nötig ist – der Klick darauf schließt (atvantage.js). */
+.avd-academy-reveal[open]::before {
+  content: ""; position: fixed; inset: 0; z-index: 60;
+  background: rgba(2, 6, 23, .6);
+}
+
+/* Das Panel: mittig, begrenzt in Breite und Höhe, innen scrollbar. Ohne das
+   Skript (kein `__body`) greift dieselbe Regel für die direkten Kinder – dann
+   liegt der Inhalt ebenfalls mittig, nur ohne eigene Fläche pro Block. */
+.avd-academy-reveal[open] > .avd-academy-reveal__body {
+  position: fixed; inset: 0; margin: auto; z-index: 61;
+  /* `height: fit-content` ist nötig, nicht Kosmetik: Mit `inset: 0` sind oben UND
+     unten gesetzt, dadurch streckt sich das Panel bei `height: auto` über die
+     ganze Höhe – ein kurzer Inhalt stünde in einem fast leeren Kasten. */
+  width: min(92vw, 780px); height: fit-content; max-height: 85vh; overflow: auto;
+  padding: var(--avd-academy-space-6);
+  background: var(--avd-academy-color-bg);
+  color: var(--avd-academy-color-ink);
+  border: 1px solid var(--avd-academy-color-border);
+  border-radius: var(--radius-dark, 8px);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .35);
+}
+.avd-academy-reveal__body > :first-child { margin-top: 0; }
+.avd-academy-reveal__body > :last-child { margin-bottom: 0; }
+/* Der Titel wird im Panel wiederholt, damit sichtbar bleibt, was man geöffnet
+   hat – gesetzt von atvantage.js aus dem `summary`. */
+.avd-academy-reveal__title {
+  margin: 0 0 var(--avd-academy-space-4);
+  font-size: 1.05rem;
+  padding-bottom: var(--avd-academy-space-2);
+  border-bottom: 1px solid var(--avd-academy-color-border);
+}
+/* Schließen-Kreuz oben rechts im Panel (atvantage.js). */
+.avd-academy-reveal__close {
+  position: absolute; top: var(--avd-academy-space-3); right: var(--avd-academy-space-3);
+  border: 0; background: transparent; color: inherit;
+  font-size: 1.5rem; line-height: 1; cursor: pointer; padding: 0 .2rem;
+}
+
 /* --- Badge / Chip (Academy) ----------------------------------------------- */
 .avd-academy-badge {
   display: inline-block; font-size: var(--avd-academy-fs-sm); font-weight: 500;

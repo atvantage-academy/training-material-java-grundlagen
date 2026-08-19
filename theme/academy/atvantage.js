@@ -452,6 +452,104 @@
     });
   }
 
+  /* --- Aufdeckbarer Inhalt (`avd-academy-reveal`) --------------------------
+     Die mittige Darstellung macht CSS an `[open]`; hier kommt nur dazu, was
+     `<details>` nicht mitbringt:
+       - ein Rahmen um den Inhalt (`__body`), damit Panel und Overlay getrennt
+         liegen und das Panel eine eigene Fläche bekommt,
+       - der Titel im Panel (aus dem `summary`), damit sichtbar bleibt, was
+         geöffnet ist,
+       - Klick daneben, ESC und ein Schließen-Kreuz.
+     Ohne dieses Skript bleibt der Baustein ein gewöhnlicher Aufklapper – der
+     Inhalt ist dann erreichbar, nur nicht mittig. Kein Schulungsinhalt hängt
+     also am JavaScript. */
+  function initReveals() {
+    document.querySelectorAll("details.avd-academy-reveal").forEach(function (details) {
+      var summary = details.querySelector(":scope > summary");
+      if (!summary) return;
+
+      var body = details.querySelector(":scope > .avd-academy-reveal__body");
+      if (!body) {
+        body = document.createElement("div");
+        body.className = "avd-academy-reveal__body";
+        // Alles außer dem summary in den Rahmen umhängen (Reihenfolge bleibt).
+        var kinder = [];
+        details.childNodes.forEach(function (n) { if (n !== summary) kinder.push(n); });
+        kinder.forEach(function (n) { body.appendChild(n); });
+        details.appendChild(body);
+      }
+
+      if (!body.querySelector(".avd-academy-reveal__title")) {
+        var titel = document.createElement("p");
+        titel.className = "avd-academy-reveal__title";
+        titel.textContent = summary.textContent.trim();
+        body.insertBefore(titel, body.firstChild);
+      }
+
+      if (!body.querySelector(".avd-academy-reveal__close")) {
+        var knopf = document.createElement("button");
+        knopf.type = "button";
+        knopf.className = "avd-academy-reveal__close";
+        knopf.setAttribute("aria-label", "Schließen");
+        knopf.innerHTML = "&times;";
+        knopf.addEventListener("click", function () { details.open = false; });
+        body.appendChild(knopf);
+      }
+
+      /* Klick NEBEN das Panel schließt. Der Klick auf die Abdunkelung landet am
+         `details` selbst (sie ist dessen ::before), Klicks im Panel nicht – die
+         fängt der zweite Handler ab. */
+      details.addEventListener("click", function (event) {
+        if (!details.open) return;
+        if (event.target === summary || summary.contains(event.target)) return;
+        if (body.contains(event.target)) return;
+        details.open = false;
+      });
+    });
+
+    /* ESC schließt das oberste offene Panel. `<details>` kennt das nicht. */
+    document.addEventListener("keydown", function (event) {
+      if (event.key !== "Escape") return;
+      var offen = document.querySelectorAll("details.avd-academy-reveal[open]");
+      if (!offen.length) return;
+      offen[offen.length - 1].open = false;
+    });
+
+    /* FÜR DEN AUSDRUCK AUFKLAPPEN. Das muss hier passieren und lässt sich NICHT
+       in print.css lösen: Ein geschlossenes `<details>` verbirgt seinen Inhalt
+       über einen Slot im Shadow DOM (`content-visibility`), nicht über ein
+       `display: none` an den Kindern – von außen ist das per CSS nicht
+       aufzuheben. print.css baut anschließend nur noch Overlay und Panelfläche
+       zurück, damit der Inhalt eingebettet in der Seite steht.
+       `--screen-only` bleibt zu (und wird in print.css ausgeblendet): Ein
+       Ausdruck, der die Musterlösung mitbringt, nimmt der Übung den Sinn.
+       Nach dem Druck wird der vorherige Zustand wiederhergestellt. */
+    var fuerDruckGeoeffnet = [];
+    function vorDemDruck() {
+      fuerDruckGeoeffnet = [];
+      document.querySelectorAll("details.avd-academy-reveal").forEach(function (d) {
+        if (d.classList.contains("avd-academy-reveal--screen-only")) return;
+        if (d.open) return;
+        d.open = true;
+        fuerDruckGeoeffnet.push(d);
+      });
+    }
+    function nachDemDruck() {
+      fuerDruckGeoeffnet.forEach(function (d) { d.open = false; });
+      fuerDruckGeoeffnet = [];
+    }
+    window.addEventListener("beforeprint", vorDemDruck);
+    window.addEventListener("afterprint", nachDemDruck);
+    /* Älteres Safari kennt beforeprint/afterprint nicht, wohl aber den
+       Medienwechsel. */
+    if (window.matchMedia) {
+      var mq = window.matchMedia("print");
+      var beiWechsel = function (e) { if (e.matches) { vorDemDruck(); } else { nachDemDruck(); } };
+      if (mq.addEventListener) { mq.addEventListener("change", beiWechsel); }
+      else if (mq.addListener) { mq.addListener(beiWechsel); }
+    }
+  }
+
   function init() {
     initBackButtons();
     initThemeToggle();
@@ -463,6 +561,7 @@
     initPageQr();
     initGuideProgress();
     initGuideToc();
+    initReveals();
   }
 
   if (document.readyState === "loading") {
