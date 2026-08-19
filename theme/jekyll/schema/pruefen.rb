@@ -24,7 +24,9 @@
 #                  KEINE Seite gefunden). Eine Prüfung über die leere Menge ist
 #                  kein Erfolg – sie ist ein Befund.
 #
-# Schema-Version: siehe version.txt neben dieser Datei.
+# Schema-Versionen: frontmatter.version.txt und config.version.txt neben dieser Datei.
+# JE SCHEMA eine eigene Zaehlung – die beiden entwickeln sich unabhaengig, und eine
+# gemeinsame Nummer haette bei jeder Aenderung des einen auch das andere „neu" gemacht.
 # =============================================================================
 require 'yaml'
 require 'json'
@@ -39,13 +41,17 @@ SCHLUESSELWOERTER = %w[
 # Validator – Draft-07-Ausschnitt
 # ---------------------------------------------------------------------------
 class Validator
-  def initialize(schema_dir)
-    @dir = schema_dir
+  def initialize
     @dokumente = {}
   end
 
+  # Schluessel ist der ABSOLUTE Pfad. Damit loest `$ref` relativ zur Datei auf, in
+  # der er steht – und der Pruefer versteht beide Ablagen: die flache im Paket
+  # (`frontmatter.schema.json` neben `config.schema.json`) und die veroeffentlichte
+  # (`schemas/config/1/schema.json` verweist auf `../../frontmatter/1/schema.json`).
   def dokument(datei)
-    @dokumente[datei] ||= JSON.parse(File.read(File.join(@dir, datei)))
+    pfad = File.expand_path(datei)
+    @dokumente[pfad] ||= JSON.parse(File.read(pfad))
   end
 
   # Liefert eine Liste von Meldungen [{zeiger:, text:}].
@@ -62,7 +68,11 @@ class Validator
 
     if (ref = schema['$ref'])
       ziel_datei, fragment = ref.split('#', 2)
-      ziel_datei = datei if ziel_datei.nil? || ziel_datei.empty?
+      ziel_datei = if ziel_datei.nil? || ziel_datei.empty?
+                     datei
+                   else
+                     File.expand_path(ziel_datei, File.dirname(datei))
+                   end
       unter = dokument(ziel_datei)
       (fragment || '').split('/').reject(&:empty?).each do |teil|
         unter = unter[teil.gsub('~1', '/').gsub('~0', '~')]
@@ -244,21 +254,25 @@ end
 # Warum das eine eigene Prüfung ist: Ein Schlüsselwort, das dieser Validator nicht
 # kennt (etwa `pattern`), fällt sonst erst auf, wenn eine Seite den betroffenen
 # Zweig überhaupt erreicht – bis dahin urteilen IDE und Pipeline verschieden.
-def selbsttest(schema_dir)
+def selbsttest(pfade)
   fehler = []
-  dateien = %w[frontmatter.schema.json config.schema.json]
   bekannt = SCHLUESSELWOERTER + %w[$schema $id title description examples definitions default]
 
+  # Schluessel ist der Dateiname, wie ihn ein `$ref` schreibt – so bleibt die
+  # Referenzpruefung unabhaengig davon, wo die Dateien liegen.
   dokumente = {}
-  dateien.each do |datei|
-    pfad = File.join(schema_dir, datei)
+  namen = {}
+  pfade.each do |rolle, pfad|
+    name = File.basename(pfad)
+    namen[rolle] = name
     begin
-      dokumente[datei] = JSON.parse(File.read(pfad))
+      dokumente[name] = JSON.parse(File.read(pfad))
     rescue JSON::ParserError => e
-      fehler << "#{datei}: kein gültiges JSON – #{e.message}"
+      fehler << "#{name}: kein gültiges JSON – #{e.message}"
     end
   end
   return fehler unless fehler.empty?
+  dateien = namen.values
 
   # Rekursiv durch alle Schema-Knoten. Ein Knoten ist ein Schema, wenn er als
   # Wert an einer Schema-Stelle steht – deshalb wird über die bekannten
@@ -273,7 +287,7 @@ def selbsttest(schema_dir)
     if (ref = knoten['$ref'])
       ziel, fragment = ref.split('#', 2)
       ziel = datei if ziel.nil? || ziel.empty?
-      doc = dokumente[ziel]
+      doc = dokumente[File.basename(ziel)]
       if doc.nil?
         fehler << "#{datei}#{pfad}: `$ref` zeigt auf #{ziel} – diese Datei gehört nicht zum Schema-Satz."
       else
@@ -293,6 +307,19 @@ def selbsttest(schema_dir)
     end
   end
   dateien.each { |datei| pruefe.call(dokumente[datei], datei, '') }
+
+  # KEIN PFLICHTFELD IM FRONT MATTER. Eine Seite ohne Front Matter muss bauen, und
+  # zwar richtig – wer eine .md anlegt, soll schreiben koennen, ohne vorher eine
+  # Feldliste zu lesen. Ein `required` auf oberster Ebene waere genau das Gegenteil
+  # und faellt sonst niemandem auf, bis ein bestehendes Repo rot wird.
+  # `required` INNERHALB einer Unterstruktur bleibt erlaubt: Ein resources-Eintrag
+  # ohne `url` ist kein Standardfall, sondern ein halber Eintrag.
+  wurzel_required = dokumente[namen[:frontmatter]]['required']
+  unless wurzel_required.nil?
+    fehler << 'frontmatter.schema.json: `required` auf oberster Ebene ist nicht erlaubt ' \
+              "(#{Array(wurzel_required).join(', ')}). Jedes Front-Matter-Feld ist optional – " \
+              'das Theme darf kein Feld verlangen. Stattdessen einen Standardwert vorsehen.'
+  end
   fehler
 end
 
@@ -302,12 +329,16 @@ end
 wurzel = Dir.pwd
 schema_dir = __dir__
 configs = []
+fm_schema = nil
+cfg_schema = nil
 selbsttest_nur = false
 argv = ARGV.dup
 until argv.empty?
   case (arg = argv.shift)
   when '--wurzel'  then wurzel = argv.shift
   when '--schemas' then schema_dir = argv.shift
+  when '--frontmatter-schema' then fm_schema = argv.shift
+  when '--config-schema'      then cfg_schema = argv.shift
   when '--config'  then configs << argv.shift
   when '--selbsttest' then selbsttest_nur = true
   when '--hilfe', '-h'
@@ -319,18 +350,26 @@ until argv.empty?
   end
 end
 
-%w[frontmatter.schema.json config.schema.json].each do |f|
-  next if File.exist?(File.join(schema_dir, f))
-  warn "FEHLER: Schema #{f} fehlt in #{schema_dir}."
-  warn '       Das Theme liefert die Schemas unter theme/jekyll/schema/ aus; ohne sie'
-  warn '       gibt es keine Prüfung – und eine Prüfung, die nichts prüft, ist kein Erfolg.'
+# Die beiden Schemas: entweder ueber --schemas (flache Ablage im Paket) oder
+# einzeln ueber --frontmatter-schema/--config-schema (veroeffentlichte Ablage,
+# `schemas/«name»/«version»/schema.json`). Ohne Angabe gilt das Verzeichnis dieser Datei.
+pfade = {
+  frontmatter: fm_schema || File.join(schema_dir, 'frontmatter.schema.json'),
+  config: cfg_schema || File.join(schema_dir, 'config.schema.json')
+}
+pfade.each do |rolle, pfad|
+  next if File.exist?(pfad)
+  warn "FEHLER: Das #{rolle == :config ? 'Konfigurations' : 'Front-Matter'}-Schema fehlt: #{pfad}"
+  warn '       Das Theme liefert die Schemas unter theme/jekyll/schema/ aus, die Doku-Site'
+  warn '       unter /schemas/«name»/«version»/schema.json. Ohne sie gibt es keine Prüfung –'
+  warn '       und eine Prüfung, die nichts prüft, ist kein Erfolg.'
   exit 2
 end
 
 if selbsttest_nur
-  fehler = selbsttest(schema_dir)
+  fehler = selbsttest(pfade)
   if fehler.empty?
-    puts "Schema-Selbsttest bestanden (#{schema_dir})."
+    puts "Schema-Selbsttest bestanden (#{pfade.values.map { |p| File.basename(File.dirname(p)) + '/' + File.basename(p) }.join(', ')})."
     exit 0
   end
   warn "FEHLER: #{fehler.size} Problem(e) in den Schemas selbst:"
@@ -339,8 +378,22 @@ if selbsttest_nur
   exit 1
 end
 
-validator = Validator.new(schema_dir)
-version = File.exist?(File.join(schema_dir, 'version.txt')) ? File.read(File.join(schema_dir, 'version.txt')).strip : '?'
+validator = Validator.new
+def schema_version(dir, name)
+  datei = File.join(dir, "#{name}.version.txt")
+  File.exist?(datei) ? File.read(datei).strip : '?'
+end
+# Version: die Datei neben dem Schema (veroeffentlichte Ablage: schemas/«name»/version.txt,
+# Paket: «name».version.txt). Fehlt sie, steht dort ein Fragezeichen statt einer Erfindung.
+def version_von(pfad, name)
+  kandidaten = [
+    File.join(File.dirname(pfad), "#{name}.version.txt"),
+    File.join(File.dirname(pfad), '..', 'version.txt')
+  ]
+  kandidaten.each { |k| return File.read(k).strip if File.exist?(k) }
+  '?'
+end
+version = "Front Matter #{version_von(pfade[:frontmatter], 'frontmatter')} / Config #{version_von(pfade[:config], 'config')}"
 configs = [File.join(wurzel, '_config.yml')] if configs.empty?
 
 meldungen = []
@@ -360,7 +413,7 @@ configs.each do |cfg|
   end
   ausschluss += Array(daten['exclude'])
   anzeige = cfg.sub(/\A#{Regexp.escape(wurzel)}\/?/, '')
-  validator.pruefen(daten, validator.dokument('config.schema.json'), 'config.schema.json').each do |f|
+  validator.pruefen(daten, validator.dokument(pfade[:config]), pfade[:config]).each do |f|
     zeile = zeile_von(cfg, f[:zeiger], 0)
     meldungen << "#{anzeige}#{zeile ? ":#{zeile}" : ''}: #{f[:zeiger].empty? ? '' : "`#{f[:zeiger].sub(%r{\A/}, '').gsub('/', '.')}` "}#{f[:text]}"
   end
@@ -378,7 +431,7 @@ Dir.glob(File.join(wurzel, '**', '*.{md,markdown,html}')).sort.each do |pfad|
   end
   seiten += 1
   next if daten.nil?
-  validator.pruefen(daten, validator.dokument('frontmatter.schema.json'), 'frontmatter.schema.json').each do |f|
+  validator.pruefen(daten, validator.dokument(pfade[:frontmatter]), pfade[:frontmatter]).each do |f|
     zeile = zeile_von(pfad, f[:zeiger], 1)
     meldungen << "#{rel}#{zeile ? ":#{zeile}" : ''}: #{f[:zeiger].empty? ? '' : "`#{f[:zeiger].sub(%r{\A/}, '').gsub('/', '.')}` "}#{f[:text]}"
   end
@@ -397,7 +450,7 @@ if meldungen.empty?
   exit 0
 end
 
-warn "FEHLER: #{meldungen.size} Verstoß/Verstöße gegen die Academy-Schemas (Version #{version}):"
+warn "FEHLER: #{meldungen.size} Verstoß/Verstöße gegen die Academy-Schemas (#{version}):"
 warn ''
 meldungen.each { |m| warn "  #{m}" }
 warn ''

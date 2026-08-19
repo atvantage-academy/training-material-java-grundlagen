@@ -506,6 +506,38 @@ pre > .avd-academy-copy.is-copied { opacity: 1; }
 .avd-academy-reveal > summary:hover,
 .avd-academy-reveal > summary:focus-visible { border-bottom-style: solid; }
 
+/* --- Variante `--info`: kompakte Schaltfläche statt Titelzeile ---------------
+   Für Stellen ohne Platz für einen Titel – eine Tabellenzelle, das Ende einer
+   Zeile. Die Auslösung ist ein runder Knopf mit Info-Zeichen; der Titel steckt
+   als visuell verborgener Text im `summary` und ist damit NICHT weg: Screenreader
+   lesen ihn, und atvantage.js übernimmt ihn als Überschrift des Panels.
+
+       <details class="avd-academy-reveal avd-academy-reveal--info" markdown="1">
+       <summary><span class="avd-academy-visually-hidden">«Titel»</span></summary>
+       …
+       </details>
+
+   Das Zeichen ist eine CSS-Maske in `currentColor`, kein Emoji – ein Emoji sieht
+   je Plattform anders aus, lässt sich nicht einfärben und folgt der Schriftgröße
+   nicht. Ohne `margin`, damit der Knopf in einer Tabellenzeile nicht ausbricht. */
+.avd-academy-reveal--info { display: inline-block; margin: 0; vertical-align: middle; }
+.avd-academy-reveal--info > summary {
+  width: 1.4rem; height: 1.4rem; padding: 0; gap: 0;
+  justify-content: center;
+  border-bottom: 0; border-radius: 999px;
+  background: color-mix(in srgb, var(--avd-academy-color-accent) 16%, transparent);
+}
+.avd-academy-reveal--info > summary:hover,
+.avd-academy-reveal--info > summary:focus-visible {
+  border-bottom: 0;
+  background: color-mix(in srgb, var(--avd-academy-color-accent) 34%, transparent);
+}
+.avd-academy-reveal--info > summary::before {
+  width: .95rem; height: .95rem;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 2a10 10 0 100 20 10 10 0 000-20zm0 2a8 8 0 110 16 8 8 0 010-16zm-1.1 6.4h2.2v7h-2.2zm0-4h2.2v2.2h-2.2z'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 2a10 10 0 100 20 10 10 0 000-20zm0 2a8 8 0 110 16 8 8 0 010-16zm-1.1 6.4h2.2v7h-2.2zm0-4h2.2v2.2h-2.2z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
 /* Abdunkelung hinter dem Panel. Sie sitzt am `details` selbst, damit kein
    zusätzliches Element nötig ist – der Klick darauf schließt (atvantage.js). */
 .avd-academy-reveal[open]::before {

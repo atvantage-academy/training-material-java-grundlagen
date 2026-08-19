@@ -69,13 +69,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Java-Syntax auf einen Blick · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Kompakte Übersicht der Java-Grundsyntax: Einstieg über main, primitive Datentypen, Variablen, Strings und Arrays, Typumwandlung, Methoden und Kontrollstrukturen."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787140907"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787140907">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787140907">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787140907">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787140907"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787140907">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787140907" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1787140907" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787140907">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787146837"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787146837">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787146837">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787146837">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787146837"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787146837">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787146837" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787146837" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787146837">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,8 +89,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787140907">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787140907"></head><body class="avd-academy-guide avd-academy-guide--viz">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787146837">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787146837"></head><body class="avd-academy-guide avd-academy-guide--viz">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a><section class="avd-academy-guide-hero avd-academy-guide-hero--slim"><div class="avd-academy-guide-hero__meta">
       <div class="avd-academy-guide-hero__tags">
       </div>
@@ -219,7 +219,7 @@
 int hexadezimal = 0x2A;
 
 // binär, Präfix 0b → 42
-int binaer = 0b101010;
+int binär = 0b101010;
 
 // oktal, führende 0 → 42
 int oktal = 052;
@@ -363,7 +363,7 @@ int[] direkt = { 1250, -300, 80 };
 <pre><code class="language-java">int cent = 1250;
 
 // int → long
-long gross = cent;
+long groß = cent;
 
 // int → double: 1250.0
 double genau = cent;
@@ -381,10 +381,10 @@ int code = c;</code></pre>
 // schneidet ab, rundet nicht → 12
 int cent = (int) zins;
 
-int gross = 200;
+int groß = 200;
 
 // passt nicht in 8 Bit, Überlauf → -56
-byte klein = (byte) gross;
+byte klein = (byte) groß;
 
 // int falsch = zins;  → Fehler, der Cast fehlt</code></pre>
 <p>Der Cast <code>(typ)</code> ist Deine Zusicherung, den möglichen Verlust in Kauf zu nehmen.</p>
@@ -430,8 +430,8 @@ static boolean istPositiv(int cent) {
     return cent / 100 + "," + Math.abs(cent % 100);
 }
 
-static String format(int cent, String waehrung) {
-    return format(cent) + " " + waehrung;
+static String format(int cent, String währung) {
+    return format(cent) + " " + währung;
 }</code></pre>
 <p>Gleicher Name, <strong>verschiedene Parameterlisten</strong> – also verschiedene Signaturen. Der Compiler wählt anhand der Argumente aus. Ein anderer Rückgabetyp allein genügt <strong>nicht</strong>.</p>
 </div>

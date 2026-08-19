@@ -60,13 +60,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Referenztypen · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Vier Szenarien durch den Speicher: Was bei jeder Codezeile im Thread Stack und im Heap passiert – Abgrenzung zu primitiven Typen, Objektgeflecht, Identität gegen Inhalt, this und static."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787140907"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787140907">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787140907">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787140907">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787140907"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787140907">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787140907" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1787140907" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787140907">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787146837"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787146837">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787146837">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787146837">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787146837"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787146837">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787146837" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787146837" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787146837">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -79,8 +79,8 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/training-material-java-se/theme/atvantage/assets/icon-180.png">
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/simulation.css?v=1787140907"><script src="/training-material-java-se/theme/jekyll/simulation.js?v=1787140907"></script>
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787140907"></head>
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/simulation.css?v=1787146837"><script src="/training-material-java-se/theme/jekyll/simulation.js?v=1787146837"></script>
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787146837"></head>
 <body class="avd-academy-sim" data-avd-academy-sim data-avd-academy-sim-titel="Referenztypen"
       data-avd-academy-sim-starttempo="1"
       data-avd-academy-sim-schrittdauer="3200">
@@ -734,7 +734,7 @@ int größer = Math.max(3, 7);</code></pre>
   var stackBox = document.getElementById("speicher-stack");
   var heapBox  = document.getElementById("speicher-heap");
   var svg      = document.getElementById("speicher-pfeile");
-  var buehne   = document.querySelector(".speicher");
+  var bühne   = document.querySelector(".speicher");
 
   /* ---------------------------------------------------------------------------
      1) AUSGANGSLAGE + ZEICHNEN
@@ -850,7 +850,7 @@ int größer = Math.max(3, 7);</code></pre>
   function pfeile(s, animiert) {
     letzterStand = s;
     svg.querySelectorAll(".speicher__pfeil").forEach(function (p) { p.remove(); });
-    var rahmen = buehne.getBoundingClientRect();
+    var rahmen = bühne.getBoundingClientRect();
     var spur = 0;   // je Pfeil eine eigene Höhe für das Zwischenstück
 
     s.stack.forEach(function (v) {
@@ -891,7 +891,7 @@ int größer = Math.max(3, 7);</code></pre>
     var d = "M " + punkte[0][0] + " " + punkte[0][1];
     for (var i = 1; i < punkte.length - 1; i++) {
       var vor = punkte[i - 1], ecke = punkte[i], nach = punkte[i + 1];
-      var r = Math.min(radius, laenge(vor, ecke) / 2, laenge(ecke, nach) / 2);
+      var r = Math.min(radius, länge(vor, ecke) / 2, länge(ecke, nach) / 2);
       var a = weg(ecke, vor, r);      // r weit von der Ecke Richtung Vorgänger
       var b = weg(ecke, nach, r);     // r weit von der Ecke Richtung Nachfolger
       d += " L " + a[0] + " " + a[1] +
@@ -901,10 +901,10 @@ int größer = Math.max(3, 7);</code></pre>
     return d + " L " + letzter[0] + " " + letzter[1];
   }
 
-  function laenge(p, q) { return Math.hypot(q[0] - p[0], q[1] - p[1]); }
+  function länge(p, q) { return Math.hypot(q[0] - p[0], q[1] - p[1]); }
 
   function weg(von, zu, r) {
-    var l = laenge(von, zu) || 1;
+    var l = länge(von, zu) || 1;
     return [von[0] + (zu[0] - von[0]) / l * r, von[1] + (zu[1] - von[1]) / l * r];
   }
 
@@ -1146,10 +1146,10 @@ int größer = Math.max(3, 7);</code></pre>
     // `data-kontext` markiert Blöcke, die NICHT durchlaufen werden – etwa eine
     // Klassendefinition, die als Kulisse danebensteht. Sie zählen auch nicht mit,
     // sonst verschöbe sich die Nummerierung des Ablaufs.
-    var bloecke = document.querySelectorAll(
+    var blöcke = document.querySelectorAll(
       '[data-avd-academy-sim-szene="' + kid + '"] .avd-academy-sim-code:not([data-kontext])');
     var rest = (n === null || n === undefined || n < 0) ? -1 : n;
-    Array.prototype.forEach.call(bloecke, function (block) {
+    Array.prototype.forEach.call(blöcke, function (block) {
       var code = block.querySelector("code");
       var anzahl = code ? code.textContent.replace(/\n$/, "").split("\n").length : 0;
       if (rest >= 0 && rest < anzahl) {
@@ -1172,7 +1172,7 @@ int größer = Math.max(3, 7);</code></pre>
     return k;
   }
 
-  function objektFuellen(k, o, kid) {
+  function objektFüllen(k, o, kid) {
     k.querySelector(".speicher__objekt-kopf").textContent = o.adresse + " : " + o.klasse;
     var felder = k.querySelector(".speicher__objekt-felder");
     var alt = felder.textContent;
@@ -1203,10 +1203,10 @@ int größer = Math.max(3, 7);</code></pre>
      die Route läuft links an den Tafeln vorbei (siehe Szenario 1). */
   function pfeileZeichnen(kid, verbindungen, animiert) {
     var svg = el(kid + "-pfeile");
-    var buehne = svg && svg.parentNode;
-    if (!svg || !buehne) return;
+    var bühne = svg && svg.parentNode;
+    if (!svg || !bühne) return;
     svg.querySelectorAll(".speicher__pfeil").forEach(function (p) { p.remove(); });
-    var rahmen = buehne.getBoundingClientRect();
+    var rahmen = bühne.getBoundingClientRect();
     verbindungen.forEach(function (v, spur) {
       var von = el(v.von), nach = el(v.nach);
       if (!von || !nach) return;
@@ -1290,10 +1290,10 @@ int größer = Math.max(3, 7);</code></pre>
       key: function (o) { return o.id; },
       create: objektKarte,
       update: function (k, o) {
-        var geaendert = objektFuellen(k, o, kid);
+        var geändert = objektFüllen(k, o, kid);
         k.classList.toggle("is-aktiv", s.betont === o.id);
         if (o.spalte !== undefined) k.style.order = o.spalte;
-        if (geaendert && ctx.animiert) sim.puls(k);
+        if (geändert && ctx.animiert) sim.puls(k);
       }
     });
 

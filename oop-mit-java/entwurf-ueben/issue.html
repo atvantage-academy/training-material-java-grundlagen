@@ -69,13 +69,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Entwurf üben: zwei knifflige Fälle · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Zwei knifflige Entwurfsaufgaben zur Wiederholung: ein Dateisystem, das sich selbst enthält – und ein Quadrat, das ein Rechteck sein will."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787140907"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787140907">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787140907">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787140907">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787140907"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787140907">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787140907" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1787140907" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787140907">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787146837"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787146837">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787146837">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787146837">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787146837"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787146837">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787146837" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787146837" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787146837">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,8 +89,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787140907">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787140907"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787146837">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787146837"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
   <div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
@@ -116,7 +116,7 @@
   </div>
 </header>
 <section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Entwurf üben: zwei knifflige Fälle</span></nav><div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 50 Minuten</span><span class="avd-academy-tag">Vererbung</span><span class="avd-academy-tag">Interfaces</span><span class="avd-academy-tag">Entwurf</span>
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 50 Minuten</span><span class="avd-academy-tag">Vererbung</span><span class="avd-academy-tag">Interfaces</span><span class="avd-academy-tag">Entwurf</span><span class="avd-academy-tag">Modellierung</span>
       </div>
       <div class="avd-academy-guide-hero__actions">
         <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
@@ -145,6 +145,8 @@ Haken. Genau darum geht es – notier Dir, was an Deinem Weg unangenehm ist.</p>
 <ul>
   <li>modellierst eine Struktur, in der ein Teil wieder das Ganze enthalten kann.</li>
   <li>führst eine Berechnung über eine solche Struktur, ohne die Arten zu unterscheiden.</li>
+  <li>prüfst Dein Diagramm gegen den fertigen Code und ziehst es nach, wo die Umsetzung
+etwas anderes gezeigt hat – und verwirfst einen Entwurf, wenn der Code ihn widerlegt.</li>
   <li>wägst mehrere Entwürfe gegeneinander ab und benennst die Kosten jedes einzelnen.</li>
   <li>erkennst, dass eine sprachlich richtige „ist ein“-Aussage im Code falsch sein kann.</li>
 </ul>
@@ -170,12 +172,31 @@ was darin liegt: aus den Dateien und aus den Unterordnern.</p>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Die Größe eines Ordners wird aus seinem Inhalt berechnet, über beliebig viele Ebenen.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Die Berechnung unterscheidet <strong>nicht</strong> zwischen Datei und Ordner – kein <code>instanceof</code>, keine Fallunterscheidung.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Ein Beispielbaum mit mindestens drei Ebenen wird in <code>Main</code> aufgebaut und seine Gesamtgröße ausgegeben.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Dein Diagramm passt am Ende zum Code – oder Du hast notiert, <strong>wo es abweicht und warum</strong>.</li>
 </ul>
 
+<h3 id="arbeitsschritte">Arbeitsschritte</h3>
+
+<p><strong>1. Modellieren – auf Papier.</strong> Zeichne die Klassen und die Beziehung zwischen
+ihnen, bevor Du eine Zeile tippst. Die entscheidende Frage steckt im Diagramm, nicht
+im Code: <strong>Was genau enthält ein Ordner?</strong> Zähl auf, was hineindarf, und such einen
+Oberbegriff dafür – Du hast ihn schon gezeichnet.</p>
+
+<p><strong>2. Implementieren – in Java.</strong> Setz genau das um, was Du gezeichnet hast: die
+Klassen, die Beziehung und die Größenberechnung. Wenn Du beim Tippen merkst, dass
+etwas im Diagramm fehlt oder nicht funktioniert, <strong>änder es nicht heimlich im Kopf</strong> –
+notier es.</p>
+
+<p><strong>3. Das Modell nachziehen.</strong> Nimm Dein Diagramm noch einmal zur Hand und vergleich
+es mit dem, was Du gebaut hast. Bei der Umsetzung fällt fast immer etwas auf, das man
+beim Zeichnen nicht sieht: eine fehlende Methode, eine Beziehung in der falschen
+Richtung, ein Typ, der zu eng oder zu weit gefasst ist. Korrigier das Diagramm – es
+ist Deine Beschreibung des Codes, nicht ein Entwurf, den Du hinter Dir gelassen hast.</p>
+
 <blockquote>
-  <p><strong>Hinweis:</strong> Zeichne zuerst. Die entscheidende Frage steckt im Diagramm, nicht
-im Code: <strong>Was genau enthält ein Ordner?</strong> Zähl auf, was hineindarf, und such
-einen Oberbegriff dafür – Du hast ihn schon gezeichnet.</p>
+  <p><strong>Hinweis:</strong> Wenn Du an Schritt 3 nichts zu korrigieren findest, prüf zwei Stellen
+gezielt: Steht im Diagramm, welchen <strong>Typ</strong> die Liste im Ordner enthält? Und steht
+die Größen-Methode dort, wo sie im Code steht?</p>
 </blockquote>
 
 <blockquote>
@@ -188,6 +209,22 @@ dritte Art von Eintrag dazukommt – und was Du dann alles anfassen musst.</p>
   <p><strong>Hinweis:</strong> Für die Größe eines Ordners fragst Du jeden Eintrag nach seiner
 Größe. Was passiert, wenn der Eintrag ein Ordner ist? Genau das ist die Idee.</p>
 </blockquote>
+
+<h3 id="zusatzaufgabe-optional-verknüpfungen">Zusatzaufgabe (optional): Verknüpfungen</h3>
+
+<blockquote>
+  <p>In einem Dateisystem gibt es außerdem <strong>Verknüpfungen</strong>. Eine Verknüpfung hat einen
+eigenen Namen, liegt wie alles andere in einem Ordner und <strong>zeigt auf</strong> eine Datei
+oder einen Ordner – <strong>nie auf eine andere Verknüpfung</strong>.</p>
+</blockquote>
+
+<p>Ergänze das zuerst in Deinem <strong>Diagramm</strong>: Wo hängt die Verknüpfung, und wie
+zeichnest Du, worauf sie zeigen darf? Die Einschränkung „nie auf eine andere
+Verknüpfung“ soll sich aus der <strong>Struktur</strong> ergeben – nicht aus einem Kommentar
+daneben und nicht aus einer Prüfung, die erst zur Laufzeit zuschlägt.</p>
+
+<p>Setz es danach um, wenn Du magst. Die Frage dazu ist mehr wert als der Code:
+<strong>Welchen bestehenden Code musst Du dafür anfassen – und welchen nicht?</strong></p>
 
 <h2 id="aufgabe-2-quadrat-und-rechteck">Aufgabe 2: Quadrat und Rechteck</h2>
 
@@ -207,7 +244,27 @@ Rechteck.</strong></p>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du kannst von beiden Formen den Flächeninhalt berechnen.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast aufgeschrieben, <strong>was an Deinem Entwurf unangenehm ist</strong> – jeder hat etwas.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du kennst mindestens einen alternativen Weg und kannst sagen, warum Du ihn nicht gewählt hast.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Dein Diagramm passt am Ende zum Code – oder Du hast notiert, <strong>wo Du es nachgezogen oder den Entwurf gewechselt hast</strong>.</li>
 </ul>
+
+<h3 id="arbeitsschritte-1">Arbeitsschritte</h3>
+
+<p><strong>1. Modellieren – auf Papier.</strong> Zeichne <strong>mindestens zwei</strong> Wege, wie Quadrat und
+Rechteck zusammenhängen könnten, und entscheid Dich für einen. Schreib den Prüfsatz
+dazu: „Ein Quadrat ist ein Rechteck.“ Klingt gut – und trägt trotzdem nicht
+zwangsläufig.</p>
+
+<p><strong>2. Implementieren – in Java.</strong> Setz den gewählten Entwurf um, mit Flächeninhalt für
+beide Formen. Und dann die Gegenprobe im Code: Gib Dein Quadrat an eine Stelle, die
+ein <strong>Rechteck</strong> erwartet, und <strong>verdopple dort nur die Breite</strong>. Was soll passieren –
+und was passiert wirklich? Lässt Dein Entwurf diesen Aufruf gar nicht zu, ist auch das
+ein Ergebnis: Notier, warum nicht.</p>
+
+<p><strong>3. Modell und Entwurf nachziehen.</strong> Vergleich Dein Diagramm mit dem Code. Hier kann
+mehr herauskommen als eine Korrektur: Vielleicht <strong>widerlegt der Code Deinen Entwurf</strong> –
+dann wechsel ihn. Beides ist richtig, nur schreib auf, <strong>was der Auslöser war</strong>. Ein
+Entwurf, den die Umsetzung gekippt hat, ist kein Fehler, sondern das Ergebnis der
+Aufgabe.</p>
 
 <blockquote>
   <p><strong>Hinweis:</strong> Bevor Du tippst, probier den Prüfsatz: „Ein Quadrat ist ein
@@ -232,7 +289,10 @@ in eine gemeinsame Liste? Diese Woche hattest Du etwas dafür.</p>
 <ul>
   <li>Warum enthält Dein Ordner Einträge und nicht Dateien und Ordner?</li>
   <li>Wo hört die Rekursion bei der Größenberechnung auf?</li>
+  <li>Was hat die Implementierung an Deinem Diagramm geändert – und warum war das beim Zeichnen nicht zu sehen?</li>
+  <li>Nur wenn Du die Zusatzaufgabe gemacht hast: Wie erzwingt Deine Struktur, dass eine Verknüpfung nicht auf eine Verknüpfung zeigen kann?</li>
   <li>„Ein Quadrat ist ein Rechteck“ ist sprachlich richtig. Warum ist es als Vererbung trotzdem heikel?</li>
+  <li>Hat Dich die Implementierung dazu gebracht, Deinen Entwurf zu ändern? Woran genau hast Du es gemerkt – und hättest Du es am Diagramm allein sehen können?</li>
   <li>Welchen Entwurf würdest Du wählen, wenn die Formen nach dem Erzeugen unveränderlich wären?</li>
 </ul>
 
@@ -250,6 +310,8 @@ Du…
 
 * modellierst eine Struktur, in der ein Teil wieder das Ganze enthalten kann.
 * führst eine Berechnung über eine solche Struktur, ohne die Arten zu unterscheiden.
+* prüfst Dein Diagramm gegen den fertigen Code und ziehst es nach, wo die Umsetzung
+  etwas anderes gezeigt hat – und verwirfst einen Entwurf, wenn der Code ihn widerlegt.
 * wägst mehrere Entwürfe gegeneinander ab und benennst die Kosten jedes einzelnen.
 * erkennst, dass eine sprachlich richtige „ist ein“-Aussage im Code falsch sein kann.
 
@@ -271,10 +333,29 @@ Anforderung dazu:
 * [ ] Die Größe eines Ordners wird aus seinem Inhalt berechnet, über beliebig viele Ebenen.
 * [ ] Die Berechnung unterscheidet **nicht** zwischen Datei und Ordner – kein `instanceof`, keine Fallunterscheidung.
 * [ ] Ein Beispielbaum mit mindestens drei Ebenen wird in `Main` aufgebaut und seine Gesamtgröße ausgegeben.
+* [ ] Dein Diagramm passt am Ende zum Code – oder Du hast notiert, **wo es abweicht und warum**.
 
-&gt; **Hinweis:** Zeichne zuerst. Die entscheidende Frage steckt im Diagramm, nicht
-&gt; im Code: **Was genau enthält ein Ordner?** Zähl auf, was hineindarf, und such
-&gt; einen Oberbegriff dafür – Du hast ihn schon gezeichnet.
+### Arbeitsschritte
+
+**1. Modellieren – auf Papier.** Zeichne die Klassen und die Beziehung zwischen
+ihnen, bevor Du eine Zeile tippst. Die entscheidende Frage steckt im Diagramm, nicht
+im Code: **Was genau enthält ein Ordner?** Zähl auf, was hineindarf, und such einen
+Oberbegriff dafür – Du hast ihn schon gezeichnet.
+
+**2. Implementieren – in Java.** Setz genau das um, was Du gezeichnet hast: die
+Klassen, die Beziehung und die Größenberechnung. Wenn Du beim Tippen merkst, dass
+etwas im Diagramm fehlt oder nicht funktioniert, **änder es nicht heimlich im Kopf** –
+notier es.
+
+**3. Das Modell nachziehen.** Nimm Dein Diagramm noch einmal zur Hand und vergleich
+es mit dem, was Du gebaut hast. Bei der Umsetzung fällt fast immer etwas auf, das man
+beim Zeichnen nicht sieht: eine fehlende Methode, eine Beziehung in der falschen
+Richtung, ein Typ, der zu eng oder zu weit gefasst ist. Korrigier das Diagramm – es
+ist Deine Beschreibung des Codes, nicht ein Entwurf, den Du hinter Dir gelassen hast.
+
+&gt; **Hinweis:** Wenn Du an Schritt 3 nichts zu korrigieren findest, prüf zwei Stellen
+&gt; gezielt: Steht im Diagramm, welchen **Typ** die Liste im Ordner enthält? Und steht
+&gt; die Größen-Methode dort, wo sie im Code steht?
 
 &gt; **Hinweis:** Wenn Du im Ordner zwei getrennte Listen führst, eine für Dateien
 &gt; und eine für Ordner: Das läuft. Frag Dich trotzdem, was passiert, wenn eine
@@ -282,6 +363,20 @@ Anforderung dazu:
 
 &gt; **Hinweis:** Für die Größe eines Ordners fragst Du jeden Eintrag nach seiner
 &gt; Größe. Was passiert, wenn der Eintrag ein Ordner ist? Genau das ist die Idee.
+
+### Zusatzaufgabe (optional): Verknüpfungen
+
+&gt; In einem Dateisystem gibt es außerdem **Verknüpfungen**. Eine Verknüpfung hat einen
+&gt; eigenen Namen, liegt wie alles andere in einem Ordner und **zeigt auf** eine Datei
+&gt; oder einen Ordner – **nie auf eine andere Verknüpfung**.
+
+Ergänze das zuerst in Deinem **Diagramm**: Wo hängt die Verknüpfung, und wie
+zeichnest Du, worauf sie zeigen darf? Die Einschränkung „nie auf eine andere
+Verknüpfung“ soll sich aus der **Struktur** ergeben – nicht aus einem Kommentar
+daneben und nicht aus einer Prüfung, die erst zur Laufzeit zuschlägt.
+
+Setz es danach um, wenn Du magst. Die Frage dazu ist mehr wert als der Code:
+**Welchen bestehenden Code musst Du dafür anfassen – und welchen nicht?**
 
 ## Aufgabe 2: Quadrat und Rechteck
 
@@ -298,6 +393,26 @@ Modelliere die beiden – und begründe Deinen Entwurf.
 * [ ] Du kannst von beiden Formen den Flächeninhalt berechnen.
 * [ ] Du hast aufgeschrieben, **was an Deinem Entwurf unangenehm ist** – jeder hat etwas.
 * [ ] Du kennst mindestens einen alternativen Weg und kannst sagen, warum Du ihn nicht gewählt hast.
+* [ ] Dein Diagramm passt am Ende zum Code – oder Du hast notiert, **wo Du es nachgezogen oder den Entwurf gewechselt hast**.
+
+### Arbeitsschritte
+
+**1. Modellieren – auf Papier.** Zeichne **mindestens zwei** Wege, wie Quadrat und
+Rechteck zusammenhängen könnten, und entscheid Dich für einen. Schreib den Prüfsatz
+dazu: „Ein Quadrat ist ein Rechteck.“ Klingt gut – und trägt trotzdem nicht
+zwangsläufig.
+
+**2. Implementieren – in Java.** Setz den gewählten Entwurf um, mit Flächeninhalt für
+beide Formen. Und dann die Gegenprobe im Code: Gib Dein Quadrat an eine Stelle, die
+ein **Rechteck** erwartet, und **verdopple dort nur die Breite**. Was soll passieren –
+und was passiert wirklich? Lässt Dein Entwurf diesen Aufruf gar nicht zu, ist auch das
+ein Ergebnis: Notier, warum nicht.
+
+**3. Modell und Entwurf nachziehen.** Vergleich Dein Diagramm mit dem Code. Hier kann
+mehr herauskommen als eine Korrektur: Vielleicht **widerlegt der Code Deinen Entwurf** –
+dann wechsel ihn. Beides ist richtig, nur schreib auf, **was der Auslöser war**. Ein
+Entwurf, den die Umsetzung gekippt hat, ist kein Fehler, sondern das Ergebnis der
+Aufgabe.
 
 &gt; **Hinweis:** Bevor Du tippst, probier den Prüfsatz: „Ein Quadrat ist ein
 &gt; Rechteck.“ Klingt gut. Jetzt die Gegenprobe: Jemand bekommt Dein Quadrat in die
@@ -315,7 +430,10 @@ Modelliere die beiden – und begründe Deinen Entwurf.
 
 * Warum enthält Dein Ordner Einträge und nicht Dateien und Ordner?
 * Wo hört die Rekursion bei der Größenberechnung auf?
+* Was hat die Implementierung an Deinem Diagramm geändert – und warum war das beim Zeichnen nicht zu sehen?
+* Nur wenn Du die Zusatzaufgabe gemacht hast: Wie erzwingt Deine Struktur, dass eine Verknüpfung nicht auf eine Verknüpfung zeigen kann?
 * „Ein Quadrat ist ein Rechteck“ ist sprachlich richtig. Warum ist es als Vererbung trotzdem heikel?
+* Hat Dich die Implementierung dazu gebracht, Deinen Entwurf zu ändern? Woran genau hast Du es gemerkt – und hättest Du es am Diagramm allein sehen können?
 * Welchen Entwurf würdest Du wählen, wenn die Formen nach dem Erzeugen unveränderlich wären?</textarea>
     </main>
     <aside class="avd-academy-guide-sidebar">

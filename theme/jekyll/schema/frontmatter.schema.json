@@ -24,7 +24,7 @@
     },
     "title": {
       "type": "string",
-      "description": "Seitentitel. Erscheint im Hero, in `<title>` und in den Brotkrumen. Fehlt er, nimmt das Theme die erste `#`-Überschrift."
+      "description": "Seitentitel. Erscheint im Hero, in `<title>` und in den Brotkrumen. In Markdown besser weglassen und eine `#`-Überschrift schreiben – das Theme nimmt sie, und der Titel steht nur an einer Stelle. In HTML-Dateien umgekehrt: Dort wird ein `<h1>` im Rumpf NICHT ausgewertet, also `title` setzen. Fehlt beides, bleibt der Hero titellos."
     },
     "description": {
       "type": "string",
@@ -59,12 +59,12 @@
         "trainer",
         "learner"
       ],
-      "description": "Zielgruppe der Seite. Wird NICHT vom Theme gelesen, sondern vom zielgruppengefilterten Build (`bin/build.sh`): Seiten fremder Zielgruppe landen nicht in der Ausgabe. Ohne Angabe erscheint die Seite in beiden Ausgaben."
+      "description": "Zielgruppe der Seite. Wird NICHT vom Theme gelesen, sondern vom zielgruppengefilterten Build (`bin/build.sh`): Seiten fremder Zielgruppe landen nicht in der Ausgabe. Ohne Angabe erscheint die Seite in beiden Ausgaben. Die Werteliste gehört hier eigentlich nicht her – dass es genau `trainer` und `learner` gibt, ist eine Festlegung des Schulungsprozesses, nicht des Themes; aufgeräumt wird das zu 2.0 (Issue #130)."
     },
     "duration": {
       "type": "integer",
       "minimum": 0,
-      "description": "Geplante Dauer in Minuten. Erscheint als Zeit-Tag im Hero (Layouts `default`, `page`, `guide`) und ist der Wert, den die Tagestabellen des Trainerleitfadens in der ⏱️-Spalte übernehmen."
+      "description": "Zeit in Minuten; erscheint als Zeit-Tag im Hero. Was gemessen wird, hängt an der Art der Seite: bei einer Übung (`guide`) die Bearbeitungszeit, bei einer gewöhnlichen Seite die Lesedauer, bei Folien die Vortragszeit, bei einem Ablauf die Zeit fürs Durchspielen. Ein Richtwert, keine Vorgabe. Ohne Angabe erscheint kein Zeit-Tag."
     },
     "topics": {
       "type": "array",

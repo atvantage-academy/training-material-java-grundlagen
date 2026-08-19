@@ -168,6 +168,11 @@
   .avd-academy-reveal > summary::before { display: none !important; }
   /* Der Titel im Panel wäre auf Papier eine Dopplung des `summary`. */
   .avd-academy-reveal__title { display: none !important; }
+  /* Umgekehrt bei der Variante `--info`: Dort trägt das `summary` nur einen
+     visuell verborgenen Titel – auf Papier bliebe ein leerer Knopf stehen und der
+     Abschnitt ohne Überschrift. Also Knopf weg, Panel-Titel her. */
+  .avd-academy-reveal--info > summary { display: none !important; }
+  .avd-academy-reveal--info .avd-academy-reveal__title { display: block !important; }
   /* Ausnahme: Was auf Papier NICHT erscheinen soll – Musterlösungen neben der
      Übung. Ein Ausdruck, der die Lösung mitbringt, nimmt der Übung den Sinn. */
   .avd-academy-reveal--screen-only { display: none !important; }
