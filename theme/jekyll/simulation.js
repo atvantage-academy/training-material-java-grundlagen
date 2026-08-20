@@ -26,14 +26,17 @@
        });
 
        AvdSimulation.registerStep({
-         titel: "Erste Kiste",                    // Überschrift der Erklärspalte
+         title: "Erste Kiste",                    // Überschrift der Erklärspalte
          text:  "Die Kiste entsteht auf dem …",   // HTML oder Funktion (s) => HTML
          apply: (s) => { s.kisten.push({ id: "k1" }); },
-         dauer: 3000                              // optional: eigene Standzeit (ms)
+         duration: 3000                           // optional: eigene Standzeit (ms)
        });
 
-   Feldnamen gehen auch englisch (`title`/`text`/`apply`/`duration`) – gemischte
-   Bestände sollen nicht an einer Vokabel scheitern.
+   FELDNAMEN SIND ENGLISCH – ausnahmslos. Bis 2.0 nahm dieses Skript jeden
+   Schlüssel auch deutsch (`titel`, `dauer`, `kennung`, `schritte`, `zustand`,
+   `zeichne`), damit „gemischte Bestände nicht an einer Vokabel scheitern“. Genau
+   das war das Problem: Zwei Namen für dasselbe Feld sind zwei Wartungsorte, und
+   niemand konnte sagen, welcher der richtige ist.
 
    HELFER
      AvdSimulation.list(container, items, {key, create, update})
@@ -41,8 +44,8 @@
          innerHTML). Nur so können neue Kästen einfliegen und alte ausblenden –
          mit innerHTML entstünde bei jedem Schritt alles neu und nichts bewegte
          sich.
-     AvdSimulation.puls(el)     kurzes Hervorheben (Klasse `is-puls`)
-     AvdSimulation.on(name, fn) "schritt" nach jedem Wechsel
+     AvdSimulation.pulse(el)    kurzes Hervorheben (Klasse `is-pulse`)
+     AvdSimulation.on(name, fn) "step" nach jedem Wechsel
 
    OHNE DIESES SKRIPT bleibt die Kulisse als statische Seite stehen.
    ============================================================================= */
@@ -98,10 +101,10 @@
     return JSON.parse(JSON.stringify(v));
   }
 
-  function feld(obj, de, en, fallback) {
-    if (obj[de] !== undefined) return obj[de];
-    if (obj[en] !== undefined) return obj[en];
-    return fallback;
+  function feld(obj, name, fallback) {
+    /* Ein Feld lesen, mit Vorgabe. EIN Name, nicht zwei: Die deutschen Zweitnamen
+       sind mit 2.0 entfallen (siehe Kopf). */
+    return obj[name] !== undefined ? obj[name] : fallback;
   }
 
   function melde(name, daten) {
@@ -128,7 +131,7 @@
     var s = ausgangslage();
     var liste = steps();
     for (var i = 0; i <= bis && i < liste.length; i++) {
-      var apply = feld(liste[i], "apply", "apply", null);
+      var apply = feld(liste[i], "apply", null);
       if (typeof apply === "function") apply(s, { index: i, schritt: liste[i] });
     }
     return s;
@@ -159,40 +162,43 @@
     var animiert = !REDUCED && richtung !== 0 && Math.abs(index - vorher) === 1;
     var zustand = baue(index);
 
+    /* DER KONTEXT IST DIE AUTORENSCHNITTSTELLE – deshalb englische Namen, auch wenn
+       die Variablen darunter deutsch heissen. Er wird an `render` und `apply`
+       uebergeben; jeder Name darin steht im fremden Simulationsskript. */
     var ctx = {
       index: index,
-      vorher: vorher,
-      richtung: richtung,
-      animiert: animiert,
-      schritt: schritt,
-      anzahl: liste.length,
-      szenario: szenario().id || null,
-      szenarioIndex: szIndex,
+      previous: vorher,
+      direction: richtung,
+      animated: animiert,
+      step: schritt,
+      count: liste.length,
+      scenario: szenario().id || null,
+      scenarioIndex: szIndex,
       stage: el.stage,
       sim: API
     };
 
     /* Auch ohne eigene `render`-Funktion nutzbar: Schrittnummer und Kennung
        stehen als data-Attribute auf der Bühne, sodass eine Simulation allein
-       mit CSS-Regeln (`[data-schritt="3"] .paket { … }`) auskommen kann. */
+       mit CSS-Regeln (`[data-step="3"] .paket { … }`) auskommen kann. */
     ansichtWechseln();
 
     if (el.stage) {
-      el.stage.setAttribute("data-schritt", String(index + 1));
+      el.stage.setAttribute("data-step", String(index + 1));
       if (szenario().id) el.stage.setAttribute("data-szenario", szenario().id);
       else el.stage.removeAttribute("data-szenario");
-      el.stage.setAttribute("data-richtung", richtung > 0 ? "vor" : richtung < 0 ? "zurueck" : "start");
-      var kennung = feld(schritt, "id", "id", "");
-      if (kennung) el.stage.setAttribute("data-schritt-id", kennung);
-      else el.stage.removeAttribute("data-schritt-id");
+      el.stage.setAttribute("data-direction", richtung > 0 ? "forward" : richtung < 0 ? "back" : "start");
+      var kennung = feld(schritt, "id", "");
+      if (kennung) el.stage.setAttribute("data-step-id", kennung);
+      else el.stage.removeAttribute("data-step-id");
     }
 
     var render = zeichner();
     if (typeof render === "function") render(zustand, ctx);
 
     // Erklärspalte
-    var titel = feld(schritt, "titel", "title", "");
-    var text = feld(schritt, "text", "text", "");
+    var titel = feld(schritt, "title", "");
+    var text = feld(schritt, "text", "");
     if (typeof text === "function") text = text(zustand, ctx);
     if (el.noteTitle) {
       el.noteTitle.textContent = titel || "";
@@ -216,7 +222,7 @@
     reiterZeichnen();
     ostZeichnen();
     hash();
-    melde("schritt", ctx);
+    melde("step", ctx);
   }
 
   /* Die aktuelle Schrittnummer steht im Fragment (#/3) – reload-fest und
@@ -299,7 +305,7 @@
 
   function dauer() {
     var s = steps()[index];
-    var eigen = s ? feld(s, "dauer", "duration", null) : null;
+    var eigen = s ? feld(s, "duration", null) : null;
     var ms = (typeof eigen === "number" ? eigen : grunddauer) / TEMPI[tempoIdx];
     return Math.max(150, ms);
   }
@@ -356,11 +362,11 @@
     if (el.tempoLabel) el.tempoLabel.textContent = beschriftung(wert);
     if (el.tempoMenu) {
       Array.prototype.forEach.call(
-        el.tempoMenu.querySelectorAll("[data-avd-academy-sim-tempo-wert]"),
+        el.tempoMenu.querySelectorAll("[data-avd-academy-sim-speed-value]"),
         function (b) {
-          var an = Number(b.getAttribute("data-avd-academy-sim-tempo-wert")) === wert;
+          var an = Number(b.getAttribute("data-avd-academy-sim-speed-value")) === wert;
           b.setAttribute("aria-checked", an ? "true" : "false");
-          b.classList.toggle("is-aktiv", an);
+          b.classList.toggle("is-active", an);
         }
       );
     }
@@ -390,7 +396,7 @@
     el.tempo.setAttribute("aria-expanded", an ? "true" : "false");
     if (an) {
       var aktiv = el.tempoMenu.querySelector("[aria-checked='true']") ||
-                  el.tempoMenu.querySelector("[data-avd-academy-sim-tempo-wert]");
+                  el.tempoMenu.querySelector("[data-avd-academy-sim-speed-value]");
       if (aktiv) aktiv.focus();
     }
   }
@@ -404,7 +410,7 @@
   function menuVerdrahten() {
     if (!el.tempo || !el.tempoMenu) return;
     var eintraege = Array.prototype.slice.call(
-      el.tempoMenu.querySelectorAll("[data-avd-academy-sim-tempo-wert]"));
+      el.tempoMenu.querySelectorAll("[data-avd-academy-sim-speed-value]"));
 
     el.tempo.addEventListener("click", function (e) {
       e.stopPropagation();
@@ -413,7 +419,7 @@
 
     eintraege.forEach(function (b, i) {
       b.addEventListener("click", function () {
-        tempo(b.getAttribute("data-avd-academy-sim-tempo-wert"));
+        tempo(b.getAttribute("data-avd-academy-sim-speed-value"));
         menuSchliessen(true);
         // Ein Tempo zu wählen heißt: so abspielen. Sonst wäre jede Wahl zwei
         // Klicks weit von dem entfernt, weswegen man sie getroffen hat.
@@ -452,11 +458,11 @@
      Der Kern jeder Bewegung. `innerHTML = …` erzeugt bei jedem Schritt frische
      Elemente – der Browser sieht nichts, das sich verändert, und animiert nichts.
      Hier bleiben bestehende Knoten erhalten (Übergänge greifen), neue kommen mit
-     `is-neu` hinzu (Einblend-Animation) und verschwundene gehen mit `is-weg`. */
+     `is-new` hinzu (Einblend-Animation) und verschwundene gehen mit `is-gone`. */
   function list(container, items, cfg) {
     if (!container) return [];
     cfg = cfg || {};
-    var animiert = cfg.animiert !== undefined ? cfg.animiert : !REDUCED;
+    var animiert = cfg.animated !== undefined ? cfg.animated : !REDUCED;
     var key = cfg.key || function (item, i) { return item && item.id !== undefined ? item.id : i; };
 
     var vorhanden = {};
@@ -464,7 +470,7 @@
       var k = node.getAttribute("data-sim-key");
       // Knoten, die gerade ausblenden, zählen nicht mehr mit: Sonst würde ein
       // Element, das im selben Schritt neu entsteht, den sterbenden wiederbeleben.
-      if (k !== null && !node.hasAttribute("data-sim-weg")) vorhanden[k] = node;
+      if (k !== null && !node.hasAttribute("data-sim-gone")) vorhanden[k] = node;
     });
 
     var ergebnis = [];
@@ -473,11 +479,11 @@
       var node = vorhanden[k];
       if (node) {
         delete vorhanden[k];
-        node.classList.remove("is-neu");
+        node.classList.remove("is-new");
       } else {
         node = cfg.create ? cfg.create(item, i) : document.createElement("div");
         node.setAttribute("data-sim-key", k);
-        if (animiert) node.classList.add("is-neu");
+        if (animiert) node.classList.add("is-new");
       }
       if (cfg.update) cfg.update(node, item, i);
       container.appendChild(node);          // stellt zugleich die Reihenfolge her
@@ -487,9 +493,9 @@
     Object.keys(vorhanden).forEach(function (k) {
       var node = vorhanden[k];
       if (!animiert) { node.remove(); return; }
-      node.setAttribute("data-sim-weg", "");
-      node.classList.remove("is-neu");
-      node.classList.add("is-weg");
+      node.setAttribute("data-sim-gone", "");
+      node.classList.remove("is-new");
+      node.classList.add("is-gone");
       setTimeout(function () { node.remove(); }, 280);
     });
 
@@ -533,24 +539,24 @@
     return marker;
   }
 
-  function puls(node) {
+  function pulse(node) {
     if (!node || REDUCED) return;
-    node.classList.remove("is-puls");
+    node.classList.remove("is-pulse");
     void node.offsetWidth;               // Reflow erzwingen → Animation startet neu
-    node.classList.add("is-puls");
-    setTimeout(function () { node.classList.remove("is-puls"); }, 900);
+    node.classList.add("is-pulse");
+    setTimeout(function () { node.classList.remove("is-pulse"); }, 900);
   }
 
   /* --- Szenarien: Reiter, Übersicht, Bühnenbilder ----------------------------
      Bei mehreren Szenarien bekommt die Seite eine Reiterleiste und eine
      Übersicht als Startbild. Beide baut das Skript – die Seite liefert nur je
      Szenario ein Bühnenbild in einem Container mit
-     `data-avd-academy-sim-szene="«id»"`; sichtbar ist immer genau eines. */
+     `data-avd-academy-sim-scene="«id»"`; sichtbar ist immer genau eines. */
   function szenenSammeln() {
     if (!el.stage) return;
-    var knoten = el.stage.querySelectorAll("[data-avd-academy-sim-szene]");
+    var knoten = el.stage.querySelectorAll("[data-avd-academy-sim-scene]");
     Array.prototype.forEach.call(knoten, function (n) {
-      var id = n.getAttribute("data-avd-academy-sim-szene");
+      var id = n.getAttribute("data-avd-academy-sim-scene");
       for (var i = 0; i < szenarien.length; i++) if (szenarien[i].id === id) szenarien[i].szene = n;
     });
   }
@@ -584,8 +590,8 @@
       b.type = "button";
       b.className = "avd-academy-sim__tab";
       b.innerHTML = '<span class="avd-academy-sim__tab-nr">' + (i + 1) + '</span>' +
-                    '<span class="avd-academy-sim__tab-titel"></span>';
-      b.querySelector(".avd-academy-sim__tab-titel").textContent = sz.titel || ("Szenario " + (i + 1));
+                    '<span class="avd-academy-sim__tab-title"></span>';
+      b.querySelector(".avd-academy-sim__tab-title").textContent = sz.titel || ("Szenario " + (i + 1));
       if (i < 9) b.title = (sz.titel || "") + " (Taste " + (i + 1) + ")";
       b.addEventListener("click", function () { zumSzenario(i); });
       el.tabs.appendChild(b);
@@ -596,13 +602,13 @@
   function reiterZeichnen() {
     if (!mehrere() || !el.tabs) return;
     if (el.tabUebersicht) {
-      el.tabUebersicht.classList.toggle("is-aktiv", uebersicht);
+      el.tabUebersicht.classList.toggle("is-active", uebersicht);
       el.tabUebersicht.setAttribute("aria-current", uebersicht ? "true" : "false");
     }
     szenarien.forEach(function (sz, i) {
       if (!sz.tab) return;
       var an = !uebersicht && i === szIndex;
-      sz.tab.classList.toggle("is-aktiv", an);
+      sz.tab.classList.toggle("is-active", an);
       sz.tab.setAttribute("aria-current", an ? "true" : "false");
     });
   }
@@ -611,12 +617,12 @@
      Inhaltsverzeichnis der Simulation, nicht bloß ein leerer Startbildschirm. */
   function introBauen() {
     if (!el.intro || !mehrere()) return;
-    var titel = el.root ? el.root.getAttribute("data-avd-academy-sim-titel") : "";
+    var titel = el.root ? el.root.getAttribute("data-avd-academy-sim-title") : "";
     var kopf = document.createElement("div");
     kopf.className = "avd-academy-sim__intro-kopf";
     if (titel) {
       var h = document.createElement("h1");
-      h.className = "avd-academy-sim__intro-titel";
+      h.className = "avd-academy-sim__intro-title";
       h.textContent = titel;
       kopf.appendChild(h);
     }
@@ -646,7 +652,7 @@
         '<span class="avd-academy-sim__intro-meta">' + (sz.steps || []).length + ' Schritte</span>';
       b.querySelector(".avd-academy-sim__intro-name").textContent = sz.titel || ("Szenario " + (i + 1));
       var mehr = b.querySelector(".avd-academy-sim__intro-mehr");
-      var besch = feld(sz, "beschreibung", "description", "");
+      var besch = feld(sz, "description", "");
       if (besch) mehr.innerHTML = besch; else mehr.remove();
       b.addEventListener("click", function () { zumSzenario(i); });
       li.appendChild(b);
@@ -722,8 +728,8 @@
     }
     if (!an) { ostPlatz(); return; }
     var schritt = steps()[index] || {};
-    var titel = feld(schritt, "titel", "title", "");
-    var text = feld(schritt, "text", "text", "");
+    var titel = feld(schritt, "title", "");
+    var text = feld(schritt, "text", "");
     if (typeof text === "function") text = text(baue(index), { index: index, schritt: schritt });
     if (el.ostTitle) el.ostTitle.textContent = titel || "";
     if (el.ostText) el.ostText.innerHTML = text || "";
@@ -790,10 +796,10 @@
     };
 
     /* Bewusst NICHT `…-tempo`/`…-dauer`: Der Tempo-Knopf trägt
-       `data-avd-academy-sim-tempo`, und der <body> steht im Dokument vor ihm –
+       `data-avd-academy-sim-speed`, und der <body> steht im Dokument vor ihm –
        ein `querySelector` fände dann den Body statt des Knopfes. */
-    grunddauer = parseInt(root.getAttribute("data-avd-academy-sim-schrittdauer"), 10) || 2500;
-    tempo(root.getAttribute("data-avd-academy-sim-starttempo") || 1);
+    grunddauer = parseInt(root.getAttribute("data-avd-academy-sim-step-interval"), 10) || 2500;
+    tempo(root.getAttribute("data-avd-academy-sim-speed") || 1);
 
     if (!steps().length) {
       // Keine Schritte angemeldet: Die Kulisse steht, die Steuerung bleibt aus.
@@ -880,24 +886,22 @@
     setup: function (o) {
       o = o || {};
       if (o.state !== undefined) opts.state = o.state;
-      if (o.zustand !== undefined) opts.state = o.zustand;
       if (o.render !== undefined) opts.render = o.render;
-      if (o.zeichne !== undefined) opts.render = o.zeichne;
-      if (o.tempo !== undefined) tempo(o.tempo);
-      if (o.schrittdauer !== undefined) grunddauer = o.schrittdauer;
+      if (o.speed !== undefined) tempo(o.speed);
+      if (o.stepInterval !== undefined) grunddauer = o.stepInterval;
       return API;
     },
     /** Ein Szenario anmelden. Ab dem ZWEITEN erscheinen Reiterleiste und
-        Übersicht. Felder: id, titel, beschreibung, state?, render?, steps. */
+        Übersicht. Felder: id, title, description, state?, render?, steps. */
     registerScenario: function (sz) {
       if (!sz) return API;
       szenarien.push({
-        id: sz.id || sz.kennung || ("szenario-" + (szenarien.length + 1)),
-        titel: feld(sz, "titel", "title", ""),
-        beschreibung: feld(sz, "beschreibung", "description", ""),
-        state: sz.state !== undefined ? sz.state : sz.zustand,
-        render: sz.render !== undefined ? sz.render : sz.zeichne,
-        steps: (sz.steps || sz.schritte || []).slice()
+        id: sz.id || ("szenario-" + (szenarien.length + 1)),
+        titel: feld(sz, "title", ""),
+        beschreibung: feld(sz, "description", ""),
+        state: sz.state,
+        render: sz.render,
+        steps: (sz.steps || []).slice()
       });
       return API;
     },
@@ -918,8 +922,8 @@
       return API;
     },
     list: list,
-    puls: puls,
-    codeZeile: codeZeile,
+    pulse: pulse,
+    codeLine: codeZeile,
     on: function (name, fn) {
       (hoerer[name] = hoerer[name] || []).push(fn);
       return API;

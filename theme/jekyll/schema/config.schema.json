@@ -1,24 +1,21 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Academy-Theme – _config.yml einer Schulungs-Site",
-  "description": "Die Jekyll-Konfiguration einer Site, die das Academy-Theme nutzt: der von Jekyll selbst gelesene Standard PLUS die Schlüssel, die das Theme ausliest. Schema-Version 1. Bewusst OFFEN (`additionalProperties`): Jekyll-Plugins und die Site selbst dürfen eigene Schlüssel setzen (diese Doku-Site tut es, z. B. `theme_repo_url`). Getippte Schlüssel werden geprüft, unbekannte durchgelassen.",
+  "title": "Academy-Theme – _config.yml einer Site",
+  "description": "Die Jekyll-Konfiguration einer Site, die das Academy-Theme nutzt: der von Jekyll selbst gelesene Standard PLUS die Schlüssel, die das Theme ausliest. Schema-Version 2. An der Oberfläche bewusst OFFEN (`additionalProperties`): Jekyll-Plugins und die Site selbst dürfen eigene Schlüssel setzen. Getippte Schlüssel werden geprüft, unbekannte durchgelassen.",
   "type": "object",
   "properties": {
     "title": {
       "type": "string",
-      "description": "Titel der Site. Erscheint in der Kopfzeile neben dem Logo und in `<title>`."
+      "description": "Titel der Site – erscheint in der Kopfzeile neben dem Logo und in `<title>`. STANDARD: „ATVANTAGE Academy“."
     },
     "description": {
       "type": "string",
-      "description": "Kurzbeschreibung der Site (Jekyll-Standard); Rückfall für `<meta name=\"description\">`, wenn eine Seite keine eigene `description` trägt."
+      "description": "Kurzbeschreibung der Site; Rückfall für `<meta name=\"description\">`, wenn eine Seite keine eigene trägt. STANDARD: keine."
     },
     "lang": {
       "type": "string",
-      "description": "Sprache der Site (BCP-47) – landet in `<html lang>`. Einzelne Seiten überschreiben sie im Front Matter.",
-      "examples": [
-        "de",
-        "en"
-      ]
+      "default": "de",
+      "description": "Sprache der Site (BCP-47) – landet in `<html lang>`. Einzelne Seiten überschreiben sie im Front Matter."
     },
     "url": {
       "type": "string",
@@ -26,6 +23,7 @@
     },
     "baseurl": {
       "type": "string",
+      "default": "",
       "description": "Jekyll-Standard: Pfadpräfix der Site (Projektseiten: `/reponame`, eigene Domain: leer). Muss dem veröffentlichten Pfad entsprechen, sonst brechen alle Asset-Pfade."
     },
     "layouts_dir": {
@@ -45,18 +43,26 @@
     },
     "markdown": {
       "type": "string",
+      "default": "kramdown",
       "description": "Jekyll-Standard: Markdown-Prozessor. Das Theme ist auf `kramdown` im GFM-Modus abgestimmt."
     },
     "kramdown": {
       "type": "object",
       "description": "Jekyll-Standard: kramdown-Optionen. Das Theme erwartet `input: GFM` und `hard_wrap: false`."
     },
+    "theme": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Jekyll-Standard: Theme-Gem. Das Academy-Theme ist KEIN Gem – die Defaults setzen `theme: null`."
+    },
     "exclude": {
       "type": "array",
       "items": {
         "type": "string"
       },
-      "description": "Jekyll-Standard: Pfade, die NICHT in die Ausgabe wandern. Auch die Schema-Prüfung überspringt sie – ausgeschlossene Markdown-Dateien sind keine Seiten."
+      "description": "Jekyll-Standard: Pfade, die NICHT in die Ausgabe wandern. Auch die Schema-Prüfung überspringt sie."
     },
     "include": {
       "type": "array",
@@ -74,7 +80,7 @@
     },
     "defaults": {
       "type": "array",
-      "description": "Jekyll-Standard: Front-Matter-Vorgaben je Pfad/Typ. Fast jede Academy-Site setzt hier `layout`, damit einzelne Seiten es nicht wiederholen müssen.",
+      "description": "Jekyll-Standard: Front-Matter-Vorgaben je Pfad/Typ. Das Theme setzt hier `layout: page` für die ganze Site – deshalb braucht eine Seite kein `layout:`. ACHTUNG: Jekyll ERSETZT diese Liste, wenn eine Site sie selbst definiert; die Layout-Regel gehört dann mit hinein. Das Wort gehört Jekyll – die Bausteine des Themes stehen unter `components`.",
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -110,7 +116,8 @@
     },
     "encoding": {
       "type": "string",
-      "description": "Jekyll-Standard: Zeichenkodierung der Quelldateien (`utf-8`)."
+      "default": "utf-8",
+      "description": "Jekyll-Standard: Zeichenkodierung der Quelldateien."
     },
     "strict_front_matter": {
       "type": "boolean",
@@ -124,28 +131,82 @@
       "type": "object",
       "description": "Jekyll-Standard: Sass-Optionen. Das Theme liefert fertiges CSS und braucht sie nicht."
     },
-    "logo": {
+    "audiences": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      },
+      "description": "Die Zielgruppen, die diese Site kennt – die Deklaration, gegen die alle `audiences`-Angaben geprüft werden (Seiten, `resources`, `nav.items`, `footer.links.items`) sowie `audience` des Builds. Das Theme legt die Werte NICHT fest: Welche Zielgruppen es gibt und wie sie heißen, ist eine Festlegung des Werkzeugs, das die Site baut. STANDARD: keine – dann ist jede Zielgruppen-Angabe ein Fehler, weil nicht prüfbar."
+    },
+    "audience": {
       "type": "string",
-      "description": "Logo in der Kopfzeile, site-relativer Pfad (führender `/`). Ohne Angabe nimmt das Theme `/theme/atvantage/assets/logo-orange.svg`."
+      "description": "Die Zielgruppe DIESES Builds. Wird nicht von Hand gesetzt, sondern vom Build als Overlay (`_config.audience.yml`); Seiten und Einträge fremder Zielgruppe entfallen dann. STANDARD: keine – dann ist alles sichtbar (die lokale Vorschau). Der Wert muss in `audiences` deklariert sein."
     },
-    "favicon": {
-      "type": "string",
-      "description": "Favicon (32×32), site-relativer Pfad."
+    "brand": {
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x_": {
+          "description": "Repo-eigenes Feld – vom Theme nicht gelesen."
+        }
+      },
+      "description": "Die Marke der Site: Logo, Icons, Markentext, Website.",
+      "properties": {
+        "logo": {
+          "type": "string",
+          "default": "/theme/atvantage/assets/logo-orange.svg",
+          "description": "Logo (Wortmarke) in der Kopfzeile, site-relativer Pfad."
+        },
+        "tagline": {
+          "type": "string",
+          "default": "ATVANTAGE Academy",
+          "description": "Eine Zeile Markentext in der Metaleiste über der Kopfzeile."
+        },
+        "website": {
+          "type": "string",
+          "default": "https://www.atvantage.com",
+          "description": "URL der Academy-Website – gelesen von der Druck-Kontaktzeile. In den Pipelines aus der Org-Variablen `ACADEMY_WEBSITE` gesetzt, damit die URL an genau einer Stelle steht."
+        },
+        "icon": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Favicons. Die Wortmarke taugt hier nicht: In 16×16 wird sie zum unkenntlichen Strich – deshalb die quadratische Bildmarke.",
+          "properties": {
+            "default": {
+              "type": "string",
+              "default": "/theme/atvantage/assets/icon-32.png",
+              "description": "Favicon 32×32 – der einfache Fall, wird ohne `type`/`sizes` ausgegeben (auch SVG möglich)."
+            },
+            "small": {
+              "type": "string",
+              "default": "/theme/atvantage/assets/icon-16.png",
+              "description": "Favicon 16×16 – im Tab schärfer als das herunterskalierte 32er."
+            },
+            "apple": {
+              "type": "string",
+              "default": "/theme/atvantage/assets/icon-180.png",
+              "description": "Apple-Touch-Icon 180×180 für den iOS-Homescreen."
+            }
+          }
+        }
+      }
     },
-    "favicon_16": {
-      "type": "string",
-      "description": "Favicon in 16×16 – schärfer im Tab als das herunterskalierte 32er."
+    "code": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Darstellung von Code.",
+      "properties": {
+        "highlight": {
+          "type": "boolean",
+          "default": false,
+          "description": "Lädt die Syntax-Hervorhebung (highlight.js aus dem Theme). Nur einschalten, wenn die Site Code zeigt."
+        }
+      }
     },
-    "favicon_apple": {
-      "type": "string",
-      "description": "Apple-Touch-Icon (180×180) für den iOS-Homescreen."
-    },
-    "syntax_highlight": {
-      "type": "boolean",
-      "description": "Lädt die Syntax-Hervorhebung (highlight.js aus dem Theme). Nur einschalten, wenn die Site Code zeigt."
-    },
-    "custom_css": {
-      "description": "Eigenes Stylesheet der Site NACH den Theme-Stilen – ein einzelner Pfad oder eine Liste. Gehört nur, was schulungsspezifisch ist; alles Allgemeine gehört ins Theme bzw. ins Didaktikon-Plugin.",
+    "styles": {
+      "description": "Eigenes Stylesheet der Site NACH den Theme-Stilen – ein einzelner Pfad oder eine Liste. STANDARD: keines. Hier gehört nur hinein, was site-spezifisch ist; alles Allgemeine gehört ins Theme.",
       "oneOf": [
         {
           "type": "string"
@@ -159,122 +220,21 @@
         }
       ]
     },
-    "audience": {
-      "type": "string",
-      "enum": [
-        "trainer",
-        "learner"
-      ],
-      "description": "Zielgruppe DIESES Builds. Wird nicht von Hand in die `_config.yml` geschrieben, sondern vom Build als Overlay (`_config.audience.yml`) gesetzt; Seiten und Einträge fremder Zielgruppe entfallen dann. Ohne Wert (lokale Vorschau) ist alles sichtbar – die Trainer-Ansicht."
-    },
     "nav": {
-      "type": "array",
-      "description": "Kopfnavigation. Einträge sind entweder ein Link (`url`) oder eine Gruppe mit Untermenü (`children`).",
-      "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "patternProperties": {
-          "^x_": {
-            "description": "Repo-eigenes Feld – vom Theme nicht gelesen. Alles mit dem Präfix `x_` ist frei, damit eine geschlossene Struktur eigene Angaben nicht verbietet."
-          }
-        },
-        "anyOf": [
-          {
-            "required": [
-              "url"
-            ]
-          },
-          {
-            "required": [
-              "children"
-            ]
-          }
-        ],
-        "properties": {
-          "title": {
-            "type": "string",
-            "description": "Anzeigetext. Bei einem Eintrag mit `icon` optional, sonst nötig."
-          },
-          "url": {
-            "type": "string",
-            "description": "Ziel, site-relativ (führender `/`). Nicht zusammen mit `children`."
-          },
-          "icon": {
-            "type": "string",
-            "description": "Icon-Pfad, site-relativ. Mit `title` erscheint es davor, ohne `title` allein (dann dient `title` als Alternativtext)."
-          },
-          "audience": {
-            "type": "string",
-            "enum": [
-              "trainer",
-              "learner"
-            ],
-            "description": "Beschränkt den Eintrag auf eine Zielgruppe. Bei einer Gruppe entfällt sie ganz, wenn kein Kind übrig bleibt."
-          },
-          "children": {
-            "type": "array",
-            "minItems": 1,
-            "description": "Untermenü-Einträge.",
-            "items": {
-              "type": "object",
-              "additionalProperties": false,
-              "patternProperties": {
-                "^x_": {
-                  "description": "Repo-eigenes Feld – vom Theme nicht gelesen. Alles mit dem Präfix `x_` ist frei, damit eine geschlossene Struktur eigene Angaben nicht verbietet."
-                }
-              },
-              "required": [
-                "url"
-              ],
-              "properties": {
-                "title": {
-                  "type": "string",
-                  "description": "Anzeigetext."
-                },
-                "url": {
-                  "type": "string",
-                  "description": "Ziel, site-relativ."
-                },
-                "icon": {
-                  "type": "string",
-                  "description": "Icon-Pfad, site-relativ."
-                },
-                "audience": {
-                  "type": "string",
-                  "enum": [
-                    "trainer",
-                    "learner"
-                  ],
-                  "description": "Beschränkt diesen Untermenü-Eintrag auf eine Zielgruppe."
-                }
-              }
-            }
-          }
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x_": {
+          "description": "Repo-eigenes Feld – vom Theme nicht gelesen."
         }
-      }
-    },
-    "metanav": {
-      "type": "array",
-      "description": "Meta-Zeile über der Kopfzeile – wenige, kurze Verweise (Impressum, Datenschutz).",
-      "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "patternProperties": {
-          "^x_": {
-            "description": "Repo-eigenes Feld – vom Theme nicht gelesen. Alles mit dem Präfix `x_` ist frei, damit eine geschlossene Struktur eigene Angaben nicht verbietet."
-          }
-        },
-        "required": [
-          "url"
-        ],
-        "properties": {
-          "title": {
-            "type": "string",
-            "description": "Anzeigetext."
-          },
-          "url": {
-            "type": "string",
-            "description": "Ziel."
+      },
+      "description": "Die Kopfnavigation. STANDARD: keine – dann zeigt die Kopfzeile nur Logo und Werkzeuge.",
+      "properties": {
+        "items": {
+          "type": "array",
+          "description": "Die Einträge – dieselbe Form wie `footer.links.items` und `resources`, zusätzlich mit Untermenü. Ein Eintrag ist entweder ein Verweis (`url`) oder eine Gruppe (`children`).",
+          "items": {
+            "$ref": "#/definitions/navEintrag"
           }
         }
       }
@@ -284,22 +244,19 @@
       "additionalProperties": false,
       "patternProperties": {
         "^x_": {
-          "description": "Repo-eigenes Feld – vom Theme nicht gelesen. Alles mit dem Präfix `x_` ist frei, damit eine geschlossene Struktur eigene Angaben nicht verbietet."
+          "description": "Repo-eigenes Feld – vom Theme nicht gelesen."
         }
       },
-      "description": "Kontaktdaten. Getrennt vom `footer`, weil sie auch das Drucklayout braucht: Ein Blatt Papier hat keine Adresszeile.",
+      "description": "Kontaktangaben. Getrennt von `footer`, weil auch das Drucklayout sie braucht: Ein Blatt Papier hat keine Adresszeile.",
       "properties": {
         "email": {
           "type": "string",
-          "description": "E-Mail-Adresse. Erscheint im Footer und in der Druck-Kontaktzeile."
+          "default": "academy@atvantage.com",
+          "description": "E-Mail-Adresse – erscheint im Footer und in der Druck-Kontaktzeile."
         },
         "phone": {
           "type": "string",
-          "description": "Telefonnummer."
-        },
-        "tagline": {
-          "type": "string",
-          "description": "Ein Satz, der in der Druck-Kontaktzeile neben der Adresse steht."
+          "description": "Telefonnummer, Spalte „Kontakt“ im Footer. STANDARD: keine."
         }
       }
     },
@@ -308,211 +265,143 @@
       "additionalProperties": false,
       "patternProperties": {
         "^x_": {
-          "description": "Repo-eigenes Feld – vom Theme nicht gelesen. Alles mit dem Präfix `x_` ist frei, damit eine geschlossene Struktur eigene Angaben nicht verbietet."
+          "description": "Repo-eigenes Feld – vom Theme nicht gelesen."
         }
       },
       "description": "Fußzeile der Site.",
       "properties": {
         "tagline": {
           "type": "string",
-          "description": "Ein Satz unter dem Logo in der linken Spalte."
+          "description": "Ein Satz unter dem Site-Titel in der linken Spalte. STANDARD: keiner. Nicht zu verwechseln mit `brand.tagline`, der Zeile in der Metaleiste über der Kopfzeile."
         },
-        "homepage": {
-          "type": "string",
-          "description": "Verweis auf die Academy-Website. In den Pipelines aus der Org-Variablen `ACADEMY_WEBSITE` gesetzt, damit die URL nicht in jedem Repo steht."
-        },
-        "imprint": {
-          "type": "string",
-          "description": "Ziel des Impressum-Links."
-        },
-        "privacy": {
-          "type": "string",
-          "description": "Ziel des Datenschutz-Links."
-        },
-        "phone": {
-          "type": "string",
-          "description": "Telefonnummer in der Fußzeile."
-        },
-        "more": {
+        "legal": {
           "type": "object",
           "additionalProperties": false,
-          "patternProperties": {
-            "^x_": {
-              "description": "Repo-eigenes Feld – vom Theme nicht gelesen. Alles mit dem Präfix `x_` ist frei, damit eine geschlossene Struktur eigene Angaben nicht verbietet."
+          "description": "Rechtliche Verweise in der Schlusszeile. STANDARD: keine – dann zeigt die Zeile nur das Copyright.",
+          "properties": {
+            "imprint": {
+              "type": "string",
+              "description": "Ziel des Impressum-Links."
+            },
+            "privacy": {
+              "type": "string",
+              "description": "Ziel des Datenschutz-Links."
             }
-          },
-          "description": "Rechte Spalte „Weitere Informationen“. Ohne `links` wird sie gar nicht gerendert.",
+          }
+        },
+        "links": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Rechte Spalte der Fußzeile. STANDARD: keine – ohne `items` wird die Spalte gar nicht gerendert.",
           "properties": {
             "title": {
               "type": "string",
-              "description": "Überschrift der Spalte (Vorgabe „Weitere Informationen“)."
+              "default": "Weitere Informationen",
+              "description": "Überschrift der Spalte."
             },
-            "links": {
+            "items": {
               "type": "array",
               "minItems": 1,
-              "description": "Links wie in der Kopfnavigation – mit `title` und/oder `icon`.",
+              "description": "Die Verweise – dieselbe Form wie `nav.items` und `resources`.",
               "items": {
-                "type": "object",
-                "additionalProperties": false,
-                "patternProperties": {
-                  "^x_": {
-                    "description": "Repo-eigenes Feld – vom Theme nicht gelesen. Alles mit dem Präfix `x_` ist frei, damit eine geschlossene Struktur eigene Angaben nicht verbietet."
-                  }
-                },
-                "properties": {
-                  "title": {
-                    "type": "string",
-                    "description": "Anzeigetext."
-                  },
-                  "url": {
-                    "type": "string",
-                    "description": "Ziel. Absolute URLs (`://`) öffnen in einem neuen Tab. Entfällt bei `homepage: true`."
-                  },
-                  "icon": {
-                    "type": "string",
-                    "description": "Icon-Pfad, site-relativ."
-                  },
-                  "homepage": {
-                    "const": true,
-                    "description": "Markiert DIESEN Link als Verweis auf die Academy-Website. Das Ziel löst das Theme aus `footer.homepage` auf (das die Pipeline aus der Org-Variablen ACADEMY_WEBSITE setzt); ohne Wert greift der Theme-Default. Ein eigenes `url` ist dann unnötig, und ohne `title` erscheint „ATVANTAGE Academy“. So steht die URL an genau einer Stelle – kein Umschreiben in der Pipeline des Repos."
-                  }
-                },
-                "anyOf": [
-                  {
-                    "required": [
-                      "url"
-                    ],
-                    "description": "gewöhnlicher Link mit eigenem Ziel"
-                  },
-                  {
-                    "required": [
-                      "homepage"
-                    ],
-                    "description": "der Academy-Link – das Ziel kommt aus `footer.homepage`"
-                  }
-                ]
+                "$ref": "frontmatter.schema.json#/definitions/verweis"
               }
             }
           }
         }
       }
     },
-    "avd_academy": {
+    "components": {
       "type": "object",
       "additionalProperties": false,
-      "description": "Schalter des Themes – site-weite Vorgaben. Auflösung von schwach nach stark: harte Vorgabe je Layout → `defaults` → `layouts.«layout»` → Front Matter der Seite. Angeboten werden je Layout nur die Schalter, die dieses Layout auch AUSLIEST; alles andere wäre ein Eintrag, der aussieht, als täte er etwas.",
+      "description": "Bausteine zu- und abschalten – site-weite Vorgaben. Auflösung von schwach nach stark: harte Vorgabe je Layout → `components.«gruppe»` → `components.layouts.«layout».«gruppe»` → Front Matter der Seite. Die Form ist auf allen Ebenen dieselbe wie im Front Matter.",
       "properties": {
-        "defaults": {
-          "type": "object",
-          "additionalProperties": false,
-          "description": "Vorgabe für die ganze Site, layoutübergreifend. Ein Schalter wirkt nur in den Layouts, die ihn lesen.",
-          "properties": {
-            "markdown_copy": {
-              "$ref": "frontmatter.schema.json#/properties/markdown_copy"
-            },
-            "toc": {
-              "$ref": "frontmatter.schema.json#/properties/toc"
-            },
-            "progress": {
-              "$ref": "frontmatter.schema.json#/properties/progress"
-            },
-            "resources_box": {
-              "$ref": "frontmatter.schema.json#/properties/resources_box"
-            },
-            "print_contact": {
-              "$ref": "frontmatter.schema.json#/properties/print_contact"
-            },
-            "print_button": {
-              "$ref": "frontmatter.schema.json#/properties/print_button"
-            },
-            "qr_code": {
-              "$ref": "frontmatter.schema.json#/properties/qr_code"
-            }
-          }
+        "sidebar": {
+          "$ref": "#/definitions/sidebarSiteweit"
+        },
+        "toolbar": {
+          "$ref": "frontmatter.schema.json#/properties/toolbar"
         },
         "layouts": {
           "type": "object",
-          "description": "Vorgaben je Layout. Der Schlüssel ist der Layout-Name aus dem Front Matter der Seite.",
+          "description": "Vorgaben je Layout. Der Schlüssel ist der Layout-Name aus dem Front Matter der Seite. Angeboten wird je Layout nur, was dieses Layout auch AUSLIEST.",
           "additionalProperties": {
             "type": "object",
             "additionalProperties": false,
-            "description": "Eigenes Layout des Repos: Welche Schalter es liest, weiß nur das Layout selbst – hier sind daher alle erlaubt.",
+            "description": "Eigenes Layout des Repos: Welche Gruppen es liest, weiß nur das Layout selbst – hier sind daher alle erlaubt.",
             "properties": {
-              "markdown_copy": {
-                "$ref": "frontmatter.schema.json#/properties/markdown_copy"
+              "sidebar": {
+                "$ref": "#/definitions/sidebarSchalter"
               },
-              "toc": {
-                "$ref": "frontmatter.schema.json#/properties/toc"
-              },
-              "progress": {
-                "$ref": "frontmatter.schema.json#/properties/progress"
-              },
-              "resources_box": {
-                "$ref": "frontmatter.schema.json#/properties/resources_box"
-              },
-              "print_contact": {
-                "$ref": "frontmatter.schema.json#/properties/print_contact"
-              },
-              "print_button": {
-                "$ref": "frontmatter.schema.json#/properties/print_button"
-              },
-              "qr_code": {
-                "$ref": "frontmatter.schema.json#/properties/qr_code"
+              "toolbar": {
+                "$ref": "frontmatter.schema.json#/properties/toolbar"
               }
             }
           },
           "properties": {
-            "default": {
-              "$ref": "#/definitions/schalterSeite"
-            },
             "page": {
-              "$ref": "#/definitions/schalterSeite"
+              "$ref": "#/definitions/seitenlayout"
             },
             "guide": {
-              "$ref": "#/definitions/schalterSeite"
+              "$ref": "#/definitions/seitenlayout"
             },
             "visualization": {
               "type": "object",
               "additionalProperties": false,
-              "description": "Vollflächen-Ansicht: keine Sidebar, daher kein `toc`, `progress`, `resources_box`.",
+              "description": "Vollflächen-Ansicht: keine Sidebar, daher keine `sidebar`-Gruppe.",
               "properties": {
-                "markdown_copy": {
-                  "$ref": "frontmatter.schema.json#/properties/markdown_copy"
-                },
-                "print_contact": {
-                  "$ref": "frontmatter.schema.json#/properties/print_contact"
-                },
-                "print_button": {
-                  "$ref": "frontmatter.schema.json#/properties/print_button"
-                },
-                "qr_code": {
-                  "$ref": "frontmatter.schema.json#/properties/qr_code"
+                "toolbar": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "description": "Werkzeuge im Hero der Visualisierung.",
+                  "properties": {
+                    "copy": {
+                      "$ref": "frontmatter.schema.json#/properties/toolbar/properties/copy"
+                    },
+                    "print": {
+                      "$ref": "frontmatter.schema.json#/properties/toolbar/properties/print"
+                    },
+                    "qr": {
+                      "$ref": "frontmatter.schema.json#/properties/toolbar/properties/qr"
+                    }
+                  }
                 }
               }
             },
             "presentation": {
               "type": "object",
               "additionalProperties": false,
-              "description": "Folien: eigenes Layout ohne Sidebar und ohne Markdown-Knopf. Die Fortschrittsleiste gehört zum Ablauf und ist nicht schaltbar.",
+              "description": "Folien: eigenes Layout ohne Sidebar und ohne Kopier-Knopf. Die Fortschrittsleiste gehört zum Ablauf und ist nicht schaltbar.",
               "properties": {
-                "print_contact": {
-                  "$ref": "frontmatter.schema.json#/properties/print_contact"
-                },
-                "print_button": {
-                  "$ref": "frontmatter.schema.json#/properties/print_button"
-                },
-                "qr_code": {
-                  "$ref": "frontmatter.schema.json#/properties/qr_code"
+                "toolbar": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "description": "Werkzeuge der Kopfleiste.",
+                  "properties": {
+                    "print": {
+                      "$ref": "frontmatter.schema.json#/properties/toolbar/properties/print"
+                    },
+                    "qr": {
+                      "$ref": "frontmatter.schema.json#/properties/toolbar/properties/qr"
+                    }
+                  }
                 }
               }
             },
             "simulation": {
               "type": "object",
               "additionalProperties": false,
-              "description": "Ablauf: eigenes Layout ohne Sidebar, ohne Druck-Kontaktzeile und ohne Drucken-Knopf. Bleibt nur der QR-Code.",
+              "description": "Ablauf: eigenes Layout ohne Sidebar und ohne Drucken-Knopf. Bleibt der QR-Code.",
               "properties": {
-                "qr_code": {
-                  "$ref": "frontmatter.schema.json#/properties/qr_code"
+                "toolbar": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "description": "Werkzeuge der Kopfleiste.",
+                  "properties": {
+                    "qr": {
+                      "$ref": "frontmatter.schema.json#/properties/toolbar/properties/qr"
+                    }
+                  }
                 }
               }
             }
@@ -522,28 +411,181 @@
     }
   },
   "definitions": {
-    "schalterSeite": {
+    "seitenlayout": {
       "type": "object",
       "additionalProperties": false,
-      "description": "Gewöhnliche Seite bzw. Übung (`default`, `page`, `guide`) – das einzige Layout mit Sidebar. Kein `print_button`: Auf einer gewöhnlichen Seite wäre er eine Dopplung von Strg/Cmd+P.",
+      "description": "Gewöhnliche Seite bzw. Übung (`page`, `guide`) – die einzigen Layouts mit Sidebar. Kein `toolbar.print`: Dort wäre er eine Dopplung von Strg/Cmd+P.",
       "properties": {
-        "markdown_copy": {
-          "$ref": "frontmatter.schema.json#/properties/markdown_copy"
+        "sidebar": {
+          "$ref": "#/definitions/sidebarSchalter"
         },
+        "toolbar": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Werkzeuge der Kopfzeile.",
+          "properties": {
+            "copy": {
+              "$ref": "frontmatter.schema.json#/properties/toolbar/properties/copy"
+            },
+            "qr": {
+              "$ref": "frontmatter.schema.json#/properties/toolbar/properties/qr"
+            }
+          }
+        }
+      }
+    },
+    "navEintrag": {
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x_": {
+          "description": "Repo-eigenes Feld – vom Theme nicht gelesen."
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "url"
+          ],
+          "description": "gewöhnlicher Verweis"
+        },
+        {
+          "required": [
+            "children"
+          ],
+          "description": "Gruppe mit Untermenü"
+        }
+      ],
+      "description": "Ein Eintrag der Kopfnavigation: dieselben Felder wie ein Verweis, zusätzlich `children` für ein Untermenü.",
+      "properties": {
+        "title": {
+          "$ref": "frontmatter.schema.json#/definitions/verweis/properties/title"
+        },
+        "url": {
+          "$ref": "frontmatter.schema.json#/definitions/verweis/properties/url"
+        },
+        "icon": {
+          "$ref": "frontmatter.schema.json#/definitions/verweis/properties/icon"
+        },
+        "audiences": {
+          "$ref": "frontmatter.schema.json#/definitions/verweis/properties/audiences"
+        },
+        "children": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Die Einträge des Untermenüs – gewöhnliche Verweise, ohne weitere Ebene.",
+          "items": {
+            "$ref": "frontmatter.schema.json#/definitions/verweis"
+          }
+        }
+      }
+    },
+    "sidebarSchalter": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Sidebar-Karten dieses Layouts: `enabled` und `title`. NICHT `open` und `open_threshold` – Anfangszustand und Schwelle werden je Layout nicht ausgelesen; sie stehen site-weit unter `components.sidebar` bzw. im Front Matter der Seite. Ein Eintrag ohne Wirkung wäre schlimmer als keiner.",
+      "properties": {
         "toc": {
-          "$ref": "frontmatter.schema.json#/properties/toc"
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Karte „Auf dieser Seite“.",
+          "properties": {
+            "enabled": {
+              "$ref": "frontmatter.schema.json#/properties/sidebar/properties/toc/properties/enabled"
+            },
+            "title": {
+              "$ref": "frontmatter.schema.json#/properties/sidebar/properties/toc/properties/title"
+            }
+          }
         },
         "progress": {
-          "$ref": "frontmatter.schema.json#/properties/progress"
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Karte „Fortschritt“.",
+          "properties": {
+            "enabled": {
+              "$ref": "frontmatter.schema.json#/properties/sidebar/properties/progress/properties/enabled"
+            },
+            "title": {
+              "$ref": "frontmatter.schema.json#/properties/sidebar/properties/progress/properties/title"
+            }
+          }
         },
-        "resources_box": {
-          "$ref": "frontmatter.schema.json#/properties/resources_box"
+        "resources": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Karte „Weiterführende Informationen“.",
+          "properties": {
+            "enabled": {
+              "$ref": "frontmatter.schema.json#/properties/sidebar/properties/resources/properties/enabled"
+            },
+            "title": {
+              "$ref": "frontmatter.schema.json#/properties/sidebar/properties/resources/properties/title"
+            }
+          }
+        }
+      }
+    },
+    "sidebarSiteweit": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Sidebar-Karten site-weit. Hier – und nur hier – stehen die Schwellen `open_threshold`: Sie sind eine Regel für die ganze Site. Der Anfangszustand einer einzelnen Seite gehört in ihr Front Matter.",
+      "properties": {
+        "toc": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Karte „Auf dieser Seite“.",
+          "properties": {
+            "enabled": {
+              "$ref": "frontmatter.schema.json#/properties/sidebar/properties/toc/properties/enabled"
+            },
+            "title": {
+              "$ref": "frontmatter.schema.json#/properties/sidebar/properties/toc/properties/title"
+            },
+            "open": {
+              "$ref": "frontmatter.schema.json#/properties/sidebar/properties/toc/properties/open"
+            },
+            "open_threshold": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 12,
+              "description": "Zahl der Überschriften, ab der das Inhaltsverzeichnis ZUGEKLAPPT startet. Es klappt nur zu, wenn unter ihm noch eine Karte steht, die es sonst aus dem Bild schiebt; ist es das letzte Element der Sidebar, bleibt es offen. STANDARD: 12. Nur hier, nicht im Front Matter: Eine Schwelle ist eine Regel für die ganze Site – je Seite ist `sidebar.toc.open` gemeint."
+            }
+          }
         },
-        "print_contact": {
-          "$ref": "frontmatter.schema.json#/properties/print_contact"
+        "progress": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Karte „Fortschritt“.",
+          "properties": {
+            "enabled": {
+              "$ref": "frontmatter.schema.json#/properties/sidebar/properties/progress/properties/enabled"
+            },
+            "title": {
+              "$ref": "frontmatter.schema.json#/properties/sidebar/properties/progress/properties/title"
+            }
+          }
         },
-        "qr_code": {
-          "$ref": "frontmatter.schema.json#/properties/qr_code"
+        "resources": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Karte „Weiterführende Informationen“.",
+          "properties": {
+            "enabled": {
+              "$ref": "frontmatter.schema.json#/properties/sidebar/properties/resources/properties/enabled"
+            },
+            "title": {
+              "$ref": "frontmatter.schema.json#/properties/sidebar/properties/resources/properties/title"
+            },
+            "open": {
+              "$ref": "frontmatter.schema.json#/properties/sidebar/properties/resources/properties/open"
+            },
+            "open_threshold": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Zahl der Einträge, ab der die Karte „Weiterführende Informationen“ ZUGEKLAPPT startet. OHNE ANGABE ist die Karte gar nicht klappbar: Unter ihr steht nichts mehr, sie verdeckt also nichts. Nur hier, nicht im Front Matter."
+            }
+          }
         }
       }
     }

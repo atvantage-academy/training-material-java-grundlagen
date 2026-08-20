@@ -143,6 +143,21 @@
   align-items: start;
 }
 .avd-academy-guide-main { min-width: 0; display: flex; flex-direction: column; gap: 3.5rem; }
+
+/* Breite Tabellen: NICHT die Spalte verengen, sondern der Tabelle das Schrumpfen
+   erlauben. Die Grid-Spalte ist schon korrekt (`minmax(0, 1fr)` + `min-width: 0`) –
+   ueberlaufen kann trotzdem eine Tabelle mit `width: 100%`, weil sie nicht unter ihre
+   MIN-CONTENT-Breite geht: Ein langer Bezeichner in einer Zelle
+   (`simulation.step.interval`) setzt eine Untergrenze, und die Tabelle legt sich
+   sichtbar ueber die Sidebar.
+   Der Hebel ist `overflow-wrap: anywhere` – und zwar genau dort: Nur dieser Wert
+   senkt laut Spezifikation die min-content-Breite, `break-word` tut es NICHT. Deshalb
+   bekommt Code den harten Wert (dort stehen die langen Bezeichner) und Prosa den
+   sanften, der nur bricht, wenn ein Wort allein nicht passt. */
+.avd-academy-guide-main table th,
+.avd-academy-guide-main table td { overflow-wrap: break-word; }
+.avd-academy-guide-main table code,
+.avd-academy-guide-main table a { overflow-wrap: anywhere; }
 /* Schritt-Zähler nur auf nummerierten Seiten (Übungen/Guides, s. u.). */
 .avd-academy-guide-main--numbered { counter-reset: avd-academy-step; }
 
@@ -249,22 +264,25 @@
 }
 .avd-academy-guide-main blockquote > :last-child { margin-bottom: 0; }
 
-/* Prev/Next unten */
-.avd-academy-guide-nav {
-  display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
-  padding-top: 1.5rem; border-top: 1px solid var(--avd-academy-border-soft);
-}
-.avd-academy-guide-nav a { color: var(--avd-orange); font-weight: 500; text-decoration: none; }
-.avd-academy-guide-nav a:hover { text-decoration: underline; }
-.avd-academy-guide-nav .avd-academy-guide-nav__next { margin-left: auto; }
-
-/* --- Rechte Sidebar (sticky, ohne eigenen Scrollbalken) ------------------- */
+/* --- Rechte Sidebar (sticky, mit eigenem Scrollbereich) ------------------- */
 .avd-academy-guide-sidebar {
   position: sticky;
   top: calc(var(--topnav-height, 80px) + 1.75rem);
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  /* Eigener Scrollbereich, wenn die Karten hoeher sind als der sichtbare Rest der
+     Seite. Vorher blieb ein langes Inhaltsverzeichnis am unteren Rand haengen: Wer die
+     Karten darunter sehen wollte, musste die GANZE Seite scrollen, bis die Sidebar
+     mitwanderte – und auf einer langen Uebung reichte das nicht.
+     `overscroll-behavior: contain` haelt das Scrollen in der Sidebar, statt am Ende in
+     die Seite durchzuschlagen. Das Padding rechts laesst dem Scrollbalken Platz, damit
+     er nicht auf dem Karteninhalt liegt. */
+  max-height: calc(100vh - var(--topnav-height, 80px) - 3.5rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 4px;
+  scrollbar-width: thin;
 }
 .avd-academy-guide-side {
   border-radius: var(--radius-dark, 8px);
@@ -274,6 +292,11 @@
 .avd-academy-guide-side[hidden] { display: none; }   /* JS blendet die TOC-Karte bei < 2 Überschriften aus */
 .avd-academy-guide-side--toc { background: var(--avd-academy-color-bg-subtle); }
 .avd-academy-guide-side--bordered { border: 1px solid var(--avd-academy-border-soft); }
+.avd-academy-guide-side.avd-academy-fold[open] > .avd-academy-fold__body {
+  /* Die Karte ist selbst ein Flex-Container mit `gap` – der Abstand des Bausteins
+     kaeme oben drauf und riss sie die Karte auf. */
+  margin-top: 0;
+}
 .avd-academy-guide-side__label {
   font-size: 14px; font-weight: 500; letter-spacing: .04em;
   text-transform: uppercase; color: var(--avd-academy-color-ink-muted);
@@ -308,7 +331,12 @@
 /* --- Responsive ----------------------------------------------------------- */
 @media (max-width: 960px) {
   .avd-academy-guide-layout { grid-template-columns: 1fr; gap: 2.5rem; }
-  .avd-academy-guide-sidebar { position: static; order: -1; }
+  /* Schmal: Die Sidebar steht ueber dem Inhalt und scrollt mit der Seite – ein eigener
+     Scrollbereich waere dort eine Scrollfalle im Scrollfluss. */
+  .avd-academy-guide-sidebar {
+    position: static; order: -1;
+    max-height: none; overflow: visible; padding-right: 0;
+  }
 }
 @media (max-width: 700px) {
   .avd-academy-metanav { display: none; }

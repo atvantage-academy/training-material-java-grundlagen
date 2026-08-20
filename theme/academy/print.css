@@ -61,7 +61,6 @@
   .avd-academy-guide-hero__crumbs,
   .avd-academy-guide-hero__tags,
   .avd-academy-guide-sidebar,
-  .avd-academy-guide-nav,
   .avd-academy-footer,
   .avd-academy-skip-link,
   .avd-academy-copy-md,
@@ -166,6 +165,12 @@
     font-weight: 600;
   }
   .avd-academy-reveal > summary::before { display: none !important; }
+  /* Aufklappbare Abschnitte (`avd-academy-fold`): Auf Papier gibt es kein Klicken,
+     also steht alles offen. Das Zeichen entfällt – es wäre ein Bedienelement ohne
+     Bedienung. */
+  .avd-academy-fold > *:not(summary) { display: block !important; }
+  .avd-academy-fold > summary::after { display: none !important; }
+
   /* Der Titel im Panel wäre auf Papier eine Dopplung des `summary`. */
   .avd-academy-reveal__title { display: none !important; }
   /* Umgekehrt bei der Variante `--info`: Dort trägt das `summary` nur einen

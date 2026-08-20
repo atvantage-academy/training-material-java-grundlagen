@@ -15,8 +15,8 @@
        .avd-academy-sim__controls  Steuerleiste (⟲ ‹ ▶ Abspielen 1×▴ ›)
 
    Darunter die BÜHNEN-BAUSTEINE (`avd-academy-sim-*`): Tafeln, Zellen,
-   Code-Listing und die Zustandsklassen `is-neu`, `is-weg`, `is-aktiv`,
-   `is-puls`, `is-fehler`. Sie sind ein Angebot, keine Pflicht – eine Simulation
+   Code-Listing und die Zustandsklassen `is-new`, `is-gone`, `is-active`,
+   `is-pulse`, `is-error`. Sie sind ein Angebot, keine Pflicht – eine Simulation
    darf ihre Kulisse auch vollständig selbst gestalten.
 
    Alle Farben/Abstände kommen aus den Academy-Tokens; Dark Mode kostet damit
@@ -109,7 +109,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) clamp(17rem, 24vw, 24rem);
 }
-.avd-academy-sim__main--breit { grid-template-columns: minmax(0, 1fr); }
+.avd-academy-sim__main--wide { grid-template-columns: minmax(0, 1fr); }
 /* Bühne und Übersicht liegen übereinander in derselben Zelle; sichtbar ist per
    `hidden` immer nur eine. So springt beim Wechsel nichts. */
 .avd-academy-sim__stage,
@@ -121,7 +121,7 @@
    UA-Regel `[hidden] { display: none }` verliert gegen jeden Klassenselektor,
    und ein Bühnenbild trägt fast immer eines (`display: grid`, `flex` …). Ohne
    diese Zeile stünden bei vier Szenarien alle vier Kulissen untereinander. */
-[data-avd-academy-sim-szene][hidden] { display: none !important; }
+[data-avd-academy-sim-scene][hidden] { display: none !important; }
 
 .avd-academy-sim__stage {
   position: relative;          /* Bezugsrahmen für SVG-Overlays der Simulation */
@@ -219,7 +219,7 @@
   transition: color var(--avd-academy-transition), border-color var(--avd-academy-transition);
 }
 .avd-academy-sim__tab:hover { color: var(--avd-academy-color-ink); }
-.avd-academy-sim__tab.is-aktiv {
+.avd-academy-sim__tab.is-active {
   color: var(--avd-academy-color-headline);
   border-bottom-color: var(--avd-academy-color-accent);
   font-weight: var(--avd-academy-fw-medium);
@@ -234,7 +234,7 @@
   font-size: 0.75em;
   font-variant-numeric: tabular-nums;
 }
-.avd-academy-sim__tab.is-aktiv .avd-academy-sim__tab-nr {
+.avd-academy-sim__tab.is-active .avd-academy-sim__tab-nr {
   background: var(--avd-academy-color-accent);
   color: var(--avd-academy-color-accent-contrast);
 }
@@ -253,7 +253,7 @@
 .avd-academy-sim[data-uebersicht] .avd-academy-sim__main { grid-template-columns: minmax(0, 1fr); }
 .avd-academy-sim[data-uebersicht] .avd-academy-sim__aside { display: none; }
 .avd-academy-sim__intro-kopf { max-width: 46rem; margin-bottom: var(--avd-academy-space-8); }
-.avd-academy-sim__intro-titel {
+.avd-academy-sim__intro-title {
   margin: 0 0 var(--avd-academy-space-3) 0;
   font-size: var(--avd-academy-fs-xl);
   line-height: var(--avd-academy-lh-heading);
@@ -450,7 +450,7 @@
   text-align: left;
 }
 
-.avd-academy-sim__btn--tempo {
+.avd-academy-sim__btn--speed {
   min-width: 0;
   gap: 0.3em;
   padding: 0 var(--avd-academy-space-4) 0 var(--avd-academy-space-1);
@@ -464,13 +464,13 @@
   line-height: 1;
   transition: transform var(--avd-academy-transition);
 }
-.avd-academy-sim__btn--tempo[aria-expanded="true"] .avd-academy-sim__caret {
+.avd-academy-sim__btn--speed[aria-expanded="true"] .avd-academy-sim__caret {
   transform: rotate(180deg);
 }
 
 /* Das Menü klappt nach OBEN auf – die Steuerleiste sitzt am unteren Rand – und
    sitzt bündig am Knopf: gleiche Kante rechts, gleiche Mindestbreite. */
-.avd-academy-sim__tempo-menu {
+.avd-academy-sim__speed-menu {
   position: absolute;
   right: 0;
   bottom: calc(100% + 0.4rem);
@@ -484,8 +484,8 @@
   border-radius: var(--avd-academy-radius);
   box-shadow: var(--avd-academy-shadow-2);
 }
-.avd-academy-sim__tempo-menu[hidden] { display: none; }
-.avd-academy-sim__tempo-menu button {
+.avd-academy-sim__speed-menu[hidden] { display: none; }
+.avd-academy-sim__speed-menu button {
   display: flex;
   align-items: baseline;
   gap: 0.45em;
@@ -501,21 +501,21 @@
   text-align: left;
   cursor: pointer;
 }
-.avd-academy-sim__tempo-menu button:hover,
-.avd-academy-sim__tempo-menu button:focus-visible {
+.avd-academy-sim__speed-menu button:hover,
+.avd-academy-sim__speed-menu button:focus-visible {
   background: var(--avd-academy-color-bg-subtle);
   outline: none;
 }
 /* Das Häkchen ist IMMER da, nur unsichtbar: Sonst rückten alle Zeilen um seine
    Breite, sobald die Auswahl wechselt. */
-.avd-academy-sim__tempo-menu button::before {
+.avd-academy-sim__speed-menu button::before {
   content: "✓";
   visibility: hidden;
   color: var(--avd-academy-color-accent);
 }
-.avd-academy-sim__tempo-menu button.is-aktiv::before { visibility: visible; }
-.avd-academy-sim__tempo-menu button.is-aktiv { font-weight: var(--avd-academy-fw-bold); }
-.avd-academy-sim__tempo-menu button span {
+.avd-academy-sim__speed-menu button.is-active::before { visibility: visible; }
+.avd-academy-sim__speed-menu button.is-active { font-weight: var(--avd-academy-fw-bold); }
+.avd-academy-sim__speed-menu button span {
   margin-left: auto;
   color: var(--avd-academy-color-ink-muted);
   font-weight: var(--avd-academy-fw-normal);
@@ -528,8 +528,8 @@
   .avd-academy-sim__title { display: none; }
   /* Der Beisatz („langsam“, „im Zeitraffer“) ist Komfort, die Zahl ist die
      Information – auf schmalen Geräten bleibt nur sie. */
-  .avd-academy-sim__tempo-menu { min-width: 7rem; }
-  .avd-academy-sim__tempo-menu button span { display: none; }
+  .avd-academy-sim__speed-menu { min-width: 7rem; }
+  .avd-academy-sim__speed-menu button span { display: none; }
 }
 
 /* =============================================================================
@@ -597,10 +597,10 @@
 .avd-academy-sim-panel--ton-alert .avd-academy-sim-panel__title {
   color: var(--avd-academy-sim-ton);
 }
-/* Der Ton weicht, wenn die Tafel etwas meldet – `is-aktiv`/`is-fehler` sind
+/* Der Ton weicht, wenn die Tafel etwas meldet – `is-active`/`is-error` sind
    Zustände und müssen lauter sein als die Zuordnung. */
-.avd-academy-sim-panel.is-aktiv { border-color: var(--avd-academy-color-accent); }
-.avd-academy-sim-panel.is-fehler { border-color: var(--avd-academy-color-danger); }
+.avd-academy-sim-panel.is-active { border-color: var(--avd-academy-color-accent); }
+.avd-academy-sim-panel.is-error { border-color: var(--avd-academy-color-danger); }
 
 /* Eine Zelle: der kleinste sichtbare Zustandsträger (Variable, Objekt, Paket). */
 .avd-academy-sim-cell {
@@ -639,7 +639,7 @@
        a = 10;</code></pre>
 
    Die laufende Zeile wird NICHT durch Umbauen des Markups hervorgehoben, sondern
-   durch einen Balken DAHINTER (`AvdSimulation.codeZeile(block, n)`). Das ist der
+   durch einen Balken DAHINTER (`AvdSimulation.codeLine(block, n)`). Das ist der
    einzige Weg, der die Ausgabe von highlight.js unangetastet lässt: Sie besteht
    aus verschachtelten Spans, die sich nicht ohne Weiteres zeilenweise zerlegen
    lassen – und ein zerlegtes Markup würde die Farben zerreißen. */
@@ -707,7 +707,7 @@
 
 /* ÄLTERE FORM (seit 1.8.0): einzelne `__line`-Elemente statt eines Codeblocks.
    Sie bleibt gültig – wer sie nutzt, bekommt weiterhin Zeilen-Flächen mit
-   `is-aktiv`/`is-erledigt`. Neue Simulationen nehmen den Codeblock oben: Er
+   `is-active`/`is-erledigt`. Neue Simulationen nehmen den Codeblock oben: Er
    bringt die Syntaxfarben mit, die hier fehlen. */
 .avd-academy-sim-code__line {
   display: block;
@@ -719,7 +719,7 @@
   transition: background var(--avd-academy-transition), border-color var(--avd-academy-transition),
               opacity var(--avd-academy-transition), color var(--avd-academy-transition);
 }
-.avd-academy-sim-code__line.is-aktiv {
+.avd-academy-sim-code__line.is-active {
   opacity: 1;
   background: color-mix(in srgb, var(--avd-academy-color-accent) 18%, transparent);
   border-left-color: var(--avd-academy-color-accent);
@@ -729,17 +729,17 @@
 .avd-academy-sim-code__line.is-erledigt { opacity: 0.75; }
 
 /* --- Zustandsklassen --------------------------------------------------------
-   `is-neu` und `is-weg` setzt AvdSimulation.list() beim Abgleich; `is-aktiv`,
-   `is-puls` und `is-fehler` vergibt die Simulation selbst. */
-.avd-academy-sim-cell.is-aktiv,
-.avd-academy-sim-panel.is-aktiv { border-color: var(--avd-academy-color-accent); }
+   `is-new` und `is-gone` setzt AvdSimulation.list() beim Abgleich; `is-active`,
+   `is-pulse` und `is-error` vergibt die Simulation selbst. */
+.avd-academy-sim-cell.is-active,
+.avd-academy-sim-panel.is-active { border-color: var(--avd-academy-color-accent); }
 /* Der Fehlerrand einer Zelle ist nur 1 px stark – auf dem Beamer verschwindet er.
    Ein zweiter Ring per `box-shadow` macht ihn ohne Layoutsprung sichtbar. */
-.avd-academy-sim-cell.is-fehler {
+.avd-academy-sim-cell.is-error {
   border-color: var(--avd-academy-color-danger);
   box-shadow: 0 0 0 1px var(--avd-academy-color-danger);
 }
-.avd-academy-sim-panel.is-fehler { border-color: var(--avd-academy-color-danger); }
+.avd-academy-sim-panel.is-error { border-color: var(--avd-academy-color-danger); }
 
 @keyframes avd-academy-sim-einblenden {
   from { opacity: 0; transform: translateY(0.5rem); }
@@ -763,14 +763,14 @@
   40%, 60% { transform: translateX(4px); }
 }
 
-.is-neu  { animation: avd-academy-sim-einblenden 280ms ease-out; }
-.is-weg  { animation: avd-academy-sim-ausblenden 260ms ease-in forwards; pointer-events: none; }
-.is-puls { animation: avd-academy-sim-puls 900ms ease-in-out; }
-.is-fehler.is-puls { animation: avd-academy-sim-beben 500ms cubic-bezier(0.36, 0.07, 0.19, 0.97); }
+.is-new  { animation: avd-academy-sim-einblenden 280ms ease-out; }
+.is-gone  { animation: avd-academy-sim-ausblenden 260ms ease-in forwards; pointer-events: none; }
+.is-pulse { animation: avd-academy-sim-puls 900ms ease-in-out; }
+.is-error.is-pulse { animation: avd-academy-sim-beben 500ms cubic-bezier(0.36, 0.07, 0.19, 0.97); }
 
 @media (prefers-reduced-motion: reduce) {
   .avd-academy-sim__note,
-  .is-neu, .is-weg, .is-puls, .is-fehler.is-puls { animation: none; }
+  .is-new, .is-gone, .is-pulse, .is-error.is-pulse { animation: none; }
 }
 
 /* =============================================================================
@@ -884,7 +884,7 @@
   .avd-academy-sim__tool,
   .avd-academy-sim__progress,
   .avd-academy-sim__controls,
-  .avd-academy-sim__tempo-menu,
+  .avd-academy-sim__speed-menu,
   .avd-academy-sim__ost,
   .avd-academy-sim__tabs,
   .avd-academy-sim__capture-hint { display: none !important; }

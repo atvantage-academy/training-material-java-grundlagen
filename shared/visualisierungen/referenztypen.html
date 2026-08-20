@@ -34,15 +34,17 @@
     layout: simulation
     title:        "…"            → Titel in der Kopfleiste; sonst die erste #-Überschrift
     description:  "…"            → Meta-Description
-    erklaerspalte: false         → rechte Spalte weglassen (Bühne über volle Breite)
-    einleitung:   "…"            → ein Satz auf der Szenario-Übersicht (nur bei mehreren)
-    tempo:  0.5 | 1 | 2 | 5      → Start-Tempo des automatischen Abspielens
-    schrittdauer: 2500           → Grunddauer je Schritt beim Abspielen (ms)
+    simulation:
+      aside: false               → rechte Spalte weglassen (Bühne über volle Breite)
+      intro: "…"                 → ein Satz auf der Szenario-Übersicht (nur bei mehreren)
+      speed: 0.5 | 1 | 2 | 5     → Start-Tempo des automatischen Abspielens
+      step:
+        interval: 2500           → Grunddauer je Schritt beim Abspielen (ms)
 
   MEHRERE SZENARIEN: Meldet die Seite über `registerScenario` mehr als einen
   Ablauf an, bekommt sie eine Reiterleiste und eine Übersicht als Startbild. Je
   Szenario liefert die Seite ein eigenes Bühnenbild in einem Container mit
-  `data-avd-academy-sim-szene="«id»"`; sichtbar ist immer genau eines. Mit nur
+  `data-avd-academy-sim-scene="«id»"`; sichtbar ist immer genau eines. Mit nur
   einem Szenario (oder bloßem `registerStep`) ändert sich nichts.
 
   Der INHALT dieser Seite ist das BÜHNENBILD: die Kulisse (Kästen, Beschriftungen,
@@ -60,13 +62,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Referenztypen · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Vier Szenarien durch den Speicher: Was bei jeder Codezeile im Thread Stack und im Heap passiert – Abgrenzung zu primitiven Typen, Objektgeflecht, Identität gegen Inhalt, this und static."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787151111"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787151111">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787151111">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787151111">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787151111"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787151111">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787151111" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1787151111" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787151111">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787222911"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787222911">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787222911">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787222911">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787222911"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787222911">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787222911" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787222911" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787222911">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -79,19 +81,18 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/training-material-java-se/theme/atvantage/assets/icon-180.png">
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/simulation.css?v=1787151111"><script src="/training-material-java-se/theme/jekyll/simulation.js?v=1787151111"></script>
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787151111"></head>
-<body class="avd-academy-sim" data-avd-academy-sim data-avd-academy-sim-titel="Referenztypen"
-      data-avd-academy-sim-starttempo="1"
-      data-avd-academy-sim-schrittdauer="3200">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/simulation.css?v=1787222911"><script src="/training-material-java-se/theme/jekyll/simulation.js?v=1787222911"></script>
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787222911"></head>
+<body class="avd-academy-sim" data-avd-academy-sim data-avd-academy-sim-title="Referenztypen"
+      data-avd-academy-sim-speed="1"
+      data-avd-academy-sim-step-interval="3200">
   <a class="avd-academy-skip-link" href="#avd-academy-sim-stage">Zum Inhalt springen</a>
 
   <header class="avd-academy-sim__bar">
     <img class="avd-academy-sim__logo" src="/training-material-java-se/assets/logo-schulung.svg" alt="ATVANTAGE Academy"><span class="avd-academy-sim__title">Referenztypen</span>
     <span class="avd-academy-sim__counter" data-avd-academy-sim-counter aria-live="off"></span>
     <div class="avd-academy-sim__tools"><button type="button" class="avd-academy-sim__back" data-avd-academy-back hidden
-              title="Zurück" aria-label="Zurück">← Zurück</button>
-      <button type="button" class="avd-academy-qr" data-avd-academy-qr hidden
+              title="Zurück" aria-label="Zurück">← Zurück</button><button type="button" class="avd-academy-qr" data-avd-academy-qr hidden
               title="Diese Seite auf Deinem Smartphone öffnen"
               aria-label="Diese Seite auf Deinem Smartphone öffnen"></button><button type="button" class="avd-academy-sim__tool" data-avd-academy-theme-toggle
               title="Farbschema umschalten (hell/dunkel)" aria-label="Farbschema umschalten">◐</button>
@@ -209,7 +210,7 @@
   /* Der Pfeil wird GEZEICHNET, statt einfach da zu sein: Die Verbindung entsteht
      vor den Augen der Teilnehmenden – genau das ist der Lernmoment. */
   @media (prefers-reduced-motion: no-preference) {
-    .speicher__pfeil.is-neu { animation: speicher-ziehen 500ms ease-out; }
+    .speicher__pfeil.is-new { animation: speicher-ziehen 500ms ease-out; }
   }
   /* 900 statt der Pfadlänge: Der Wert muss nur GRÖSSER als jeder vorkommende Pfad
      sein, dann läuft die Linie sichtbar von vorn nach hinten aus. */
@@ -379,7 +380,7 @@
   .szene__meta  { grid-area: meta; }
   /* „this und static“ hat eine dritte Tafel: den Bereich AUSSERHALB des Heaps,
      in dem die geladenen Klassen samt ihrem Code liegen. */
-  .szene[data-avd-academy-sim-szene="this-static"] {
+  .szene[data-avd-academy-sim-scene="this-static"] {
     /* Der Metaspace steht NEBEN dem Thread Stack, nicht darunter: So bleibt der
        Stack schmal, und alle drei Bereiche passen ohne Scrollen auf den Schirm. */
     /* Die Quelltext-Spalte bleibt so breit, dass die längste Zeile
@@ -388,7 +389,7 @@
     grid-template-areas: "code stack meta" "code heap heap";
   }
   @media (max-width: 1100px) {
-    .szene[data-avd-academy-sim-szene="this-static"] {
+    .szene[data-avd-academy-sim-scene="this-static"] {
       grid-template-columns: minmax(0, 1fr);
       grid-template-areas: "code" "stack" "heap" "meta";
     }
@@ -421,7 +422,7 @@
      nach innen und treffen die Kundin an der Seite, die ihnen zugewandt ist –
      keiner kreuzt eine Karte. Die Reihenfolge im Zustand ist eine andere
      (die Kundin entsteht zuerst), deshalb `order`. */
-  [data-avd-academy-sim-szene="objektgeflecht"] .szene__objekte {
+  [data-avd-academy-sim-scene="objektgeflecht"] .szene__objekte {
     align-items: center;
     justify-content: center;
     gap: clamp(2rem, 1rem + 3vw, 4.5rem);
@@ -526,7 +527,7 @@
   </defs>
 </svg>
 
-<div class="speicher" data-avd-academy-sim-szene="abgrenzung">
+<div class="speicher" data-avd-academy-sim-scene="abgrenzung">
 
   <svg class="speicher__pfeile" id="speicher-pfeile" aria-hidden="true"></svg>
 
@@ -599,7 +600,7 @@ k2 = null;</code></pre>
 
 </div>
 
-<div class="szene" data-avd-academy-sim-szene="objektgeflecht">
+<div class="szene" data-avd-academy-sim-scene="objektgeflecht">
 
   <svg class="speicher__pfeile" id="objektgeflecht-pfeile" aria-hidden="true"></svg>
 
@@ -638,7 +639,7 @@ print(spar.inhaber.wohnort);</code></pre>
 
 </div>
 
-<div class="szene" data-avd-academy-sim-szene="identitaet">
+<div class="szene" data-avd-academy-sim-scene="identitaet">
 
   <svg class="speicher__pfeile" id="identitaet-pfeile" aria-hidden="true"></svg>
 
@@ -677,7 +678,7 @@ print(a.equals(b));</code></pre>
 
 </div>
 
-<div class="szene" data-avd-academy-sim-szene="this-static">
+<div class="szene" data-avd-academy-sim-scene="this-static">
 
   <svg class="speicher__pfeile" id="this-static-pfeile" aria-hidden="true"></svg>
 
@@ -750,13 +751,13 @@ int größer = Math.max(3, 7);</code></pre>
     render: function (s, ctx) {
       // Codezeile hervorheben – der Balken liegt hinter dem Text, damit die
       // Syntaxfarben von highlight.js unangetastet bleiben.
-      var kid = ctx.szenario;
+      var kid = ctx.scenario;
       zeigeZeile(kid, s.zeile);
 
       // Stack – Abgleich über den Variablennamen, damit eine bestehende Variable
       // beim Wertwechsel NICHT neu entsteht (sonst gäbe es keinen Übergang).
       sim.list(stackBox, s.stack, {
-        animiert: ctx.animiert,
+        animated: ctx.animated,
         key: function (v) { return v.name; },
         create: function () {
           var el = document.createElement("div");
@@ -779,20 +780,20 @@ int größer = Math.max(3, 7);</code></pre>
             (v.leer ? " speicher__unbelegt"
                     : v.wert === "null" ? " speicher__null"
                     : v.ref ? " speicher__adresse" : "");
-          // Der Fehlerzustand BEBT (siehe `.is-fehler.is-puls`) – aber nur in dem
+          // Der Fehlerzustand BEBT (siehe `.is-error.is-pulse`) – aber nur in dem
           // Schritt, in dem er eintritt, nicht bei jedem erneuten Zeichnen.
-          var warFehler = el.classList.contains("is-fehler");
+          var warFehler = el.classList.contains("is-error");
           var istFehler = s.fehler && v.name === "k1";
-          el.classList.toggle("is-fehler", istFehler);
-          if (istFehler && !warFehler && ctx.animiert) sim.puls(el);
-          el.classList.toggle("is-aktiv", s.liest === v.name);
+          el.classList.toggle("is-error", istFehler);
+          if (istFehler && !warFehler && ctx.animated) sim.pulse(el);
+          el.classList.toggle("is-active", s.liest === v.name);
           el.id = "speicher-var-" + v.name;
         }
       });
 
       // Heap
       sim.list(heapBox, s.heap, {
-        animiert: ctx.animiert,
+        animated: ctx.animated,
         key: function (o) { return o.id; },
         create: function () {
           var el = document.createElement("div");
@@ -813,7 +814,7 @@ int größer = Math.max(3, 7);</code></pre>
           // Der WERTWECHSEL pulsiert – und das Lesen über k1 ebenfalls, denn
           // genau dort ist der Lernmoment: dieselbe Zelle, anderer Weg.
           var anlass = (alt && alt !== wert.textContent) || s.liest;
-          if (anlass && ctx.animiert) sim.puls(el);
+          if (anlass && ctx.animated) sim.pulse(el);
         }
       });
 
@@ -826,7 +827,7 @@ int größer = Math.max(3, 7);</code></pre>
 
       var gc = document.getElementById("speicher-gc");
       gc.hidden = !s.gc;
-      if (s.gc && ctx.animiert) {
+      if (s.gc && ctx.animated) {
         gc.style.animation = "none";
         void gc.offsetWidth;
         gc.style.animation = "";
@@ -836,7 +837,7 @@ int größer = Math.max(3, 7);</code></pre>
       // Kein `requestAnimationFrame` nötig: `getBoundingClientRect()` erzwingt
       // das Layout selbst. Über rAF gezeichnet bliebe der Pfeil stehen, wenn der
       // Browser gerade keine Frames liefert (Hintergrund-Tab, Aufzeichnung).
-      pfeile(s, ctx.animiert);
+      pfeile(s, ctx.animated);
     }
   });
 
@@ -877,7 +878,7 @@ int größer = Math.max(3, 7);</code></pre>
 
       var pfad = document.createElementNS("http://www.w3.org/2000/svg", "path");
       pfad.setAttribute("d", eckig([[x1, y1], [gasse, y1], [gasse, y2], [x2, y2]], 10));
-            pfad.setAttribute("class", "speicher__pfeil" + (animiert ? " is-neu" : ""));
+            pfad.setAttribute("class", "speicher__pfeil" + (animiert ? " is-new" : ""));
       svg.appendChild(pfad);
     });
   }
@@ -919,12 +920,12 @@ int größer = Math.max(3, 7);</code></pre>
   --------------------------------------------------------------------------- */
   sim.registerScenario({
     id: "abgrenzung",
-    titel: "Abgrenzung zu primitiven Datentypen",
-    beschreibung: "Was beim Kopieren passiert – bei einem <code>int</code> und bei einem Objekt. " +
+    title: "Abgrenzung zu primitiven Datentypen",
+    description: "Was beim Kopieren passiert – bei einem <code>int</code> und bei einem Objekt. " +
                   "Bis hin zur NullPointerException und dem Garbage Collector.",
     steps: [
     {
-      titel: "Zwei Lager",
+      title: "Zwei Lager",
       text: "<p>Java verwahrt Daten an <b>zwei</b> Orten. Im <b>Thread Stack</b> liegen die " +
             "Variablen selbst – ein Fach je Name. Im <b>Heap</b> darunter liegen die Objekte.</p>" +
             "<p><b>Jeder Thread hat seinen eigenen Stack</b> – die blassen Kästen oben sind die " +
@@ -936,7 +937,7 @@ int größer = Math.max(3, 7);</code></pre>
 
     /* --- Primitive Typen --------------------------------------------------- */
     {
-      titel: "int kontostand;",
+      title: "int kontostand;",
       text: "<p>Die <b>Deklaration</b> schafft nur das <b>Fach</b>: ein Platz im Stack, " +
             "beschriftet mit <code>kontostand</code>, groß genug für ein <code>int</code>.</p>" +
             "<p>Drin ist noch nichts. Nicht <code>0</code>, nicht <code>null</code> – " +
@@ -947,7 +948,7 @@ int größer = Math.max(3, 7);</code></pre>
       }
     },
     {
-      titel: "kontostand = 10;",
+      title: "kontostand = 10;",
       text: "<p>Jetzt die <b>Zuweisung</b>: Der Wert <code>10</code> landet <b>direkt im Fach</b>. " +
             "Kein Objekt, kein Umweg.</p>" +
             "<p>Zwei Zeilen, zwei Vorgänge – meist schreibt man sie zusammen, aber es " +
@@ -959,7 +960,7 @@ int größer = Math.max(3, 7);</code></pre>
       }
     },
     {
-      titel: "int kopie;",
+      title: "int kopie;",
       text: "<p>Ein <b>eigenes, zweites Fach</b> entsteht – wieder leer. Mit " +
             "<code>kontostand</code> hat es bis hierher nichts zu tun.</p>",
       apply: function (s) {
@@ -968,7 +969,7 @@ int größer = Math.max(3, 7);</code></pre>
       }
     },
     {
-      titel: "kopie = kontostand;",
+      title: "kopie = kontostand;",
       text: "<p>Rechts steht ein Fach – gelesen wird sein <b>Inhalt</b>, also <code>10</code>. " +
             "Diese <code>10</code> wird ins linke Fach <b>kopiert</b>.</p>" +
             "<p>Zwei Fächer, zwei Zehnen. Keine Verbindung.</p>",
@@ -979,7 +980,7 @@ int größer = Math.max(3, 7);</code></pre>
       }
     },
     {
-      titel: "kopie = 20;",
+      title: "kopie = 20;",
       text: "<p>Nur <code>kopie</code> ändert sich. <code>kontostand</code> bleibt bei <code>10</code>.</p>" +
             "<p><b>Merke:</b> Bei primitiven Typen wird der Wert kopiert – nichts bleibt verbunden.</p>",
       apply: function (s) {
@@ -990,7 +991,7 @@ int größer = Math.max(3, 7);</code></pre>
 
     /* --- Referenztypen ----------------------------------------------------- */
     {
-      titel: "Konto k1;",
+      title: "Konto k1;",
       text: "<p>Auch hier zuerst nur das <b>Fach</b> – und zwar eines im Stack, nicht im Heap. " +
             "Es ist nicht groß genug für ein Konto, sondern nur für eine <b>Adresse</b>.</p>" +
             "<p><code>new</code> stand hier noch nirgends: Es gibt <b>kein Objekt</b>.</p>",
@@ -1000,7 +1001,7 @@ int größer = Math.max(3, 7);</code></pre>
       }
     },
     {
-      titel: "k1 = new Konto(100);",
+      title: "k1 = new Konto(100);",
       text: "<p>Zwei Dinge auf einmal: <code>new</code> legt das <b>Objekt im Heap</b> an – " +
             "und liefert dessen <b>Adresse</b> <code>#A1</code> zurück. Die wird ins Fach " +
             "von <code>k1</code> geschrieben.</p>" +
@@ -1013,7 +1014,7 @@ int größer = Math.max(3, 7);</code></pre>
       }
     },
     {
-      titel: "Konto k2;",
+      title: "Konto k2;",
       text: "<p>Ein zweites Adressfach – leer. Noch zeigt es nirgendwohin.</p>",
       apply: function (s) {
         s.zeile = 7;
@@ -1021,7 +1022,7 @@ int größer = Math.max(3, 7);</code></pre>
       }
     },
     {
-      titel: "k2 = k1;",
+      title: "k2 = k1;",
       text: "<p>Dieselbe Regel wie oben: Kopiert wird der <b>Inhalt des Fachs</b> – und der ist " +
             "hier eine Adresse.</p>" +
             "<p>Es entsteht <b>kein zweites Konto</b>. Zwei Wegweiser, ein Ziel.</p>",
@@ -1032,7 +1033,7 @@ int größer = Math.max(3, 7);</code></pre>
       }
     },
     {
-      titel: "k2.standInCent = 500;",
+      title: "k2.standInCent = 500;",
       text: "<p>Der Punkt folgt dem Wegweiser nach unten in den Heap und ändert <b>dort</b> " +
             "den Wert.</p>" +
             "<p>Und <code>k1</code>? Zeigt auf dasselbe Objekt – sieht die 500 also auch. " +
@@ -1043,7 +1044,7 @@ int größer = Math.max(3, 7);</code></pre>
       }
     },
     {
-      titel: "print(k1.standInCent);",
+      title: "print(k1.standInCent);",
       text: "<p>Gelesen wird über <code>k1</code> – und heraus kommt <b>500</b>, nicht 100.</p>" +
             "<p><code>k1</code> wurde nie angefasst. Geändert hat jemand über <code>k2</code>. " +
             "Beide Wege führen zu <b>demselben</b> Objekt, und ein Objekt hat nur einen " +
@@ -1054,10 +1055,10 @@ int größer = Math.max(3, 7);</code></pre>
         s.zeile = 10;
         s.liest = "k1";
       },
-      dauer: 4000
+      duration: 4000
     },
     {
-      titel: "k1 = null;",
+      title: "k1 = null;",
       text: "<p>Nur der <b>Wegweiser</b> wird gelöscht, nicht das Objekt. Es lebt weiter, " +
             "solange <code>k2</code> darauf zeigt.</p>" +
             "<p><code>null</code> ist übrigens etwas anderes als das leere Fach vom Anfang: " +
@@ -1071,7 +1072,7 @@ int größer = Math.max(3, 7);</code></pre>
       }
     },
     {
-      titel: "k1.standInCent = 1000; 💥",
+      title: "k1.standInCent = 1000; 💥",
       text: "<p>Dem Wegweiser folgen, der auf <b>nichts</b> zeigt – das geht nicht: " +
             "<b>NullPointerException</b>.</p>" +
             "<p>Nicht das Objekt ist weg. Der <b>Weg dorthin</b> ist weg.</p>",
@@ -1079,10 +1080,10 @@ int größer = Math.max(3, 7);</code></pre>
         s.zeile = 12;
         s.fehler = true;
       },
-      dauer: 4200
+      duration: 4200
     },
     {
-      titel: "k2 = null;",
+      title: "k2 = null;",
       text: "<p>Nehmen wir an, die Exception war abgefangen – das Programm läuft weiter. " +
             "Jetzt wird auch der letzte Wegweiser gelöscht.</p>" +
             "<p>Das Objekt ist noch <b>da</b> – aber <b>unerreichbar</b>: Kein Fach in " +
@@ -1096,7 +1097,7 @@ int größer = Math.max(3, 7);</code></pre>
       }
     },
     {
-      titel: "Irgendwann kommt der Garbage Collector",
+      title: "Irgendwann kommt der Garbage Collector",
       text: "<p>Speicher freigeben musst Du in Java nicht. Das erledigt der " +
             "<b>Garbage Collector</b>: Er sucht, was nicht mehr erreichbar ist, und " +
             "kehrt es weg.</p>" +
@@ -1111,10 +1112,10 @@ int größer = Math.max(3, 7);</code></pre>
         s.heap[0].unerreichbar = true;
         s.heap[0].gekehrt = true;
       },
-      dauer: 6000
+      duration: 6000
     },
     {
-      titel: "Zum Mitnehmen",
+      title: "Zum Mitnehmen",
       text: "<p>Bei primitiven Typen ist der Inhalt des Fachs der <b>Wert</b> – die " +
             "Kopie ist eigenständig. Bei Objekten ist es die <b>Adresse</b> – die " +
             "Kopie führt zum selben Objekt.</p>" +
@@ -1134,7 +1135,7 @@ int größer = Math.max(3, 7);</code></pre>
      GEMEINSAMES FÜR DIE SZENARIEN 2–4
      Alle drei zeigen dasselbe Bild: Quelltext, ein Thread Stack, ein Heap mit
      Objektkarten und Pfeilen dazwischen. Deshalb EIN Zeichner statt drei –
-     unterschieden wird nur über die Kennung des Szenarios (`ctx.szenario`).
+     unterschieden wird nur über die Kennung des Szenarios (`ctx.scenario`).
      =========================================================================== */
   function el(id) { return document.getElementById(id); }
 
@@ -1147,16 +1148,16 @@ int größer = Math.max(3, 7);</code></pre>
     // Klassendefinition, die als Kulisse danebensteht. Sie zählen auch nicht mit,
     // sonst verschöbe sich die Nummerierung des Ablaufs.
     var blöcke = document.querySelectorAll(
-      '[data-avd-academy-sim-szene="' + kid + '"] .avd-academy-sim-code:not([data-kontext])');
+      '[data-avd-academy-sim-scene="' + kid + '"] .avd-academy-sim-code:not([data-kontext])');
     var rest = (n === null || n === undefined || n < 0) ? -1 : n;
     Array.prototype.forEach.call(blöcke, function (block) {
       var code = block.querySelector("code");
       var anzahl = code ? code.textContent.replace(/\n$/, "").split("\n").length : 0;
       if (rest >= 0 && rest < anzahl) {
-        sim.codeZeile(block, rest);
+        sim.codeLine(block, rest);
         rest = -1;              // verbraucht – die übrigen Blöcke bleiben leer
       } else {
-        sim.codeZeile(block, null);
+        sim.codeLine(block, null);
         if (rest >= 0) rest -= anzahl;
       }
     });
@@ -1233,7 +1234,7 @@ int größer = Math.max(3, 7);</code></pre>
         y2 = b.top - rahmen.top + b.height * (0.3 + spur * 0.25);
         var pfadQuer = document.createElementNS("http://www.w3.org/2000/svg", "path");
         pfadQuer.setAttribute("d", eckig([[x1, y1], [gasse, y1], [gasse, y2], [x2, y2]], 10));
-        pfadQuer.setAttribute("class", "speicher__pfeil" + (animiert ? " is-neu" : ""));
+        pfadQuer.setAttribute("class", "speicher__pfeil" + (animiert ? " is-new" : ""));
         svg.appendChild(pfadQuer);
         return;
       }
@@ -1250,7 +1251,7 @@ int größer = Math.max(3, 7);</code></pre>
 
       var pfad = document.createElementNS("http://www.w3.org/2000/svg", "path");
       pfad.setAttribute("d", eckig([[x1, y1], [gasse, y1], [gasse, quer], [x2, quer], [x2, y2]], 10));
-      pfad.setAttribute("class", "speicher__pfeil" + (animiert ? " is-neu" : ""));
+      pfad.setAttribute("class", "speicher__pfeil" + (animiert ? " is-new" : ""));
       svg.appendChild(pfad);
     });
   }
@@ -1258,12 +1259,12 @@ int größer = Math.max(3, 7);</code></pre>
   /* Der gemeinsame Zeichner. Der Zustand ist überall gleich aufgebaut:
      { zeile, stack: [], heap: [], pfeile: [], ergebnis: null }. */
   function zeichneSzene(s, ctx) {
-    var kid = ctx.szenario;
+    var kid = ctx.scenario;
 
     zeigeZeile(kid, s.zeile);
 
     sim.list(el(kid + "-stack"), s.stack, {
-      animiert: ctx.animiert,
+      animated: ctx.animated,
       key: function (v) { return v.name; },
       create: function () {
         var c = document.createElement("div");
@@ -1280,20 +1281,20 @@ int größer = Math.max(3, 7);</code></pre>
         w.textContent = v.leer ? "–" : v.wert;
         w.className = "avd-academy-sim-cell__value" +
           (v.leer ? " speicher__unbelegt" : v.ref ? " speicher__adresse" : "");
-        c.classList.toggle("is-aktiv", s.betont === v.name);
+        c.classList.toggle("is-active", s.betont === v.name);
         c.id = kid + "-var-" + v.name;
       }
     });
 
     sim.list(el(kid + "-heap"), s.heap, {
-      animiert: ctx.animiert,
+      animated: ctx.animated,
       key: function (o) { return o.id; },
       create: objektKarte,
       update: function (k, o) {
         var geändert = objektFüllen(k, o, kid);
-        k.classList.toggle("is-aktiv", s.betont === o.id);
+        k.classList.toggle("is-active", s.betont === o.id);
         if (o.spalte !== undefined) k.style.order = o.spalte;
-        if (geändert && ctx.animiert) sim.puls(k);
+        if (geändert && ctx.animated) sim.pulse(k);
       }
     });
 
@@ -1301,7 +1302,7 @@ int größer = Math.max(3, 7);</code></pre>
     var metaBox = el(kid + "-meta");
     if (metaBox) {
       sim.list(metaBox, s.meta || [], {
-        animiert: ctx.animiert,
+        animated: ctx.animated,
         key: function (k) { return k.id; },
         create: function () {
           var n = document.createElement("div");
@@ -1322,7 +1323,7 @@ int größer = Math.max(3, 7);</code></pre>
             felder.appendChild(z);
           });
           n.id = kid + "-klasse-" + k.id;
-          n.classList.toggle("is-aktiv", s.betont === "klasse:" + k.id);
+          n.classList.toggle("is-active", s.betont === "klasse:" + k.id);
         }
       });
     }
@@ -1350,11 +1351,11 @@ int größer = Math.max(3, 7);</code></pre>
         d.querySelector("span").textContent = e.ausdruck;
         d.querySelector("b").textContent = boolesch ? (e.wert ? "true" : "false") : String(e.wert);
         erg.appendChild(d);
-        if (ctx.animiert) d.classList.add("is-neu");
+        if (ctx.animated) d.classList.add("is-new");
       });
     }
 
-    pfeileZeichnen(kid, s.pfeile || [], ctx.animiert);
+    pfeileZeichnen(kid, s.pfeile || [], ctx.animated);
   }
 
   function leereSzene() {
@@ -1369,14 +1370,14 @@ int größer = Math.max(3, 7);</code></pre>
      --------------------------------------------------------------------------- */
   sim.registerScenario({
     id: "objektgeflecht",
-    titel: "Objektgeflecht",
-    beschreibung: "Zwei Konten, eine Kundin: Aus dem Klassendiagramm (Baupläne) wird " +
+    title: "Objektgeflecht",
+    description: "Zwei Konten, eine Kundin: Aus dem Klassendiagramm (Baupläne) wird " +
                   "zur Laufzeit ein Geflecht aus konkreten Objekten.",
     state: leereSzene,
     render: zeichneSzene,
     steps: [
       {
-        titel: "Baupläne und Dinge",
+        title: "Baupläne und Dinge",
         text: "<p>Das Klassendiagramm zeigt <b>Baupläne</b>: eine Klasse <code>Konto</code>, " +
               "eine Klasse <code>Kunde</code>, dazwischen eine Linie.</p>" +
               "<p>Zur Laufzeit entsteht daraus etwas anderes: <b>konkrete Objekte</b>, " +
@@ -1384,7 +1385,7 @@ int größer = Math.max(3, 7);</code></pre>
         apply: function () {}
       },
       {
-        titel: "Kunde anna = new Kunde();",
+        title: "Kunde anna = new Kunde();",
         text: "<p>Ein Kundenobjekt entsteht im Heap. Die Felder sind noch leer – " +
               "<code>null</code>, weil es Referenzen auf <code>String</code>-Objekte sind.</p>",
         apply: function (s) {
@@ -1395,7 +1396,7 @@ int größer = Math.max(3, 7);</code></pre>
         }
       },
       {
-        titel: "anna.name = \"Anna Berger\";",
+        title: "anna.name = \"Anna Berger\";",
         text: "<p>Der Punkt folgt dem Wegweiser: Geschrieben wird <b>im Heap</b>, am Objekt.</p>",
         apply: function (s) {
           s.zeile = 1;
@@ -1403,7 +1404,7 @@ int größer = Math.max(3, 7);</code></pre>
         }
       },
       {
-        titel: "anna.wohnort = \"Bremen\";",
+        title: "anna.wohnort = \"Bremen\";",
         text: "<p>Dasselbe für das zweite Feld. Im Stack steht weiterhin nur die " +
               "Adresse – dort ändert sich nichts.</p>",
         apply: function (s) {
@@ -1413,7 +1414,7 @@ int größer = Math.max(3, 7);</code></pre>
         }
       },
       {
-        titel: "Konto giro = new Konto();",
+        title: "Konto giro = new Konto();",
         text: "<p>Ein Konto entsteht – noch ohne Inhaberin. Das Feld <code>inhaber</code> " +
               "ist <code>null</code>: Es <b>zeigt auf nichts</b>.</p>",
         apply: function (s) {
@@ -1426,7 +1427,7 @@ int größer = Math.max(3, 7);</code></pre>
         }
       },
       {
-        titel: "giro.inhaber = anna;",
+        title: "giro.inhaber = anna;",
         text: "<p>Jetzt die Linie aus dem Klassendiagramm – als <b>Pfeil zwischen zwei " +
               "Objekten</b>. Das Konto hält kein Wort, sondern das Kundenobjekt selbst.</p>",
         apply: function (s) {
@@ -1436,7 +1437,7 @@ int größer = Math.max(3, 7);</code></pre>
         }
       },
       {
-        titel: "Konto spar = new Konto();",
+        title: "Konto spar = new Konto();",
         text: "<p>Ein zweites Konto – wieder ohne Inhaberin.</p>",
         apply: function (s) {
           s.zeile = 5;
@@ -1446,7 +1447,7 @@ int größer = Math.max(3, 7);</code></pre>
         }
       },
       {
-        titel: "spar.inhaber = anna;",
+        title: "spar.inhaber = anna;",
         text: "<p>Dasselbe Objekt ein zweites Mal – <b>kein weiteres <code>new Kunde()</code></b>. " +
               "Es gibt genau eine Anna, und zwei Konten führen zu ihr.</p>",
         apply: function (s) {
@@ -1456,7 +1457,7 @@ int größer = Math.max(3, 7);</code></pre>
         }
       },
       {
-        titel: "anna.wohnort = \"Hamburg\";",
+        title: "anna.wohnort = \"Hamburg\";",
         text: "<p>Anna zieht um. Geändert wird <b>ein</b> Objekt – und <b>beide</b> Konten " +
               "sehen den neuen Wohnort, weil beide Pfeile dorthin führen.</p>" +
               "<p>Ein kopierter Name wäre jetzt an einer Stelle veraltet. Genau davor " +
@@ -1466,10 +1467,10 @@ int größer = Math.max(3, 7);</code></pre>
           s.heap[0].felder[1] = { name: "wohnort", wert: "\"Hamburg\"" };
           s.betont = "anna";
         },
-        dauer: 4200
+        duration: 4200
       },
       {
-        titel: "print(spar.inhaber.wohnort);",
+        title: "print(spar.inhaber.wohnort);",
         text: "<p>Der Punkt läuft <b>am Pfeil entlang</b>: <code>spar</code> führt zum " +
               "Kontoobjekt, <code>.inhaber</code> von dort zum Kundenobjekt, " +
               "<code>.wohnort</code> liest dessen Feld.</p>" +
@@ -1483,10 +1484,10 @@ int größer = Math.max(3, 7);</code></pre>
           s.betont = "anna";
           s.ergebnis = [{ ausdruck: "spar.inhaber.wohnort", wert: "\"Hamburg\"" }];
         },
-        dauer: 4600
+        duration: 4600
       },
       {
-        titel: "Der Merksatz",
+        title: "Der Merksatz",
         text: "<p><b>Eine Referenz ist kein Abzug, sondern der Weg zum Original.</b></p>" +
               "<p>Genau dafür steht die Linie im Klassendiagramm – und deshalb lässt " +
               "sie sich mit dem Punkt entlanglaufen.</p>",
@@ -1505,15 +1506,15 @@ int größer = Math.max(3, 7);</code></pre>
      --------------------------------------------------------------------------- */
   sim.registerScenario({
     id: "identitaet",
-    titel: "Das Gleiche oder dasselbe",
-    beschreibung: "Zwei Objekte mit gleichem Inhalt sind noch lange nicht dasselbe " +
+    title: "Das Gleiche oder dasselbe",
+    description: "Zwei Objekte mit gleichem Inhalt sind noch lange nicht dasselbe " +
                   "Objekt. <code>==</code> fragt nach der Identität, <code>equals</code> " +
                   "nach der logischen Gleichheit – die jede Klasse selbst festlegt.",
     state: leereSzene,
     render: zeichneSzene,
     steps: [
       {
-        titel: "Das gleiche Auto – oder dasselbe?",
+        title: "Das gleiche Auto – oder dasselbe?",
         text: "<p>Peter und Claudia haben beide ein grünes Auto. Sie fahren " +
               "<b>das gleiche</b> Auto.</p>" +
               "<p>Peter und Claudia haben ein Auto. Oder haben Peter und Claudia " +
@@ -1523,7 +1524,7 @@ int größer = Math.max(3, 7);</code></pre>
         apply: function () {}
       },
       {
-        titel: "Kunde a = new Kunde();",
+        title: "Kunde a = new Kunde();",
         text: "<p>Ein Objekt im Heap, ein Wegweiser im Stack. Nichts Neues.</p>",
         apply: function (s) {
           s.zeile = 0;
@@ -1533,7 +1534,7 @@ int größer = Math.max(3, 7);</code></pre>
         }
       },
       {
-        titel: "a.name = \"Anna Berger\";",
+        title: "a.name = \"Anna Berger\";",
         text: "<p>Das Feld wird gefüllt – im Heap, am Objekt.</p>",
         apply: function (s) {
           s.zeile = 1;
@@ -1541,7 +1542,7 @@ int größer = Math.max(3, 7);</code></pre>
         }
       },
       {
-        titel: "Kunde b = new Kunde();",
+        title: "Kunde b = new Kunde();",
         text: "<p>Ein <b>zweites <code>new</code></b> – und jedes <code>new</code> legt " +
               "ein eigenes Objekt an, an einer eigenen Adresse.</p>",
         apply: function (s) {
@@ -1552,7 +1553,7 @@ int größer = Math.max(3, 7);</code></pre>
         }
       },
       {
-        titel: "b.name = \"Anna Berger\";",
+        title: "b.name = \"Anna Berger\";",
         text: "<p>Gleicher Name, zweites Objekt. Zwei Kästen im Heap mit demselben Inhalt " +
               "– aber an zwei Adressen.</p>",
         apply: function (s) {
@@ -1561,7 +1562,7 @@ int größer = Math.max(3, 7);</code></pre>
         }
       },
       {
-        titel: "print(a == b);",
+        title: "print(a == b);",
         text: "<p><code>==</code> vergleicht, was <b>in den Fächern steht</b> – also die " +
               "Adressen: <code>#K1</code> gegen <code>#K2</code>.</p>" +
               "<p><b>false.</b> Die Frage war „dasselbe Objekt?“, und die Antwort ist nein.</p>",
@@ -1571,7 +1572,7 @@ int größer = Math.max(3, 7);</code></pre>
         }
       },
       {
-        titel: "print(a.equals(b));",
+        title: "print(a.equals(b));",
         text: "<p><b>true</b> – hier geht es nicht mehr um die Adresse, sondern um den " +
               "<b>Inhalt</b>: Beide Objekte tragen denselben Namen.</p>" +
               "<p>Das nennt man <b>logische Gleichheit</b>, und was sie bedeutet, legt " +
@@ -1586,10 +1587,10 @@ int größer = Math.max(3, 7);</code></pre>
           s.ergebnis = [{ ausdruck: "a == b", wert: false },
                         { ausdruck: "a.equals(b)", wert: true }];
         },
-        dauer: 4600
+        duration: 4600
       },
       {
-        titel: "Der Merksatz",
+        title: "Der Merksatz",
         text: "<p><b><code>==</code> fragt nach dem Objekt, <code>equals</code> nach dem " +
               "Inhalt.</b></p>" +
               "<p>Bei Objekten willst Du fast immer <code>equals</code> – und musst es in " +
@@ -1616,14 +1617,14 @@ int größer = Math.max(3, 7);</code></pre>
      --------------------------------------------------------------------------- */
   sim.registerScenario({
     id: "this-static",
-    titel: "this und static",
-    beschreibung: "Eine Methode läuft <em>auf</em> einem Objekt – <code>this</code> ist " +
+    title: "this und static",
+    description: "Eine Methode läuft <em>auf</em> einem Objekt – <code>this</code> ist " +
                   "der Wegweiser dorthin. Statische Methoden kommen ohne Objekt aus.",
     state: leereSzene,
     render: zeichneSzene,
     steps: [
       {
-        titel: "Eine Methode, viele Objekte",
+        title: "Eine Methode, viele Objekte",
         text: "<p>Zwei Konten liegen im <b>Heap</b>. Den Code von <code>einzahlen</code> " +
               "gibt es aber nur <b>einmal</b> – er steht in der <b>Klasse</b>, nicht im " +
               "Objekt.</p>" +
@@ -1647,7 +1648,7 @@ int größer = Math.max(3, 7);</code></pre>
         }
       },
       {
-        titel: "giro.einzahlen(50);",
+        title: "giro.einzahlen(50);",
         text: "<p>Der Aufruf steht <b>an einem Objekt</b>. Genau dieses Objekt bekommt die " +
               "Methode als <code>this</code> mitgeliefert – unsichtbar, aber es ist da.</p>" +
               "<p><code>this.standInCent += 50</code> trifft deshalb <code>#A1</code>.</p>",
@@ -1658,7 +1659,7 @@ int größer = Math.max(3, 7);</code></pre>
         }
       },
       {
-        titel: "spar.einzahlen(20);",
+        title: "spar.einzahlen(20);",
         text: "<p><b>Derselbe Code</b>, anderes Objekt. <code>this</code> zeigt jetzt auf " +
               "<code>#A2</code>, und dort steigt der Stand.</p>" +
               "<p>Deshalb genügt <b>eine</b> Methode für alle Objekte einer Klasse. " +
@@ -1669,10 +1670,10 @@ int größer = Math.max(3, 7);</code></pre>
           s.heap[1].felder = [{ name: "standInCent", wert: "20" }];
           s.betont = "spar";
         },
-        dauer: 4200
+        duration: 4200
       },
       {
-        titel: "int größer = Math.max(3, 7);",
+        title: "int größer = Math.max(3, 7);",
         text: "<p>Der Gegenpol: Vor dem Punkt steht ein <b>Klassenname</b>, kein Objekt. " +
               "<code>Math</code> wird in den <b>Metaspace</b> geladen – im Heap entsteht " +
               "nichts.</p>" +
@@ -1690,10 +1691,10 @@ int größer = Math.max(3, 7);</code></pre>
           s.stack.push({ name: "größer", typ: "int", wert: "7" });
           s.ergebnis = [{ ausdruck: "Math.max(3, 7)", wert: 7 }];
         },
-        dauer: 5000
+        duration: 5000
       },
       {
-        titel: "Zum Mitnehmen",
+        title: "Zum Mitnehmen",
         text: "<p>Eine Methode gehört zur <b>Klasse</b> – geladen einmal, im Metaspace. " +
               "Laufen tut sie auf einem <b>Objekt</b> im Heap, und <code>this</code> ist " +
               "der Wegweiser dorthin.</p>" +
@@ -1739,17 +1740,17 @@ int größer = Math.max(3, 7);</code></pre>
         <span class="avd-academy-sim__btn-icon" data-avd-academy-sim-play-icon>▶</span>
         <span class="avd-academy-sim__btn-text" data-avd-academy-sim-play-text>Abspielen</span>
       </button>
-      <button type="button" class="avd-academy-sim__btn avd-academy-sim__btn--tempo" data-avd-academy-sim-tempo
+      <button type="button" class="avd-academy-sim__btn avd-academy-sim__btn--speed" data-avd-academy-sim-speed
               title="Tempo wählen (Taste T)" aria-label="Tempo wählen"
               aria-haspopup="true" aria-expanded="false">
-        <span data-avd-academy-sim-tempo-label>1×</span>
+        <span data-avd-academy-sim-speed-label>1×</span>
         <span class="avd-academy-sim__caret" aria-hidden="true">▴</span>
       </button>
-      <ul class="avd-academy-sim__tempo-menu" data-avd-academy-sim-tempo-menu hidden role="menu"
-          aria-label="Tempo"><li role="none"><button type="button" role="menuitemradio" aria-checked="false" data-avd-academy-sim-tempo-wert="0.5">0,5×<span> langsam</span></button></li>
-        <li role="none"><button type="button" role="menuitemradio" aria-checked="true"  data-avd-academy-sim-tempo-wert="1">1×<span> normal</span></button></li>
-        <li role="none"><button type="button" role="menuitemradio" aria-checked="false" data-avd-academy-sim-tempo-wert="2">2×<span> zügig</span></button></li>
-        <li role="none"><button type="button" role="menuitemradio" aria-checked="false" data-avd-academy-sim-tempo-wert="5">5×<span> im Zeitraffer</span></button></li>
+      <ul class="avd-academy-sim__speed-menu" data-avd-academy-sim-speed-menu hidden role="menu"
+          aria-label="Tempo"><li role="none"><button type="button" role="menuitemradio" aria-checked="false" data-avd-academy-sim-speed-value="0.5">0,5×<span> langsam</span></button></li>
+        <li role="none"><button type="button" role="menuitemradio" aria-checked="true"  data-avd-academy-sim-speed-value="1">1×<span> normal</span></button></li>
+        <li role="none"><button type="button" role="menuitemradio" aria-checked="false" data-avd-academy-sim-speed-value="2">2×<span> zügig</span></button></li>
+        <li role="none"><button type="button" role="menuitemradio" aria-checked="false" data-avd-academy-sim-speed-value="5">5×<span> im Zeitraffer</span></button></li>
       </ul>
     </div>
     <button type="button" class="avd-academy-sim__btn" data-avd-academy-sim-next

@@ -3,10 +3,10 @@
 # Prüft die Konfiguration und das Front Matter einer Academy-Site gegen die
 # JSON-Schemas dieses Verzeichnisses.
 #
-#   ruby theme/jekyll/schema/pruefen.rb                    # ganzes Repo
-#   ruby pruefen.rb --wurzel . --schemas /tmp/schema/1      # Schemas woanders
-#   ruby pruefen.rb --config _config.yml --config _config.ci.yml
-#   ruby pruefen.rb --selbsttest                            # nur die Schemas prüfen
+#   ruby theme/jekyll/schema/validate.rb          # ganzes Repo
+#   ruby validate.rb --root . --schemas /tmp/schema/1
+#   ruby validate.rb --config _config.yml --config _config.ci.yml
+#   ruby validate.rb --self-test                  # nur die Schemas prüfen
 #
 # WARUM RUBY OHNE GEMS: Das Skript läuft in drei Umgebungen – Doku-Pipeline,
 # Schulungs-Pipeline und lokal im Container. Ruby ist überall da (Jekyll), YAML
@@ -246,6 +246,52 @@ def zeile_von(pfad, zeiger, versatz)
 end
 
 # ---------------------------------------------------------------------------
+# Zielgruppen: deklarierte Werte gegen benutzte Werte
+# ---------------------------------------------------------------------------
+# WARUM DAS HIER STEHT UND NICHT IM SCHEMA: Welche Zielgruppen es gibt, ist keine
+# Festlegung des Themes, sondern des Werkzeugs, das die Site baut. Ein `enum` im Schema
+# waere der falsche Ort – wer eine dritte Zielgruppe braucht, muesste das THEME aendern.
+#
+# Ein blosses `type: string` wuerde die Pruefung aber verlieren: `audience: lerner`
+# (Tippfehler) faellt dann nirgends auf, und die Seite landet stillschweigend in JEDEM
+# Build. Deshalb deklariert die Site ihre Zielgruppen in `audiences`, und hier wird
+# dagegen geprueft. Die Werte kommen aus der Site, die Pruefung bleibt.
+#
+# WER `audience` OHNE `audiences` BENUTZT, bekommt einen Fehler – nicht ein Achselzucken.
+# Das ist der ganze Zweck: Eine Angabe ohne pruefbare Menge ist eine Vermutung.
+def zielgruppen_pruefen(daten, deklariert, quelle, pfad = [])
+  meldungen = []
+  case daten
+  when Hash
+    daten.each do |k, v|
+      # `audiences` auf der WURZEL einer Konfiguration ist die Deklaration selbst, keine
+      # Verwendung – sonst pruefte sie sich gegen sich.
+      deklaration = k == 'audiences' && pfad.empty?
+      benutzt = !deklaration && (k == 'audiences' || (k == 'audience' && v.is_a?(String)))
+      if benutzt
+        voll = (pfad + [k.to_s]).join('.')
+        Array(v).each do |wert|
+          next unless wert.is_a?(String)
+          if deklariert.nil? || deklariert.empty?
+            meldungen << [voll, "Zielgruppe `#{wert}` benutzt, aber die Site deklariert keine " \
+                                '`audiences`. Ohne Deklaration ist der Wert nicht prüfbar – ' \
+                                'ein Tippfehler fiele nirgends auf.']
+          elsif !deklariert.include?(wert)
+            meldungen << [voll, "`#{wert}` ist keine deklarierte Zielgruppe. Deklariert sind: " \
+                                "#{deklariert.join(', ')} (Schlüssel `audiences` in der _config.yml)."]
+          end
+        end
+      else
+        meldungen += zielgruppen_pruefen(v, deklariert, quelle, pfad + [k.to_s])
+      end
+    end
+  when Array
+    daten.each_with_index { |v, i| meldungen += zielgruppen_pruefen(v, deklariert, quelle, pfad + [i.to_s]) }
+  end
+  meldungen
+end
+
+# ---------------------------------------------------------------------------
 # Selbsttest der Schemas
 # ---------------------------------------------------------------------------
 # Prüft die Schemas selbst, nicht die Site: gültiges JSON, KEIN Schlüsselwort
@@ -280,7 +326,7 @@ def selbsttest(pfade)
   pruefe = lambda do |knoten, datei, pfad|
     return unless knoten.is_a?(Hash)
     (knoten.keys - bekannt).each do |k|
-      fehler << "#{datei}#{pfad}: Schlüsselwort `#{k}` kennt pruefen.rb nicht – " \
+      fehler << "#{datei}#{pfad}: Schlüsselwort `#{k}` kennt validate.rb nicht – " \
                 'entweder aus dem Schema entfernen oder in SCHLUESSELWOERTER ergänzen ' \
                 '(sonst urteilen IDE und Pipeline unterschiedlich).'
     end
@@ -335,13 +381,13 @@ selbsttest_nur = false
 argv = ARGV.dup
 until argv.empty?
   case (arg = argv.shift)
-  when '--wurzel'  then wurzel = argv.shift
+  when '--root'  then wurzel = argv.shift
   when '--schemas' then schema_dir = argv.shift
   when '--frontmatter-schema' then fm_schema = argv.shift
   when '--config-schema'      then cfg_schema = argv.shift
   when '--config'  then configs << argv.shift
-  when '--selbsttest' then selbsttest_nur = true
-  when '--hilfe', '-h'
+  when '--self-test' then selbsttest_nur = true
+  when '--help', '-h'
     puts File.read(__FILE__).lines[2..24].map { |z| z.sub(/\A# ?/, '') }.join
     exit 0
   else
@@ -400,6 +446,8 @@ meldungen = []
 
 # --- _config.yml ---------------------------------------------------------
 ausschluss = []
+zielgruppen = []
+konfigurationen_daten = []
 configs.each do |cfg|
   unless File.exist?(cfg)
     warn "FEHLER: #{cfg} gibt es nicht."
@@ -412,10 +460,21 @@ configs.each do |cfg|
     next
   end
   ausschluss += Array(daten['exclude'])
+  zielgruppen += Array(daten['audiences'])
   anzeige = cfg.sub(/\A#{Regexp.escape(wurzel)}\/?/, '')
+  konfigurationen_daten << [anzeige, cfg, daten]
   validator.pruefen(daten, validator.dokument(pfade[:config]), pfade[:config]).each do |f|
     zeile = zeile_von(cfg, f[:zeiger], 0)
     meldungen << "#{anzeige}#{zeile ? ":#{zeile}" : ''}: #{f[:zeiger].empty? ? '' : "`#{f[:zeiger].sub(%r{\A/}, '').gsub('/', '.')}` "}#{f[:text]}"
+  end
+end
+
+# --- Zielgruppen in den Konfigurationen (nav, audience des Builds) -------
+# Erst NACH allen Konfigurationen, denn `audiences` kann im Overlay stehen.
+konfigurationen_daten.each do |anzeige, cfg, daten|
+  zielgruppen_pruefen(daten, zielgruppen.uniq, anzeige).each do |feld, text|
+    zeile = zeile_von(cfg, '/' + feld.split('.').first, 0)
+    meldungen << "#{anzeige}#{zeile ? ":#{zeile}" : ''}: `#{feld}` #{text}"
   end
 end
 
@@ -435,18 +494,23 @@ Dir.glob(File.join(wurzel, '**', '*.{md,markdown,html}')).sort.each do |pfad|
     zeile = zeile_von(pfad, f[:zeiger], 1)
     meldungen << "#{rel}#{zeile ? ":#{zeile}" : ''}: #{f[:zeiger].empty? ? '' : "`#{f[:zeiger].sub(%r{\A/}, '').gsub('/', '.')}` "}#{f[:text]}"
   end
+  zielgruppen_pruefen(daten, zielgruppen.uniq, rel).each do |feld, text|
+    zeile = zeile_von(pfad, '/' + feld.split('.').first, 1)
+    meldungen << "#{rel}#{zeile ? ":#{zeile}" : ''}: `#{feld}` #{text}"
+  end
 end
 
 # Eine Prüfung über die leere Menge ist kein Erfolg.
 if seiten.zero?
   warn "FEHLER: Unter #{wurzel} wurde KEINE Seite gefunden."
   warn '       Damit hat die Prüfung nichts geprüft – das ist ein Befund, kein Erfolg.'
-  warn '       Stimmt --wurzel? Schließt `exclude` versehentlich alles aus?'
+  warn '       Stimmt --root? Schließt `exclude` versehentlich alles aus?'
   exit 2
 end
 
 if meldungen.empty?
-  puts "Schema #{version}: #{configs.size} Konfiguration(en) und #{seiten} Seite(n) geprüft – keine Verstöße."
+  zg = zielgruppen.uniq.empty? ? 'keine Zielgruppen deklariert' : "Zielgruppen: #{zielgruppen.uniq.join(', ')}"
+  puts "Schema #{version}: #{configs.size} Konfiguration(en) und #{seiten} Seite(n) geprüft, #{zg} – keine Verstöße."
   exit 0
 end
 

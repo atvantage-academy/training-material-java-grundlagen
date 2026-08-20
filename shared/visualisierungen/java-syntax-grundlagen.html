@@ -23,31 +23,26 @@
     description: "…"                → Meta-Description
     duration:    8                  → Zahl in Minuten → Hero-Tag „ca. 8 Minuten“
                                        (ungefähre LESEDAUER; bei Guides/Übungen die
-                                       Dauer der Übung). Aktiviert zugleich die
-                                       nummerierten Arbeitsschritte und die
-                                       automatische Prev/Next-Navigation zwischen
-                                       gleichartigen Geschwister-Seiten. Alle drei
-                                       entfallen bei `layout: visualization`.
+                                       Dauer der Übung). Entfällt bei
+                                       `layout: visualization`.
     topics:      ["Cloud & DevOps"] → weitere Hero-Tags
-    resources:   [{titel, url, icon}, …] → Sidebar-Karte „Weiterführende Informationen“.
-                                       titel und/oder icon (Bildpfad); icon erscheint
+    resources:   [{title, url, icon}, …] → Sidebar-Karte „Weiterführende Informationen“.
+                                       title und/oder icon (Bildpfad); icon erscheint
                                        rechts und wird kreisrund dargestellt.
     breadcrumb:                     → Brotkrumen anpassen (beides optional):
       label: "…"                    → überschreibt den Ordnernamen dieser Ebene;
                                        in der Ordner-`index.md` gesetzt gilt es für
                                        ALLE Seiten im Ordner und in Unterordnern.
-      path: [{title, url}, …]       → explizite Vorfahren-Kette OHNE die aktuelle
+      ancestors: [{title, url}, …]  → explizite Vorfahren-Kette OHNE die aktuelle
                                        Seite (diese wird automatisch angehängt); in
                                        der `index.md` gesetzt wird sie vererbt.
-    zurueck / weiter: {title, url}  → explizite Prev/Next-Links (sonst automatisch)
 
   „Markdown kopieren“ (Button im Hero) erscheint NUR auf Guides (Übungen,
   Anleitungen) – dort ist das Übernehmen des Quelltexts der Zweck. Bedingungen:
   Markdown-Seite (`.md`, nicht reines HTML) UND als Guide erkennbar UND keine
   Visualisierung. Guide ist eine Seite mit `layout: guide` ODER gesetztem
-  `duration` – letzteres ist der etablierte Marker (er schaltet auch die
-  nummerierten Arbeitsschritte und Prev/Next frei), und die Guide-Vorlage des
-  Themes wie auch die von didaktikon erzeugten Übungen nutzen `layout: default`
+  `duration` – letzteres ist der etablierte Marker, und die Guide-Vorlage des
+  Themes wie auch die von didaktikon erzeugten Übungen nutzen `layout: page`
   plus `duration`. Nur auf `layout: guide` zu prüfen würde den Button dort
   entfernen. Doku-Seiten haben kein `duration`; Visualisierungen sind
   ausgeschlossen, weil ihr Inhalt nicht sinnvoll als Markdown kopierbar ist.
@@ -69,13 +64,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Java-Syntax auf einen Blick · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Kompakte Übersicht der Java-Grundsyntax: Einstieg über main, primitive Datentypen, Variablen, Strings und Arrays, Typumwandlung, Methoden und Kontrollstrukturen."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787151111"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787151111">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787151111">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787151111">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787151111"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787151111">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787151111" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1787151111" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787151111">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787222911"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787222911">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787222911">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787222911">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787222911"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787222911">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787222911" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787222911" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787222911">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -89,13 +84,13 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787151111">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787151111"></head><body class="avd-academy-guide avd-academy-guide--viz">
-  <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a><section class="avd-academy-guide-hero avd-academy-guide-hero--slim"><div class="avd-academy-guide-hero__meta">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787222911">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787222911"></head><body class="avd-academy-guide avd-academy-guide--viz">
+  <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a>
+  <section class="avd-academy-guide-hero avd-academy-guide-hero--slim"><div class="avd-academy-guide-hero__meta">
       <div class="avd-academy-guide-hero__tags">
       </div>
-      <div class="avd-academy-guide-hero__actions">
-        <button type="button" class="avd-academy-qr" data-avd-academy-qr hidden
+      <div class="avd-academy-guide-hero__actions"><button type="button" class="avd-academy-qr" data-avd-academy-qr hidden
                 title="Diese Seite auf Deinem Smartphone öffnen"
                 aria-label="Diese Seite auf Deinem Smartphone öffnen"></button>
         <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-print-btn"
@@ -103,9 +98,7 @@
                 title="Diese Seite drucken" aria-label="Diese Seite drucken"></button>
       </div>
     </div><h1>Java-Syntax auf einen Blick</h1>
-  </section>
-
-  <div class="avd-academy-guide-layout">
+  </section><div class="avd-academy-guide-layout">
     <main class="avd-academy-guide-main" id="avd-academy-content">
       
 <style>
@@ -523,8 +516,7 @@ for (int i = 0; i &lt; 3; i++) { }
 
 
     </main>
-  </div>
-  <div class="avd-academy-print-contact" aria-hidden="true">
+  </div><div class="avd-academy-print-contact" aria-hidden="true">
     <span>Kontakt: <a href="mailto:academy@atvantage.com">academy@atvantage.com</a></span>
     <span><a href="https://atvantage-academy.github.io/academy-online/">ATVANTAGE Academy</a></span>
   </div>
@@ -541,7 +533,7 @@ for (int i = 0; i &lt; 3; i++) { }
       </p>
     </div><div>
       <strong>Weitere Informationen</strong>
-      <p><a href="https://atvantage-academy.github.io/academy-online/" target="_blank" rel="noopener">ATVANTAGE Academy</a></p>
+      <p><a href="https://www.atvantage.com" target="_blank" rel="noopener">ATVANTAGE Academy</a></p>
     </div></div>
   <div class="avd-academy-footer__legal">
     © <span data-avd-academy-year>2026</span> ATVANTAGE

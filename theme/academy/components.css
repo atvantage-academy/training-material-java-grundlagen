@@ -616,7 +616,6 @@ pre > .avd-academy-copy.is-copied { opacity: 1; }
 }
 .avd-academy-metanav a { color: inherit; text-decoration: none; }
 .avd-academy-metanav a:hover { color: var(--avd-orange); }
-.avd-academy-metanav__right { margin-left: auto; display: flex; gap: 18px; flex-wrap: wrap; }
 
 /* --- Header: weißer, sticky ATVANTAGE-Header ------------------------------ */
 .avd-academy-header {
@@ -783,3 +782,101 @@ pre > .avd-academy-copy.is-copied { opacity: 1; }
 .avd-academy-footer a { color: #fff; }
 .avd-academy-footer a:hover { color: var(--avd-orange); }
 .avd-academy-footer__legal { margin-top: var(--avd-academy-space-6); text-align: center; color: rgba(255, 255, 255, 0.7); }
+
+/* --- Layout-Vererbungsdiagramm (docs) ------------------------------------
+   Ein eingebettetes SVG, keine Bibliothek: Das Theme bleibt abhängigkeitsfrei, und
+   die Farben kommen aus den Tokens – damit trägt es Light, Dark und Druck ohne
+   zweite Fassung. `currentColor` für die Pfeile, damit sie der Textfarbe folgen. */
+.avd-academy-layouttree { margin: var(--avd-academy-space-6) 0; color: var(--avd-academy-color-ink); }
+.avd-academy-layouttree svg { max-width: 100%; height: auto; display: block; }
+.avd-academy-layouttree rect {
+  fill: var(--avd-academy-color-bg-subtle);
+  stroke: var(--avd-academy-color-border);
+  stroke-width: 1.4;
+}
+.avd-academy-layouttree .lt-rahmen rect { stroke-dasharray: 5 4; }
+.avd-academy-layouttree .lt-eigen rect { stroke-dasharray: 2 3; }
+.avd-academy-layouttree text { fill: var(--avd-academy-color-headline); }
+.avd-academy-layouttree .lt-rolle { font-weight: 400; fill: var(--avd-academy-color-accent); }
+.avd-academy-layouttree .lt-feature,
+.avd-academy-layouttree .lt-notiz text { font-weight: 400; fill: var(--avd-academy-color-ink-muted); }
+.avd-academy-layouttree figcaption {
+  margin-top: var(--avd-academy-space-3);
+  font-size: var(--avd-academy-fs-sm);
+  color: var(--avd-academy-color-ink-muted);
+}
+
+/* --- Aufklappbarer Abschnitt (`avd-academy-fold`) --------------------------
+   Ein Abschnitt, der sich an seiner Stelle auf- und zuklappen laesst – im Gegensatz
+   zu `avd-academy-reveal`, das seinen Inhalt als Panel ueber die Seite legt. Hier
+   bleibt alles im Fluss, nur die Hoehe aendert sich.
+
+   Baut auf `<details>`/`<summary>`: Auf- und Zuklappen, Tastaturbedienung und die
+   ARIA-Semantik bringt der Browser mit – ohne eine Zeile JavaScript. Das Dreieck
+   ersetzen wir durch ein eigenes Zeichen, das der Textfarbe folgt.
+
+   Im Ausdruck ist ein zugeklappter Abschnitt sinnlos: Papier kennt kein Klicken.
+   print.css klappt deshalb alles auf (siehe dort). */
+.avd-academy-fold > summary {
+  display: flex; align-items: center; gap: 8px;
+  cursor: pointer;
+  list-style: none;
+}
+.avd-academy-fold > summary::-webkit-details-marker { display: none; }
+.avd-academy-fold > summary::after {
+  content: ""; flex: none; margin-left: auto;
+  width: .7rem; height: .7rem;
+  background-color: currentColor;
+  transition: transform .15s ease;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 16 4 8h16z'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 16 4 8h16z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.avd-academy-fold:not([open]) > summary::after { transform: rotate(-90deg); }
+.avd-academy-fold > summary:focus-visible { outline: 2px solid var(--avd-academy-color-accent); outline-offset: 3px; }
+/* Der Inhalt bekommt Abstand zum Titel – im Fluss, nicht als Panel. */
+.avd-academy-fold[open] > .avd-academy-fold__body { margin-top: 1rem; }
+
+/* --- Feldtabelle (`avd-academy-fieldtable`) --------------------------------
+   Eine Tabelle, deren erste Spalte NAMEN traegt – YAML-Schluessel, Optionen,
+   Feldpfade. Solche Namen darf man nicht umbrechen: `sidebar.toc.open_threshold`
+   ueber drei Zeilen verteilt liest sich nicht mehr als ein Name, und wer sie
+   abtippt, uebernimmt den Umbruch mit.
+
+   Die erste Spalte bekommt deshalb `nowrap` und damit so viel Breite, wie ihr
+   laengster Name braucht; der Rest teilt sich, was uebrig bleibt. Damit das
+   aufgeht, muss die Bedeutungsspalte KURZ gehalten werden – mehr Erklaerung
+   gehoert in eine Info-Schaltflaeche (`avd-academy-reveal--info`).
+
+   Die globale Tabellenregel bricht lange Namen notfalls mitten im Wort
+   (`overflow-wrap`); hier wird sie fuer die erste Spalte zurueckgenommen. */
+.avd-academy-fieldtable th:first-child,
+.avd-academy-fieldtable td:first-child {
+  white-space: nowrap;
+  width: 1%;                 /* so schmal wie moeglich – `nowrap` setzt die Untergrenze */
+}
+.avd-academy-fieldtable td:first-child code { overflow-wrap: normal; }
+.avd-academy-fieldtable th,
+.avd-academy-fieldtable td { vertical-align: top; }
+/* Die Info-Schaltflaeche sitzt am Ende des Textes, nicht in einer eigenen Spalte:
+   eine Spalte mehr waere genau die Breite, die hier fehlt. */
+.avd-academy-fieldtable .avd-academy-reveal--info { margin-left: 6px; }
+/* Spalte „Layouts“: die Layouts als ihre Symbole – dieselben wie in der Navigation.
+   Ausgeschriebene Layoutnamen brauchten dort mehr Platz als die Bedeutung; der Name
+   steht im `title` (Tooltip) und im `alt` (Screenreader), geht also nicht verloren. */
+.avd-academy-fieldtable__layouts {
+  white-space: nowrap;
+  width: 1%;                 /* so schmal wie moeglich – `nowrap` setzt die Untergrenze:
+                                die Spalte wird so breit wie ihre breiteste Zelle und
+                                nimmt der Bedeutungsspalte keinen Platz weg. */
+}
+.avd-academy-fieldtable__layouts .avd-academy-linkicon { margin-right: .2em; }
+.avd-academy-fieldtable__layouts .avd-academy-linkicon:last-child { margin-right: 0; }
+
+/* --- Waagerechter Scrollbereich fuer eine Tabelle (`avd-academy-tablescroll`) ---
+   Letzte Rettung, wenn die Mindestbreiten aller Spalten zusammen breiter sind als
+   die Spalte, in der die Tabelle steht: Dann schiebt der Browser Inhalte, die nicht
+   schrumpfen koennen – Bilder etwa –, ueber die Zellgrenze, und die Tabelle sieht
+   kaputt aus. Mit einem eigenen Scrollbereich bleibt sie ganz, und nur SIE scrollt;
+   die Seite selbst bekommt niemals einen waagerechten Balken. */
+.avd-academy-tablescroll { overflow-x: auto; }
+.avd-academy-tablescroll > table { margin: 0; }

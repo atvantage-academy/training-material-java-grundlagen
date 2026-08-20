@@ -156,7 +156,27 @@
           if (h.tagName === "H3") a.className = "avd-academy-toc--h3";
           toc.appendChild(a);
         });
-        if (tocCard) tocCard.hidden = false;
+        if (tocCard) {
+          tocCard.hidden = false;
+          /* ZUGEKLAPPT STARTEN, wenn das Verzeichnis lang ist – aber nur, wenn darunter
+             ueberhaupt noch eine Karte sichtbar ist (Fortschritt, weiterfuehrende Links).
+             Ist das Verzeichnis das letzte Element der Sidebar, verdeckt es nichts; dann
+             es zuzuklappen wuerde dem Leser nur einen Klick abverlangen, ohne dass er
+             etwas gewinnt. Die Fortschrittskarte blendet sich in initGuideProgress()
+             selbst ein – die laeuft vorher, ihr [hidden] ist hier also endgueltig.
+             Hat die Seite den Zustand selbst gesetzt, gilt sie und beides bleibt aussen vor. */
+          var vorgabe = tocCard.getAttribute("data-avd-academy-toc-open");
+          if (vorgabe !== null) {
+            tocCard.open = vorgabe !== "false";
+          } else {
+            var darunter = false;
+            for (var g = tocCard.nextElementSibling; g; g = g.nextElementSibling) {
+              if (!g.hidden) { darunter = true; break; }
+            }
+            var grenze = parseInt(tocCard.getAttribute("data-avd-academy-toc-grenze"), 10);
+            if (darunter && !isNaN(grenze) && grenze > 0 && heads.length > grenze) tocCard.open = false;
+          }
+        }
         if ("IntersectionObserver" in window) {
           var links = toc.querySelectorAll("a");
           var byId = {};
