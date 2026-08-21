@@ -251,7 +251,7 @@
         "website": {
           "type": "string",
           "default": "https://www.atvantage.com",
-          "description": "URL der Academy-Website – erscheint in der Footer-Spalte „Kontakt“ und in der Druck-Kontaktzeile. In den Pipelines aus der Org-Variablen `ACADEMY_WEBSITE` gesetzt, damit die URL an genau einer Stelle steht. Ersetzt `brand.website`."
+          "description": "URL der Academy-Website – erscheint in der Footer-Spalte „Kontakt“ als Link mit der Beschriftung „Website“ und in der Druck-Kontaktzeile als ausgeschriebene URL. In den Pipelines aus der Org-Variablen `ACADEMY_WEBSITE` gesetzt, damit die URL an genau einer Stelle steht. Ersetzt `brand.website`."
         },
         "email": {
           "type": "string",
