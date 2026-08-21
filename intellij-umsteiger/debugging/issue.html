@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<!--
+  ATVANTAGE-Academy – EINZIGES Seitenlayout (Jekyll)
+  --------------------------------------------------
+  Ein Layout für alles: allgemeine Doku-Seiten UND Guides (Übungen/Anleitungen).
+  Optik nach der ATVANTAGE-Website: Meta-Nav, weiße sticky Kopfzeile, Hero-Band,
+  zweispaltig mit rechter Sidebar (automatisches Inhaltsverzeichnis, Fortschritt
+  aus Task-Listen, weiterführende Ressourcen). Überschriften ohne Emoji-Icons.
+
+  Verwendung im Front Matter:  layout: default   (oder `layout: guide` – Alias,
+  siehe guide.html; beides rendert dieselbe Guide-Ansicht)
+
+  `layout: visualization` (siehe visualization.html) rendert dieselbe Seite OHNE
+  obere Navigation (Meta-Leiste + Kopfzeile/TopNav), OHNE Brotkrumen und OHNE den
+  rechten Bereich (Inhaltsverzeichnis, Fortschritt, Ressourcen – auch bei gesetztem
+  `resources`), mit schmalerem Hero-Balken und breiterem, zentriertem Inhalt – für
+  eigenständige Visualisierungen/Simulationen.
+
+  Alle Front-Matter-Felder sind OPTIONAL (Convention over Configuration). Nur der
+  Titel ist faktisch erforderlich – als `title:` ODER als erste `#`-Überschrift:
+
+    title:       "…"                → sonst erste #-Überschrift (eins von beiden nötig)
+    description: "…"                → Meta-Description
+    duration:    8                  → Zahl in Minuten → Hero-Tag „ca. 8 Minuten“
+                                       (ungefähre LESEDAUER; bei Guides/Übungen die
+                                       Dauer der Übung). Entfällt bei
+                                       `layout: visualization`.
+    topics:      ["Cloud & DevOps"] → weitere Hero-Tags
+    resources:   [{title, url, icon}, …] → Sidebar-Karte „Weiterführende Informationen“.
+                                       title und/oder icon (Bildpfad); icon erscheint
+                                       rechts und wird kreisrund dargestellt.
+    breadcrumb:                     → Brotkrumen anpassen (beides optional):
+      label: "…"                    → überschreibt den Ordnernamen dieser Ebene;
+                                       in der Ordner-`index.md` gesetzt gilt es für
+                                       ALLE Seiten im Ordner und in Unterordnern.
+      ancestors: [{title, url}, …]  → explizite Vorfahren-Kette OHNE die aktuelle
+                                       Seite (diese wird automatisch angehängt); in
+                                       der `index.md` gesetzt wird sie vererbt.
+
+  „Markdown kopieren“ (Button im Hero) erscheint NUR auf Guides (Übungen,
+  Anleitungen) – dort ist das Übernehmen des Quelltexts der Zweck. Bedingungen:
+  Markdown-Seite (`.md`, nicht reines HTML) UND als Guide erkennbar UND keine
+  Visualisierung. Guide ist eine Seite mit `layout: guide` ODER gesetztem
+  `duration` – letzteres ist der etablierte Marker, und die Guide-Vorlage des
+  Themes wie auch die von didaktikon erzeugten Übungen nutzen `layout: page`
+  plus `duration`. Nur auf `layout: guide` zu prüfen würde den Button dort
+  entfernen. Doku-Seiten haben kein `duration`; Visualisierungen sind
+  ausgeschlossen, weil ihr Inhalt nicht sinnvoll als Markdown kopierbar ist.
+
+  QR-CODE der Seitenadresse + DRUCKEN-KNOPF: In dieser Ansicht (`visualization`)
+  stehen beide rechts im Hero – QR links, Drucken rechts. Sie hat weder Kopfzeile
+  noch Sidebar, in der sie sonst Platz hätten.
+
+  Auf `default`/`guide` steht im Hero KEINES von beiden: Der QR-Code sitzt in der
+  Kopfzeile neben dem Farbschema-Umschalter (siehe `_includes/header.html`), und zum
+  Drucken bleibt es beim Browser-Befehl (Strg/Cmd+P). Tooltip des QR-Codes überall:
+  „Diese Seite auf Deinem Smartphone öffnen“. Er wird erst im Browser erzeugt (theme/academy/atvantage.js), weil die
+  Adresse zur Build-Zeit nicht feststeht; ohne JavaScript erscheint er nicht.
+  Kein Front-Matter-Schalter: Es gibt keine Seite, auf der der Weg aufs eigene
+  Smartphone schaden würde.
+--><html lang="de">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Einen Fehler in einer Stream-Kette einkreisen · Java SE (ATVANTAGE Academy)</title>
+<meta name="description" content="Kreise einen Fehler ein, ohne Code zum Debuggen zu verändern: bedingte Haltepunkte, Ausdrücke auswerten, protokollierende Haltepunkte, Stream-Debugger."><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787309846"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787309846">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787309846">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787309846">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787309846"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787309846">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787309846" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787309846" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787309846">
+<script type="module">
+  const _hlbase = "/training-material-java-se/theme/academy/hljs/";
+  Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
+    .then(([core, java]) => {
+      const hljs = core.default;
+      hljs.registerLanguage("java", java.default);
+      document.querySelectorAll("pre code.language-java").forEach((el) => hljs.highlightElement(el));
+    });
+</script>
+<link rel="apple-touch-icon" sizes="180x180" href="/training-material-java-se/theme/atvantage/assets/icon-180.png">
+<link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
+<link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
+
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787309846">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787309846"></head><body class="avd-academy-guide">
+  <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a><div class="avd-academy-metanav">
+    <span>ATVANTAGE Academy</span>
+  </div>
+
+  <header class="avd-academy-header">
+  <a class="avd-academy-header__brand" href="/training-material-java-se/" aria-label="Startseite">
+    <img class="avd-academy-header__logo"
+         src="/training-material-java-se/assets/logo-schulung.svg"
+         alt="ATVANTAGE Academy">
+  </a>
+  <button class="avd-academy-btn avd-academy-btn--ghost avd-academy-header__burger" data-avd-academy-nav-toggle="#avd-academy-main-nav"
+          aria-label="Navigation umschalten" aria-expanded="false">☰</button>
+  <nav class="avd-academy-header__nav" id="avd-academy-main-nav"><a href="/training-material-java-se/">Start</a><div class="avd-academy-header__group" data-avd-academy-menu>
+        <button type="button" class="avd-academy-header__grouptoggle"
+                aria-expanded="false" aria-haspopup="true">Schulungsprogramm<span class="avd-academy-header__caret" aria-hidden="true">▾</span></button><div class="avd-academy-header__submenu" role="menu"><a role="menuitem" href="/training-material-java-se/oop-mit-java/">Objektorientierte Programmierung mit Java</a><a role="menuitem" href="/training-material-java-se/intellij-umsteiger/">IntelliJ IDEA Ultimate für Umsteiger</a>
+        </div>
+      </div><a href="/training-material-java-se/shared/visualisierungen/">Visualisierungen</a>
+  </nav><div class="avd-academy-header__tools"><button type="button" class="avd-academy-qr" data-avd-academy-qr hidden
+            title="Diese Seite auf Deinem Smartphone öffnen"
+            aria-label="Diese Seite auf Deinem Smartphone öffnen"></button>
+    <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-theme-toggle"
+            data-avd-academy-theme-toggle
+            title="Farbschema umschalten (hell/dunkel)"
+            aria-label="Farbschema umschalten">◐</button>
+  </div>
+</header>
+
+  <section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/intellij-umsteiger/">IntelliJ für Umsteiger</a><span>/</span><span aria-current="page">Einen Fehler in einer Stream-Kette einkreisen</span></nav><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 30 Minuten</span><span class="avd-academy-tag">Debugging</span><span class="avd-academy-tag">Haltepunkte</span><span class="avd-academy-tag">Stream-Debugger</span>
+      </div>
+      <div class="avd-academy-guide-hero__actions">
+        <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
+                data-avd-academy-copy-md="#avd-academy-md-source"
+                title="Markdown kopieren" aria-label="Markdown kopieren"></button>
+      </div>
+    </div><h1>Einen Fehler in einer Stream-Kette einkreisen</h1>
+  </section><div class="avd-academy-guide-layout">
+    <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
+      <h1 id="einen-fehler-in-einer-stream-kette-einkreisen">Einen Fehler in einer Stream-Kette einkreisen</h1>
+
+<p>Als Entwickler:in möchte ich einen Fehler mit dem Debugger einkreisen, ohne den
+Code zum Debuggen zu verändern, damit ich den Gegenstand meiner Untersuchung nicht
+selbst verändere und nichts aufzuräumen vergesse.</p>
+
+<blockquote>
+  <p><strong>Die eine Regel dieser Übung: Du fügst keine Ausgabe ein.</strong> Kein
+<code>System.out.println</code>, kein <code>peek</code>, kein Logger-Aufruf und keine Zwischenvariable,
+die nur zum Nachsehen da ist. Alles, was Du wissen willst, holst Du aus dem
+Debugger. Wenn Du zum Tippen ansetzt, ist das das Signal, den passenden Griff zu
+suchen.</p>
+</blockquote>
+
+<h2 id="lernziele">Lernziele</h2>
+
+<p>Du …</p>
+
+<ul>
+  <li>setzt einen Haltepunkt mit Bedingung und triffst damit genau den Durchlauf, der Dich interessiert.</li>
+  <li>hältst bei einer Ausnahme an, ohne die Stelle zu kennen, an der sie entsteht.</li>
+  <li>wertest im angehaltenen Zustand einen Ausdruck aus, der im Programm nicht vorkommt.</li>
+  <li>liest an einer Stream-Kette ab, an welchem Zwischenschritt ein Element herausfällt.</li>
+  <li>ersetzt eine eingefügte Ausgabe durch einen Haltepunkt, der nicht anhält.</li>
+  <li>benennst, was <em>Frame verwerfen</em> zurücknimmt und was nicht.</li>
+</ul>
+
+<h2 id="definition-of-done">Definition of Done</h2>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast den Fehler gefunden und kannst sagen, an welchem Schritt der Kette er entsteht.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast dafür <strong>keine</strong> Ausgabe und <strong>keine</strong> Zwischenvariable eingefügt.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Mindestens ein Haltepunkt war bedingt, und Du kannst die Bedingung begründen.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast einen protokollierenden Haltepunkt benutzt, der nicht anhält.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der Fehler ist behoben und die Tests sind grün.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
+</ul>
+
+<h2 id="arbeitsschritte">Arbeitsschritte</h2>
+
+<h3 id="den-fehler-reproduzieren">Den Fehler reproduzieren</h3>
+
+<p>Führe den fehlschlagenden Test aus und lies die Fehlermeldung genau. Halte für Dich
+fest, was Du erwartest und was tatsächlich herauskommt – ohne diese beiden Sätze
+suchst Du ins Blaue.</p>
+
+<p>Schließe daraus, in welchem Bereich der Fehler stecken muss. Setze noch keinen
+Haltepunkt.</p>
+
+<h3 id="einen-haltepunkt-setzen-der-nur-einmal-trifft">Einen Haltepunkt setzen, der nur einmal trifft</h3>
+
+<p>Suche die Schleife oder Stream-Kette, in der der Fehler steckt. Setze einen
+Haltepunkt und gib ihm eine <strong>Bedingung</strong>, sodass er nur bei dem Element hält, das
+Dich interessiert.</p>
+
+<p>Wenn Du die Bedingung nicht kennst, weil Du das Element noch nicht kennst: Setze sie
+auf etwas, das den Kreis eingrenzt, und verfeinere sie.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Ein Haltepunkt kann mehr als eine Bedingung tragen – er kann auch
+erst nach einer bestimmten Anzahl von Treffern anhalten oder nur in einem
+bestimmten Thread. Sieh Dir seine Einstellungen an, statt sie zu erraten.</p>
+</blockquote>
+
+<h3 id="im-angehaltenen-zustand-fragen-stellen">Im angehaltenen Zustand Fragen stellen</h3>
+
+<p>Nutze am Haltepunkt die Auswertung von Ausdrücken: Frage Dinge ab, die <strong>im Code
+nicht stehen</strong>. Zum Beispiel, wie viele Elemente eine Bedingung erfüllen, oder was
+eine Methode für einen anderen Wert zurückgäbe.</p>
+
+<p>Genau das ersetzt die Ausgabe, die Du sonst eingebaut hättest – und es verändert das
+Programm nicht.</p>
+
+<h3 id="die-stream-kette-aufklappen">Die Stream-Kette aufklappen</h3>
+
+<p>Halte an einer Stelle an, an der eine Stream-Kette ausgewertet wird, und öffne den
+Stream-Debugger.</p>
+
+<p>Lies ab:</p>
+
+<ol>
+  <li>Wie viele Elemente gehen in die Kette hinein?</li>
+  <li>An welchem Zwischenschritt fallen welche heraus?</li>
+  <li>Ist die Menge nach jedem Schritt die, die Du erwartest?</li>
+</ol>
+
+<p>Der Schritt, an dem Deine Erwartung zum ersten Mal nicht mehr stimmt, ist die Stelle
+des Fehlers.</p>
+
+<h3 id="bei-der-ausnahme-anhalten-ohne-die-stelle-zu-kennen">Bei der Ausnahme anhalten, ohne die Stelle zu kennen</h3>
+
+<p>Setze einen Ausnahme-Haltepunkt für den Ausnahmetyp, der geworfen wird – ohne eine
+Zeile auszuwählen. Starte neu und sieh Dir an, wo das Programm anhält und wie die
+Aufrufliste aussieht.</p>
+
+<p>Falls im Projekt keine Ausnahme fliegt: Provoziere eine, indem Du im Testaufruf
+einen Wert übergibst, der nicht behandelt wird. Nimm die Änderung danach zurück.</p>
+
+<h3 id="die-ausgabe-durch-einen-haltepunkt-ersetzen">Die Ausgabe durch einen Haltepunkt ersetzen</h3>
+
+<p>Suche eine Stelle, an der Du normalerweise eine Ausgabe eingebaut hättest, um einen
+Wert über viele Durchläufe zu beobachten.</p>
+
+<p>Setze dort einen Haltepunkt, der <strong>nicht anhält</strong>, sondern den Wert protokolliert.
+Lass das Programm durchlaufen und lies die Protokollzeilen in der Debugger-Konsole.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Das ist der Griff, der eingefügte Ausgaben vollständig ersetzt. Er
+hinterlässt keine Spuren im Code – es gibt also nichts aufzuräumen und nichts, was
+versehentlich committet wird.</p>
+</blockquote>
+
+<h3 id="einen-aufruf-wiederholen">Einen Aufruf wiederholen</h3>
+
+<p>Halte in einer Methode an, gehe ein paar Schritte weiter, und nimm dann den
+<strong>gesamten Methodenaufruf zurück</strong>, um ihn erneut zu betreten.</p>
+
+<p>Beobachte dabei genau, was wieder auf dem Ausgangsstand ist und was nicht. Notiere
+Dir eine Sache, die <strong>nicht</strong> zurückgenommen wurde – Du brauchst sie für die
+Reflexion.</p>
+
+<h3 id="beheben-und-absichern">Beheben und absichern</h3>
+
+<p>Behebe den Fehler und lass die Tests laufen. Prüfe zum Schluss Deinen
+Änderungsstand: Es darf <strong>keine</strong> Debug-Ausgabe und keine Hilfsvariable
+übrigbleiben. Entferne Deine Haltepunkte, soweit Du sie nicht behalten willst.</p>
+
+<h2 id="reflexionsfragen">Reflexionsfragen</h2>
+
+<ul>
+  <li>Wie hättest Du den Fehler in der Stream-Kette ohne den Stream-Debugger gefunden?</li>
+  <li>Du hast einen bedingten Haltepunkt gesetzt. Was wäre die Alternative gewesen, und wie lange hätte sie gedauert?</li>
+  <li>Wo hättest Du in Deiner alten IDE zu <code>System.out.println</code> gegriffen – und welcher Griff ersetzt das jetzt?</li>
+  <li>Du hast einen Frame verworfen. Was war danach wirklich wie vorher – und was nicht?</li>
+</ul>
+
+
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Einen Fehler in einer Stream-Kette einkreisen
+
+Als Entwickler:in möchte ich einen Fehler mit dem Debugger einkreisen, ohne den
+Code zum Debuggen zu verändern, damit ich den Gegenstand meiner Untersuchung nicht
+selbst verändere und nichts aufzuräumen vergesse.
+
+&gt; **Die eine Regel dieser Übung: Du fügst keine Ausgabe ein.** Kein
+&gt; `System.out.println`, kein `peek`, kein Logger-Aufruf und keine Zwischenvariable,
+&gt; die nur zum Nachsehen da ist. Alles, was Du wissen willst, holst Du aus dem
+&gt; Debugger. Wenn Du zum Tippen ansetzt, ist das das Signal, den passenden Griff zu
+&gt; suchen.
+
+## Lernziele
+
+Du …
+
+- setzt einen Haltepunkt mit Bedingung und triffst damit genau den Durchlauf, der Dich interessiert.
+- hältst bei einer Ausnahme an, ohne die Stelle zu kennen, an der sie entsteht.
+- wertest im angehaltenen Zustand einen Ausdruck aus, der im Programm nicht vorkommt.
+- liest an einer Stream-Kette ab, an welchem Zwischenschritt ein Element herausfällt.
+- ersetzt eine eingefügte Ausgabe durch einen Haltepunkt, der nicht anhält.
+- benennst, was *Frame verwerfen* zurücknimmt und was nicht.
+
+## Definition of Done
+
+* [ ] Du hast den Fehler gefunden und kannst sagen, an welchem Schritt der Kette er entsteht.
+* [ ] Du hast dafür **keine** Ausgabe und **keine** Zwischenvariable eingefügt.
+* [ ] Mindestens ein Haltepunkt war bedingt, und Du kannst die Bedingung begründen.
+* [ ] Du hast einen protokollierenden Haltepunkt benutzt, der nicht anhält.
+* [ ] Der Fehler ist behoben und die Tests sind grün.
+* [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
+
+## Arbeitsschritte
+
+### Den Fehler reproduzieren
+
+Führe den fehlschlagenden Test aus und lies die Fehlermeldung genau. Halte für Dich
+fest, was Du erwartest und was tatsächlich herauskommt – ohne diese beiden Sätze
+suchst Du ins Blaue.
+
+Schließe daraus, in welchem Bereich der Fehler stecken muss. Setze noch keinen
+Haltepunkt.
+
+### Einen Haltepunkt setzen, der nur einmal trifft
+
+Suche die Schleife oder Stream-Kette, in der der Fehler steckt. Setze einen
+Haltepunkt und gib ihm eine **Bedingung**, sodass er nur bei dem Element hält, das
+Dich interessiert.
+
+Wenn Du die Bedingung nicht kennst, weil Du das Element noch nicht kennst: Setze sie
+auf etwas, das den Kreis eingrenzt, und verfeinere sie.
+
+&gt; **Hinweis:** Ein Haltepunkt kann mehr als eine Bedingung tragen – er kann auch
+&gt; erst nach einer bestimmten Anzahl von Treffern anhalten oder nur in einem
+&gt; bestimmten Thread. Sieh Dir seine Einstellungen an, statt sie zu erraten.
+
+### Im angehaltenen Zustand Fragen stellen
+
+Nutze am Haltepunkt die Auswertung von Ausdrücken: Frage Dinge ab, die **im Code
+nicht stehen**. Zum Beispiel, wie viele Elemente eine Bedingung erfüllen, oder was
+eine Methode für einen anderen Wert zurückgäbe.
+
+Genau das ersetzt die Ausgabe, die Du sonst eingebaut hättest – und es verändert das
+Programm nicht.
+
+### Die Stream-Kette aufklappen
+
+Halte an einer Stelle an, an der eine Stream-Kette ausgewertet wird, und öffne den
+Stream-Debugger.
+
+Lies ab:
+
+1. Wie viele Elemente gehen in die Kette hinein?
+2. An welchem Zwischenschritt fallen welche heraus?
+3. Ist die Menge nach jedem Schritt die, die Du erwartest?
+
+Der Schritt, an dem Deine Erwartung zum ersten Mal nicht mehr stimmt, ist die Stelle
+des Fehlers.
+
+### Bei der Ausnahme anhalten, ohne die Stelle zu kennen
+
+Setze einen Ausnahme-Haltepunkt für den Ausnahmetyp, der geworfen wird – ohne eine
+Zeile auszuwählen. Starte neu und sieh Dir an, wo das Programm anhält und wie die
+Aufrufliste aussieht.
+
+Falls im Projekt keine Ausnahme fliegt: Provoziere eine, indem Du im Testaufruf
+einen Wert übergibst, der nicht behandelt wird. Nimm die Änderung danach zurück.
+
+### Die Ausgabe durch einen Haltepunkt ersetzen
+
+Suche eine Stelle, an der Du normalerweise eine Ausgabe eingebaut hättest, um einen
+Wert über viele Durchläufe zu beobachten.
+
+Setze dort einen Haltepunkt, der **nicht anhält**, sondern den Wert protokolliert.
+Lass das Programm durchlaufen und lies die Protokollzeilen in der Debugger-Konsole.
+
+&gt; **Hinweis:** Das ist der Griff, der eingefügte Ausgaben vollständig ersetzt. Er
+&gt; hinterlässt keine Spuren im Code – es gibt also nichts aufzuräumen und nichts, was
+&gt; versehentlich committet wird.
+
+### Einen Aufruf wiederholen
+
+Halte in einer Methode an, gehe ein paar Schritte weiter, und nimm dann den
+**gesamten Methodenaufruf zurück**, um ihn erneut zu betreten.
+
+Beobachte dabei genau, was wieder auf dem Ausgangsstand ist und was nicht. Notiere
+Dir eine Sache, die **nicht** zurückgenommen wurde – Du brauchst sie für die
+Reflexion.
+
+### Beheben und absichern
+
+Behebe den Fehler und lass die Tests laufen. Prüfe zum Schluss Deinen
+Änderungsstand: Es darf **keine** Debug-Ausgabe und keine Hilfsvariable
+übrigbleiben. Entferne Deine Haltepunkte, soweit Du sie nicht behalten willst.
+
+## Reflexionsfragen
+
+- Wie hättest Du den Fehler in der Stream-Kette ohne den Stream-Debugger gefunden?
+- Du hast einen bedingten Haltepunkt gesetzt. Was wäre die Alternative gewesen, und wie lange hätte sie gedauert?
+- Wo hättest Du in Deiner alten IDE zu `System.out.println` gegriffen – und welcher Griff ersetzt das jetzt?
+- Du hast einen Frame verworfen. Was war danach wirklich wie vorher – und was nicht?</textarea>
+    </main><aside class="avd-academy-guide-sidebar"><details class="avd-academy-guide-side avd-academy-guide-side--toc avd-academy-fold" data-avd-academy-toc-box
+               data-avd-academy-toc-grenze="12" open hidden>
+        <summary class="avd-academy-guide-side__label">Auf dieser Seite</summary>
+        <nav class="avd-academy-toc avd-academy-fold__body" data-avd-academy-toc aria-label="Inhaltsverzeichnis"></nav>
+      </details>
+      <div class="avd-academy-guide-side avd-academy-guide-side--bordered" data-avd-academy-progress hidden><div class="avd-academy-guide-side__label">Fortschritt</div>
+        <div class="avd-academy-progress__bar"><div class="avd-academy-progress__fill"></div></div>
+        <div class="avd-academy-progress__text"></div>
+      </div>
+    </aside>
+  </div><div class="avd-academy-print-contact" aria-hidden="true">
+    <span>Kontakt: https://academy.atvantage-academy.workers.dev/</span>
+    <span>academy@atvantage.com</span>
+  </div>
+
+  <footer class="avd-academy-footer">
+  <div class="avd-academy-footer__grid">
+    <div>
+      <strong>Java SE (ATVANTAGE Academy)</strong>
+      <p>Schulungen im Bereich 'Java SE'</p>
+    </div><div>
+      <strong>Kontakt</strong>
+      <p><a href="https://academy.atvantage-academy.workers.dev/" target="_blank" rel="noopener">Website</a><br><a href="mailto:academy@atvantage.com">academy@atvantage.com</a><br>
+      </p>
+    </div></div>
+  <div class="avd-academy-footer__legal">
+    © <span data-avd-academy-year>2026</span> ATVANTAGE
+  </div>
+</footer>
+
+</body>
+</html>

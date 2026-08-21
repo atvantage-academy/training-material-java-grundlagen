@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<!--
+  ATVANTAGE-Academy – EINZIGES Seitenlayout (Jekyll)
+  --------------------------------------------------
+  Ein Layout für alles: allgemeine Doku-Seiten UND Guides (Übungen/Anleitungen).
+  Optik nach der ATVANTAGE-Website: Meta-Nav, weiße sticky Kopfzeile, Hero-Band,
+  zweispaltig mit rechter Sidebar (automatisches Inhaltsverzeichnis, Fortschritt
+  aus Task-Listen, weiterführende Ressourcen). Überschriften ohne Emoji-Icons.
+
+  Verwendung im Front Matter:  layout: default   (oder `layout: guide` – Alias,
+  siehe guide.html; beides rendert dieselbe Guide-Ansicht)
+
+  `layout: visualization` (siehe visualization.html) rendert dieselbe Seite OHNE
+  obere Navigation (Meta-Leiste + Kopfzeile/TopNav), OHNE Brotkrumen und OHNE den
+  rechten Bereich (Inhaltsverzeichnis, Fortschritt, Ressourcen – auch bei gesetztem
+  `resources`), mit schmalerem Hero-Balken und breiterem, zentriertem Inhalt – für
+  eigenständige Visualisierungen/Simulationen.
+
+  Alle Front-Matter-Felder sind OPTIONAL (Convention over Configuration). Nur der
+  Titel ist faktisch erforderlich – als `title:` ODER als erste `#`-Überschrift:
+
+    title:       "…"                → sonst erste #-Überschrift (eins von beiden nötig)
+    description: "…"                → Meta-Description
+    duration:    8                  → Zahl in Minuten → Hero-Tag „ca. 8 Minuten“
+                                       (ungefähre LESEDAUER; bei Guides/Übungen die
+                                       Dauer der Übung). Entfällt bei
+                                       `layout: visualization`.
+    topics:      ["Cloud & DevOps"] → weitere Hero-Tags
+    resources:   [{title, url, icon}, …] → Sidebar-Karte „Weiterführende Informationen“.
+                                       title und/oder icon (Bildpfad); icon erscheint
+                                       rechts und wird kreisrund dargestellt.
+    breadcrumb:                     → Brotkrumen anpassen (beides optional):
+      label: "…"                    → überschreibt den Ordnernamen dieser Ebene;
+                                       in der Ordner-`index.md` gesetzt gilt es für
+                                       ALLE Seiten im Ordner und in Unterordnern.
+      ancestors: [{title, url}, …]  → explizite Vorfahren-Kette OHNE die aktuelle
+                                       Seite (diese wird automatisch angehängt); in
+                                       der `index.md` gesetzt wird sie vererbt.
+
+  „Markdown kopieren“ (Button im Hero) erscheint NUR auf Guides (Übungen,
+  Anleitungen) – dort ist das Übernehmen des Quelltexts der Zweck. Bedingungen:
+  Markdown-Seite (`.md`, nicht reines HTML) UND als Guide erkennbar UND keine
+  Visualisierung. Guide ist eine Seite mit `layout: guide` ODER gesetztem
+  `duration` – letzteres ist der etablierte Marker, und die Guide-Vorlage des
+  Themes wie auch die von didaktikon erzeugten Übungen nutzen `layout: page`
+  plus `duration`. Nur auf `layout: guide` zu prüfen würde den Button dort
+  entfernen. Doku-Seiten haben kein `duration`; Visualisierungen sind
+  ausgeschlossen, weil ihr Inhalt nicht sinnvoll als Markdown kopierbar ist.
+
+  QR-CODE der Seitenadresse + DRUCKEN-KNOPF: In dieser Ansicht (`visualization`)
+  stehen beide rechts im Hero – QR links, Drucken rechts. Sie hat weder Kopfzeile
+  noch Sidebar, in der sie sonst Platz hätten.
+
+  Auf `default`/`guide` steht im Hero KEINES von beiden: Der QR-Code sitzt in der
+  Kopfzeile neben dem Farbschema-Umschalter (siehe `_includes/header.html`), und zum
+  Drucken bleibt es beim Browser-Befehl (Strg/Cmd+P). Tooltip des QR-Codes überall:
+  „Diese Seite auf Deinem Smartphone öffnen“. Er wird erst im Browser erzeugt (theme/academy/atvantage.js), weil die
+  Adresse zur Build-Zeit nicht feststeht; ohne JavaScript erscheint er nicht.
+  Kein Front-Matter-Schalter: Es gibt keine Seite, auf der der Weg aufs eigene
+  Smartphone schaden würde.
+--><html lang="de">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Eine anonyme Klasse zur Methodenreferenz führen · Java SE (ATVANTAGE Academy)</title>
+<meta name="description" content="Lass die IDE Code umbauen: eine anonyme Klasse über das Lambda zur Methodenreferenz führen, umbenennen mit Vorschau, Inspections lesen."><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787309846"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787309846">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787309846">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787309846">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787309846"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787309846">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787309846" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787309846" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787309846">
+<script type="module">
+  const _hlbase = "/training-material-java-se/theme/academy/hljs/";
+  Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
+    .then(([core, java]) => {
+      const hljs = core.default;
+      hljs.registerLanguage("java", java.default);
+      document.querySelectorAll("pre code.language-java").forEach((el) => hljs.highlightElement(el));
+    });
+</script>
+<link rel="apple-touch-icon" sizes="180x180" href="/training-material-java-se/theme/atvantage/assets/icon-180.png">
+<link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
+<link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
+
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787309846">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787309846"></head><body class="avd-academy-guide">
+  <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a><div class="avd-academy-metanav">
+    <span>ATVANTAGE Academy</span>
+  </div>
+
+  <header class="avd-academy-header">
+  <a class="avd-academy-header__brand" href="/training-material-java-se/" aria-label="Startseite">
+    <img class="avd-academy-header__logo"
+         src="/training-material-java-se/assets/logo-schulung.svg"
+         alt="ATVANTAGE Academy">
+  </a>
+  <button class="avd-academy-btn avd-academy-btn--ghost avd-academy-header__burger" data-avd-academy-nav-toggle="#avd-academy-main-nav"
+          aria-label="Navigation umschalten" aria-expanded="false">☰</button>
+  <nav class="avd-academy-header__nav" id="avd-academy-main-nav"><a href="/training-material-java-se/">Start</a><div class="avd-academy-header__group" data-avd-academy-menu>
+        <button type="button" class="avd-academy-header__grouptoggle"
+                aria-expanded="false" aria-haspopup="true">Schulungsprogramm<span class="avd-academy-header__caret" aria-hidden="true">▾</span></button><div class="avd-academy-header__submenu" role="menu"><a role="menuitem" href="/training-material-java-se/oop-mit-java/">Objektorientierte Programmierung mit Java</a><a role="menuitem" href="/training-material-java-se/intellij-umsteiger/">IntelliJ IDEA Ultimate für Umsteiger</a>
+        </div>
+      </div><a href="/training-material-java-se/shared/visualisierungen/">Visualisierungen</a>
+  </nav><div class="avd-academy-header__tools"><button type="button" class="avd-academy-qr" data-avd-academy-qr hidden
+            title="Diese Seite auf Deinem Smartphone öffnen"
+            aria-label="Diese Seite auf Deinem Smartphone öffnen"></button>
+    <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-theme-toggle"
+            data-avd-academy-theme-toggle
+            title="Farbschema umschalten (hell/dunkel)"
+            aria-label="Farbschema umschalten">◐</button>
+  </div>
+</header>
+
+  <section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/intellij-umsteiger/">IntelliJ für Umsteiger</a><span>/</span><span aria-current="page">Eine anonyme Klasse zur Methodenreferenz führen</span></nav><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 22 Minuten</span><span class="avd-academy-tag">Refactoring</span><span class="avd-academy-tag">Inspections</span><span class="avd-academy-tag">Lambdas</span><span class="avd-academy-tag">Methodenreferenzen</span>
+      </div>
+      <div class="avd-academy-guide-hero__actions">
+        <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
+                data-avd-academy-copy-md="#avd-academy-md-source"
+                title="Markdown kopieren" aria-label="Markdown kopieren"></button>
+      </div>
+    </div><h1>Eine anonyme Klasse zur Methodenreferenz führen</h1>
+  </section><div class="avd-academy-guide-layout">
+    <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
+      <h1 id="eine-anonyme-klasse-zur-methodenreferenz-führen">Eine anonyme Klasse zur Methodenreferenz führen</h1>
+
+<p>Als Entwickler:in möchte ich Umformungen von der IDE ausführen lassen, damit ich
+Code umbauen kann, ohne ihn neu zu schreiben und ohne dabei Fundstellen zu
+übersehen.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Committe Deinen aktuellen Stand, <strong>bevor</strong> Du anfängst. Dann ist der
+Rückweg eine Verwerfen-Aktion statt Bastelei – und Du hast für die Git-Einheit
+später einen sauberen Ausgangspunkt.</p>
+
+  <p>Die Regel dieser Übung: <strong>Du schreibst nichts von Hand um.</strong> Wenn Du zum
+Umschreiben ansetzt, ist das das Signal, nach der passenden Umformung zu suchen –
+über das Refactoring-Sammelmenü oder die Intention-Aktion.</p>
+</blockquote>
+
+<h2 id="lernziele">Lernziele</h2>
+
+<p>Du …</p>
+
+<ul>
+  <li>rufst ein Refactoring über das Sammelmenü auf, ohne sein Kürzel zu kennen.</li>
+  <li>benennst einen Bezeichner projektweit um und beurteilst vorher die Vorschau.</li>
+  <li>überführst eine anonyme Klasse in ein Lambda und weiter in eine Methodenreferenz – und wieder zurück.</li>
+  <li>unterscheidest an Deinem Code eine Inspection von einem Compilerfehler.</li>
+  <li>begründest, wann Du einen Umformungsvorschlag der IDE <strong>nicht</strong> übernimmst.</li>
+</ul>
+
+<h2 id="definition-of-done">Definition of Done</h2>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Dein Ausgangsstand war committet, bevor Du angefangen hast.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Keine der Umformungen hast Du von Hand getippt.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Mindestens eine anonyme Klasse ist über das Lambda zur Methodenreferenz geworden – und einmal den Weg zurückgegangen.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Ein Bezeichner ist projektweit umbenannt; Du kannst sagen, was in der Vorschau stand.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Die Tests sind grün.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
+</ul>
+
+<h2 id="arbeitsschritte">Arbeitsschritte</h2>
+
+<h3 id="herausfinden-was-hier-überhaupt-geht">Herausfinden, was hier überhaupt geht</h3>
+
+<p>Stelle den Cursor auf einen Methodennamen und öffne das Refactoring-Sammelmenü –
+die Aktion, die alle für diese Stelle möglichen Umformungen auflistet. Finde sie
+über <em>Find Action</em>, falls Du ihr Kürzel nicht kennst.</p>
+
+<p>Lies die Liste, bevor Du etwas auswählst. Sie ist die Antwort auf die Frage „welche
+Refactorings gibt es?“ – und sie ist stellenabhängig, also bei einem Feld eine
+andere als bei einer Methode.</p>
+
+<h3 id="umbenennen-mit-blick-in-die-vorschau">Umbenennen mit Blick in die Vorschau</h3>
+
+<p>Suche einen Bezeichner, der an mehreren Stellen vorkommt und dessen Name unglücklich
+ist. Benenne ihn projektweit um – aber sieh Dir <strong>vorher</strong> die Vorschau an, statt
+direkt zu bestätigen.</p>
+
+<p>Achte in der Vorschau auf drei Dinge:</p>
+
+<ol>
+  <li>Vorkommen in <strong>Kommentaren</strong> und <strong>Zeichenketten</strong> – die werden getrennt
+aufgeführt, weil sie einzeln zu bewerten sind.</li>
+  <li>Gleichnamige Bezeichner in anderen Klassen, die <strong>nicht</strong> mitgeändert werden.</li>
+  <li>Konflikte, falls der neue Name schon belegt ist.</li>
+</ol>
+
+<p>Notiere Dir, was in Deiner Vorschau stand. Du brauchst es für die Reflexion.</p>
+
+<h3 id="die-anonyme-klasse-abbauen">Die anonyme Klasse abbauen</h3>
+
+<p>Suche im Projekt eine anonyme innere Klasse – typischerweise ein Vergleicher oder
+ein Callback mit genau einer Methode.</p>
+
+<p>Führe sie in zwei Schritten weiter:</p>
+
+<ol>
+  <li>anonyme Klasse → <strong>Lambda</strong>,</li>
+  <li>Lambda → <strong>Methodenreferenz</strong>.</li>
+</ol>
+
+<p>Beide Schritte bietet die IDE an der Stelle an, an der der Code steht. Wenn der
+zweite Schritt nicht angeboten wird, sieh Dir an, warum: Nicht jedes Lambda lässt
+sich als Methodenreferenz schreiben.</p>
+
+<h3 id="den-weg-zurückgehen">Den Weg zurückgehen</h3>
+
+<p>Wandle die Methodenreferenz wieder in ein Lambda und das Lambda wieder in eine
+anonyme Klasse.</p>
+
+<p>Das wirkt zunächst sinnlos – ist es aber nicht. Es ist der Griff, den Du brauchst,
+wenn Du in einem Lambda einen Haltepunkt setzen oder eine Zeile einschieben willst.
+Und es zeigt Dir, dass die drei Schreibweisen dieselbe Sache sind.</p>
+
+<p>Danach wieder auf die Form bringen, die Du für die richtige hältst.</p>
+
+<h3 id="einen-vorschlag-ablehnen">Einen Vorschlag ablehnen</h3>
+
+<p>Suche eine Schleife über eine Sammlung, zu der die IDE eine Umformung in eine
+Stream-Kette anbietet. Sieh Dir das Ergebnis an – und <strong>entscheide dann</strong>, ob Du es
+behältst.</p>
+
+<p>Suche außerdem eine Schleife, bei der Du die Stream-Fassung <strong>nicht</strong> willst: eine
+mit vorzeitigem Abbruch, mit einem Seiteneffekt oder mit mehreren mitlaufenden
+Werten. Begründe für Dich, warum die Schleife dort die bessere Fassung ist.</p>
+
+<h3 id="die-markierungen-im-editor-lesen">Die Markierungen im Editor lesen</h3>
+
+<p>Sieh Dir die farbige Leiste am rechten Rand des Editors an. Sie zeigt die Treffer
+der ganzen Datei, nicht nur den sichtbaren Ausschnitt.</p>
+
+<p>Finde eine Markierung, die <strong>kein</strong> Compilerfehler ist, und lies nach, welche Regel
+dahintersteht. Entscheide, ob Du dem Hinweis folgst.</p>
+
+<h3 id="absichern">Absichern</h3>
+
+<p>Lass die Tests laufen. Sind sie grün, haben Deine Umformungen das Verhalten nicht
+geändert – genau das ist der Grund, vorher zu committen und Tests zu haben.</p>
+
+<h2 id="reflexionsfragen">Reflexionsfragen</h2>
+
+<ul>
+  <li>Du hast dieselbe Logik in drei Schreibweisen gesehen. Wann würdest Du welche wählen?</li>
+  <li>Das Umbenennen hat eine Vorschau angeboten. Was hättest Du übersehen, wenn Du im Editor gesucht und ersetzt hättest?</li>
+  <li>Die IDE hat vorgeschlagen, eine Schleife in eine Stream-Kette zu wandeln. Hast Du den Vorschlag übernommen – und warum (nicht)?</li>
+  <li>Welche Inspection hat bei Dir angeschlagen, die kein Fehler war?</li>
+</ul>
+
+
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Eine anonyme Klasse zur Methodenreferenz führen
+
+Als Entwickler:in möchte ich Umformungen von der IDE ausführen lassen, damit ich
+Code umbauen kann, ohne ihn neu zu schreiben und ohne dabei Fundstellen zu
+übersehen.
+
+&gt; **Hinweis:** Committe Deinen aktuellen Stand, **bevor** Du anfängst. Dann ist der
+&gt; Rückweg eine Verwerfen-Aktion statt Bastelei – und Du hast für die Git-Einheit
+&gt; später einen sauberen Ausgangspunkt.
+&gt;
+&gt; Die Regel dieser Übung: **Du schreibst nichts von Hand um.** Wenn Du zum
+&gt; Umschreiben ansetzt, ist das das Signal, nach der passenden Umformung zu suchen –
+&gt; über das Refactoring-Sammelmenü oder die Intention-Aktion.
+
+## Lernziele
+
+Du …
+
+- rufst ein Refactoring über das Sammelmenü auf, ohne sein Kürzel zu kennen.
+- benennst einen Bezeichner projektweit um und beurteilst vorher die Vorschau.
+- überführst eine anonyme Klasse in ein Lambda und weiter in eine Methodenreferenz – und wieder zurück.
+- unterscheidest an Deinem Code eine Inspection von einem Compilerfehler.
+- begründest, wann Du einen Umformungsvorschlag der IDE **nicht** übernimmst.
+
+## Definition of Done
+
+* [ ] Dein Ausgangsstand war committet, bevor Du angefangen hast.
+* [ ] Keine der Umformungen hast Du von Hand getippt.
+* [ ] Mindestens eine anonyme Klasse ist über das Lambda zur Methodenreferenz geworden – und einmal den Weg zurückgegangen.
+* [ ] Ein Bezeichner ist projektweit umbenannt; Du kannst sagen, was in der Vorschau stand.
+* [ ] Die Tests sind grün.
+* [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
+
+## Arbeitsschritte
+
+### Herausfinden, was hier überhaupt geht
+
+Stelle den Cursor auf einen Methodennamen und öffne das Refactoring-Sammelmenü –
+die Aktion, die alle für diese Stelle möglichen Umformungen auflistet. Finde sie
+über *Find Action*, falls Du ihr Kürzel nicht kennst.
+
+Lies die Liste, bevor Du etwas auswählst. Sie ist die Antwort auf die Frage „welche
+Refactorings gibt es?“ – und sie ist stellenabhängig, also bei einem Feld eine
+andere als bei einer Methode.
+
+### Umbenennen mit Blick in die Vorschau
+
+Suche einen Bezeichner, der an mehreren Stellen vorkommt und dessen Name unglücklich
+ist. Benenne ihn projektweit um – aber sieh Dir **vorher** die Vorschau an, statt
+direkt zu bestätigen.
+
+Achte in der Vorschau auf drei Dinge:
+
+1. Vorkommen in **Kommentaren** und **Zeichenketten** – die werden getrennt
+   aufgeführt, weil sie einzeln zu bewerten sind.
+2. Gleichnamige Bezeichner in anderen Klassen, die **nicht** mitgeändert werden.
+3. Konflikte, falls der neue Name schon belegt ist.
+
+Notiere Dir, was in Deiner Vorschau stand. Du brauchst es für die Reflexion.
+
+### Die anonyme Klasse abbauen
+
+Suche im Projekt eine anonyme innere Klasse – typischerweise ein Vergleicher oder
+ein Callback mit genau einer Methode.
+
+Führe sie in zwei Schritten weiter:
+
+1. anonyme Klasse → **Lambda**,
+2. Lambda → **Methodenreferenz**.
+
+Beide Schritte bietet die IDE an der Stelle an, an der der Code steht. Wenn der
+zweite Schritt nicht angeboten wird, sieh Dir an, warum: Nicht jedes Lambda lässt
+sich als Methodenreferenz schreiben.
+
+### Den Weg zurückgehen
+
+Wandle die Methodenreferenz wieder in ein Lambda und das Lambda wieder in eine
+anonyme Klasse.
+
+Das wirkt zunächst sinnlos – ist es aber nicht. Es ist der Griff, den Du brauchst,
+wenn Du in einem Lambda einen Haltepunkt setzen oder eine Zeile einschieben willst.
+Und es zeigt Dir, dass die drei Schreibweisen dieselbe Sache sind.
+
+Danach wieder auf die Form bringen, die Du für die richtige hältst.
+
+### Einen Vorschlag ablehnen
+
+Suche eine Schleife über eine Sammlung, zu der die IDE eine Umformung in eine
+Stream-Kette anbietet. Sieh Dir das Ergebnis an – und **entscheide dann**, ob Du es
+behältst.
+
+Suche außerdem eine Schleife, bei der Du die Stream-Fassung **nicht** willst: eine
+mit vorzeitigem Abbruch, mit einem Seiteneffekt oder mit mehreren mitlaufenden
+Werten. Begründe für Dich, warum die Schleife dort die bessere Fassung ist.
+
+### Die Markierungen im Editor lesen
+
+Sieh Dir die farbige Leiste am rechten Rand des Editors an. Sie zeigt die Treffer
+der ganzen Datei, nicht nur den sichtbaren Ausschnitt.
+
+Finde eine Markierung, die **kein** Compilerfehler ist, und lies nach, welche Regel
+dahintersteht. Entscheide, ob Du dem Hinweis folgst.
+
+### Absichern
+
+Lass die Tests laufen. Sind sie grün, haben Deine Umformungen das Verhalten nicht
+geändert – genau das ist der Grund, vorher zu committen und Tests zu haben.
+
+## Reflexionsfragen
+
+- Du hast dieselbe Logik in drei Schreibweisen gesehen. Wann würdest Du welche wählen?
+- Das Umbenennen hat eine Vorschau angeboten. Was hättest Du übersehen, wenn Du im Editor gesucht und ersetzt hättest?
+- Die IDE hat vorgeschlagen, eine Schleife in eine Stream-Kette zu wandeln. Hast Du den Vorschlag übernommen – und warum (nicht)?
+- Welche Inspection hat bei Dir angeschlagen, die kein Fehler war?</textarea>
+    </main><aside class="avd-academy-guide-sidebar"><details class="avd-academy-guide-side avd-academy-guide-side--toc avd-academy-fold" data-avd-academy-toc-box
+               data-avd-academy-toc-grenze="12" open hidden>
+        <summary class="avd-academy-guide-side__label">Auf dieser Seite</summary>
+        <nav class="avd-academy-toc avd-academy-fold__body" data-avd-academy-toc aria-label="Inhaltsverzeichnis"></nav>
+      </details>
+      <div class="avd-academy-guide-side avd-academy-guide-side--bordered" data-avd-academy-progress hidden><div class="avd-academy-guide-side__label">Fortschritt</div>
+        <div class="avd-academy-progress__bar"><div class="avd-academy-progress__fill"></div></div>
+        <div class="avd-academy-progress__text"></div>
+      </div>
+    </aside>
+  </div><div class="avd-academy-print-contact" aria-hidden="true">
+    <span>Kontakt: https://academy.atvantage-academy.workers.dev/</span>
+    <span>academy@atvantage.com</span>
+  </div>
+
+  <footer class="avd-academy-footer">
+  <div class="avd-academy-footer__grid">
+    <div>
+      <strong>Java SE (ATVANTAGE Academy)</strong>
+      <p>Schulungen im Bereich 'Java SE'</p>
+    </div><div>
+      <strong>Kontakt</strong>
+      <p><a href="https://academy.atvantage-academy.workers.dev/" target="_blank" rel="noopener">Website</a><br><a href="mailto:academy@atvantage.com">academy@atvantage.com</a><br>
+      </p>
+    </div></div>
+  <div class="avd-academy-footer__legal">
+    © <span data-avd-academy-year>2026</span> ATVANTAGE
+  </div>
+</footer>
+
+</body>
+</html>

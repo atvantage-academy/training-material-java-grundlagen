@@ -61,8 +61,8 @@
 --><html lang="de">
 <head>
   <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1"><title>Das Banking-System um eine Funktion erweitern · Java SE (ATVANTAGE Academy)</title>
-<meta name="description" content="Erweitere das Banking-System um eine eigene Funktion und kombiniere die Konzepte der Woche."><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Zwei Themen aus einem Arbeitsstand trennen · Java SE (ATVANTAGE Academy)</title>
+<meta name="description" content="Trenne zwei unabhängige Themen aus einem gemeinsamen Arbeitsstand in zwei Commits – mit Blockauswahl, Shelve und einem Blick in die Historie."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787309846"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787309846">
 <link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787309846">
@@ -113,107 +113,231 @@
   </div>
 </header>
 
-  <section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Das Banking-System um eine Funktion erweitern</span></nav><div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 135 Minuten</span><span class="avd-academy-tag">Integrationsprojekt</span><span class="avd-academy-tag">Banking</span>
+  <section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/intellij-umsteiger/">IntelliJ für Umsteiger</a><span>/</span><span aria-current="page">Zwei Themen aus einem Arbeitsstand trennen</span></nav><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 18 Minuten</span><span class="avd-academy-tag">Git</span><span class="avd-academy-tag">Commit</span><span class="avd-academy-tag">Shelve</span><span class="avd-academy-tag">Historie</span>
       </div>
       <div class="avd-academy-guide-hero__actions">
         <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
                 data-avd-academy-copy-md="#avd-academy-md-source"
                 title="Markdown kopieren" aria-label="Markdown kopieren"></button>
       </div>
-    </div><h1>Das Banking-System um eine Funktion erweitern</h1>
+    </div><h1>Zwei Themen aus einem Arbeitsstand trennen</h1>
   </section><div class="avd-academy-guide-layout">
     <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
-      <h1 id="das-banking-system-um-eine-funktion-erweitern">Das Banking-System um eine Funktion erweitern</h1>
+      <h1 id="zwei-themen-aus-einem-arbeitsstand-trennen">Zwei Themen aus einem Arbeitsstand trennen</h1>
 
-<p>Als Entwickler:in möchte ich eine sinnvolle Funktion zum Banking-System hinzufügen, damit ich die Konzepte der Woche in einem zusammenhängenden Stück Software anwende.</p>
+<p>Als Entwickler:in möchte ich aus einem gemischten Arbeitsstand zwei Commits mit je
+einem Thema machen, damit die Historie später erklärt, was passiert ist, und ein
+einzelner Commit zurückgenommen werden kann.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Dein Ausgangsstand ist der Arbeitsstand dieses Tages – <strong>räum ihn
+nicht auf.</strong> Der unordentliche Stand ist die Aufgabe. Hast Du zwischendurch alles
+committet, mach Dir in einer Datei zwei kleine Änderungen: eine sachliche (ein
+Verhalten oder ein Name) und eine kosmetische (Formatierung, ein Kommentar).</p>
+</blockquote>
 
 <h2 id="lernziele">Lernziele</h2>
 
-<p>Du…</p>
+<p>Du …</p>
 
 <ul>
-  <li>erweiterst das Banking-System um eine eigene Funktion und kombinierst dabei Klassen, Vererbung, Ausnahmen und Collections.</li>
-  <li>begründest Deine Entwurfsentscheidungen (Verantwortlichkeiten, Sichtbarkeiten) gegenüber anderen.</li>
+  <li>wählst einzelne Änderungsblöcke einer Datei für einen Commit aus, statt ganze Dateien.</li>
+  <li>erzeugst aus einem gemischten Arbeitsstand zwei Commits mit je einem Thema.</li>
+  <li>legst Änderungen mit <em>Shelve</em> weg und holst sie zurück.</li>
+  <li>verfolgst eine Zeile bis zu dem Commit zurück, der sie eingeführt hat.</li>
+  <li>benennst den Unterschied zwischen <em>Shelve</em> und <em>Stash</em> und wann Du welches nimmst.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Eine selbst gewählte Funktion ist umgesetzt und lauffähig.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Die Lösung nutzt mindestens drei Konzepte der Woche (z. B. eigene Klasse, Vererbung/Polymorphie, Ausnahme, Collection).</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Mindestens ein zentraler Teil ist mit einem JUnit-Test abgesichert.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du kannst Deine Entwurfsentscheidungen in 2–3 Sätzen begründen.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt <strong>zwei</strong> Commits, jeder mit genau einem Thema.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Beide Commit-Nachrichten benennen ihr Thema in einem Satz – nicht „Änderungen“.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Mindestens einmal hast Du nur einen Teil einer Datei committet.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast etwas mit <em>Shelve</em> weggelegt und wieder zurückgeholt.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du kannst zu einer Zeile im Code den Commit nennen, der sie eingeführt hat.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
 <h2 id="arbeitsschritte">Arbeitsschritte</h2>
 
-<h3 id="eine-funktion-auswählen">Eine Funktion auswählen</h3>
+<h3 id="den-eigenen-arbeitsstand-ansehen">Den eigenen Arbeitsstand ansehen</h3>
 
-<p>Wähle eine Erweiterung, die Dich reizt – zum Beispiel:</p>
+<p>Öffne das Commit-Fenster und sieh Dir an, was Du heute alles angefasst hast.</p>
+
+<p>Sortiere für Dich, welche Änderungen inhaltlich zusammengehören. Du wirst
+mindestens zwei Gruppen finden – typischerweise eine sachliche Änderung und
+Nebenwirkungen des Ausprobierens.</p>
 
 <blockquote>
-  <p><strong>Hinweis:</strong> Beispiele: Zinsberechnung für Sparkonten, ein einfacher Kontoauszug (Liste der Transaktionen), Kundensuche nach Namen, Überweisung zwischen zwei Konten.</p>
+  <p><strong>Hinweis:</strong> Falls Du mehr als zwei Gruppen hast: gut. Mach zwei Commits daraus
+und lass den Rest liegen. Die Übung ist die Trennung, nicht die Vollständigkeit.</p>
 </blockquote>
 
-<h3 id="umsetzen">Umsetzen</h3>
+<h3 id="eine-datei-mit-zwei-themen-finden">Eine Datei mit zwei Themen finden</h3>
 
-<p>Implementiere die Funktion in passenden Klassen. Achte auf Kapselung und klare Verantwortlichkeiten; wirf bei Fehlerfällen eine passende Ausnahme.</p>
+<p>Suche eine Datei, in der <strong>beide</strong> Gruppen vorkommen. Öffne den Vergleich zum
+letzten Commit und sieh Dir die Änderungsblöcke einzeln an.</p>
 
-<h3 id="absichern-und-zeigen">Absichern und zeigen</h3>
+<p>Genau hier liegt der Punkt der Übung: Du kannst die Blöcke einzeln auswählen und
+musst nicht die ganze Datei nehmen.</p>
 
-<p>Schreibe mindestens einen JUnit-Test für den Kern Deiner Funktion und bereite eine kurze Demo (2–3 Minuten) vor.</p>
+<h3 id="das-erste-thema-committen">Das erste Thema committen</h3>
+
+<p>Wähle <strong>nur</strong> die Blöcke des ersten Themas aus – in allen betroffenen Dateien – und
+committe sie.</p>
+
+<p>Schreibe eine Nachricht, die das Thema benennt. Wenn Dir keine einfällt, die ohne
+„und“ auskommt, hast Du die Themen noch nicht getrennt.</p>
+
+<p>Prüfe nach dem Commit, dass die übrigen Änderungen noch im Arbeitsverzeichnis
+liegen.</p>
+
+<h3 id="das-zweite-thema-weglegen-und-zurückholen">Das zweite Thema weglegen und zurückholen</h3>
+
+<p>Lege die verbleibenden Änderungen mit <em>Shelve</em> weg. Prüfe, dass Dein
+Arbeitsverzeichnis jetzt sauber ist, und lass die Tests laufen – so weißt Du, dass
+Dein erster Commit für sich baubar ist.</p>
+
+<p>Hol die Änderungen danach zurück und committe sie als zweites Thema.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Das ist die Antwort auf „ich weiß nicht, ob mein Commit allein
+funktioniert“. Weglegen, bauen, zurückholen – schneller als jede Überlegung.</p>
+</blockquote>
+
+<h3 id="in-die-historie-sehen">In die Historie sehen</h3>
+
+<p>Öffne den Log und suche Deine beiden Commits. Sieh Dir an, wie sie im Graphen neben
+dem übrigen Zweig liegen.</p>
+
+<p>Schalte dann im Editor die Herkunftsanmerkung am linken Rand ein, wähle eine Zeile,
+die Du <strong>nicht</strong> selbst geschrieben hast, und finde heraus:</p>
+
+<ol>
+  <li>Wer hat sie eingeführt und wann?</li>
+  <li>Was sagt die Commit-Nachricht über das Warum?</li>
+  <li>Welche anderen Dateien hat derselbe Commit angefasst?</li>
+</ol>
+
+<h3 id="nachsehen-was-die-ide-tut">Nachsehen, was die IDE tut</h3>
+
+<p>Öffne die Git-Konsole der IDE und sieh Dir an, welche Befehle bei Deinen Aktionen
+ausgeführt wurden.</p>
+
+<p>Das ist keine Pflichtübung, sondern gegen das Misstrauen: Die Oberfläche macht
+nichts, was Du nicht auch von Hand tun würdest – sie macht es schneller.</p>
 
 <h2 id="reflexionsfragen">Reflexionsfragen</h2>
 
 <ul>
-  <li>Welche Konzepte der Woche hast Du genutzt – und warum gerade diese?</li>
-  <li>An welcher Stelle war die Entscheidung „Vererbung vs. eigenes Feld“ oder „Ausnahme vs. Rückgabewert“ relevant?</li>
-  <li>Was würdest Du mit mehr Zeit refaktorieren – und woran erkennst Du das?</li>
+  <li>Wie hättest Du die beiden Themen in Deiner alten IDE getrennt?</li>
+  <li>Du hast einen Änderungsblock weggelegt statt committet. Wann nimmst Du dafür <em>Shelve</em> und wann <em>Stash</em>?</li>
+  <li>Du hast die Herkunft einer Zeile nachgesehen. Was hat der Commit erklärt, was der Code nicht gesagt hat?</li>
+  <li>Was würde passieren, wenn Du nur die halbe Datei committest und der Rest nicht kompiliert?</li>
 </ul>
 
 
-<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Das Banking-System um eine Funktion erweitern
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Zwei Themen aus einem Arbeitsstand trennen
 
-Als Entwickler:in möchte ich eine sinnvolle Funktion zum Banking-System hinzufügen, damit ich die Konzepte der Woche in einem zusammenhängenden Stück Software anwende.
+Als Entwickler:in möchte ich aus einem gemischten Arbeitsstand zwei Commits mit je
+einem Thema machen, damit die Historie später erklärt, was passiert ist, und ein
+einzelner Commit zurückgenommen werden kann.
+
+&gt; **Hinweis:** Dein Ausgangsstand ist der Arbeitsstand dieses Tages – **räum ihn
+&gt; nicht auf.** Der unordentliche Stand ist die Aufgabe. Hast Du zwischendurch alles
+&gt; committet, mach Dir in einer Datei zwei kleine Änderungen: eine sachliche (ein
+&gt; Verhalten oder ein Name) und eine kosmetische (Formatierung, ein Kommentar).
 
 ## Lernziele
 
-Du…
+Du …
 
-* erweiterst das Banking-System um eine eigene Funktion und kombinierst dabei Klassen, Vererbung, Ausnahmen und Collections.
-* begründest Deine Entwurfsentscheidungen (Verantwortlichkeiten, Sichtbarkeiten) gegenüber anderen.
+- wählst einzelne Änderungsblöcke einer Datei für einen Commit aus, statt ganze Dateien.
+- erzeugst aus einem gemischten Arbeitsstand zwei Commits mit je einem Thema.
+- legst Änderungen mit *Shelve* weg und holst sie zurück.
+- verfolgst eine Zeile bis zu dem Commit zurück, der sie eingeführt hat.
+- benennst den Unterschied zwischen *Shelve* und *Stash* und wann Du welches nimmst.
 
 ## Definition of Done
 
-* [ ] Eine selbst gewählte Funktion ist umgesetzt und lauffähig.
-* [ ] Die Lösung nutzt mindestens drei Konzepte der Woche (z. B. eigene Klasse, Vererbung/Polymorphie, Ausnahme, Collection).
-* [ ] Mindestens ein zentraler Teil ist mit einem JUnit-Test abgesichert.
-* [ ] Du kannst Deine Entwurfsentscheidungen in 2–3 Sätzen begründen.
+* [ ] Es gibt **zwei** Commits, jeder mit genau einem Thema.
+* [ ] Beide Commit-Nachrichten benennen ihr Thema in einem Satz – nicht „Änderungen“.
+* [ ] Mindestens einmal hast Du nur einen Teil einer Datei committet.
+* [ ] Du hast etwas mit *Shelve* weggelegt und wieder zurückgeholt.
+* [ ] Du kannst zu einer Zeile im Code den Commit nennen, der sie eingeführt hat.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
 ## Arbeitsschritte
 
-### Eine Funktion auswählen
+### Den eigenen Arbeitsstand ansehen
 
-Wähle eine Erweiterung, die Dich reizt – zum Beispiel:
+Öffne das Commit-Fenster und sieh Dir an, was Du heute alles angefasst hast.
 
-&gt; **Hinweis:** Beispiele: Zinsberechnung für Sparkonten, ein einfacher Kontoauszug (Liste der Transaktionen), Kundensuche nach Namen, Überweisung zwischen zwei Konten.
+Sortiere für Dich, welche Änderungen inhaltlich zusammengehören. Du wirst
+mindestens zwei Gruppen finden – typischerweise eine sachliche Änderung und
+Nebenwirkungen des Ausprobierens.
 
-### Umsetzen
+&gt; **Hinweis:** Falls Du mehr als zwei Gruppen hast: gut. Mach zwei Commits daraus
+&gt; und lass den Rest liegen. Die Übung ist die Trennung, nicht die Vollständigkeit.
 
-Implementiere die Funktion in passenden Klassen. Achte auf Kapselung und klare Verantwortlichkeiten; wirf bei Fehlerfällen eine passende Ausnahme.
+### Eine Datei mit zwei Themen finden
 
-### Absichern und zeigen
+Suche eine Datei, in der **beide** Gruppen vorkommen. Öffne den Vergleich zum
+letzten Commit und sieh Dir die Änderungsblöcke einzeln an.
 
-Schreibe mindestens einen JUnit-Test für den Kern Deiner Funktion und bereite eine kurze Demo (2–3 Minuten) vor.
+Genau hier liegt der Punkt der Übung: Du kannst die Blöcke einzeln auswählen und
+musst nicht die ganze Datei nehmen.
+
+### Das erste Thema committen
+
+Wähle **nur** die Blöcke des ersten Themas aus – in allen betroffenen Dateien – und
+committe sie.
+
+Schreibe eine Nachricht, die das Thema benennt. Wenn Dir keine einfällt, die ohne
+„und“ auskommt, hast Du die Themen noch nicht getrennt.
+
+Prüfe nach dem Commit, dass die übrigen Änderungen noch im Arbeitsverzeichnis
+liegen.
+
+### Das zweite Thema weglegen und zurückholen
+
+Lege die verbleibenden Änderungen mit *Shelve* weg. Prüfe, dass Dein
+Arbeitsverzeichnis jetzt sauber ist, und lass die Tests laufen – so weißt Du, dass
+Dein erster Commit für sich baubar ist.
+
+Hol die Änderungen danach zurück und committe sie als zweites Thema.
+
+&gt; **Hinweis:** Das ist die Antwort auf „ich weiß nicht, ob mein Commit allein
+&gt; funktioniert“. Weglegen, bauen, zurückholen – schneller als jede Überlegung.
+
+### In die Historie sehen
+
+Öffne den Log und suche Deine beiden Commits. Sieh Dir an, wie sie im Graphen neben
+dem übrigen Zweig liegen.
+
+Schalte dann im Editor die Herkunftsanmerkung am linken Rand ein, wähle eine Zeile,
+die Du **nicht** selbst geschrieben hast, und finde heraus:
+
+1. Wer hat sie eingeführt und wann?
+2. Was sagt die Commit-Nachricht über das Warum?
+3. Welche anderen Dateien hat derselbe Commit angefasst?
+
+### Nachsehen, was die IDE tut
+
+Öffne die Git-Konsole der IDE und sieh Dir an, welche Befehle bei Deinen Aktionen
+ausgeführt wurden.
+
+Das ist keine Pflichtübung, sondern gegen das Misstrauen: Die Oberfläche macht
+nichts, was Du nicht auch von Hand tun würdest – sie macht es schneller.
 
 ## Reflexionsfragen
 
-* Welche Konzepte der Woche hast Du genutzt – und warum gerade diese?
-* An welcher Stelle war die Entscheidung „Vererbung vs. eigenes Feld“ oder „Ausnahme vs. Rückgabewert“ relevant?
-* Was würdest Du mit mehr Zeit refaktorieren – und woran erkennst Du das?</textarea>
+- Wie hättest Du die beiden Themen in Deiner alten IDE getrennt?
+- Du hast einen Änderungsblock weggelegt statt committet. Wann nimmst Du dafür *Shelve* und wann *Stash*?
+- Du hast die Herkunft einer Zeile nachgesehen. Was hat der Commit erklärt, was der Code nicht gesagt hat?
+- Was würde passieren, wenn Du nur die halbe Datei committest und der Rest nicht kompiliert?</textarea>
     </main><aside class="avd-academy-guide-sidebar"><details class="avd-academy-guide-side avd-academy-guide-side--toc avd-academy-fold" data-avd-academy-toc-box
                data-avd-academy-toc-grenze="12" open hidden>
         <summary class="avd-academy-guide-side__label">Auf dieser Seite</summary>

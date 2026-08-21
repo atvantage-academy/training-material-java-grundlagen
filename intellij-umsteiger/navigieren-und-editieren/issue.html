@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<!--
+  ATVANTAGE-Academy – EINZIGES Seitenlayout (Jekyll)
+  --------------------------------------------------
+  Ein Layout für alles: allgemeine Doku-Seiten UND Guides (Übungen/Anleitungen).
+  Optik nach der ATVANTAGE-Website: Meta-Nav, weiße sticky Kopfzeile, Hero-Band,
+  zweispaltig mit rechter Sidebar (automatisches Inhaltsverzeichnis, Fortschritt
+  aus Task-Listen, weiterführende Ressourcen). Überschriften ohne Emoji-Icons.
+
+  Verwendung im Front Matter:  layout: default   (oder `layout: guide` – Alias,
+  siehe guide.html; beides rendert dieselbe Guide-Ansicht)
+
+  `layout: visualization` (siehe visualization.html) rendert dieselbe Seite OHNE
+  obere Navigation (Meta-Leiste + Kopfzeile/TopNav), OHNE Brotkrumen und OHNE den
+  rechten Bereich (Inhaltsverzeichnis, Fortschritt, Ressourcen – auch bei gesetztem
+  `resources`), mit schmalerem Hero-Balken und breiterem, zentriertem Inhalt – für
+  eigenständige Visualisierungen/Simulationen.
+
+  Alle Front-Matter-Felder sind OPTIONAL (Convention over Configuration). Nur der
+  Titel ist faktisch erforderlich – als `title:` ODER als erste `#`-Überschrift:
+
+    title:       "…"                → sonst erste #-Überschrift (eins von beiden nötig)
+    description: "…"                → Meta-Description
+    duration:    8                  → Zahl in Minuten → Hero-Tag „ca. 8 Minuten“
+                                       (ungefähre LESEDAUER; bei Guides/Übungen die
+                                       Dauer der Übung). Entfällt bei
+                                       `layout: visualization`.
+    topics:      ["Cloud & DevOps"] → weitere Hero-Tags
+    resources:   [{title, url, icon}, …] → Sidebar-Karte „Weiterführende Informationen“.
+                                       title und/oder icon (Bildpfad); icon erscheint
+                                       rechts und wird kreisrund dargestellt.
+    breadcrumb:                     → Brotkrumen anpassen (beides optional):
+      label: "…"                    → überschreibt den Ordnernamen dieser Ebene;
+                                       in der Ordner-`index.md` gesetzt gilt es für
+                                       ALLE Seiten im Ordner und in Unterordnern.
+      ancestors: [{title, url}, …]  → explizite Vorfahren-Kette OHNE die aktuelle
+                                       Seite (diese wird automatisch angehängt); in
+                                       der `index.md` gesetzt wird sie vererbt.
+
+  „Markdown kopieren“ (Button im Hero) erscheint NUR auf Guides (Übungen,
+  Anleitungen) – dort ist das Übernehmen des Quelltexts der Zweck. Bedingungen:
+  Markdown-Seite (`.md`, nicht reines HTML) UND als Guide erkennbar UND keine
+  Visualisierung. Guide ist eine Seite mit `layout: guide` ODER gesetztem
+  `duration` – letzteres ist der etablierte Marker, und die Guide-Vorlage des
+  Themes wie auch die von didaktikon erzeugten Übungen nutzen `layout: page`
+  plus `duration`. Nur auf `layout: guide` zu prüfen würde den Button dort
+  entfernen. Doku-Seiten haben kein `duration`; Visualisierungen sind
+  ausgeschlossen, weil ihr Inhalt nicht sinnvoll als Markdown kopierbar ist.
+
+  QR-CODE der Seitenadresse + DRUCKEN-KNOPF: In dieser Ansicht (`visualization`)
+  stehen beide rechts im Hero – QR links, Drucken rechts. Sie hat weder Kopfzeile
+  noch Sidebar, in der sie sonst Platz hätten.
+
+  Auf `default`/`guide` steht im Hero KEINES von beiden: Der QR-Code sitzt in der
+  Kopfzeile neben dem Farbschema-Umschalter (siehe `_includes/header.html`), und zum
+  Drucken bleibt es beim Browser-Befehl (Strg/Cmd+P). Tooltip des QR-Codes überall:
+  „Diese Seite auf Deinem Smartphone öffnen“. Er wird erst im Browser erzeugt (theme/academy/atvantage.js), weil die
+  Adresse zur Build-Zeit nicht feststeht; ohne JavaScript erscheint er nicht.
+  Kein Front-Matter-Schalter: Es gibt keine Seite, auf der der Weg aufs eigene
+  Smartphone schaden würde.
+--><html lang="de">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Navigieren und umbauen, ohne die Maus anzufassen · Java SE (ATVANTAGE Academy)</title>
+<meta name="description" content="Bewege Dich durch den Code und baue ihn um, ohne die Maus anzufassen – mit Search Everywhere, Find Action, Intentions und mehreren Einfügemarken."><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787309846"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787309846">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787309846">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787309846">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787309846"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787309846">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787309846" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787309846" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787309846">
+<script type="module">
+  const _hlbase = "/training-material-java-se/theme/academy/hljs/";
+  Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
+    .then(([core, java]) => {
+      const hljs = core.default;
+      hljs.registerLanguage("java", java.default);
+      document.querySelectorAll("pre code.language-java").forEach((el) => hljs.highlightElement(el));
+    });
+</script>
+<link rel="apple-touch-icon" sizes="180x180" href="/training-material-java-se/theme/atvantage/assets/icon-180.png">
+<link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
+<link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
+
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787309846">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787309846"></head><body class="avd-academy-guide">
+  <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a><div class="avd-academy-metanav">
+    <span>ATVANTAGE Academy</span>
+  </div>
+
+  <header class="avd-academy-header">
+  <a class="avd-academy-header__brand" href="/training-material-java-se/" aria-label="Startseite">
+    <img class="avd-academy-header__logo"
+         src="/training-material-java-se/assets/logo-schulung.svg"
+         alt="ATVANTAGE Academy">
+  </a>
+  <button class="avd-academy-btn avd-academy-btn--ghost avd-academy-header__burger" data-avd-academy-nav-toggle="#avd-academy-main-nav"
+          aria-label="Navigation umschalten" aria-expanded="false">☰</button>
+  <nav class="avd-academy-header__nav" id="avd-academy-main-nav"><a href="/training-material-java-se/">Start</a><div class="avd-academy-header__group" data-avd-academy-menu>
+        <button type="button" class="avd-academy-header__grouptoggle"
+                aria-expanded="false" aria-haspopup="true">Schulungsprogramm<span class="avd-academy-header__caret" aria-hidden="true">▾</span></button><div class="avd-academy-header__submenu" role="menu"><a role="menuitem" href="/training-material-java-se/oop-mit-java/">Objektorientierte Programmierung mit Java</a><a role="menuitem" href="/training-material-java-se/intellij-umsteiger/">IntelliJ IDEA Ultimate für Umsteiger</a>
+        </div>
+      </div><a href="/training-material-java-se/shared/visualisierungen/">Visualisierungen</a>
+  </nav><div class="avd-academy-header__tools"><button type="button" class="avd-academy-qr" data-avd-academy-qr hidden
+            title="Diese Seite auf Deinem Smartphone öffnen"
+            aria-label="Diese Seite auf Deinem Smartphone öffnen"></button>
+    <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-theme-toggle"
+            data-avd-academy-theme-toggle
+            title="Farbschema umschalten (hell/dunkel)"
+            aria-label="Farbschema umschalten">◐</button>
+  </div>
+</header>
+
+  <section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/intellij-umsteiger/">IntelliJ für Umsteiger</a><span>/</span><span aria-current="page">Navigieren und umbauen, ohne die Maus anzufassen</span></nav><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 30 Minuten</span><span class="avd-academy-tag">Navigation</span><span class="avd-academy-tag">Search Everywhere</span><span class="avd-academy-tag">Find Action</span><span class="avd-academy-tag">Intentions</span><span class="avd-academy-tag">Live Templates</span>
+      </div>
+      <div class="avd-academy-guide-hero__actions">
+        <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
+                data-avd-academy-copy-md="#avd-academy-md-source"
+                title="Markdown kopieren" aria-label="Markdown kopieren"></button>
+      </div>
+    </div><h1>Navigieren und umbauen, ohne die Maus anzufassen</h1>
+  </section><div class="avd-academy-guide-layout">
+    <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
+      <h1 id="navigieren-und-umbauen-ohne-die-maus-anzufassen">Navigieren und umbauen, ohne die Maus anzufassen</h1>
+
+<p>Als Entwickler:in möchte ich mich im Code über die Tastatur bewegen und
+Umformungen der IDE überlassen, damit ich beim Lesen und Ändern von Code nicht
+ständig zwischen Denken und Zielen wechsle.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Diese Übung macht Ihr <strong>zu zweit</strong>. Einer arbeitet, der andere sieht
+zu und sagt genau dann etwas, wenn die Hand zur Maus wandert. Nach der Hälfte
+tauscht Ihr. Die Maus ist nicht verboten – Du sollst nur merken, wie oft Du sie
+greifst. Führe dafür eine Strichliste.</p>
+
+  <p>Und die Regel für den ganzen Tag: <strong>Kürzel, die Du nicht kennst, erfragst Du
+nicht – Du findest sie über <code>Find Action</code>.</strong></p>
+</blockquote>
+
+<h2 id="lernziele">Lernziele</h2>
+
+<p>Du …</p>
+
+<ul>
+  <li>springst über <em>Search Everywhere</em> zu einer Klasse, einer Datei und einem Symbol, ohne den Projektbaum zu öffnen.</li>
+  <li>führst eine Aktion über <em>Find Action</em> aus und liest dabei ihr Tastenkürzel ab.</li>
+  <li>wechselst von einer Verwendung zur Deklaration und findest über die Sprungliste zurück.</li>
+  <li>formst Code über die Intention-Aktion um, statt ihn zu tippen.</li>
+  <li>änderst mehrere gleichartige Stellen in einem Zug mit mehreren Einfügemarken.</li>
+  <li>benennst drei Griffe, die Du ab morgen benutzen wirst – und wie Du die übrigen wiederfindest.</li>
+</ul>
+
+<h2 id="definition-of-done">Definition of Done</h2>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast alle Arbeitsschritte ohne die Maus erledigt oder jeden Mausgriff auf Deiner Strichliste notiert.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast mindestens ein Kürzel über <em>Find Action</em> gefunden, das Du vorher nicht kanntest.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der Code kompiliert noch, und die Tests sind grün.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du kannst Deinem Paar drei Griffe nennen, die Du behalten willst.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
+</ul>
+
+<h2 id="arbeitsschritte">Arbeitsschritte</h2>
+
+<h3 id="zu-einer-klasse-springen-ohne-den-baum-zu-öffnen">Zu einer Klasse springen, ohne den Baum zu öffnen</h3>
+
+<p>Schließe das Projekt-Tool-Window ganz – Du brauchst es in dieser Übung nicht, und
+geschlossen ist es keine Versuchung.</p>
+
+<p>Springe nun der Reihe nach zu:</p>
+
+<ol>
+  <li>einer Klasse, deren Namen Du kennst,</li>
+  <li>einer Klasse, von der Du nur die <strong>Anfangsbuchstaben der Wortteile</strong> weißt
+(probiere die Abkürzungssuche: zwei bis drei Großbuchstaben genügen oft),</li>
+  <li>einer Datei, die kein Java ist – zum Beispiel die <code>pom.xml</code>,</li>
+  <li>einer Methode, deren Namen Du kennst, deren Klasse aber nicht.</li>
+</ol>
+
+<p>Für 1 bis 3 reicht ein Werkzeug. Für 4 brauchst Du die Symbolsuche – finde über
+<em>Find Action</em> heraus, wie sie heißt und welches Kürzel sie hat.</p>
+
+<h3 id="der-sprungliste-folgen-und-zurückfinden">Der Sprungliste folgen und zurückfinden</h3>
+
+<p>Suche eine Methode, die an mehreren Stellen aufgerufen wird. Springe von einem
+Aufruf zur Deklaration, sieh Dir von dort alle Verwendungen an und springe in eine
+zweite Verwendung.</p>
+
+<p>Finde jetzt auf demselben Weg zurück, den Du gekommen bist – ohne Suche und ohne
+Baum. Es gibt einen Griff dafür, und einen für die Gegenrichtung.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Der Rückweg ist der Teil, den Umsteiger vergessen. Ein Sprung, aus
+dem man nicht zurückfindet, fühlt sich wie ein Verlust an Orientierung an – und
+genau deshalb greifen viele wieder zum Projektbaum.</p>
+</blockquote>
+
+<h3 id="eine-unbekannte-aktion-ausführen">Eine unbekannte Aktion ausführen</h3>
+
+<p>Suche über <em>Find Action</em> nach einer Aktion, die Du noch nie benutzt hast, und führe
+sie aus. Notiere Dir ihr Kürzel und ob Du es behalten willst.</p>
+
+<p>Vorschläge, falls Dir nichts einfällt: die Struktur der aktuellen Datei anzeigen,
+ein Lesezeichen setzen, die zuletzt bearbeiteten Dateien öffnen, die Zeile nach oben
+verschieben, die Datei im Terminal öffnen.</p>
+
+<h3 id="code-umformen-statt-tippen">Code umformen statt tippen</h3>
+
+<p>Suche in einer Klasse eine Stelle, an der ein Wert aus einem Parameter in ein Feld
+übernommen wird, oder eine Bedingung, die Du lieber umgedreht hättest.</p>
+
+<p>Stelle den Cursor darauf und ruf die Intention-Aktion auf. Sieh Dir die Liste an,
+bevor Du wählst – dort steht mehr, als Du erwartest.</p>
+
+<p>Formuliere anschließend eine Schleife über eine Sammlung, indem Du <strong>zuerst den
+Ausdruck schreibst</strong> und die Schleife danach entstehen lässt (Postfix-Vervollständigung).
+Wenn Du nicht weiterkommst: Schreibe den Sammlungsnamen, dann einen Punkt, und sieh
+Dir an, was angeboten wird.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Das ist die Umstellung, die den Unterschied macht. In Eclipse
+schreibst Du das Konstrukt und füllst es. Hier äußerst Du eine Absicht und das
+Konstrukt entsteht.</p>
+</blockquote>
+
+<h3 id="mehrere-gleichartige-stellen-in-einem-zug-ändern">Mehrere gleichartige Stellen in einem Zug ändern</h3>
+
+<p>Suche eine Datei, in der derselbe Bezeichner mehrfach vorkommt – oder mehrere
+Zeilen mit demselben Muster.</p>
+
+<p>Setze eine Einfügemarke an jedem Vorkommen und ändere alle gleichzeitig. Nutze
+außerdem die schrittweise Auswahlerweiterung, um vom Bezeichner über den Ausdruck
+bis zur ganzen Anweisung zu kommen, statt mit der Maus zu ziehen.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Für das Umbenennen eines Bezeichners im ganzen Projekt gibt es ein
+besseres Werkzeug – das kommt in der nächsten Einheit. Hier geht es um
+gleichartige Textstellen, die kein Refactoring sind.</p>
+</blockquote>
+
+<h3 id="aufräumen">Aufräumen</h3>
+
+<p>Stelle sicher, dass der Code noch kompiliert und die Tests grün sind. Verwirf
+Änderungen, die Du nur zum Ausprobieren gemacht hast – Du brauchst einen sauberen
+Stand für die folgenden Einheiten.</p>
+
+<h2 id="reflexionsfragen">Reflexionsfragen</h2>
+
+<ul>
+  <li>Wie oft ist Deine Hand zur Maus gewandert – und bei welcher Art von Aufgabe?</li>
+  <li>Du hast ein Kürzel gebraucht, das Du nicht kanntest. Wie hast Du es gefunden, und wie lange hat es gedauert?</li>
+  <li>Was war schneller als in Deiner alten IDE, und was langsamer?</li>
+  <li>Bei welcher Umformung hast Du zuerst überlegt, wie man sie schreibt – und dann gemerkt, dass die IDE sie anbietet?</li>
+  <li>Welche drei Griffe willst Du ab morgen benutzen, und wie findest Du die übrigen wieder?</li>
+</ul>
+
+
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Navigieren und umbauen, ohne die Maus anzufassen
+
+Als Entwickler:in möchte ich mich im Code über die Tastatur bewegen und
+Umformungen der IDE überlassen, damit ich beim Lesen und Ändern von Code nicht
+ständig zwischen Denken und Zielen wechsle.
+
+&gt; **Hinweis:** Diese Übung macht Ihr **zu zweit**. Einer arbeitet, der andere sieht
+&gt; zu und sagt genau dann etwas, wenn die Hand zur Maus wandert. Nach der Hälfte
+&gt; tauscht Ihr. Die Maus ist nicht verboten – Du sollst nur merken, wie oft Du sie
+&gt; greifst. Führe dafür eine Strichliste.
+&gt;
+&gt; Und die Regel für den ganzen Tag: **Kürzel, die Du nicht kennst, erfragst Du
+&gt; nicht – Du findest sie über `Find Action`.**
+
+## Lernziele
+
+Du …
+
+- springst über *Search Everywhere* zu einer Klasse, einer Datei und einem Symbol, ohne den Projektbaum zu öffnen.
+- führst eine Aktion über *Find Action* aus und liest dabei ihr Tastenkürzel ab.
+- wechselst von einer Verwendung zur Deklaration und findest über die Sprungliste zurück.
+- formst Code über die Intention-Aktion um, statt ihn zu tippen.
+- änderst mehrere gleichartige Stellen in einem Zug mit mehreren Einfügemarken.
+- benennst drei Griffe, die Du ab morgen benutzen wirst – und wie Du die übrigen wiederfindest.
+
+## Definition of Done
+
+* [ ] Du hast alle Arbeitsschritte ohne die Maus erledigt oder jeden Mausgriff auf Deiner Strichliste notiert.
+* [ ] Du hast mindestens ein Kürzel über *Find Action* gefunden, das Du vorher nicht kanntest.
+* [ ] Der Code kompiliert noch, und die Tests sind grün.
+* [ ] Du kannst Deinem Paar drei Griffe nennen, die Du behalten willst.
+* [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
+
+## Arbeitsschritte
+
+### Zu einer Klasse springen, ohne den Baum zu öffnen
+
+Schließe das Projekt-Tool-Window ganz – Du brauchst es in dieser Übung nicht, und
+geschlossen ist es keine Versuchung.
+
+Springe nun der Reihe nach zu:
+
+1. einer Klasse, deren Namen Du kennst,
+2. einer Klasse, von der Du nur die **Anfangsbuchstaben der Wortteile** weißt
+   (probiere die Abkürzungssuche: zwei bis drei Großbuchstaben genügen oft),
+3. einer Datei, die kein Java ist – zum Beispiel die `pom.xml`,
+4. einer Methode, deren Namen Du kennst, deren Klasse aber nicht.
+
+Für 1 bis 3 reicht ein Werkzeug. Für 4 brauchst Du die Symbolsuche – finde über
+*Find Action* heraus, wie sie heißt und welches Kürzel sie hat.
+
+### Der Sprungliste folgen und zurückfinden
+
+Suche eine Methode, die an mehreren Stellen aufgerufen wird. Springe von einem
+Aufruf zur Deklaration, sieh Dir von dort alle Verwendungen an und springe in eine
+zweite Verwendung.
+
+Finde jetzt auf demselben Weg zurück, den Du gekommen bist – ohne Suche und ohne
+Baum. Es gibt einen Griff dafür, und einen für die Gegenrichtung.
+
+&gt; **Hinweis:** Der Rückweg ist der Teil, den Umsteiger vergessen. Ein Sprung, aus
+&gt; dem man nicht zurückfindet, fühlt sich wie ein Verlust an Orientierung an – und
+&gt; genau deshalb greifen viele wieder zum Projektbaum.
+
+### Eine unbekannte Aktion ausführen
+
+Suche über *Find Action* nach einer Aktion, die Du noch nie benutzt hast, und führe
+sie aus. Notiere Dir ihr Kürzel und ob Du es behalten willst.
+
+Vorschläge, falls Dir nichts einfällt: die Struktur der aktuellen Datei anzeigen,
+ein Lesezeichen setzen, die zuletzt bearbeiteten Dateien öffnen, die Zeile nach oben
+verschieben, die Datei im Terminal öffnen.
+
+### Code umformen statt tippen
+
+Suche in einer Klasse eine Stelle, an der ein Wert aus einem Parameter in ein Feld
+übernommen wird, oder eine Bedingung, die Du lieber umgedreht hättest.
+
+Stelle den Cursor darauf und ruf die Intention-Aktion auf. Sieh Dir die Liste an,
+bevor Du wählst – dort steht mehr, als Du erwartest.
+
+Formuliere anschließend eine Schleife über eine Sammlung, indem Du **zuerst den
+Ausdruck schreibst** und die Schleife danach entstehen lässt (Postfix-Vervollständigung).
+Wenn Du nicht weiterkommst: Schreibe den Sammlungsnamen, dann einen Punkt, und sieh
+Dir an, was angeboten wird.
+
+&gt; **Hinweis:** Das ist die Umstellung, die den Unterschied macht. In Eclipse
+&gt; schreibst Du das Konstrukt und füllst es. Hier äußerst Du eine Absicht und das
+&gt; Konstrukt entsteht.
+
+### Mehrere gleichartige Stellen in einem Zug ändern
+
+Suche eine Datei, in der derselbe Bezeichner mehrfach vorkommt – oder mehrere
+Zeilen mit demselben Muster.
+
+Setze eine Einfügemarke an jedem Vorkommen und ändere alle gleichzeitig. Nutze
+außerdem die schrittweise Auswahlerweiterung, um vom Bezeichner über den Ausdruck
+bis zur ganzen Anweisung zu kommen, statt mit der Maus zu ziehen.
+
+&gt; **Hinweis:** Für das Umbenennen eines Bezeichners im ganzen Projekt gibt es ein
+&gt; besseres Werkzeug – das kommt in der nächsten Einheit. Hier geht es um
+&gt; gleichartige Textstellen, die kein Refactoring sind.
+
+### Aufräumen
+
+Stelle sicher, dass der Code noch kompiliert und die Tests grün sind. Verwirf
+Änderungen, die Du nur zum Ausprobieren gemacht hast – Du brauchst einen sauberen
+Stand für die folgenden Einheiten.
+
+## Reflexionsfragen
+
+- Wie oft ist Deine Hand zur Maus gewandert – und bei welcher Art von Aufgabe?
+- Du hast ein Kürzel gebraucht, das Du nicht kanntest. Wie hast Du es gefunden, und wie lange hat es gedauert?
+- Was war schneller als in Deiner alten IDE, und was langsamer?
+- Bei welcher Umformung hast Du zuerst überlegt, wie man sie schreibt – und dann gemerkt, dass die IDE sie anbietet?
+- Welche drei Griffe willst Du ab morgen benutzen, und wie findest Du die übrigen wieder?</textarea>
+    </main><aside class="avd-academy-guide-sidebar"><details class="avd-academy-guide-side avd-academy-guide-side--toc avd-academy-fold" data-avd-academy-toc-box
+               data-avd-academy-toc-grenze="12" open hidden>
+        <summary class="avd-academy-guide-side__label">Auf dieser Seite</summary>
+        <nav class="avd-academy-toc avd-academy-fold__body" data-avd-academy-toc aria-label="Inhaltsverzeichnis"></nav>
+      </details>
+      <div class="avd-academy-guide-side avd-academy-guide-side--bordered" data-avd-academy-progress hidden><div class="avd-academy-guide-side__label">Fortschritt</div>
+        <div class="avd-academy-progress__bar"><div class="avd-academy-progress__fill"></div></div>
+        <div class="avd-academy-progress__text"></div>
+      </div>
+    </aside>
+  </div><div class="avd-academy-print-contact" aria-hidden="true">
+    <span>Kontakt: https://academy.atvantage-academy.workers.dev/</span>
+    <span>academy@atvantage.com</span>
+  </div>
+
+  <footer class="avd-academy-footer">
+  <div class="avd-academy-footer__grid">
+    <div>
+      <strong>Java SE (ATVANTAGE Academy)</strong>
+      <p>Schulungen im Bereich 'Java SE'</p>
+    </div><div>
+      <strong>Kontakt</strong>
+      <p><a href="https://academy.atvantage-academy.workers.dev/" target="_blank" rel="noopener">Website</a><br><a href="mailto:academy@atvantage.com">academy@atvantage.com</a><br>
+      </p>
+    </div></div>
+  <div class="avd-academy-footer__legal">
+    © <span data-avd-academy-year>2026</span> ATVANTAGE
+  </div>
+</footer>
+
+</body>
+</html>

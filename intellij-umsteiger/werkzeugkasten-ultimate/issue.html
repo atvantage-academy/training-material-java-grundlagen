@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<!--
+  ATVANTAGE-Academy – EINZIGES Seitenlayout (Jekyll)
+  --------------------------------------------------
+  Ein Layout für alles: allgemeine Doku-Seiten UND Guides (Übungen/Anleitungen).
+  Optik nach der ATVANTAGE-Website: Meta-Nav, weiße sticky Kopfzeile, Hero-Band,
+  zweispaltig mit rechter Sidebar (automatisches Inhaltsverzeichnis, Fortschritt
+  aus Task-Listen, weiterführende Ressourcen). Überschriften ohne Emoji-Icons.
+
+  Verwendung im Front Matter:  layout: default   (oder `layout: guide` – Alias,
+  siehe guide.html; beides rendert dieselbe Guide-Ansicht)
+
+  `layout: visualization` (siehe visualization.html) rendert dieselbe Seite OHNE
+  obere Navigation (Meta-Leiste + Kopfzeile/TopNav), OHNE Brotkrumen und OHNE den
+  rechten Bereich (Inhaltsverzeichnis, Fortschritt, Ressourcen – auch bei gesetztem
+  `resources`), mit schmalerem Hero-Balken und breiterem, zentriertem Inhalt – für
+  eigenständige Visualisierungen/Simulationen.
+
+  Alle Front-Matter-Felder sind OPTIONAL (Convention over Configuration). Nur der
+  Titel ist faktisch erforderlich – als `title:` ODER als erste `#`-Überschrift:
+
+    title:       "…"                → sonst erste #-Überschrift (eins von beiden nötig)
+    description: "…"                → Meta-Description
+    duration:    8                  → Zahl in Minuten → Hero-Tag „ca. 8 Minuten“
+                                       (ungefähre LESEDAUER; bei Guides/Übungen die
+                                       Dauer der Übung). Entfällt bei
+                                       `layout: visualization`.
+    topics:      ["Cloud & DevOps"] → weitere Hero-Tags
+    resources:   [{title, url, icon}, …] → Sidebar-Karte „Weiterführende Informationen“.
+                                       title und/oder icon (Bildpfad); icon erscheint
+                                       rechts und wird kreisrund dargestellt.
+    breadcrumb:                     → Brotkrumen anpassen (beides optional):
+      label: "…"                    → überschreibt den Ordnernamen dieser Ebene;
+                                       in der Ordner-`index.md` gesetzt gilt es für
+                                       ALLE Seiten im Ordner und in Unterordnern.
+      ancestors: [{title, url}, …]  → explizite Vorfahren-Kette OHNE die aktuelle
+                                       Seite (diese wird automatisch angehängt); in
+                                       der `index.md` gesetzt wird sie vererbt.
+
+  „Markdown kopieren“ (Button im Hero) erscheint NUR auf Guides (Übungen,
+  Anleitungen) – dort ist das Übernehmen des Quelltexts der Zweck. Bedingungen:
+  Markdown-Seite (`.md`, nicht reines HTML) UND als Guide erkennbar UND keine
+  Visualisierung. Guide ist eine Seite mit `layout: guide` ODER gesetztem
+  `duration` – letzteres ist der etablierte Marker, und die Guide-Vorlage des
+  Themes wie auch die von didaktikon erzeugten Übungen nutzen `layout: page`
+  plus `duration`. Nur auf `layout: guide` zu prüfen würde den Button dort
+  entfernen. Doku-Seiten haben kein `duration`; Visualisierungen sind
+  ausgeschlossen, weil ihr Inhalt nicht sinnvoll als Markdown kopierbar ist.
+
+  QR-CODE der Seitenadresse + DRUCKEN-KNOPF: In dieser Ansicht (`visualization`)
+  stehen beide rechts im Hero – QR links, Drucken rechts. Sie hat weder Kopfzeile
+  noch Sidebar, in der sie sonst Platz hätten.
+
+  Auf `default`/`guide` steht im Hero KEINES von beiden: Der QR-Code sitzt in der
+  Kopfzeile neben dem Farbschema-Umschalter (siehe `_includes/header.html`), und zum
+  Drucken bleibt es beim Browser-Befehl (Strg/Cmd+P). Tooltip des QR-Codes überall:
+  „Diese Seite auf Deinem Smartphone öffnen“. Er wird erst im Browser erzeugt (theme/academy/atvantage.js), weil die
+  Adresse zur Build-Zeit nicht feststeht; ohne JavaScript erscheint er nicht.
+  Kein Front-Matter-Schalter: Es gibt keine Seite, auf der der Weg aufs eigene
+  Smartphone schaden würde.
+--><html lang="de">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Eine Schnittstelle mit dem HTTP-Client ansprechen · Java SE (ATVANTAGE Academy)</title>
+<meta name="description" content="Sprich eine laufende Schnittstelle mit dem HTTP-Client aus der IDE an – als versionierte .http-Datei mit Umgebungen – und arbeite mit generiertem Lombok- und MapStruct-Code."><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787309846"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787309846">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787309846">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787309846">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787309846"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787309846">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787309846" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787309846" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787309846">
+<script type="module">
+  const _hlbase = "/training-material-java-se/theme/academy/hljs/";
+  Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
+    .then(([core, java]) => {
+      const hljs = core.default;
+      hljs.registerLanguage("java", java.default);
+      document.querySelectorAll("pre code.language-java").forEach((el) => hljs.highlightElement(el));
+    });
+</script>
+<link rel="apple-touch-icon" sizes="180x180" href="/training-material-java-se/theme/atvantage/assets/icon-180.png">
+<link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
+<link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
+
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787309846">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787309846"></head><body class="avd-academy-guide">
+  <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a><div class="avd-academy-metanav">
+    <span>ATVANTAGE Academy</span>
+  </div>
+
+  <header class="avd-academy-header">
+  <a class="avd-academy-header__brand" href="/training-material-java-se/" aria-label="Startseite">
+    <img class="avd-academy-header__logo"
+         src="/training-material-java-se/assets/logo-schulung.svg"
+         alt="ATVANTAGE Academy">
+  </a>
+  <button class="avd-academy-btn avd-academy-btn--ghost avd-academy-header__burger" data-avd-academy-nav-toggle="#avd-academy-main-nav"
+          aria-label="Navigation umschalten" aria-expanded="false">☰</button>
+  <nav class="avd-academy-header__nav" id="avd-academy-main-nav"><a href="/training-material-java-se/">Start</a><div class="avd-academy-header__group" data-avd-academy-menu>
+        <button type="button" class="avd-academy-header__grouptoggle"
+                aria-expanded="false" aria-haspopup="true">Schulungsprogramm<span class="avd-academy-header__caret" aria-hidden="true">▾</span></button><div class="avd-academy-header__submenu" role="menu"><a role="menuitem" href="/training-material-java-se/oop-mit-java/">Objektorientierte Programmierung mit Java</a><a role="menuitem" href="/training-material-java-se/intellij-umsteiger/">IntelliJ IDEA Ultimate für Umsteiger</a>
+        </div>
+      </div><a href="/training-material-java-se/shared/visualisierungen/">Visualisierungen</a>
+  </nav><div class="avd-academy-header__tools"><button type="button" class="avd-academy-qr" data-avd-academy-qr hidden
+            title="Diese Seite auf Deinem Smartphone öffnen"
+            aria-label="Diese Seite auf Deinem Smartphone öffnen"></button>
+    <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-theme-toggle"
+            data-avd-academy-theme-toggle
+            title="Farbschema umschalten (hell/dunkel)"
+            aria-label="Farbschema umschalten">◐</button>
+  </div>
+</header>
+
+  <section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/intellij-umsteiger/">IntelliJ für Umsteiger</a><span>/</span><span aria-current="page">Eine Schnittstelle mit dem HTTP-Client ansprechen</span></nav><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 22 Minuten</span><span class="avd-academy-tag">HTTP-Client</span><span class="avd-academy-tag">Lombok</span><span class="avd-academy-tag">MapStruct</span><span class="avd-academy-tag">Annotation Processing</span>
+      </div>
+      <div class="avd-academy-guide-hero__actions">
+        <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
+                data-avd-academy-copy-md="#avd-academy-md-source"
+                title="Markdown kopieren" aria-label="Markdown kopieren"></button>
+      </div>
+    </div><h1>Eine Schnittstelle mit dem HTTP-Client ansprechen</h1>
+  </section><div class="avd-academy-guide-layout">
+    <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
+      <h1 id="eine-schnittstelle-mit-dem-http-client-ansprechen">Eine Schnittstelle mit dem HTTP-Client ansprechen</h1>
+
+<p>Als Entwickler:in möchte ich HTTP-Anfragen als Datei im Projekt ablegen und aus der
+IDE ausführen, damit meine Aufrufe versioniert sind, im Review auftauchen und ohne
+Export für das ganze Team da sind.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Der HTTP-Client gehört zur <strong>Ultimate Edition</strong> – in der Community
+Edition gibt es ihn nicht. Die Lombok- und MapStruct-Unterstützung dagegen ist in
+beiden enthalten.</p>
+
+  <p>Bevor Du anfängst: Die Anwendung des Übungsprojekts muss <strong>laufen</strong>. Das machen
+wir gemeinsam, bevor die Einzelarbeit beginnt.</p>
+</blockquote>
+
+<h2 id="lernziele">Lernziele</h2>
+
+<p>Du …</p>
+
+<ul>
+  <li>führst eine HTTP-Anfrage aus einer <code>.http</code>-Datei im Projekt aus.</li>
+  <li>legst die Basis-Adresse in eine Umgebungsdatei und schaltest zwischen Umgebungen um.</li>
+  <li>verkettest zwei Anfragen, indem Du einen Wert aus der ersten Antwort in der zweiten verwendest.</li>
+  <li>rufst eine Methode auf, die Lombok erzeugt hat, und springst zu ihrer Verwendung.</li>
+  <li>springst von einer MapStruct-Schnittstelle in die generierte Implementierung und hältst darin an.</li>
+</ul>
+
+<h2 id="definition-of-done">Definition of Done</h2>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Es gibt eine <code>.http</code>-Datei im Projekt mit mindestens zwei Anfragen.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Die Basis-Adresse steht in einer Umgebungsdatei, nicht in der Anfrage.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Die zweite Anfrage benutzt einen Wert aus der Antwort der ersten.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast eine von Lombok erzeugte Methode benutzt und ihre Deklaration angesprungen.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du warst mit dem Debugger in der von MapStruct generierten Klasse.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
+</ul>
+
+<h2 id="arbeitsschritte">Arbeitsschritte</h2>
+
+<h3 id="die-erste-anfrage-anlegen">Die erste Anfrage anlegen</h3>
+
+<p>Lege im Projekt eine Datei mit der Endung <code>.http</code> an – am besten in einem Ordner,
+der zum Projekt gehört und mit versioniert wird, nicht in einem temporären
+Verzeichnis.</p>
+
+<p>Schreibe eine Anfrage, die eine lesende Schnittstelle der laufenden Anwendung
+aufruft, und führe sie aus. Die Antwort erscheint in einem eigenen Fenster; sieh Dir
+an, dass auch Status, Kopfzeilen und Laufzeit dort stehen.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Wenn Du nicht weißt, welche Adressen die Anwendung anbietet: Such im
+Code nach den Controller-Klassen und lies die Pfade dort ab. Das ist die
+Gelegenheit, die Navigationsgriffe von heute Morgen zu benutzen.</p>
+</blockquote>
+
+<h3 id="die-adresse-aus-der-anfrage-herausziehen">Die Adresse aus der Anfrage herausziehen</h3>
+
+<p>Lege eine Umgebungsdatei für den HTTP-Client an und definiere darin eine Variable
+für die Basis-Adresse – zum Beispiel eine Umgebung <code>lokal</code>.</p>
+
+<p>Ersetze die feste Adresse in Deiner Anfrage durch die Variable und führe sie erneut
+aus. Wähle beim Ausführen die Umgebung aus.</p>
+
+<p>Lege danach eine zweite Umgebung an, die auf eine andere Adresse zeigt (sie muss
+nicht erreichbar sein), und schalte einmal um. Beobachte, dass die Anfrage selbst
+sich dabei <strong>nicht</strong> ändert.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Es gibt zwei Arten von Umgebungsdateien – eine, die ins Repository
+gehört, und eine für Geheimnisse, die dort nicht hingehört. Sieh Dir an, wie sie
+heißen, und überlege, welche Deine Zugangsdaten tragen müsste.</p>
+</blockquote>
+
+<h3 id="zwei-anfragen-verketten">Zwei Anfragen verketten</h3>
+
+<p>Schreibe eine zweite Anfrage, die einen Wert aus der Antwort der ersten braucht –
+etwa eine Kennung, die Du zuvor gelesen oder erzeugt hast.</p>
+
+<p>Ergänze bei der ersten Anfrage ein Skript, das den Wert aus der Antwort in eine
+Variable schreibt, und verwende diese Variable in der zweiten Anfrage.</p>
+
+<p>Führe beide der Reihe nach aus. Damit hast Du einen ausführbaren, versionierbaren
+Ablauf – nicht zwei Aufrufe, die jemand von Hand nacheinander macht.</p>
+
+<h3 id="mit-generiertem-lombok-code-arbeiten">Mit generiertem Lombok-Code arbeiten</h3>
+
+<p>Suche eine Klasse, die Lombok-Annotationen trägt. Rufe an einer anderen Stelle eine
+Methode auf, die <strong>im Quelltext nicht steht</strong> – einen Getter, einen Setter oder
+einen Builder.</p>
+
+<p>Prüfe dabei drei Dinge:</p>
+
+<ol>
+  <li>Schlägt die Vervollständigung die Methode vor?</li>
+  <li>Kannst Du zu ihrer Deklaration springen – und wo landest Du?</li>
+  <li>Findest Du über die Verwendungssuche alle Aufrufe?</li>
+</ol>
+
+<p>Sieh Dir zum Schluss über <em>delombok</em> an, was tatsächlich erzeugt wird.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Ist alles rot, obwohl Maven baut, ist im Projekt das Annotation
+Processing nicht aktiviert. Such die Einstellung über die Suche im
+Einstellungsdialog – das ist die häufigste Stolperstelle der ersten Woche.</p>
+</blockquote>
+
+<h3 id="in-die-generierte-mapstruct-implementierung-springen">In die generierte MapStruct-Implementierung springen</h3>
+
+<p>Suche die MapStruct-Mapper-Schnittstelle. Sie hat Methoden, aber keinen Rumpf – die
+Implementierung entsteht beim Bauen.</p>
+
+<p>Baue das Projekt, falls nötig, und springe dann von der Schnittstelle in die
+<strong>generierte Klasse</strong>. Lies dort nach, wie eine der Zuordnungen tatsächlich umgesetzt
+ist.</p>
+
+<p>Setze in der generierten Klasse einen Haltepunkt und lass einen Test oder einen
+HTTP-Aufruf dagegen laufen, sodass Du darin anhältst.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Das ist der Griff, mit dem man eine falsche oder fehlende Zuordnung
+in Minuten findet – statt die Schnittstelle zu lesen und zu raten.</p>
+</blockquote>
+
+<h2 id="reflexionsfragen">Reflexionsfragen</h2>
+
+<ul>
+  <li>Die Anfrage liegt als Datei im Projekt. Was ändert das gegenüber einem externen Werkzeug?</li>
+  <li>Du hast die Basis-Adresse in eine Umgebungsdatei gelegt. Warum nicht direkt in die Anfrage?</li>
+  <li>Du hast eine Methode aufgerufen, die Lombok erzeugt hat. Woher wusste die Vervollständigung davon?</li>
+  <li>Bei MapStruct hast Du in der generierten Klasse einen Haltepunkt gesetzt. Wie hättest Du eine falsche Zuordnung sonst gefunden?</li>
+</ul>
+
+
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Eine Schnittstelle mit dem HTTP-Client ansprechen
+
+Als Entwickler:in möchte ich HTTP-Anfragen als Datei im Projekt ablegen und aus der
+IDE ausführen, damit meine Aufrufe versioniert sind, im Review auftauchen und ohne
+Export für das ganze Team da sind.
+
+&gt; **Hinweis:** Der HTTP-Client gehört zur **Ultimate Edition** – in der Community
+&gt; Edition gibt es ihn nicht. Die Lombok- und MapStruct-Unterstützung dagegen ist in
+&gt; beiden enthalten.
+&gt;
+&gt; Bevor Du anfängst: Die Anwendung des Übungsprojekts muss **laufen**. Das machen
+&gt; wir gemeinsam, bevor die Einzelarbeit beginnt.
+
+## Lernziele
+
+Du …
+
+- führst eine HTTP-Anfrage aus einer `.http`-Datei im Projekt aus.
+- legst die Basis-Adresse in eine Umgebungsdatei und schaltest zwischen Umgebungen um.
+- verkettest zwei Anfragen, indem Du einen Wert aus der ersten Antwort in der zweiten verwendest.
+- rufst eine Methode auf, die Lombok erzeugt hat, und springst zu ihrer Verwendung.
+- springst von einer MapStruct-Schnittstelle in die generierte Implementierung und hältst darin an.
+
+## Definition of Done
+
+* [ ] Es gibt eine `.http`-Datei im Projekt mit mindestens zwei Anfragen.
+* [ ] Die Basis-Adresse steht in einer Umgebungsdatei, nicht in der Anfrage.
+* [ ] Die zweite Anfrage benutzt einen Wert aus der Antwort der ersten.
+* [ ] Du hast eine von Lombok erzeugte Methode benutzt und ihre Deklaration angesprungen.
+* [ ] Du warst mit dem Debugger in der von MapStruct generierten Klasse.
+* [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
+
+## Arbeitsschritte
+
+### Die erste Anfrage anlegen
+
+Lege im Projekt eine Datei mit der Endung `.http` an – am besten in einem Ordner,
+der zum Projekt gehört und mit versioniert wird, nicht in einem temporären
+Verzeichnis.
+
+Schreibe eine Anfrage, die eine lesende Schnittstelle der laufenden Anwendung
+aufruft, und führe sie aus. Die Antwort erscheint in einem eigenen Fenster; sieh Dir
+an, dass auch Status, Kopfzeilen und Laufzeit dort stehen.
+
+&gt; **Hinweis:** Wenn Du nicht weißt, welche Adressen die Anwendung anbietet: Such im
+&gt; Code nach den Controller-Klassen und lies die Pfade dort ab. Das ist die
+&gt; Gelegenheit, die Navigationsgriffe von heute Morgen zu benutzen.
+
+### Die Adresse aus der Anfrage herausziehen
+
+Lege eine Umgebungsdatei für den HTTP-Client an und definiere darin eine Variable
+für die Basis-Adresse – zum Beispiel eine Umgebung `lokal`.
+
+Ersetze die feste Adresse in Deiner Anfrage durch die Variable und führe sie erneut
+aus. Wähle beim Ausführen die Umgebung aus.
+
+Lege danach eine zweite Umgebung an, die auf eine andere Adresse zeigt (sie muss
+nicht erreichbar sein), und schalte einmal um. Beobachte, dass die Anfrage selbst
+sich dabei **nicht** ändert.
+
+&gt; **Hinweis:** Es gibt zwei Arten von Umgebungsdateien – eine, die ins Repository
+&gt; gehört, und eine für Geheimnisse, die dort nicht hingehört. Sieh Dir an, wie sie
+&gt; heißen, und überlege, welche Deine Zugangsdaten tragen müsste.
+
+### Zwei Anfragen verketten
+
+Schreibe eine zweite Anfrage, die einen Wert aus der Antwort der ersten braucht –
+etwa eine Kennung, die Du zuvor gelesen oder erzeugt hast.
+
+Ergänze bei der ersten Anfrage ein Skript, das den Wert aus der Antwort in eine
+Variable schreibt, und verwende diese Variable in der zweiten Anfrage.
+
+Führe beide der Reihe nach aus. Damit hast Du einen ausführbaren, versionierbaren
+Ablauf – nicht zwei Aufrufe, die jemand von Hand nacheinander macht.
+
+### Mit generiertem Lombok-Code arbeiten
+
+Suche eine Klasse, die Lombok-Annotationen trägt. Rufe an einer anderen Stelle eine
+Methode auf, die **im Quelltext nicht steht** – einen Getter, einen Setter oder
+einen Builder.
+
+Prüfe dabei drei Dinge:
+
+1. Schlägt die Vervollständigung die Methode vor?
+2. Kannst Du zu ihrer Deklaration springen – und wo landest Du?
+3. Findest Du über die Verwendungssuche alle Aufrufe?
+
+Sieh Dir zum Schluss über *delombok* an, was tatsächlich erzeugt wird.
+
+&gt; **Hinweis:** Ist alles rot, obwohl Maven baut, ist im Projekt das Annotation
+&gt; Processing nicht aktiviert. Such die Einstellung über die Suche im
+&gt; Einstellungsdialog – das ist die häufigste Stolperstelle der ersten Woche.
+
+### In die generierte MapStruct-Implementierung springen
+
+Suche die MapStruct-Mapper-Schnittstelle. Sie hat Methoden, aber keinen Rumpf – die
+Implementierung entsteht beim Bauen.
+
+Baue das Projekt, falls nötig, und springe dann von der Schnittstelle in die
+**generierte Klasse**. Lies dort nach, wie eine der Zuordnungen tatsächlich umgesetzt
+ist.
+
+Setze in der generierten Klasse einen Haltepunkt und lass einen Test oder einen
+HTTP-Aufruf dagegen laufen, sodass Du darin anhältst.
+
+&gt; **Hinweis:** Das ist der Griff, mit dem man eine falsche oder fehlende Zuordnung
+&gt; in Minuten findet – statt die Schnittstelle zu lesen und zu raten.
+
+## Reflexionsfragen
+
+- Die Anfrage liegt als Datei im Projekt. Was ändert das gegenüber einem externen Werkzeug?
+- Du hast die Basis-Adresse in eine Umgebungsdatei gelegt. Warum nicht direkt in die Anfrage?
+- Du hast eine Methode aufgerufen, die Lombok erzeugt hat. Woher wusste die Vervollständigung davon?
+- Bei MapStruct hast Du in der generierten Klasse einen Haltepunkt gesetzt. Wie hättest Du eine falsche Zuordnung sonst gefunden?</textarea>
+    </main><aside class="avd-academy-guide-sidebar"><details class="avd-academy-guide-side avd-academy-guide-side--toc avd-academy-fold" data-avd-academy-toc-box
+               data-avd-academy-toc-grenze="12" open hidden>
+        <summary class="avd-academy-guide-side__label">Auf dieser Seite</summary>
+        <nav class="avd-academy-toc avd-academy-fold__body" data-avd-academy-toc aria-label="Inhaltsverzeichnis"></nav>
+      </details>
+      <div class="avd-academy-guide-side avd-academy-guide-side--bordered" data-avd-academy-progress hidden><div class="avd-academy-guide-side__label">Fortschritt</div>
+        <div class="avd-academy-progress__bar"><div class="avd-academy-progress__fill"></div></div>
+        <div class="avd-academy-progress__text"></div>
+      </div>
+    </aside>
+  </div><div class="avd-academy-print-contact" aria-hidden="true">
+    <span>Kontakt: https://academy.atvantage-academy.workers.dev/</span>
+    <span>academy@atvantage.com</span>
+  </div>
+
+  <footer class="avd-academy-footer">
+  <div class="avd-academy-footer__grid">
+    <div>
+      <strong>Java SE (ATVANTAGE Academy)</strong>
+      <p>Schulungen im Bereich 'Java SE'</p>
+    </div><div>
+      <strong>Kontakt</strong>
+      <p><a href="https://academy.atvantage-academy.workers.dev/" target="_blank" rel="noopener">Website</a><br><a href="mailto:academy@atvantage.com">academy@atvantage.com</a><br>
+      </p>
+    </div></div>
+  <div class="avd-academy-footer__legal">
+    © <span data-avd-academy-year>2026</span> ATVANTAGE
+  </div>
+</footer>
+
+</body>
+</html>

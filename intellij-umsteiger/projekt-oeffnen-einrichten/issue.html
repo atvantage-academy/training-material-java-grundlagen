@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<!--
+  ATVANTAGE-Academy – EINZIGES Seitenlayout (Jekyll)
+  --------------------------------------------------
+  Ein Layout für alles: allgemeine Doku-Seiten UND Guides (Übungen/Anleitungen).
+  Optik nach der ATVANTAGE-Website: Meta-Nav, weiße sticky Kopfzeile, Hero-Band,
+  zweispaltig mit rechter Sidebar (automatisches Inhaltsverzeichnis, Fortschritt
+  aus Task-Listen, weiterführende Ressourcen). Überschriften ohne Emoji-Icons.
+
+  Verwendung im Front Matter:  layout: default   (oder `layout: guide` – Alias,
+  siehe guide.html; beides rendert dieselbe Guide-Ansicht)
+
+  `layout: visualization` (siehe visualization.html) rendert dieselbe Seite OHNE
+  obere Navigation (Meta-Leiste + Kopfzeile/TopNav), OHNE Brotkrumen und OHNE den
+  rechten Bereich (Inhaltsverzeichnis, Fortschritt, Ressourcen – auch bei gesetztem
+  `resources`), mit schmalerem Hero-Balken und breiterem, zentriertem Inhalt – für
+  eigenständige Visualisierungen/Simulationen.
+
+  Alle Front-Matter-Felder sind OPTIONAL (Convention over Configuration). Nur der
+  Titel ist faktisch erforderlich – als `title:` ODER als erste `#`-Überschrift:
+
+    title:       "…"                → sonst erste #-Überschrift (eins von beiden nötig)
+    description: "…"                → Meta-Description
+    duration:    8                  → Zahl in Minuten → Hero-Tag „ca. 8 Minuten“
+                                       (ungefähre LESEDAUER; bei Guides/Übungen die
+                                       Dauer der Übung). Entfällt bei
+                                       `layout: visualization`.
+    topics:      ["Cloud & DevOps"] → weitere Hero-Tags
+    resources:   [{title, url, icon}, …] → Sidebar-Karte „Weiterführende Informationen“.
+                                       title und/oder icon (Bildpfad); icon erscheint
+                                       rechts und wird kreisrund dargestellt.
+    breadcrumb:                     → Brotkrumen anpassen (beides optional):
+      label: "…"                    → überschreibt den Ordnernamen dieser Ebene;
+                                       in der Ordner-`index.md` gesetzt gilt es für
+                                       ALLE Seiten im Ordner und in Unterordnern.
+      ancestors: [{title, url}, …]  → explizite Vorfahren-Kette OHNE die aktuelle
+                                       Seite (diese wird automatisch angehängt); in
+                                       der `index.md` gesetzt wird sie vererbt.
+
+  „Markdown kopieren“ (Button im Hero) erscheint NUR auf Guides (Übungen,
+  Anleitungen) – dort ist das Übernehmen des Quelltexts der Zweck. Bedingungen:
+  Markdown-Seite (`.md`, nicht reines HTML) UND als Guide erkennbar UND keine
+  Visualisierung. Guide ist eine Seite mit `layout: guide` ODER gesetztem
+  `duration` – letzteres ist der etablierte Marker, und die Guide-Vorlage des
+  Themes wie auch die von didaktikon erzeugten Übungen nutzen `layout: page`
+  plus `duration`. Nur auf `layout: guide` zu prüfen würde den Button dort
+  entfernen. Doku-Seiten haben kein `duration`; Visualisierungen sind
+  ausgeschlossen, weil ihr Inhalt nicht sinnvoll als Markdown kopierbar ist.
+
+  QR-CODE der Seitenadresse + DRUCKEN-KNOPF: In dieser Ansicht (`visualization`)
+  stehen beide rechts im Hero – QR links, Drucken rechts. Sie hat weder Kopfzeile
+  noch Sidebar, in der sie sonst Platz hätten.
+
+  Auf `default`/`guide` steht im Hero KEINES von beiden: Der QR-Code sitzt in der
+  Kopfzeile neben dem Farbschema-Umschalter (siehe `_includes/header.html`), und zum
+  Drucken bleibt es beim Browser-Befehl (Strg/Cmd+P). Tooltip des QR-Codes überall:
+  „Diese Seite auf Deinem Smartphone öffnen“. Er wird erst im Browser erzeugt (theme/academy/atvantage.js), weil die
+  Adresse zur Build-Zeit nicht feststeht; ohne JavaScript erscheint er nicht.
+  Kein Front-Matter-Schalter: Es gibt keine Seite, auf der der Weg aufs eigene
+  Smartphone schaden würde.
+--><html lang="de">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Projekt öffnen, Keymap wählen, Formatierung binden · Java SE (ATVANTAGE Academy)</title>
+<meta name="description" content="Öffne das Übungsprojekt, entscheide Dich für die IntelliJ-Keymap und binde die Codeformatierung an die .editorconfig des Projekts."><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787309846"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787309846">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787309846">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787309846">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787309846"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787309846">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787309846" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787309846" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787309846">
+<script type="module">
+  const _hlbase = "/training-material-java-se/theme/academy/hljs/";
+  Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
+    .then(([core, java]) => {
+      const hljs = core.default;
+      hljs.registerLanguage("java", java.default);
+      document.querySelectorAll("pre code.language-java").forEach((el) => hljs.highlightElement(el));
+    });
+</script>
+<link rel="apple-touch-icon" sizes="180x180" href="/training-material-java-se/theme/atvantage/assets/icon-180.png">
+<link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
+<link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
+
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787309846">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787309846"></head><body class="avd-academy-guide">
+  <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a><div class="avd-academy-metanav">
+    <span>ATVANTAGE Academy</span>
+  </div>
+
+  <header class="avd-academy-header">
+  <a class="avd-academy-header__brand" href="/training-material-java-se/" aria-label="Startseite">
+    <img class="avd-academy-header__logo"
+         src="/training-material-java-se/assets/logo-schulung.svg"
+         alt="ATVANTAGE Academy">
+  </a>
+  <button class="avd-academy-btn avd-academy-btn--ghost avd-academy-header__burger" data-avd-academy-nav-toggle="#avd-academy-main-nav"
+          aria-label="Navigation umschalten" aria-expanded="false">☰</button>
+  <nav class="avd-academy-header__nav" id="avd-academy-main-nav"><a href="/training-material-java-se/">Start</a><div class="avd-academy-header__group" data-avd-academy-menu>
+        <button type="button" class="avd-academy-header__grouptoggle"
+                aria-expanded="false" aria-haspopup="true">Schulungsprogramm<span class="avd-academy-header__caret" aria-hidden="true">▾</span></button><div class="avd-academy-header__submenu" role="menu"><a role="menuitem" href="/training-material-java-se/oop-mit-java/">Objektorientierte Programmierung mit Java</a><a role="menuitem" href="/training-material-java-se/intellij-umsteiger/">IntelliJ IDEA Ultimate für Umsteiger</a>
+        </div>
+      </div><a href="/training-material-java-se/shared/visualisierungen/">Visualisierungen</a>
+  </nav><div class="avd-academy-header__tools"><button type="button" class="avd-academy-qr" data-avd-academy-qr hidden
+            title="Diese Seite auf Deinem Smartphone öffnen"
+            aria-label="Diese Seite auf Deinem Smartphone öffnen"></button>
+    <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-theme-toggle"
+            data-avd-academy-theme-toggle
+            title="Farbschema umschalten (hell/dunkel)"
+            aria-label="Farbschema umschalten">◐</button>
+  </div>
+</header>
+
+  <section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/intellij-umsteiger/">IntelliJ für Umsteiger</a><span>/</span><span aria-current="page">Projekt öffnen, Keymap wählen, Formatierung binden</span></nav><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 25 Minuten</span><span class="avd-academy-tag">Projektmodell</span><span class="avd-academy-tag">Keymap</span><span class="avd-academy-tag">Einstellungen</span><span class="avd-academy-tag">.editorconfig</span>
+      </div>
+      <div class="avd-academy-guide-hero__actions">
+        <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
+                data-avd-academy-copy-md="#avd-academy-md-source"
+                title="Markdown kopieren" aria-label="Markdown kopieren"></button>
+      </div>
+    </div><h1>Projekt öffnen, Keymap wählen, Formatierung binden</h1>
+  </section><div class="avd-academy-guide-layout">
+    <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
+      <h1 id="projekt-öffnen-keymap-wählen-formatierung-binden">Projekt öffnen, Keymap wählen, Formatierung binden</h1>
+
+<p>Als Entwickler:in möchte ich das Projekt in IntelliJ so einrichten, dass Bauen,
+Testen und Formatieren wie im Team funktionieren, damit ich den restlichen Tag am
+Code arbeiten kann und nicht an der IDE.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Wir bleiben bei den <strong>IntelliJ-eigenen Tastenkürzeln</strong> und stellen
+nicht auf die Eclipse-Belegung um. Jede Anleitung, jedes Tutorial und jede
+KI-Antwort nennt die IntelliJ-Kürzel – wer mappt, übersetzt dauerhaft. Der erste
+Tag fühlt sich ungewohnt an, danach arbeitest Du mit dem, worauf sich alle
+beziehen. Und: Was Du vergisst, findest Du über <code>Find Action</code> wieder.</p>
+</blockquote>
+
+<h2 id="lernziele">Lernziele</h2>
+
+<p>Du …</p>
+
+<ul>
+  <li>öffnest ein bestehendes Maven-Projekt und löst einen Sync aus.</li>
+  <li>benennst den Unterschied zwischen <em>Project</em>, <em>Module</em> und <em>Content Root</em> – und sagst, was davon dem Eclipse-Workspace entspricht.</li>
+  <li>findest eine gesuchte Einstellung über die Suche im Einstellungsdialog, ohne durch Kategorien zu klicken.</li>
+  <li>bindest die Codeformatierung an die <code>.editorconfig</code> des Projekts und weist nach, dass sie greift.</li>
+  <li>holst eine überschriebene Datei über <em>Local History</em> zurück, ohne Git zu benutzen.</li>
+</ul>
+
+<h2 id="definition-of-done">Definition of Done</h2>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Das Projekt ist geöffnet, der Maven-Sync ist durchgelaufen, im Projektbaum sind keine roten Markierungen.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Das Projekt-SDK ist gesetzt; <code>mvn test</code> bzw. der Test-Lauf aus der IDE ist <strong>grün</strong>.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Die Tastaturbelegung steht auf der IntelliJ-Voreinstellung Deines Betriebssystems (<strong>nicht</strong> Eclipse).</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Die Formatierung folgt der <code>.editorconfig</code>; Du hast das an einer absichtlich falsch formatierten Datei nachgewiesen.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast eine Datei zerstört und über <em>Local History</em> zurückgeholt.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
+</ul>
+
+<h2 id="arbeitsschritte">Arbeitsschritte</h2>
+
+<h3 id="das-projekt-öffnen">Das Projekt öffnen</h3>
+
+<p>Öffne den ausgecheckten Projektordner – <strong>nicht</strong> eine einzelne Datei und nicht den
+übergeordneten Ordner. IntelliJ erkennt die <code>pom.xml</code> und schlägt vor, das Projekt
+als Maven-Projekt zu laden. Nimm den Vorschlag an.</p>
+
+<p>Warte, bis unten rechts keine Fortschrittsanzeige mehr läuft. IntelliJ baut in
+dieser Zeit seinen Index auf – bis er fertig ist, sind Suche und Navigation
+unvollständig. Das ist der Grund, warum die ersten Sekunden in einem neuen Projekt
+sich langsam anfühlen und danach nicht mehr.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Wenn Dich der Projektbaum an Eclipse erinnert, ist das eine Falle.
+Das Fenster, das Du geöffnet hast, ist ein <strong>Project</strong> – das Gegenstück zum
+Eclipse-<em>Workspace</em>. Was in Eclipse ein <em>Projekt</em> war, heißt hier <strong>Module</strong>.</p>
+</blockquote>
+
+<h3 id="das-modell-im-projektbaum-wiederfinden">Das Modell im Projektbaum wiederfinden</h3>
+
+<p>Öffne die Projektstruktur (Einstellungen, Suche nach „Project Structure“) und sieh
+Dir an, welche Module es gibt und welches SDK auf Projektebene gesetzt ist. Ist kein
+SDK gesetzt, setze es jetzt.</p>
+
+<p>Schließe den Dialog wieder und sieh im Projektbaum nach, welche Ordner anders
+eingefärbt sind als gewöhnliche Ordner. Notiere Dir, welche das sind – das sind die
+<strong>Content Roots</strong>, und die Einfärbung sagt Dir, welche Rolle sie haben
+(Quellcode, Testcode, Ressourcen).</p>
+
+<h3 id="den-testlauf-grün-bekommen">Den Testlauf grün bekommen</h3>
+
+<p>Starte die Tests des Projekts. Nutze dafür <strong>nicht</strong> den Projektbaum, sondern das
+Maven-Tool-Window: Öffne es über seine Tastenkombination und löse dort den
+Test-Lauf aus.</p>
+
+<p>Läuft etwas nicht, ist die Reihenfolge: Sync erneut auslösen, SDK prüfen, dann
+fragen. Gehe nicht weiter, solange der Lauf rot ist – der restliche Tag baut auf
+diesem Projekt auf.</p>
+
+<h3 id="die-tastaturbelegung-bewusst-setzen">Die Tastaturbelegung bewusst setzen</h3>
+
+<p>Suche in den Einstellungen nach „Keymap“. Sieh Dir die Liste der verfügbaren
+Belegungen an – <strong>darunter ist eine für Eclipse</strong>.</p>
+
+<p>Stelle sicher, dass die Voreinstellung Deines Betriebssystems aktiv ist, nicht die
+Eclipse-Belegung. Suche dann in derselben Ansicht nach der Aktion, mit der man eine
+beliebige Aktion sucht, und merke Dir ihr Kürzel. Das ist ab jetzt Dein Notausgang
+für jeden Griff, den Du nicht kennst.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Falls Du schon auf Eclipse-Belegung gestellt hattest: zurückstellen.
+Der Rest des Tages arbeitet mit der IntelliJ-Belegung, und ein gemischter Stand
+ist unangenehmer als ein ungewohnter.</p>
+</blockquote>
+
+<h3 id="die-formatierung-an-das-projekt-binden">Die Formatierung an das Projekt binden</h3>
+
+<p>Suche in den Einstellungen nach „editorconfig“ und stelle sicher, dass die
+Unterstützung aktiv ist. Sieh Dir dann die <code>.editorconfig</code> im Projektwurzelverzeichnis
+an: Sie legt Einrückung, Zeilenende und Zeilenlänge fest.</p>
+
+<p>Weise nun nach, dass die Datei tatsächlich gewinnt:</p>
+
+<ol>
+  <li>Formatiere eine Klasse absichtlich falsch – setze eine Einrückung mit Tabs oder
+einer abweichenden Anzahl Leerzeichen.</li>
+  <li>Lass die Datei neu formatieren.</li>
+  <li>Prüfe, dass die Einrückung der <code>.editorconfig</code> entspricht und nicht Deiner
+persönlichen Einstellung.</li>
+</ol>
+
+<p>Ändere zur Gegenprobe die Einrückung in der IDE-Einstellung auf einen anderen Wert
+und formatiere erneut. Was passiert – und was sagt Dir das darüber, welche Quelle
+gewinnt?</p>
+
+<h3 id="das-sicherheitsnetz-ausprobieren">Das Sicherheitsnetz ausprobieren</h3>
+
+<p>Suche in der IDE nach dem Speichern-Befehl. Du wirst keinen finden, der Deine
+Änderungen erst wirksam macht – sie sind es schon.</p>
+
+<p>Mach das zum Anlass, das Netz zu testen, bevor Du es brauchst:</p>
+
+<ol>
+  <li>Öffne eine beliebige Klasse, markiere den gesamten Inhalt und lösche ihn.</li>
+  <li>Wechsle in eine andere Datei und zurück.</li>
+  <li>Hol den alten Stand über <em>Local History</em> zurück – <strong>ohne</strong> Git zu benutzen.</li>
+</ol>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> <em>Local History</em> ist eine lokale, automatische Historie unabhängig von
+Git. Sie hilft auch bei Dateien, die nie committet wurden – aber sie ist <strong>kein
+Backup</strong> und reicht nicht beliebig weit zurück. Für alles, was Du behalten willst,
+bleibt Git zuständig.</p>
+</blockquote>
+
+<h2 id="reflexionsfragen">Reflexionsfragen</h2>
+
+<ul>
+  <li>Du hast keinen Speichern-Knopf gefunden. Was passiert mit Deinen Änderungen – und was, wenn Du etwas kaputt gemacht hast und es nicht committet war?</li>
+  <li>Die Formatierung kommt jetzt aus der <code>.editorconfig</code>. Was hättest Du stattdessen einstellen können, und warum ist das schlechter?</li>
+  <li>Du hast eine Einstellung über die Suche gefunden statt über das Menü. Wo hättest Du sie im Menü vermutet?</li>
+  <li>Du hast die Modulkonfiguration in der Projektstruktur gesehen. Was passiert damit, wenn jemand eine Abhängigkeit in der <code>pom.xml</code> ändert und Du synchronisierst?</li>
+</ul>
+
+
+<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Projekt öffnen, Keymap wählen, Formatierung binden
+
+Als Entwickler:in möchte ich das Projekt in IntelliJ so einrichten, dass Bauen,
+Testen und Formatieren wie im Team funktionieren, damit ich den restlichen Tag am
+Code arbeiten kann und nicht an der IDE.
+
+&gt; **Hinweis:** Wir bleiben bei den **IntelliJ-eigenen Tastenkürzeln** und stellen
+&gt; nicht auf die Eclipse-Belegung um. Jede Anleitung, jedes Tutorial und jede
+&gt; KI-Antwort nennt die IntelliJ-Kürzel – wer mappt, übersetzt dauerhaft. Der erste
+&gt; Tag fühlt sich ungewohnt an, danach arbeitest Du mit dem, worauf sich alle
+&gt; beziehen. Und: Was Du vergisst, findest Du über `Find Action` wieder.
+
+## Lernziele
+
+Du …
+
+- öffnest ein bestehendes Maven-Projekt und löst einen Sync aus.
+- benennst den Unterschied zwischen *Project*, *Module* und *Content Root* – und sagst, was davon dem Eclipse-Workspace entspricht.
+- findest eine gesuchte Einstellung über die Suche im Einstellungsdialog, ohne durch Kategorien zu klicken.
+- bindest die Codeformatierung an die `.editorconfig` des Projekts und weist nach, dass sie greift.
+- holst eine überschriebene Datei über *Local History* zurück, ohne Git zu benutzen.
+
+## Definition of Done
+
+* [ ] Das Projekt ist geöffnet, der Maven-Sync ist durchgelaufen, im Projektbaum sind keine roten Markierungen.
+* [ ] Das Projekt-SDK ist gesetzt; `mvn test` bzw. der Test-Lauf aus der IDE ist **grün**.
+* [ ] Die Tastaturbelegung steht auf der IntelliJ-Voreinstellung Deines Betriebssystems (**nicht** Eclipse).
+* [ ] Die Formatierung folgt der `.editorconfig`; Du hast das an einer absichtlich falsch formatierten Datei nachgewiesen.
+* [ ] Du hast eine Datei zerstört und über *Local History* zurückgeholt.
+* [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
+
+## Arbeitsschritte
+
+### Das Projekt öffnen
+
+Öffne den ausgecheckten Projektordner – **nicht** eine einzelne Datei und nicht den
+übergeordneten Ordner. IntelliJ erkennt die `pom.xml` und schlägt vor, das Projekt
+als Maven-Projekt zu laden. Nimm den Vorschlag an.
+
+Warte, bis unten rechts keine Fortschrittsanzeige mehr läuft. IntelliJ baut in
+dieser Zeit seinen Index auf – bis er fertig ist, sind Suche und Navigation
+unvollständig. Das ist der Grund, warum die ersten Sekunden in einem neuen Projekt
+sich langsam anfühlen und danach nicht mehr.
+
+&gt; **Hinweis:** Wenn Dich der Projektbaum an Eclipse erinnert, ist das eine Falle.
+&gt; Das Fenster, das Du geöffnet hast, ist ein **Project** – das Gegenstück zum
+&gt; Eclipse-*Workspace*. Was in Eclipse ein *Projekt* war, heißt hier **Module**.
+
+### Das Modell im Projektbaum wiederfinden
+
+Öffne die Projektstruktur (Einstellungen, Suche nach „Project Structure“) und sieh
+Dir an, welche Module es gibt und welches SDK auf Projektebene gesetzt ist. Ist kein
+SDK gesetzt, setze es jetzt.
+
+Schließe den Dialog wieder und sieh im Projektbaum nach, welche Ordner anders
+eingefärbt sind als gewöhnliche Ordner. Notiere Dir, welche das sind – das sind die
+**Content Roots**, und die Einfärbung sagt Dir, welche Rolle sie haben
+(Quellcode, Testcode, Ressourcen).
+
+### Den Testlauf grün bekommen
+
+Starte die Tests des Projekts. Nutze dafür **nicht** den Projektbaum, sondern das
+Maven-Tool-Window: Öffne es über seine Tastenkombination und löse dort den
+Test-Lauf aus.
+
+Läuft etwas nicht, ist die Reihenfolge: Sync erneut auslösen, SDK prüfen, dann
+fragen. Gehe nicht weiter, solange der Lauf rot ist – der restliche Tag baut auf
+diesem Projekt auf.
+
+### Die Tastaturbelegung bewusst setzen
+
+Suche in den Einstellungen nach „Keymap“. Sieh Dir die Liste der verfügbaren
+Belegungen an – **darunter ist eine für Eclipse**.
+
+Stelle sicher, dass die Voreinstellung Deines Betriebssystems aktiv ist, nicht die
+Eclipse-Belegung. Suche dann in derselben Ansicht nach der Aktion, mit der man eine
+beliebige Aktion sucht, und merke Dir ihr Kürzel. Das ist ab jetzt Dein Notausgang
+für jeden Griff, den Du nicht kennst.
+
+&gt; **Hinweis:** Falls Du schon auf Eclipse-Belegung gestellt hattest: zurückstellen.
+&gt; Der Rest des Tages arbeitet mit der IntelliJ-Belegung, und ein gemischter Stand
+&gt; ist unangenehmer als ein ungewohnter.
+
+### Die Formatierung an das Projekt binden
+
+Suche in den Einstellungen nach „editorconfig“ und stelle sicher, dass die
+Unterstützung aktiv ist. Sieh Dir dann die `.editorconfig` im Projektwurzelverzeichnis
+an: Sie legt Einrückung, Zeilenende und Zeilenlänge fest.
+
+Weise nun nach, dass die Datei tatsächlich gewinnt:
+
+1. Formatiere eine Klasse absichtlich falsch – setze eine Einrückung mit Tabs oder
+   einer abweichenden Anzahl Leerzeichen.
+2. Lass die Datei neu formatieren.
+3. Prüfe, dass die Einrückung der `.editorconfig` entspricht und nicht Deiner
+   persönlichen Einstellung.
+
+Ändere zur Gegenprobe die Einrückung in der IDE-Einstellung auf einen anderen Wert
+und formatiere erneut. Was passiert – und was sagt Dir das darüber, welche Quelle
+gewinnt?
+
+### Das Sicherheitsnetz ausprobieren
+
+Suche in der IDE nach dem Speichern-Befehl. Du wirst keinen finden, der Deine
+Änderungen erst wirksam macht – sie sind es schon.
+
+Mach das zum Anlass, das Netz zu testen, bevor Du es brauchst:
+
+1. Öffne eine beliebige Klasse, markiere den gesamten Inhalt und lösche ihn.
+2. Wechsle in eine andere Datei und zurück.
+3. Hol den alten Stand über *Local History* zurück – **ohne** Git zu benutzen.
+
+&gt; **Hinweis:** *Local History* ist eine lokale, automatische Historie unabhängig von
+&gt; Git. Sie hilft auch bei Dateien, die nie committet wurden – aber sie ist **kein
+&gt; Backup** und reicht nicht beliebig weit zurück. Für alles, was Du behalten willst,
+&gt; bleibt Git zuständig.
+
+## Reflexionsfragen
+
+- Du hast keinen Speichern-Knopf gefunden. Was passiert mit Deinen Änderungen – und was, wenn Du etwas kaputt gemacht hast und es nicht committet war?
+- Die Formatierung kommt jetzt aus der `.editorconfig`. Was hättest Du stattdessen einstellen können, und warum ist das schlechter?
+- Du hast eine Einstellung über die Suche gefunden statt über das Menü. Wo hättest Du sie im Menü vermutet?
+- Du hast die Modulkonfiguration in der Projektstruktur gesehen. Was passiert damit, wenn jemand eine Abhängigkeit in der `pom.xml` ändert und Du synchronisierst?</textarea>
+    </main><aside class="avd-academy-guide-sidebar"><details class="avd-academy-guide-side avd-academy-guide-side--toc avd-academy-fold" data-avd-academy-toc-box
+               data-avd-academy-toc-grenze="12" open hidden>
+        <summary class="avd-academy-guide-side__label">Auf dieser Seite</summary>
+        <nav class="avd-academy-toc avd-academy-fold__body" data-avd-academy-toc aria-label="Inhaltsverzeichnis"></nav>
+      </details>
+      <div class="avd-academy-guide-side avd-academy-guide-side--bordered" data-avd-academy-progress hidden><div class="avd-academy-guide-side__label">Fortschritt</div>
+        <div class="avd-academy-progress__bar"><div class="avd-academy-progress__fill"></div></div>
+        <div class="avd-academy-progress__text"></div>
+      </div>
+    </aside>
+  </div><div class="avd-academy-print-contact" aria-hidden="true">
+    <span>Kontakt: https://academy.atvantage-academy.workers.dev/</span>
+    <span>academy@atvantage.com</span>
+  </div>
+
+  <footer class="avd-academy-footer">
+  <div class="avd-academy-footer__grid">
+    <div>
+      <strong>Java SE (ATVANTAGE Academy)</strong>
+      <p>Schulungen im Bereich 'Java SE'</p>
+    </div><div>
+      <strong>Kontakt</strong>
+      <p><a href="https://academy.atvantage-academy.workers.dev/" target="_blank" rel="noopener">Website</a><br><a href="mailto:academy@atvantage.com">academy@atvantage.com</a><br>
+      </p>
+    </div></div>
+  <div class="avd-academy-footer__legal">
+    © <span data-avd-academy-year>2026</span> ATVANTAGE
+  </div>
+</footer>
+
+</body>
+</html>
