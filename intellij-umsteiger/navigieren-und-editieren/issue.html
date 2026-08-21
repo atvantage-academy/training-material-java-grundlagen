@@ -64,13 +64,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Navigieren und umbauen, ohne die Maus anzufassen · Java SE (ATVANTAGE Academy)</title>
 <meta name="description" content="Bewege Dich durch den Code und baue ihn um, ohne die Maus anzufassen – mit Search Everywhere, Find Action, Intentions und mehreren Einfügemarken."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787312240"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787312240">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787312240">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787312240">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787312240"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787312240">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787312240" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1787312240" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787312240">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787312427"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787312427">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787312427">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787312427">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787312427"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787312427">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787312427" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787312427" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787312427">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -84,8 +84,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787312240">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787312240"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787312427">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787312427"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a><div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
   </div>
@@ -136,8 +136,10 @@ zu und sagt genau dann etwas, wenn die Hand zur Maus wandert. Nach der Hälfte
 tauscht Ihr. Die Maus ist nicht verboten – Du sollst nur merken, wie oft Du sie
 greifst. Führe dafür eine Strichliste.</p>
 
-  <p>Und die Regel für den ganzen Tag: <strong>Kürzel, die Du nicht kennst, erfragst Du
-nicht – Du findest sie über <code>Find Action</code>.</strong></p>
+  <p><strong>Vier Griffe sollst Du am Ende auswendig können</strong> – und nur diese vier:
+<code>Strg+Leer</code>, <code>Alt+Enter</code>, <code>Alt+Einfügen</code> und <code>2× Umschalt</code>. Sie decken den
+Programmieralltag ab. Für <strong>alles andere</strong> gilt die Regel des Tages: <strong>Kürzel, die
+Du nicht kennst, erfragst Du nicht – Du findest sie über <code>Find Action</code>.</strong></p>
 </blockquote>
 
 <h2 id="lernziele">Lernziele</h2>
@@ -149,8 +151,10 @@ nicht – Du findest sie über <code>Find Action</code>.</strong></p>
   <li>führst eine Aktion über <em>Find Action</em> aus und liest dabei ihr Tastenkürzel ab.</li>
   <li>wechselst von einer Verwendung zur Deklaration und findest über die Sprungliste zurück.</li>
   <li>formst Code über die Intention-Aktion um, statt ihn zu tippen.</li>
+  <li>erzeugst wiederkehrende Methoden über die Generieren-Aktion, statt sie zu schreiben.</li>
+  <li>vervollständigst einen Typnamen über seine Großbuchstaben und lässt den Import dabei entstehen.</li>
   <li>änderst mehrere gleichartige Stellen in einem Zug mit mehreren Einfügemarken.</li>
-  <li>benennst drei Griffe, die Du ab morgen benutzen wirst – und wie Du die übrigen wiederfindest.</li>
+  <li>benennst die vier Griffe aus dem Kern-Set aus dem Kopf – und sagst, wie Du die übrigen wiederfindest.</li>
 </ul>
 
 <h2 id="definition-of-done">Definition of Done</h2>
@@ -158,8 +162,9 @@ nicht – Du findest sie über <code>Find Action</code>.</strong></p>
 <ul class="task-list">
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast alle Arbeitsschritte ohne die Maus erledigt oder jeden Mausgriff auf Deiner Strichliste notiert.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast mindestens ein Kürzel über <em>Find Action</em> gefunden, das Du vorher nicht kanntest.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast jeden der vier Griffe aus dem Kern-Set mindestens einmal benutzt.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Der Code kompiliert noch, und die Tests sind grün.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du kannst Deinem Paar drei Griffe nennen, die Du behalten willst.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du kannst Deinem Paar die vier Griffe des Kern-Sets ohne Nachsehen nennen.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
 </ul>
 
@@ -226,6 +231,47 @@ schreibst Du das Konstrukt und füllst es. Hier äußerst Du eine Absicht und da
 Konstrukt entsteht.</p>
 </blockquote>
 
+<h3 id="erzeugen-lassen-was-fehlt">Erzeugen lassen, was fehlt</h3>
+
+<p>Lege eine kleine Klasse an – zwei oder drei Felder genügen – und <strong>schreibe von den
+folgenden Dingen keines selbst</strong>:</p>
+
+<ol>
+  <li>einen Konstruktor über alle Felder,</li>
+  <li>Getter (und wo sinnvoll Setter),</li>
+  <li><code>equals</code> und <code>hashCode</code>,</li>
+  <li><code>toString</code>,</li>
+  <li>eine Testklasse dazu.</li>
+</ol>
+
+<p>Alles fünf liefert <strong>ein</strong> Griff an der Cursorposition: <code>Alt+Einfügen</code>.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> In Eclipse liegt dasselbe im Menü <em>Source</em> – deshalb suchen viele es
+dort. Die Merkhilfe: <code>Alt+Enter</code> ändert, was da ist. <code>Alt+Einfügen</code> erzeugt, was
+fehlt.</p>
+</blockquote>
+
+<h3 id="einen-typ-über-seine-großbuchstaben-holen">Einen Typ über seine Großbuchstaben holen</h3>
+
+<p>Schreibe eine Variablendeklaration mit einem Typ, den Du noch nicht importiert hast –
+etwa eine Liste oder eine Map.</p>
+
+<p>Tippe dafür <strong>nur die Großbuchstaben</strong> des Typnamens und vervollständige mit
+<code>Strg+Leer</code>: <code>ALI</code> für <code>ArrayList</code>, <code>HaMa</code> für <code>HashMap</code>. Achte darauf, was mit dem
+<strong>Import</strong> passiert, ohne dass Du ihn anfasst.</p>
+
+<p>Drücke <code>Strg+Leer</code> an einer Stelle, an der Du schon einen Vorschlag hast, ein
+<strong>zweites Mal</strong> und sieh Dir an, wie sich die Liste ändert.</p>
+
+<p>Probiere zum Schluss ein Live Template: Tippe <code>sout</code> und vervollständige es.</p>
+
+<blockquote>
+  <p><strong>Hinweis:</strong> Wenn Du hier <code>sysout</code> getippt hast und nichts passiert ist – genau das
+ist der Punkt. Die Templates heißen anders als in Eclipse. Wo die Liste aller
+Templates steht, findest Du über die Einstellungssuche.</p>
+</blockquote>
+
 <h3 id="mehrere-gleichartige-stellen-in-einem-zug-ändern">Mehrere gleichartige Stellen in einem Zug ändern</h3>
 
 <p>Suche eine Datei, in der derselbe Bezeichner mehrfach vorkommt – oder mehrere
@@ -254,7 +300,8 @@ Stand für die folgenden Einheiten.</p>
   <li>Du hast ein Kürzel gebraucht, das Du nicht kanntest. Wie hast Du es gefunden, und wie lange hat es gedauert?</li>
   <li>Was war schneller als in Deiner alten IDE, und was langsamer?</li>
   <li>Bei welcher Umformung hast Du zuerst überlegt, wie man sie schreibt – und dann gemerkt, dass die IDE sie anbietet?</li>
-  <li>Welche drei Griffe willst Du ab morgen benutzen, und wie findest Du die übrigen wieder?</li>
+  <li>Nenne die vier Griffe des Kern-Sets aus dem Kopf. Bei welchem musstest Du nachsehen – und woran lag das?</li>
+  <li>Du hast <code>sysout</code> getippt und nichts bekommen. Wie viele solcher umbenannten Kleinigkeiten erwartest Du noch, und wie findest Du sie?</li>
 </ul>
 
 
@@ -269,8 +316,10 @@ ständig zwischen Denken und Zielen wechsle.
 &gt; tauscht Ihr. Die Maus ist nicht verboten – Du sollst nur merken, wie oft Du sie
 &gt; greifst. Führe dafür eine Strichliste.
 &gt;
-&gt; Und die Regel für den ganzen Tag: **Kürzel, die Du nicht kennst, erfragst Du
-&gt; nicht – Du findest sie über `Find Action`.**
+&gt; **Vier Griffe sollst Du am Ende auswendig können** – und nur diese vier:
+&gt; `Strg+Leer`, `Alt+Enter`, `Alt+Einfügen` und `2× Umschalt`. Sie decken den
+&gt; Programmieralltag ab. Für **alles andere** gilt die Regel des Tages: **Kürzel, die
+&gt; Du nicht kennst, erfragst Du nicht – Du findest sie über `Find Action`.**
 
 ## Lernziele
 
@@ -280,15 +329,18 @@ Du …
 - führst eine Aktion über *Find Action* aus und liest dabei ihr Tastenkürzel ab.
 - wechselst von einer Verwendung zur Deklaration und findest über die Sprungliste zurück.
 - formst Code über die Intention-Aktion um, statt ihn zu tippen.
+- erzeugst wiederkehrende Methoden über die Generieren-Aktion, statt sie zu schreiben.
+- vervollständigst einen Typnamen über seine Großbuchstaben und lässt den Import dabei entstehen.
 - änderst mehrere gleichartige Stellen in einem Zug mit mehreren Einfügemarken.
-- benennst drei Griffe, die Du ab morgen benutzen wirst – und wie Du die übrigen wiederfindest.
+- benennst die vier Griffe aus dem Kern-Set aus dem Kopf – und sagst, wie Du die übrigen wiederfindest.
 
 ## Definition of Done
 
 * [ ] Du hast alle Arbeitsschritte ohne die Maus erledigt oder jeden Mausgriff auf Deiner Strichliste notiert.
 * [ ] Du hast mindestens ein Kürzel über *Find Action* gefunden, das Du vorher nicht kanntest.
+* [ ] Du hast jeden der vier Griffe aus dem Kern-Set mindestens einmal benutzt.
 * [ ] Der Code kompiliert noch, und die Tests sind grün.
-* [ ] Du kannst Deinem Paar drei Griffe nennen, die Du behalten willst.
+* [ ] Du kannst Deinem Paar die vier Griffe des Kern-Sets ohne Nachsehen nennen.
 * [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
 
 ## Arbeitsschritte
@@ -348,6 +400,41 @@ Dir an, was angeboten wird.
 &gt; schreibst Du das Konstrukt und füllst es. Hier äußerst Du eine Absicht und das
 &gt; Konstrukt entsteht.
 
+### Erzeugen lassen, was fehlt
+
+Lege eine kleine Klasse an – zwei oder drei Felder genügen – und **schreibe von den
+folgenden Dingen keines selbst**:
+
+1. einen Konstruktor über alle Felder,
+2. Getter (und wo sinnvoll Setter),
+3. `equals` und `hashCode`,
+4. `toString`,
+5. eine Testklasse dazu.
+
+Alles fünf liefert **ein** Griff an der Cursorposition: `Alt+Einfügen`.
+
+&gt; **Hinweis:** In Eclipse liegt dasselbe im Menü *Source* – deshalb suchen viele es
+&gt; dort. Die Merkhilfe: `Alt+Enter` ändert, was da ist. `Alt+Einfügen` erzeugt, was
+&gt; fehlt.
+
+### Einen Typ über seine Großbuchstaben holen
+
+Schreibe eine Variablendeklaration mit einem Typ, den Du noch nicht importiert hast –
+etwa eine Liste oder eine Map.
+
+Tippe dafür **nur die Großbuchstaben** des Typnamens und vervollständige mit
+`Strg+Leer`: `ALI` für `ArrayList`, `HaMa` für `HashMap`. Achte darauf, was mit dem
+**Import** passiert, ohne dass Du ihn anfasst.
+
+Drücke `Strg+Leer` an einer Stelle, an der Du schon einen Vorschlag hast, ein
+**zweites Mal** und sieh Dir an, wie sich die Liste ändert.
+
+Probiere zum Schluss ein Live Template: Tippe `sout` und vervollständige es.
+
+&gt; **Hinweis:** Wenn Du hier `sysout` getippt hast und nichts passiert ist – genau das
+&gt; ist der Punkt. Die Templates heißen anders als in Eclipse. Wo die Liste aller
+&gt; Templates steht, findest Du über die Einstellungssuche.
+
 ### Mehrere gleichartige Stellen in einem Zug ändern
 
 Suche eine Datei, in der derselbe Bezeichner mehrfach vorkommt – oder mehrere
@@ -373,7 +460,8 @@ Stand für die folgenden Einheiten.
 - Du hast ein Kürzel gebraucht, das Du nicht kanntest. Wie hast Du es gefunden, und wie lange hat es gedauert?
 - Was war schneller als in Deiner alten IDE, und was langsamer?
 - Bei welcher Umformung hast Du zuerst überlegt, wie man sie schreibt – und dann gemerkt, dass die IDE sie anbietet?
-- Welche drei Griffe willst Du ab morgen benutzen, und wie findest Du die übrigen wieder?</textarea>
+- Nenne die vier Griffe des Kern-Sets aus dem Kopf. Bei welchem musstest Du nachsehen – und woran lag das?
+- Du hast `sysout` getippt und nichts bekommen. Wie viele solcher umbenannten Kleinigkeiten erwartest Du noch, und wie findest Du sie?</textarea>
     </main><aside class="avd-academy-guide-sidebar"><details class="avd-academy-guide-side avd-academy-guide-side--toc avd-academy-fold" data-avd-academy-toc-box
                data-avd-academy-toc-grenze="12" open hidden>
         <summary class="avd-academy-guide-side__label">Auf dieser Seite</summary>
