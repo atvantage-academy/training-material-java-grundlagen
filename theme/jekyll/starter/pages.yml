@@ -51,10 +51,16 @@ concurrency:
 env:
   THEME_PACKAGE: "@avd-academy-tools/academy-theme"
   NPM_REGISTRY: ${{ vars.NPM_REGISTRY || 'https://npm.timetoact.ghe.com' }}
-  # Kompatible Spanne statt `latest`: ^2 löst zu >=2.0.0 <3.0.0 auf. Innerhalb von
+  # Kompatible Spanne statt `latest`: ^2.1.1 löst zu >=2.1.1 <3.0.0 auf. Innerhalb von
   # Major 2 sind Updates verträglich; ein inkompatibles Release erhöht die Major-
   # Stelle und wird damit NICHT automatisch gezogen (siehe CHANGELOG des Pakets).
-  THEME_VERSION: ${{ vars.THEME_VERSION || '^2' }}
+  #
+  # MINDESTVERSION 2.1.1, nicht bloß ^2: Der Schritt weiter unten schreibt
+  # `contact.website` ins Config-Overlay. Das Config-Schema ist unter `contact`
+  # geschlossen – ein Theme 2.0.x weist den Schlüssel ab, und die Prüfung vor dem Build
+  # schlägt fehl. `^2` wäre also mit einer Fassung erfüllbar, unter der dieser Workflow
+  # nicht durchläuft.
+  THEME_VERSION: ${{ vars.THEME_VERSION || '^2.1.1' }}
 
 jobs:
   build:
