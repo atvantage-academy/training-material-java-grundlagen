@@ -61,8 +61,8 @@
 --><html lang="de">
 <head>
   <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1"><title>Gemeinsamkeiten herausziehen · Java SE (ATVANTAGE Academy)</title>
-<meta name="description" content="Zieh aus mehreren Klassen das Gemeinsame heraus und zeichne es als Oberklasse – mit Vererbungspfeil, noch ohne Java."><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Kursbeschreibung · Java SE (ATVANTAGE Academy)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787308401"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787308401">
 <link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787308401">
@@ -113,152 +113,89 @@
   </div>
 </header>
 
-  <section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/oop-mit-java/">OOP mit Java</a><span>/</span><span aria-current="page">Gemeinsamkeiten herausziehen</span></nav><div class="avd-academy-guide-hero__meta">
-      <div class="avd-academy-guide-hero__tags"><span class="avd-academy-tag avd-academy-tag--time">ca. 20 Minuten</span><span class="avd-academy-tag">Vererbung</span><span class="avd-academy-tag">Modellierung</span><span class="avd-academy-tag">UML</span>
+  <section class="avd-academy-guide-hero"><nav class="avd-academy-guide-hero__crumbs" aria-label="Brotkrumen"><a href="/training-material-java-se/">Home</a><span>/</span><a href="/training-material-java-se/intellij-umsteiger/">IntelliJ für Umsteiger</a><span>/</span><span aria-current="page">Kursbeschreibung</span></nav><div class="avd-academy-guide-hero__meta">
+      <div class="avd-academy-guide-hero__tags">
       </div>
       <div class="avd-academy-guide-hero__actions">
-        <button type="button" class="avd-academy-btn avd-academy-btn--ghost avd-academy-copy-md"
-                data-avd-academy-copy-md="#avd-academy-md-source"
-                title="Markdown kopieren" aria-label="Markdown kopieren"></button>
       </div>
-    </div><h1>Gemeinsamkeiten herausziehen</h1>
+    </div><h1>Kursbeschreibung</h1>
   </section><div class="avd-academy-guide-layout">
-    <main class="avd-academy-guide-main avd-academy-guide-main--numbered" id="avd-academy-content">
-      <h1 id="gemeinsamkeiten-herausziehen">Gemeinsamkeiten herausziehen</h1>
+    <main class="avd-academy-guide-main" id="avd-academy-content">
+      <h1 id="intellij-idea-ultimate-für-umsteiger">IntelliJ IDEA Ultimate für Umsteiger</h1>
 
-<p>Als Entwickler:in möchte ich erkennen, was mehrere Klassen gemeinsam haben, und das an einer Stelle beschreiben, damit ich es nicht in jeder Klasse wiederholen muss.</p>
+<h2 id="zielgruppe">Zielgruppe</h2>
 
-<blockquote>
-  <p><strong>Hinweis:</strong> Hier wird wieder <strong>gezeichnet, nicht programmiert</strong> – Papier und
-Stift genügen. Wie das in Java aussieht, kommt gleich danach.</p>
-</blockquote>
+<p>Softwareentwickler:innen mit <strong>Java-Praxis</strong>, die ihre Arbeit bisher in einer
+<strong>anderen Entwicklungsumgebung</strong> erledigt haben – typischerweise Eclipse – und
+künftig <strong>IntelliJ IDEA Ultimate</strong> einsetzen. Java, Maven und Git sind im Alltag
+vertraut; neu ist ausschließlich das Werkzeug.</p>
+
+<p><strong>Technische Voraussetzung:</strong> IntelliJ IDEA Ultimate ist vor Kursbeginn auf dem
+Arbeitsgerät installiert und lizenziert, das Übungsprojekt ist ausgecheckt. Die
+Installation ist nicht Teil des Kurses.</p>
+
+<h2 id="überblick">Überblick</h2>
+
+<p>Eine neue Entwicklungsumgebung kostet erst einmal Geschwindigkeit: Die Handgriffe
+sitzen, aber die Tasten liegen anders. Wer dann anfängt, IntelliJ wie ein Eclipse
+mit anderen Farben zu bedienen, bleibt für Monate langsamer als vorher – denn die
+Stellen, an denen IntelliJ wirklich mehr kann, findet man nicht im Menü, sondern im
+Arbeitsfluss. Dieser Tag räumt genau das ab. Er geht die Wege durch, die Du täglich
+gehst – Projekt öffnen, zu einer Klasse springen, Code umformen, einen Fehler
+einkreisen, committen – und zeigt an jeder Station, was in IntelliJ anders heißt,
+anders funktioniert oder in Eclipse gar nicht existiert. Statt einer Tour durch die
+Oberfläche lernst Du den <strong>Zugriffsweg</strong>: Jede Aktion ist über eine Suche
+erreichbar, und wer den Weg kennt, braucht kein Menü mehr.</p>
+
+<p><strong>Eine Festlegung vorweg:</strong> Wir lernen die <strong>IntelliJ-eigenen Tastaturkürzel</strong> und
+mappen sie nicht auf die alten Eclipse-Kürzel zurück. Der Grund ist praktisch: Jede
+Anleitung, jedes Tutorial, jede Antwort der Dokumentation und jede KI-Anweisung nennt
+die IntelliJ-Belegung. Wer bei den alten Kürzeln bleibt, übersetzt dauerhaft – bei
+jeder Recherche und in jedem Pairing. Der erste Tag fühlt sich dadurch ungewohnt an;
+danach arbeitest Du mit dem, worauf sich alle anderen beziehen.</p>
 
 <h2 id="lernziele">Lernziele</h2>
 
-<p>Du…</p>
+<p>Die Lernenden…</p>
 
 <ul>
-  <li>erkennst Eigenschaften und Fähigkeiten, die mehrere Klassen teilen.</li>
-  <li>ziehst das Gemeinsame in eine Oberklasse und lässt unten nur das Unterscheidende stehen.</li>
-  <li>zeichnest den Vererbungspfeil in die richtige Richtung und liest ihn als „ist ein“.</li>
-  <li>erkennst, dass eine Klasse zugleich erben und vererben kann.</li>
+  <li>öffnen ein bestehendes Maven-Projekt in IntelliJ und benennen die Unterschiede des Projektmodells gegenüber dem Eclipse-Workspace.</li>
+  <li>arbeiten in der IntelliJ-eigenen Tastaturbelegung, richten Editor und Formatierung über <code>.editorconfig</code> ein und finden eine gesuchte Einstellung über die Suche im Einstellungsdialog statt über das Menü.</li>
+  <li>navigieren mit <code>Search Everywhere</code>, <code>Find Action</code> und den Sprungaktionen zu Typ, Datei und Symbol, ohne den Projektbaum zu benutzen.</li>
+  <li>formen Code über Refactorings und Intentions um und wandeln anonyme Klassen in Lambdas und Methodenreferenzen.</li>
+  <li>kreisen einen Fehler im Debugger mit bedingten Haltepunkten, <code>Evaluate Expression</code> und dem Stream-Debugger ein.</li>
+  <li>erledigen den Git-Alltag in der IDE: Commits in Teilen, Shelve, Log und Blame lesen, Konflikte im Merge-Werkzeug auflösen.</li>
+  <li>nutzen die Werkzeuge, für die Eclipse Zusatz-Plugins braucht: Lombok- und MapStruct-Unterstützung sowie den HTTP-Client für <code>.http</code>-Dateien.</li>
 </ul>
 
-<h2 id="definition-of-done">Definition of Done</h2>
+<h2 id="agenda-1-tag">Agenda (1 Tag)</h2>
 
-<ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast <strong>Aufgabe 1</strong> gelöst und mindestens <strong>eine</strong> der beiden anderen.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />In jedem Diagramm steht in der Oberklasse nur, was für <strong>alle</strong> Unterklassen gilt.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Jeder Vererbungspfeil zeigt von der Unterklasse <strong>nach oben</strong> zur Oberklasse.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du kannst jeden Pfeil als „ist ein“-Satz vorlesen, und der Satz ergibt Sinn.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Du hast die Reflexionsfragen schriftlich beantwortet.</li>
-</ul>
-
-<h2 id="aufgabe-1-dateien-und-ordner">Aufgabe 1: Dateien und Ordner</h2>
-
-<blockquote>
-  <p>Ein Dateisystem kennt <strong>Dateien</strong> und <strong>Ordner</strong>. Beide haben einen Namen und
-eine Größe, beide lassen sich umbenennen, und bei beiden kann man den Inhalt
-auslesen. Eine Datei hat zusätzlich eine Endung, ein Ordner weiß, wie viele
-Einträge er enthält.</p>
-</blockquote>
-
-<p>Zeichne die beiden Klassen, zieh das Gemeinsame in eine Oberklasse und setz die
-Pfeile.</p>
-
-<h2 id="aufgabe-2-medien-einer-bibliothek">Aufgabe 2: Medien einer Bibliothek</h2>
-
-<blockquote>
-  <p>Eine Bibliothek verleiht <strong>Bücher</strong>, <strong>Hörbücher</strong> und <strong>Zeitschriften</strong>. Alles
-davon hat einen Titel und ein Erscheinungsjahr und kann ausgeliehen und
-zurückgegeben werden. Bücher und Zeitschriften stehen im Regal und haben eine
-Seitenzahl und einen Standort; ein Buch hat zusätzlich eine Auflage, eine
-Zeitschrift eine Ausgabennummer. Ein Hörbuch dagegen wird heruntergeladen und
-hat eine Spieldauer und eine Dateigröße.</p>
-</blockquote>
-
-<h2 id="aufgabe-3-fahrzeuge-einer-spedition">Aufgabe 3: Fahrzeuge einer Spedition</h2>
-
-<blockquote>
-  <p>Eine Spedition verwaltet <strong>Fahrräder</strong>, <strong>PKW</strong> und <strong>LKW</strong>. Jedes Fahrzeug hat
-eine Inventarnummer und ein Gewicht und kann gewartet werden. PKW und LKW haben
-außerdem ein Kennzeichen, einen Kraftstoffstand und eine Motorleistung; nur der
-LKW hat eine Nutzlast, nur der PKW eine Sitzplatzzahl.</p>
-</blockquote>
-
-<h2 id="reflexionsfragen">Reflexionsfragen</h2>
+<h3 id="tag-1-umsteigen-und-beschleunigen">Tag 1: Umsteigen und beschleunigen</h3>
 
 <ul>
-  <li>Woran hast Du entschieden, was in die Oberklasse gehört?</li>
-  <li>Beschreibe die Beziehung zwischen Ober- und Unterklasse mithilfe der Begriffe Generalisierung und Spezialisierung.</li>
-  <li>Was wäre die Alternative, wenn Du das Gemeinsame nicht herausziehst?</li>
+  <li><strong>Projekt öffnen:</strong> Project, Module und Content Root statt Workspace; Maven-Import und -Sync; Tool-Windows, Navigationsleiste und die Symbole am Zeilenrand</li>
+  <li><strong>Grundkonfiguration:</strong> durchsuchbarer Einstellungsdialog, die IntelliJ-Tastaturbelegung, kein „Speichern“ mehr – AutoSave und Local History als Sicherheitsnetz, teamweite Formatierung über <code>.editorconfig</code></li>
+  <li><strong>Navigieren statt Suchen:</strong> <code>Search Everywhere</code>, <code>Find Action</code> als Zugang zu jedem Menüpunkt, Sprung zu Typ/Datei/Symbol/Implementierung, Struktur, Lesezeichen, zuletzt bearbeitete Dateien</li>
+  <li><strong>Tippen statt Schreiben:</strong> Intentions (<code>Alt+Enter</code>), Live Templates, Postfix Completion, mehrere Einfügemarken, Auswahl erweitern</li>
+  <li><strong>Refactoring und Inspections:</strong> Umbenennen, Extrahieren, Signatur ändern, Verschieben; Inspections gegen Eclipse-Quick-Fixes gehalten; anonyme Klassen ↔ Lambda ↔ Methodenreferenz</li>
+  <li><strong>Debugging:</strong> bedingte, Feld- und Ausnahme-Haltepunkte, <code>Evaluate Expression</code>, Watches, Frame verwerfen, Stream-Debugger</li>
+  <li><strong>Git im Alltag:</strong> Commit-Fenster mit Auswahl einzelner Änderungen, Shelve gegen Stash, Log-Graph, Blame im Editor, Konflikte im Drei-Wege-Merge</li>
+  <li><strong>Der Werkzeugkasten, den Eclipse nicht mitbringt:</strong> Lombok- und MapStruct-Unterstützung ohne Zusatz-Plugin, HTTP-Client mit <code>.http</code>-Dateien und Umgebungen</li>
 </ul>
 
+<blockquote>
+  <p><strong>Hinweis zum Umfang:</strong> Die Themenliste ist für einen Tag dicht gerechnet. Der
+letzte Punkt – Lombok, MapStruct und HTTP-Client – liegt außerhalb der regulären
+Lehrzeit; für die vollständige Liste in Ruhe sind <strong>1,5 Tage</strong> der realistische
+Rahmen. Was in einem Tag entfällt, wird vor der Durchführung abgestimmt.</p>
+</blockquote>
 
-<textarea id="avd-academy-md-source" hidden aria-hidden="true"># Gemeinsamkeiten herausziehen
 
-Als Entwickler:in möchte ich erkennen, was mehrere Klassen gemeinsam haben, und das an einer Stelle beschreiben, damit ich es nicht in jeder Klasse wiederholen muss.
-
-&gt; **Hinweis:** Hier wird wieder **gezeichnet, nicht programmiert** – Papier und
-&gt; Stift genügen. Wie das in Java aussieht, kommt gleich danach.
-
-## Lernziele
-
-Du…
-
-* erkennst Eigenschaften und Fähigkeiten, die mehrere Klassen teilen.
-* ziehst das Gemeinsame in eine Oberklasse und lässt unten nur das Unterscheidende stehen.
-* zeichnest den Vererbungspfeil in die richtige Richtung und liest ihn als „ist ein“.
-* erkennst, dass eine Klasse zugleich erben und vererben kann.
-
-## Definition of Done
-
-* [ ] Du hast **Aufgabe 1** gelöst und mindestens **eine** der beiden anderen.
-* [ ] In jedem Diagramm steht in der Oberklasse nur, was für **alle** Unterklassen gilt.
-* [ ] Jeder Vererbungspfeil zeigt von der Unterklasse **nach oben** zur Oberklasse.
-* [ ] Du kannst jeden Pfeil als „ist ein“-Satz vorlesen, und der Satz ergibt Sinn.
-* [ ] Du hast die Reflexionsfragen schriftlich beantwortet.
-
-## Aufgabe 1: Dateien und Ordner
-
-&gt; Ein Dateisystem kennt **Dateien** und **Ordner**. Beide haben einen Namen und
-&gt; eine Größe, beide lassen sich umbenennen, und bei beiden kann man den Inhalt
-&gt; auslesen. Eine Datei hat zusätzlich eine Endung, ein Ordner weiß, wie viele
-&gt; Einträge er enthält.
-
-Zeichne die beiden Klassen, zieh das Gemeinsame in eine Oberklasse und setz die
-Pfeile.
-
-## Aufgabe 2: Medien einer Bibliothek
-
-&gt; Eine Bibliothek verleiht **Bücher**, **Hörbücher** und **Zeitschriften**. Alles
-&gt; davon hat einen Titel und ein Erscheinungsjahr und kann ausgeliehen und
-&gt; zurückgegeben werden. Bücher und Zeitschriften stehen im Regal und haben eine
-&gt; Seitenzahl und einen Standort; ein Buch hat zusätzlich eine Auflage, eine
-&gt; Zeitschrift eine Ausgabennummer. Ein Hörbuch dagegen wird heruntergeladen und
-&gt; hat eine Spieldauer und eine Dateigröße.
-
-## Aufgabe 3: Fahrzeuge einer Spedition
-
-&gt; Eine Spedition verwaltet **Fahrräder**, **PKW** und **LKW**. Jedes Fahrzeug hat
-&gt; eine Inventarnummer und ein Gewicht und kann gewartet werden. PKW und LKW haben
-&gt; außerdem ein Kennzeichen, einen Kraftstoffstand und eine Motorleistung; nur der
-&gt; LKW hat eine Nutzlast, nur der PKW eine Sitzplatzzahl.
-
-## Reflexionsfragen
-
-* Woran hast Du entschieden, was in die Oberklasse gehört?
-* Beschreibe die Beziehung zwischen Ober- und Unterklasse mithilfe der Begriffe Generalisierung und Spezialisierung.
-* Was wäre die Alternative, wenn Du das Gemeinsame nicht herausziehst?</textarea>
     </main><aside class="avd-academy-guide-sidebar"><details class="avd-academy-guide-side avd-academy-guide-side--toc avd-academy-fold" data-avd-academy-toc-box
                data-avd-academy-toc-grenze="12" open hidden>
         <summary class="avd-academy-guide-side__label">Auf dieser Seite</summary>
         <nav class="avd-academy-toc avd-academy-fold__body" data-avd-academy-toc aria-label="Inhaltsverzeichnis"></nav>
       </details>
-      <div class="avd-academy-guide-side avd-academy-guide-side--bordered" data-avd-academy-progress hidden><div class="avd-academy-guide-side__label">Fortschritt</div>
-        <div class="avd-academy-progress__bar"><div class="avd-academy-progress__fill"></div></div>
-        <div class="avd-academy-progress__text"></div>
-      </div>
     </aside>
   </div><div class="avd-academy-print-contact" aria-hidden="true">
     <span>Kontakt: https://academy.atvantage-academy.workers.dev/</span>

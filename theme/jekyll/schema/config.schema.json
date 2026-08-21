@@ -6,11 +6,11 @@
   "properties": {
     "title": {
       "type": "string",
-      "description": "Titel der Site – erscheint in der Kopfzeile neben dem Logo und in `<title>`. STANDARD: „ATVANTAGE Academy“."
+      "description": "JEKYLL-STANDARD – Titel der Site – erscheint in der Kopfzeile neben dem Logo und in `<title>`. STANDARD: „ATVANTAGE Academy“."
     },
     "description": {
       "type": "string",
-      "description": "Kurzbeschreibung der Site; Rückfall für `<meta name=\"description\">`, wenn eine Seite keine eigene trägt. STANDARD: keine."
+      "description": "JEKYLL-STANDARD – Kurzbeschreibung der Site; Rückfall für `<meta name=\"description\">`, wenn eine Seite keine eigene trägt. STANDARD: keine."
     },
     "lang": {
       "type": "string",
@@ -19,68 +19,68 @@
     },
     "url": {
       "type": "string",
-      "description": "Jekyll-Standard: Basis-URL der Site OHNE Pfad (z. B. `https://example.github.io`)."
+      "description": "JEKYLL-STANDARD – Basis-URL der Site OHNE Pfad (z. B. `https://example.github.io`)."
     },
     "baseurl": {
       "type": "string",
       "default": "",
-      "description": "Jekyll-Standard: Pfadpräfix der Site (Projektseiten: `/reponame`, eigene Domain: leer). Muss dem veröffentlichten Pfad entsprechen, sonst brechen alle Asset-Pfade."
+      "description": "JEKYLL-STANDARD – Pfadpräfix der Site (Projektseiten: `/reponame`, eigene Domain: leer). Muss dem veröffentlichten Pfad entsprechen, sonst brechen alle Asset-Pfade."
     },
     "layouts_dir": {
       "type": "string",
-      "description": "Jekyll-Standard: Verzeichnis der Layouts. Für das Academy-Theme `theme/jekyll/_layouts`."
+      "description": "JEKYLL-STANDARD – Verzeichnis der Layouts. Für das Academy-Theme `theme/jekyll/_layouts`."
     },
     "includes_dir": {
       "type": "string",
-      "description": "Jekyll-Standard: Verzeichnis der Includes. Für das Academy-Theme `theme/jekyll/_includes`."
+      "description": "JEKYLL-STANDARD – Verzeichnis der Includes. Für das Academy-Theme `theme/jekyll/_includes`."
     },
     "plugins": {
       "type": "array",
       "items": {
         "type": "string"
       },
-      "description": "Jekyll-Standard: aktive Plugins. Das Theme setzt `jekyll-optional-front-matter` (Markdown ohne Front Matter) und `jekyll-relative-links` (relative `.md`-Links) voraus."
+      "description": "JEKYLL-STANDARD – aktive Plugins. Das Theme setzt `jekyll-optional-front-matter` (Markdown ohne Front Matter) und `jekyll-relative-links` (relative `.md`-Links) voraus."
     },
     "markdown": {
       "type": "string",
       "default": "kramdown",
-      "description": "Jekyll-Standard: Markdown-Prozessor. Das Theme ist auf `kramdown` im GFM-Modus abgestimmt."
+      "description": "JEKYLL-STANDARD – Markdown-Prozessor. Das Theme ist auf `kramdown` im GFM-Modus abgestimmt."
     },
     "kramdown": {
       "type": "object",
-      "description": "Jekyll-Standard: kramdown-Optionen. Das Theme erwartet `input: GFM` und `hard_wrap: false`."
+      "description": "JEKYLL-STANDARD – kramdown-Optionen. Das Theme erwartet `input: GFM` und `hard_wrap: false`."
     },
     "theme": {
       "type": [
         "string",
         "null"
       ],
-      "description": "Jekyll-Standard: Theme-Gem. Das Academy-Theme ist KEIN Gem – die Defaults setzen `theme: null`."
+      "description": "JEKYLL-STANDARD – Theme-Gem. Das Academy-Theme ist KEIN Gem – die Defaults setzen `theme: null`."
     },
     "exclude": {
       "type": "array",
       "items": {
         "type": "string"
       },
-      "description": "Jekyll-Standard: Pfade, die NICHT in die Ausgabe wandern. Auch die Schema-Prüfung überspringt sie."
+      "description": "JEKYLL-STANDARD – Pfade, die NICHT in die Ausgabe wandern. Auch die Schema-Prüfung überspringt sie."
     },
     "include": {
       "type": "array",
       "items": {
         "type": "string"
       },
-      "description": "Jekyll-Standard: Pfade, die trotz führendem Punkt/Unterstrich in die Ausgabe wandern."
+      "description": "JEKYLL-STANDARD – Pfade, die trotz führendem Punkt/Unterstrich in die Ausgabe wandern."
     },
     "keep_files": {
       "type": "array",
       "items": {
         "type": "string"
       },
-      "description": "Jekyll-Standard: Pfade in der Ausgabe, die ein Build nicht löscht."
+      "description": "JEKYLL-STANDARD – Pfade in der Ausgabe, die ein Build nicht löscht."
     },
     "defaults": {
       "type": "array",
-      "description": "Jekyll-Standard: Front-Matter-Vorgaben je Pfad/Typ. Das Theme setzt hier `layout: page` für die ganze Site – deshalb braucht eine Seite kein `layout:`. ACHTUNG: Jekyll ERSETZT diese Liste, wenn eine Site sie selbst definiert; die Layout-Regel gehört dann mit hinein. Das Wort gehört Jekyll – die Bausteine des Themes stehen unter `components`.",
+      "description": "JEKYLL-STANDARD – Front-Matter-Vorgaben je Pfad/Typ. Das Theme setzt hier `layout: page` für die ganze Site – deshalb braucht eine Seite kein `layout:`. ACHTUNG: Jekyll ERSETZT diese Liste, wenn eine Site sie selbst definiert; die Layout-Regel gehört dann mit hinein. Das Wort gehört Jekyll – die Bausteine des Themes stehen unter `components`.",
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -108,28 +108,99 @@
     },
     "permalink": {
       "type": "string",
-      "description": "Jekyll-Standard: URL-Muster der Seiten."
+      "description": "JEKYLL-STANDARD – URL-Muster der Seiten."
     },
     "timezone": {
       "type": "string",
-      "description": "Jekyll-Standard: Zeitzone (IANA), z. B. `Europe/Berlin`."
+      "description": "JEKYLL-STANDARD – Zeitzone (IANA), z. B. `Europe/Berlin`."
     },
     "encoding": {
       "type": "string",
       "default": "utf-8",
-      "description": "Jekyll-Standard: Zeichenkodierung der Quelldateien."
+      "description": "JEKYLL-STANDARD – Zeichenkodierung der Quelldateien."
     },
     "strict_front_matter": {
       "type": "boolean",
-      "description": "Jekyll-Standard: bricht den Build bei syntaktisch fehlerhaftem Front Matter ab. Prüft NUR die YAML-Syntax – die Feldnamen prüft dieses Schema."
+      "description": "JEKYLL-STANDARD – bricht den Build bei syntaktisch fehlerhaftem Front Matter ab. Prüft NUR die YAML-Syntax – die Feldnamen prüft dieses Schema."
     },
     "collections": {
       "type": "object",
-      "description": "Jekyll-Standard: eigene Collections."
+      "description": "JEKYLL-STANDARD – eigene Collections."
     },
     "sass": {
       "type": "object",
-      "description": "Jekyll-Standard: Sass-Optionen. Das Theme liefert fertiges CSS und braucht sie nicht."
+      "description": "JEKYLL-STANDARD – Sass-Optionen. Das Theme liefert fertiges CSS und braucht sie nicht."
+    },
+    "source": {
+      "type": "string",
+      "default": ".",
+      "description": "JEKYLL-STANDARD – Quellverzeichnis des Builds. Die Pipelines übergeben es als `--source`; in der Datei nur nötig, wenn die Quellen NICHT im Wurzelverzeichnis liegen."
+    },
+    "destination": {
+      "type": "string",
+      "default": "./_site",
+      "description": "JEKYLL-STANDARD – Zielverzeichnis des Builds. Die Pipelines übergeben es als `--destination` – ein Wert hier wird davon überstimmt."
+    },
+    "data_dir": {
+      "type": "string",
+      "default": "_data",
+      "description": "JEKYLL-STANDARD – Verzeichnis der Datendateien; sie stehen als `site.data` in Liquid."
+    },
+    "collections_dir": {
+      "type": "string",
+      "description": "JEKYLL-STANDARD – Verzeichnis, unter dem die Collections liegen. STANDARD: das Wurzelverzeichnis."
+    },
+    "markdown_ext": {
+      "type": "string",
+      "default": "markdown,mkdown,mkdn,mkd,md",
+      "description": "JEKYLL-STANDARD – Dateiendungen, die als Markdown verarbeitet werden. Wer hier kürzt, nimmt Dateien aus der Ausgabe – die Schema-Prüfung schaut sie trotzdem an."
+    },
+    "highlighter": {
+      "type": "string",
+      "default": "rouge",
+      "description": "JEKYLL-STANDARD – serverseitige Syntax-Hervorhebung. Das Theme färbt Code CLIENTSEITIG mit highlight.js (`code.highlight`) und schaltet Rouge in seinen Defaults ab; beides zugleich erzeugt doppeltes Markup."
+    },
+    "liquid": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "JEKYLL-STANDARD – Liquid-Optionen. `error_mode: strict` meldet einen Tippfehler in Liquid, statt ihn still auszugeben.",
+      "properties": {
+        "error_mode": {
+          "type": "string",
+          "enum": [
+            "lax",
+            "warn",
+            "strict"
+          ],
+          "default": "warn",
+          "description": "Wie streng Liquid-Fehler behandelt werden."
+        },
+        "strict_filters": {
+          "type": "boolean",
+          "default": false,
+          "description": "Unbekannter Filter bricht den Build ab."
+        },
+        "strict_variables": {
+          "type": "boolean",
+          "default": false,
+          "description": "Unbekannte Variable bricht den Build ab."
+        }
+      }
+    },
+    "future": {
+      "type": "boolean",
+      "default": false,
+      "description": "JEKYLL-STANDARD – ob Seiten mit einem `date` in der ZUKUNFT gebaut werden. STANDARD: nein – eine solche Seite fehlt dann in der Ausgabe, ohne Fehlermeldung."
+    },
+    "unpublished": {
+      "type": "boolean",
+      "default": false,
+      "description": "JEKYLL-STANDARD – ob Seiten mit `published: false` gebaut werden. STANDARD: nein."
+    },
+    "incremental": {
+      "type": "boolean",
+      "default": false,
+      "description": "JEKYLL-STANDARD – experimenteller inkrementeller Build. Beschleunigt die lokale Vorschau, baut aber nicht zuverlässig vollständig – für die Pipeline ungeeignet."
     },
     "audiences": {
       "type": "array",

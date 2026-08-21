@@ -64,13 +64,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Änderungen am ATVANTAGE Academy Theme · Java SE (ATVANTAGE Academy)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787300582"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787300582">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787300582">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787300582">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787300582"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787300582">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787300582" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1787300582" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787300582">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787308401"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787308401">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787308401">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787308401">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787308401"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787308401">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787308401" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787308401" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787308401">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -84,8 +84,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787300582">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787300582"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787308401">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787308401"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a><div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
   </div>
@@ -98,7 +98,11 @@
   </a>
   <button class="avd-academy-btn avd-academy-btn--ghost avd-academy-header__burger" data-avd-academy-nav-toggle="#avd-academy-main-nav"
           aria-label="Navigation umschalten" aria-expanded="false">☰</button>
-  <nav class="avd-academy-header__nav" id="avd-academy-main-nav"><a href="/training-material-java-se/">Start</a><a href="/training-material-java-se/oop-mit-java/">Objektorientierte Programmierung mit Java</a><a href="/training-material-java-se/shared/visualisierungen/">Visualisierungen</a>
+  <nav class="avd-academy-header__nav" id="avd-academy-main-nav"><a href="/training-material-java-se/">Start</a><div class="avd-academy-header__group" data-avd-academy-menu>
+        <button type="button" class="avd-academy-header__grouptoggle"
+                aria-expanded="false" aria-haspopup="true">Schulungsprogramm<span class="avd-academy-header__caret" aria-hidden="true">▾</span></button><div class="avd-academy-header__submenu" role="menu"><a role="menuitem" href="/training-material-java-se/oop-mit-java/">Objektorientierte Programmierung mit Java</a><a role="menuitem" href="/training-material-java-se/intellij-umsteiger/">IntelliJ IDEA Ultimate für Umsteiger</a>
+        </div>
+      </div><a href="/training-material-java-se/shared/visualisierungen/">Visualisierungen</a>
   </nav><div class="avd-academy-header__tools"><button type="button" class="avd-academy-qr" data-avd-academy-qr hidden
             title="Diese Seite auf Deinem Smartphone öffnen"
             aria-label="Diese Seite auf Deinem Smartphone öffnen"></button>
@@ -152,6 +156,47 @@
 inkompatibel gilt und wie eingestuft wird, steht in
 <a href="https://timetoact.ghe.com/AVD-Academy-Tools/academy-theme/blob/main/AGENTS.md"><code>AGENTS.md</code></a>,
 Abschnitt „Theme-Version“.</p>
+
+<hr />
+
+<h2 id="220">2.2.0</h2>
+
+<p><strong>Zehn Jekyll-Schlüssel mehr im Konfigurations-Schema</strong> – durchgegangen anhand von
+<a href="https://www.schemastore.org/jekyll.json">json.schemastore.org/jekyll</a> und aufgenommen,
+was in einem Academy-Repo realistisch vorkommt: <code>source</code>, <code>destination</code>, <code>data_dir</code>,
+<code>collections_dir</code>, <code>markdown_ext</code>, <code>highlighter</code>, <code>liquid</code>, <code>future</code>, <code>unpublished</code>,
+<code>incremental</code>.</p>
+
+<p>Zwei davon lohnen den Blick: <strong><code>future</code> und <code>unpublished</code></strong> entscheiden, ob eine Seite mit
+künftigem <code>date</code> bzw. <code>published: false</code> überhaupt gebaut wird – beide Felder kennt das
+Front-Matter-Schema, die zugehörigen Schalter fehlten. Und <strong><code>highlighter</code></strong> steht in
+Spannung zu <code>code.highlight</code>: Das Theme färbt clientseitig und schaltet Rouge in seinen
+Defaults ab; beides zugleich erzeugt doppeltes Markup. Das steht jetzt in der Beschreibung.</p>
+
+<p><strong>Jede Beschreibung eines Jekyll-Schlüssels beginnt mit <code>JEKYLL-STANDARD –</code>.</strong> Im Tooltip
+soll ohne Nachschlagen klar sein, ob der Schlüssel dem Theme gehört oder Jekyll.</p>
+
+<p><strong>Nicht aufgenommen:</strong> die Server- und CLI-Optionen (<code>port</code>, <code>host</code>, <code>livereload*</code>,
+<code>quiet</code>, <code>safe</code>, <code>whitelist</code>, <code>webrick</code>, <code>rdiscount</code>, <code>redcarpet</code> …). Sie gehören in den
+Aufruf; in diesen Repos steuert sie der Container, in der Datei hätten sie keine Wirkung.</p>
+
+<p><strong>Das Schema erweitert das Jekyll-Schema weiterhin nicht</strong> – es zählt die Schlüssel selbst
+auf. Ein <code>$ref</code> auf die veröffentlichte Fassung schiede aus zwei Gründen aus: Der Prüfer
+löst <code>$ref</code> relativ zur Datei auf und kann keine URL holen, und eine Netzabhängigkeit ist
+genau das, was der lokale Schema-Pfad beseitigt hat. Die Schema-Version bleibt <strong>2</strong>: rein
+ergänzend, die Wurzel war schon vorher offen.</p>
+
+<hr />
+
+<h2 id="216">2.1.6</h2>
+
+<p><strong>Festgehalten, dass Markdown-Front-Matter keinen IDE-Support bekommt.</strong> Die Doku sagte
+das schon, aber als Vermutung. Der naheliegende Ausweg – den Repos eine IDE-Zuordnung
+erzeugen (<code>.idea/jsonSchemas.xml</code>, <code>yaml.schemas</code> in VS Code) und das Front-Matter-Schema
+auf <code>**/*.md</code> mappen – ist am 21.08.2026 ausprobiert worden und <strong>greift nicht</strong>: Eine
+Zuordnung ordnet einer <em>Datei</em> ein Schema zu, und eine <code>.md</code> ist für die IDE eine
+Markdown-Datei. <code>docs/theme/schemas.md</code> nennt jetzt Datum und Grund, damit die Idee nicht
+alle paar Monate neu gebaut statt gemessen wird.</p>
 
 <hr />
 

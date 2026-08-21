@@ -15,6 +15,47 @@ Abschnitt „Theme-Version“.
 
 ---
 
+## 2.2.0
+
+**Zehn Jekyll-Schlüssel mehr im Konfigurations-Schema** – durchgegangen anhand von
+[json.schemastore.org/jekyll](https://www.schemastore.org/jekyll.json) und aufgenommen,
+was in einem Academy-Repo realistisch vorkommt: `source`, `destination`, `data_dir`,
+`collections_dir`, `markdown_ext`, `highlighter`, `liquid`, `future`, `unpublished`,
+`incremental`.
+
+Zwei davon lohnen den Blick: **`future` und `unpublished`** entscheiden, ob eine Seite mit
+künftigem `date` bzw. `published: false` überhaupt gebaut wird – beide Felder kennt das
+Front-Matter-Schema, die zugehörigen Schalter fehlten. Und **`highlighter`** steht in
+Spannung zu `code.highlight`: Das Theme färbt clientseitig und schaltet Rouge in seinen
+Defaults ab; beides zugleich erzeugt doppeltes Markup. Das steht jetzt in der Beschreibung.
+
+**Jede Beschreibung eines Jekyll-Schlüssels beginnt mit `JEKYLL-STANDARD –`.** Im Tooltip
+soll ohne Nachschlagen klar sein, ob der Schlüssel dem Theme gehört oder Jekyll.
+
+**Nicht aufgenommen:** die Server- und CLI-Optionen (`port`, `host`, `livereload*`,
+`quiet`, `safe`, `whitelist`, `webrick`, `rdiscount`, `redcarpet` …). Sie gehören in den
+Aufruf; in diesen Repos steuert sie der Container, in der Datei hätten sie keine Wirkung.
+
+**Das Schema erweitert das Jekyll-Schema weiterhin nicht** – es zählt die Schlüssel selbst
+auf. Ein `$ref` auf die veröffentlichte Fassung schiede aus zwei Gründen aus: Der Prüfer
+löst `$ref` relativ zur Datei auf und kann keine URL holen, und eine Netzabhängigkeit ist
+genau das, was der lokale Schema-Pfad beseitigt hat. Die Schema-Version bleibt **2**: rein
+ergänzend, die Wurzel war schon vorher offen.
+
+---
+
+## 2.1.6
+
+**Festgehalten, dass Markdown-Front-Matter keinen IDE-Support bekommt.** Die Doku sagte
+das schon, aber als Vermutung. Der naheliegende Ausweg – den Repos eine IDE-Zuordnung
+erzeugen (`.idea/jsonSchemas.xml`, `yaml.schemas` in VS Code) und das Front-Matter-Schema
+auf `**/*.md` mappen – ist am 21.08.2026 ausprobiert worden und **greift nicht**: Eine
+Zuordnung ordnet einer *Datei* ein Schema zu, und eine `.md` ist für die IDE eine
+Markdown-Datei. `docs/theme/schemas.md` nennt jetzt Datum und Grund, damit die Idee nicht
+alle paar Monate neu gebaut statt gemessen wird.
+
+---
+
 ## 2.1.5
 
 **Die Schemas kommen für die IDE aus dem Paket, nicht von der veröffentlichten URL.**
