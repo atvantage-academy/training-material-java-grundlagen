@@ -152,7 +152,7 @@
           "description": "Repo-eigenes Feld – vom Theme nicht gelesen."
         }
       },
-      "description": "Die Marke der Site: Logo, Icons, Markentext, Website.",
+      "description": "Die Marke der Site: Logo, Icons, Markentext.",
       "properties": {
         "logo": {
           "type": "string",
@@ -166,8 +166,7 @@
         },
         "website": {
           "type": "string",
-          "default": "https://www.atvantage.com",
-          "description": "URL der Academy-Website – gelesen von der Druck-Kontaktzeile. In den Pipelines aus der Org-Variablen `ACADEMY_WEBSITE` gesetzt, damit die URL an genau einer Stelle steht."
+          "description": "VERALTET seit 2.1.0 – die Angabe heißt jetzt `contact.website` und steht bei den übrigen Kontaktangaben. Wird nur noch gelesen, wenn `contact.website` fehlt, und entfällt mit Theme 3.0 (Register „Kompatibilitätsschichten“ im CHANGELOG des Themes)."
         },
         "icon": {
           "type": "object",
@@ -247,16 +246,21 @@
           "description": "Repo-eigenes Feld – vom Theme nicht gelesen."
         }
       },
-      "description": "Kontaktangaben. Getrennt von `footer`, weil auch das Drucklayout sie braucht: Ein Blatt Papier hat keine Adresszeile.",
+      "description": "Kontaktangaben. Getrennt von `footer`, weil auch das Drucklayout sie braucht: Ein Blatt Papier hat keine Adresszeile. Ausgegeben wird in der Reihenfolge Website, E-Mail, Telefon – im Footer wie im Ausdruck.",
       "properties": {
+        "website": {
+          "type": "string",
+          "default": "https://www.atvantage.com",
+          "description": "URL der Academy-Website – erscheint in der Footer-Spalte „Kontakt“ und in der Druck-Kontaktzeile. In den Pipelines aus der Org-Variablen `ACADEMY_WEBSITE` gesetzt, damit die URL an genau einer Stelle steht. Ersetzt `brand.website`."
+        },
         "email": {
           "type": "string",
           "default": "academy@atvantage.com",
-          "description": "E-Mail-Adresse – erscheint im Footer und in der Druck-Kontaktzeile."
+          "description": "E-Mail-Adresse – erscheint im Footer und in der Druck-Kontaktzeile (dort ohne `mailto:`-Verweis: Auf Papier ist ein Link nur sein Text)."
         },
         "phone": {
           "type": "string",
-          "description": "Telefonnummer, Spalte „Kontakt“ im Footer. STANDARD: keine."
+          "description": "Telefonnummer – erscheint in der Footer-Spalte „Kontakt“ und in der Druck-Kontaktzeile. STANDARD: keine."
         }
       }
     },

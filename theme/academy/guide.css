@@ -216,8 +216,16 @@
 .avd-academy-guide-main ul, .avd-academy-guide-main ol { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 8px; }
 .avd-academy-guide-main li > ul, .avd-academy-guide-main li > ol { margin-top: 8px; }
 
-/* Definition of Done: GFM-Task-Liste als Karte */
-.avd-academy-guide-main ul:has(> li > input[type="checkbox"]) {
+/* Definition of Done: GFM-Task-Liste als Karte
+   ZWEI FORMEN JE PUNKT, und beide muessen getroffen werden: Enthaelt ein Punkt nur
+   eine Zeile, steht die Checkbox direkt im `<li>`. Enthaelt er einen zweiten Block –
+   einen Codeblock, einen weiteren Absatz –, wickelt Kramdown den Inhalt in `<p>`, und
+   die Checkbox sitzt in `li > p`. Ohne die zweite Form verlor genau dieser Punkt die
+   absolute Positionierung: Die Checkbox lief im Text mit, das `padding-left` blieb, und
+   der Punkt stand um 30px eingerueckt neben seinen Geschwistern. Aufgefallen an der
+   Voraussetzungs-Liste der Didaktikon-Doku – dort traegt ein Punkt einen Codeblock. */
+.avd-academy-guide-main ul:has(> li > input[type="checkbox"]),
+.avd-academy-guide-main ul:has(> li > p > input[type="checkbox"]) {
   list-style: none;
   padding: 24px 28px;
   background: var(--avd-academy-color-bg-subtle);
@@ -228,14 +236,20 @@
    würde jedes Inline-Kind (Text, <code>, <a>) zu einem eigenen Flex-Item mit
    Abständen. So fließt der Inhalt als normaler Text; mehrzeilige Items hängen
    sauber unter der ersten Zeile ein. */
-.avd-academy-guide-main ul:has(> li > input[type="checkbox"]) > li {
+.avd-academy-guide-main ul:has(> li > input[type="checkbox"]) > li,
+.avd-academy-guide-main ul:has(> li > p > input[type="checkbox"]) > li {
   position: relative; padding-left: 30px; line-height: 1.5;
 }
-.avd-academy-guide-main ul:has(> li > input[type="checkbox"]) > li > input[type="checkbox"] {
+.avd-academy-guide-main ul:has(> li > input[type="checkbox"]) > li > input[type="checkbox"],
+.avd-academy-guide-main ul:has(> li > p > input[type="checkbox"]) > li > p:first-child > input[type="checkbox"] {
   position: absolute; left: 0; top: 0.25em; margin: 0;
   width: 18px; height: 18px;
   accent-color: var(--avd-orange); cursor: pointer;
 }
+/* Der Wickel-Absatz traegt sonst die Standard-Abstaende des Themes und reisst den
+   Punkt auf. Zwischen ZWEI Absaetzen desselben Punktes bleibt Luft. */
+.avd-academy-guide-main ul:has(> li > p > input[type="checkbox"]) > li > p { margin: 0; }
+.avd-academy-guide-main ul:has(> li > p > input[type="checkbox"]) > li > p + p { margin-top: 8px; }
 
 /* Code */
 .avd-academy-guide-main pre {

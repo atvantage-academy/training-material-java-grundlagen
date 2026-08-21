@@ -51,10 +51,10 @@ concurrency:
 env:
   THEME_PACKAGE: "@avd-academy-tools/academy-theme"
   NPM_REGISTRY: ${{ vars.NPM_REGISTRY || 'https://npm.timetoact.ghe.com' }}
-  # Kompatible Spanne statt `latest`: ^1 löst zu >=1.0.0 <2.0.0 auf. Innerhalb von
-  # Major 1 sind Updates verträglich; ein inkompatibles Release erhöht die Major-
+  # Kompatible Spanne statt `latest`: ^2 löst zu >=2.0.0 <3.0.0 auf. Innerhalb von
+  # Major 2 sind Updates verträglich; ein inkompatibles Release erhöht die Major-
   # Stelle und wird damit NICHT automatisch gezogen (siehe CHANGELOG des Pakets).
-  THEME_VERSION: ${{ vars.THEME_VERSION || '^1' }}
+  THEME_VERSION: ${{ vars.THEME_VERSION || '^2' }}
 
 jobs:
   build:
@@ -88,13 +88,19 @@ jobs:
         with:
           ruby-version: "3.3"
 
-      # Druck-Kontaktzeile: Link auf die Academy-Website aus der Org-Variablen
-      # ACADEMY_WEBSITE – so steht die URL an genau einer Stelle und muss in keinem
-      # Schulungs-Repo gepflegt werden. Gesetzt wird ausschließlich brand.website;
-      # Jekyll merget Config-Hashes tief, alle übrigen footer.*-Werte aus der
-      # projekteigenen _config.yml bleiben erhalten. Fehlt die Variable (Fork,
-      # lokaler Build), greift der Theme-Default.
-      # Diese Verdrahtung unverändert übernehmen. `_config.ci.yml` gehört in die
+      # Academy-Website aus der Org-Variablen ACADEMY_WEBSITE – so steht die URL an
+      # genau einer Stelle und muss in keinem Schulungs-Repo gepflegt werden. Sie
+      # erscheint in der Footer-Spalte „Kontakt“ und in der Druck-Kontaktzeile.
+      # Gesetzt wird ausschließlich contact.website; Jekyll merget Config-Hashes tief,
+      # alle übrigen contact.*-Werte aus der projekteigenen _config.yml bleiben
+      # erhalten. Fehlt die Variable (Fork, lokaler Build), greift der Theme-Default.
+      # ERFORDERT THEME >= 2.1.0. Ältere Themes kennen nur brand.website – wer noch
+      # auf 2.0.x steht, zieht erst das Theme nach und dann diese Vorlage.
+      # DIESER SCHRITT IST EINE ORG-KONVENTION, keine Anforderung des Themes: Er
+      # gehört in Repos einer Academy-Organisation, in der `ACADEMY_WEBSITE` gesetzt
+      # ist. Wer außerhalb einer solchen Org baut, streicht ihn und pflegt
+      # `contact.website` in der eigenen `_config.yml` (dann auch `_config.ci.yml`
+      # aus dem `--config`-Aufruf unten entfernen). `_config.ci.yml` gehört in die
       # .gitignore; Jekyll liefert Dateien mit `_`-Präfix ohnehin nicht aus.
       - name: Academy-Website aus Org-Variable ins Config-Overlay schreiben
         env:
@@ -102,7 +108,7 @@ jobs:
         run: |
           : > _config.ci.yml
           if [ -n "$ACADEMY_WEBSITE" ]; then
-            printf 'brand:\n  website: "%s"\n' "$ACADEMY_WEBSITE" >> _config.ci.yml
+            printf 'contact:\n  website: "%s"\n' "$ACADEMY_WEBSITE" >> _config.ci.yml
           else
             echo "::warning::Org-Variable ACADEMY_WEBSITE ist nicht gesetzt – die Druck-Kontaktzeile nutzt den Theme-Default."
           fi
