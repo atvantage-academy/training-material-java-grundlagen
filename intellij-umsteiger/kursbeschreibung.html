@@ -64,13 +64,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Kursbeschreibung · Java SE (ATVANTAGE Academy)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787310293"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787310293">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787310293">
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787310293">
-<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787310293"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787310293">
-<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787310293" defer></script>
-<script src="/training-material-java-se/theme/jekyll/site.js?v=1787310293" defer></script>
-<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787310293">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/training-material-java-se/theme/atvantage/styles.css?v=1787312240"><link rel="stylesheet" href="/training-material-java-se/theme/academy/tokens.css?v=1787312240">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/base.css?v=1787312240">
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/components.css?v=1787312240">
+<link rel="stylesheet" href="/training-material-java-se/theme/jekyll/site.css?v=1787312240"><link rel="stylesheet" href="/training-material-java-se/theme/academy/print.css?v=1787312240">
+<script src="/training-material-java-se/theme/academy/atvantage.js?v=1787312240" defer></script>
+<script src="/training-material-java-se/theme/jekyll/site.js?v=1787312240" defer></script>
+<link rel="stylesheet" href="/training-material-java-se/theme/academy/highlight.css?v=1787312240">
 <script type="module">
   const _hlbase = "/training-material-java-se/theme/academy/hljs/";
   Promise.all([import(_hlbase + "core.min.js"), import(_hlbase + "java.min.js")])
@@ -84,8 +84,8 @@
 <link rel="icon" href="/training-material-java-se/theme/atvantage/assets/icon-32.png">
 <link rel="icon" sizes="16x16" href="/training-material-java-se/theme/atvantage/assets/icon-16.png">
 
-  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787310293">
-  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787310293"></head><body class="avd-academy-guide">
+  <link rel="stylesheet" href="/training-material-java-se/theme/academy/guide.css?v=1787312240">
+  <link rel="stylesheet" href="/training-material-java-se/assets/custom.css?v=1787312240"></head><body class="avd-academy-guide">
   <a class="avd-academy-skip-link" href="#avd-academy-content">Zum Inhalt springen</a><div class="avd-academy-metanav">
     <span>ATVANTAGE Academy</span>
   </div>
@@ -147,48 +147,73 @@ anders funktioniert oder in Eclipse gar nicht existiert. Statt einer Tour durch 
 Oberfläche lernst Du den <strong>Zugriffsweg</strong>: Jede Aktion ist über eine Suche
 erreichbar, und wer den Weg kennt, braucht kein Menü mehr.</p>
 
-<p><strong>Eine Festlegung vorweg:</strong> Wir lernen die <strong>IntelliJ-eigenen Tastaturkürzel</strong> und
-mappen sie nicht auf die alten Eclipse-Kürzel zurück. Der Grund ist praktisch: Jede
-Anleitung, jedes Tutorial, jede Antwort der Dokumentation und jede KI-Anweisung nennt
-die IntelliJ-Belegung. Wer bei den alten Kürzeln bleibt, übersetzt dauerhaft – bei
-jeder Recherche und in jedem Pairing. Der erste Tag fühlt sich dadurch ungewohnt an;
-danach arbeitest Du mit dem, worauf sich alle anderen beziehen.</p>
-
 <h2 id="lernziele">Lernziele</h2>
 
 <p>Die Lernenden…</p>
 
 <ul>
-  <li>öffnen ein bestehendes Maven-Projekt in IntelliJ und benennen die Unterschiede des Projektmodells gegenüber dem Eclipse-Workspace.</li>
-  <li>arbeiten in der IntelliJ-eigenen Tastaturbelegung, richten Editor und Formatierung über <code>.editorconfig</code> ein und finden eine gesuchte Einstellung über die Suche im Einstellungsdialog statt über das Menü.</li>
-  <li>navigieren mit <code>Search Everywhere</code>, <code>Find Action</code> und den Sprungaktionen zu Typ, Datei und Symbol, ohne den Projektbaum zu benutzen.</li>
-  <li>formen Code über Refactorings und Intentions um und wandeln anonyme Klassen in Lambdas und Methodenreferenzen.</li>
-  <li>kreisen einen Fehler im Debugger mit bedingten Haltepunkten, <code>Evaluate Expression</code> und dem Stream-Debugger ein.</li>
-  <li>erledigen den Git-Alltag in der IDE: Commits in Teilen, Shelve, Log und Blame lesen, Konflikte im Merge-Werkzeug auflösen.</li>
-  <li>nutzen die Werkzeuge, für die Eclipse Zusatz-Plugins braucht: Lombok- und MapStruct-Unterstützung sowie den HTTP-Client für <code>.http</code>-Dateien.</li>
+  <li>richten ein bestehendes Maven-Projekt so in IntelliJ ein, dass Bauen, Testen und Formatieren wie im Team funktionieren.</li>
+  <li>nutzen die Funktionen der Entwicklungsumgebung, um sich in einem unbekannten Codebestand zurechtzufinden, statt ihn zu durchsuchen.</li>
+  <li>lassen wiederkehrende Änderungen am Code von der Entwicklungsumgebung ausführen, statt sie von Hand zu schreiben.</li>
+  <li>finden Fehler durch Debugging mit IntelliJ, ohne den untersuchten Code dafür zu verändern.</li>
+  <li>arbeiten mit Git aus der Entwicklungsumgebung heraus und halten ihre Änderungen dabei thematisch getrennt.</li>
+  <li>erschließen sich eine unbekannte Funktion der Entwicklungsumgebung selbst.</li>
 </ul>
 
 <h2 id="agenda-1-tag">Agenda (1 Tag)</h2>
 
-<h3 id="tag-1-umsteigen-und-beschleunigen">Tag 1: Umsteigen und beschleunigen</h3>
+<h3 id="ankommen-im-werkzeug">Ankommen im Werkzeug</h3>
 
 <ul>
-  <li><strong>Projekt öffnen:</strong> Project, Module und Content Root statt Workspace; Maven-Import und -Sync; Tool-Windows, Navigationsleiste und die Symbole am Zeilenrand</li>
-  <li><strong>Grundkonfiguration:</strong> durchsuchbarer Einstellungsdialog, die IntelliJ-Tastaturbelegung, kein „Speichern“ mehr – AutoSave und Local History als Sicherheitsnetz, teamweite Formatierung über <code>.editorconfig</code></li>
-  <li><strong>Navigieren statt Suchen:</strong> <code>Search Everywhere</code>, <code>Find Action</code> als Zugang zu jedem Menüpunkt, Sprung zu Typ/Datei/Symbol/Implementierung, Struktur, Lesezeichen, zuletzt bearbeitete Dateien</li>
-  <li><strong>Tippen statt Schreiben:</strong> Intentions (<code>Alt+Enter</code>), Live Templates, Postfix Completion, mehrere Einfügemarken, Auswahl erweitern</li>
-  <li><strong>Refactoring und Inspections:</strong> Umbenennen, Extrahieren, Signatur ändern, Verschieben; Inspections gegen Eclipse-Quick-Fixes gehalten; anonyme Klassen ↔ Lambda ↔ Methodenreferenz</li>
-  <li><strong>Debugging:</strong> bedingte, Feld- und Ausnahme-Haltepunkte, <code>Evaluate Expression</code>, Watches, Frame verwerfen, Stream-Debugger</li>
-  <li><strong>Git im Alltag:</strong> Commit-Fenster mit Auswahl einzelner Änderungen, Shelve gegen Stash, Log-Graph, Blame im Editor, Konflikte im Drei-Wege-Merge</li>
-  <li><strong>Der Werkzeugkasten, den Eclipse nicht mitbringt:</strong> Lombok- und MapStruct-Unterstützung ohne Zusatz-Plugin, HTTP-Client mit <code>.http</code>-Dateien und Umgebungen</li>
+  <li>Das Projektmodell von IntelliJ und wie ein Maven-Projekt darin aufgeht</li>
+  <li>Die Oberfläche als Arbeitsmittel: Werkzeugfenster, Informationen am Zeilenrand</li>
+  <li>Grundkonfiguration und das Auffinden von Einstellungen</li>
+  <li>Formatierung, die das ganze Team teilt</li>
+  <li>Warum es keinen Speichern-Knopf gibt – und was stattdessen absichert</li>
 </ul>
 
-<blockquote>
-  <p><strong>Hinweis zum Umfang:</strong> Die Themenliste ist für einen Tag dicht gerechnet. Der
-letzte Punkt – Lombok, MapStruct und HTTP-Client – liegt außerhalb der regulären
-Lehrzeit; für die vollständige Liste in Ruhe sind <strong>1,5 Tage</strong> der realistische
-Rahmen. Was in einem Tag entfällt, wird vor der Durchführung abgestimmt.</p>
-</blockquote>
+<h3 id="tempo-im-alltag">Tempo im Alltag</h3>
+
+<ul>
+  <li>Sich im Code bewegen, ohne ihn zu durchsuchen</li>
+  <li>Eine unbekannte Funktion der Umgebung selbst finden</li>
+  <li>Code entstehen lassen statt ihn auszuschreiben</li>
+  <li>Wiederkehrende Änderungen in einem Zug erledigen</li>
+</ul>
+
+<h3 id="code-umformen">Code umformen</h3>
+
+<ul>
+  <li>Umformungen, die über die Cursorposition hinaus wirken – und ihre Vorschau</li>
+  <li>Dauerhafte Code-Prüfungen und wie sie sich von Compilerfehlern unterscheiden</li>
+  <li>Funktionale Schreibweisen ineinander überführen</li>
+  <li>Wann ein Vorschlag der Umgebung abzulehnen ist</li>
+</ul>
+
+<h3 id="fehler-finden">Fehler finden</h3>
+
+<ul>
+  <li>Ein Programm gezielt an der interessanten Stelle anhalten</li>
+  <li>Im angehaltenen Zustand Fragen an das Programm stellen</li>
+  <li>Fehlersuche, ohne den untersuchten Code zu verändern</li>
+  <li>Verarbeitungsketten nachvollziehen, die sich nicht Zeile für Zeile lesen lassen</li>
+</ul>
+
+<h3 id="mit-git-arbeiten">Mit Git arbeiten</h3>
+
+<ul>
+  <li>Änderungen statt Dateien in einen Commit geben</li>
+  <li>Angefangene Arbeit zwischenlagern</li>
+  <li>Die Historie lesen und die Herkunft einer Zeile klären</li>
+  <li>Konflikte im Werkzeug auflösen, ohne die Umgebung zu wechseln</li>
+</ul>
+
+<h3 id="werkzeuge-die-andere-umgebungen-nicht-mitbringen">Werkzeuge, die andere Umgebungen nicht mitbringen</h3>
+
+<ul>
+  <li>Generierter Code, mit dem Navigation, Umbenennen und Debugging genauso funktionieren</li>
+  <li>HTTP-Anfragen als versionierter Teil des Projekts, statt in einem Werkzeug daneben</li>
+</ul>
 
 
     </main><aside class="avd-academy-guide-sidebar"><details class="avd-academy-guide-side avd-academy-guide-side--toc avd-academy-fold" data-avd-academy-toc-box
