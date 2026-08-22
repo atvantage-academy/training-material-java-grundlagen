@@ -15,6 +15,21 @@ Abschnitt „Theme-Version“.
 
 ---
 
+## 2.2.1
+
+**Warnung ergänzt: die Info-Schaltfläche trägt in einem Markdown-Listenpunkt nicht.**
+Die Doku empfahl `avd-academy-reveal--info` für Stellen ohne Platz für einen Titel –
+„eine Tabellenzelle, das Ende einer Zeile“. In einer **Aufzählung** führt genau das in
+den Fehler: Kramdown behandelt das `<details>` dort als Inline-HTML und maskiert seinen
+Inhalt, im Ergebnis steht `&lt;summary&gt;` und die Schaltfläche ist kaputt. `markdown="1"`
+am umgebenden Element hilft nicht.
+
+Nachgemessen und in die Doku übernommen, samt Ausweg (die ganze Liste als Block-HTML)
+und dem Hinweis, dass dieser Preis hoch genug ist, um die Erläuterung lieber neben die
+Liste zu stellen. Gemeldet aus einem Konzept-Repo (A-013).
+
+---
+
 ## 2.2.0
 
 **Zehn Jekyll-Schlüssel mehr im Konfigurations-Schema** – durchgegangen anhand von
